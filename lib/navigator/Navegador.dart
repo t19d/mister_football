@@ -1,0 +1,263 @@
+import 'package:flutter/material.dart';
+import 'package:mister_football/main.dart';
+import 'package:mister_football/routes/alineacion_favorita/v_alineacion.dart';
+import 'package:mister_football/routes/configuracion/v_configuracion.dart';
+import 'package:mister_football/routes/ejercicios/v_ejercicios.dart';
+import 'package:mister_football/routes/entrenamientos/v_entrenamientos.dart';
+import 'package:mister_football/routes/equipo/v_equipo.dart';
+import 'package:mister_football/routes/estado_jugadores/v_estado_jugadores.dart';
+import 'package:mister_football/routes/eventos/v_eventos.dart';
+import 'package:mister_football/routes/gestion_jugadores/v_gestion_jugadores.dart';
+import 'package:mister_football/routes/partidos/v_partidos.dart';
+import 'package:mister_football/routes/perfil/v_perfil.dart';
+import 'package:mister_football/routes/resultados/v_resultados.dart';
+
+class Navegador extends StatefulWidget {
+  Navegador({Key key}) : super(key: key);
+
+  @override
+  _Navegador createState() => _Navegador();
+}
+
+class _Navegador extends State<Navegador> {
+  //Estilo de los enlaces
+  TextStyle estiloEnlaces = new TextStyle(color: Colors.white);
+
+  //Divisores
+  Divider divisor = new Divider(
+    color: MisterFootball.analogo1Light,
+  );
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      //color: MisterFootball.primario,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            colors: [MisterFootball.primario, MisterFootball.primarioDark]),
+      ),
+      child: ListView(
+        children: <Widget>[
+          //Título equipo
+          Container(
+            //color: MisterFootball.primarioLight,
+            padding: const EdgeInsets.fromLTRB(15, 30, 30, 10),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  //Cambiar por el escudo del equipo (si el usuario quiere)
+                  Image.asset(
+                    'assets/img/escudo.png',
+                    width: 100,
+                  ),
+                  Text(
+                    "Pastoriza SCD",
+                    textAlign: TextAlign.right,
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      color: Colors.white,
+                      height: 3,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ]),
+          ),
+          divisor,
+          //Item Estado Jugadores
+          ListTile(
+            title: Text(
+              "Estado jugadores",
+              style: estiloEnlaces,
+            ),
+            leading: Icon(
+              Icons.playlist_add_check,
+              color: Colors.white70,
+            ),
+            onTap: () {
+              Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => EstadoJugadores()),
+            );
+            },
+          ),
+          //Item Gestión
+          ListTile(
+            title: Text(
+              "Gestión jugadores",
+              style: estiloEnlaces,
+            ),
+            leading: Icon(
+              Icons.transfer_within_a_station,
+              color: Colors.white70,
+            ),
+            onTap: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => GestionJugadores()),
+              );
+            },
+          ),
+          divisor,
+          //Item Partidos
+          ListTile(
+            title: Text(
+              "Partidos",
+              style: estiloEnlaces,
+            ),
+            leading: Icon(
+              Icons.trending_up,
+              color: Colors.white70,
+            ),
+            onTap: () {
+              Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => Partidos()),
+            );
+            },
+          ),
+          //Item Resultados
+          ListTile(
+            title: Text(
+              "Resultados",
+              style: estiloEnlaces,
+            ),
+            leading: Icon(
+              Icons.insert_chart,
+              color: Colors.white70,
+            ),
+            onTap: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => Resultados()),
+              );
+            },
+          ),
+          divisor,
+          //Item Entrenamientos
+          ListTile(
+            title: Text(
+              "Entrenamientos",
+              style: estiloEnlaces,
+            ),
+            leading: Icon(
+              Icons.filter_frames,
+              color: Colors.white70,
+            ),
+            onTap: () {
+              Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => Entrenamientos()),
+            );
+            },
+          ),
+          //Item Ejercicios
+          ListTile(
+            title: Text(
+              "Ejercicios",
+              style: estiloEnlaces,
+            ),
+            leading: Icon(
+              Icons.directions_run,
+              color: Colors.white70,
+            ),
+            onTap: () {
+              Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => Ejercicios()),
+            );
+            },
+          ),
+          divisor,
+          //Item Alineación Favorita
+          ListTile(
+            title: Text(
+              "Alineación favorita",
+              style: estiloEnlaces,
+            ),
+            leading: Icon(
+              Icons.ac_unit,
+              color: Colors.white70,
+            ),
+            onTap: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => Alineacion()),
+              );
+            },
+          ),
+          //Item Detalles Equipo
+          ListTile(
+            title: Text(
+              "Equipo",
+              style: estiloEnlaces,
+            ),
+            leading: Icon(
+              Icons.people,
+              color: Colors.white70,
+            ),
+            onTap: () {
+              Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => Equipo()),
+            );
+            },
+          ),
+          //Item Eventos
+          ListTile(
+            title: Text(
+              "Eventos",
+              style: estiloEnlaces,
+            ),
+            leading: Icon(
+              Icons.event_note,
+              color: Colors.white70,
+            ),
+            onTap: () {
+              Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => Eventos()),
+            );
+            },
+          ),
+          divisor,
+          //Item Perfil
+          ListTile(
+            title: Text(
+              "Perfil",
+              style: estiloEnlaces,
+            ),
+            leading: Icon(
+              Icons.person,
+              color: Colors.white70,
+            ),
+            onTap: () {
+              Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => Perfil()),
+            );
+            },
+          ),
+          //Item Configuración
+          ListTile(
+            title: Text(
+              "Configuración",
+              style: estiloEnlaces,
+            ),
+            leading: Icon(
+              Icons.settings,
+              color: Colors.white70,
+            ),
+            onTap: () {
+              Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => Configuracion()),
+            );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}

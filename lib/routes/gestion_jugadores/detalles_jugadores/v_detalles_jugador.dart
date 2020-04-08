@@ -1,18 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:mister_football/clases/conversor_imagen.dart';
 import 'package:mister_football/clases/jugador.dart';
 import 'package:mister_football/database/DBHelper.dart';
 
 class DetallesJugador extends StatefulWidget {
   final Jugador jugador;
+  final int posicion;
 
-  DetallesJugador({Key key, @required this.jugador}) : super(key: key);
+  DetallesJugador({Key key, @required this.jugador, @required this.posicion}) : super(key: key);
 
   @override
   _DetallesJugador createState() => _DetallesJugador();
 }
 
 class _DetallesJugador extends State<DetallesJugador> {
+
+  @override
+  void dispose() {
+    Hive.close();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,8 +47,11 @@ class _DetallesJugador extends State<DetallesJugador> {
                 color: Colors.redAccent,
               ),
               tooltip: 'Eliminar jugador',
-              onPressed: () {
+              onPressed: () async {
                 //DBHelper.delete(widget.jugador.id);
+                var boxJugadores = await Hive.openBox('jugadores');
+                print(widget.posicion);
+                boxJugadores.deleteAt(widget.posicion);
                 Navigator.pop(context);
               },
             ),

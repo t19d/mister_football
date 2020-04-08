@@ -175,7 +175,6 @@ class _ListaGestionJugadores extends State<ListaGestionJugadores> {
 
     final boxJugadores = Hive.box('jugadores');
     if (boxJugadores.length > 0) {
-      print("entró");
       //print("Tamaño ${boxJugadores.length}");
       //boxJugadores.delete(1);
       return GridView.count(
@@ -193,7 +192,7 @@ class _ListaGestionJugadores extends State<ListaGestionJugadores> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => DetallesJugador(jugador: jugadorBox),
+                    builder: (context) => DetallesJugador(jugador: jugadorBox, posicion: iJugador,),
                   ),
                 );
               },
@@ -256,6 +255,7 @@ class _ListaGestionJugadores extends State<ListaGestionJugadores> {
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
                     if (snapshot.hasError) {
+                      print(snapshot.error.toString());
                       return Text(snapshot.error.toString());
                     } else {
                       //return cartasJugadores(snapshot.data);

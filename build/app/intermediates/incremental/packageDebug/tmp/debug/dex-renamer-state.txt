@@ -1,4 +1,4 @@
-#Wed Apr 08 18:47:09 CEST 2020
+#Wed Apr 08 19:08:01 CEST 2020
 base.0=C\:\\mister_football\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\out\\classes.dex
 path.0=classes.dex
 renamed.0=classes.dex

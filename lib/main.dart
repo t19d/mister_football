@@ -26,7 +26,7 @@ void main() async {
   //TEST
   WidgetsFlutterBinding.ensureInitialized();
   //Lugar donde se va a almacenar el documento:
-  almacenarBoxes();
+  await almacenarBoxes();
   runApp(MisterFootball());
 }
 

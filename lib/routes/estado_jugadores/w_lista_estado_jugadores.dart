@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:mister_football/clases/conversor_imagen.dart';
 import 'package:mister_football/clases/jugador.dart';
 import 'package:mister_football/database/DBHelper.dart';
@@ -11,12 +12,18 @@ class ListaEstadoJugadores extends StatefulWidget {
 }
 
 class _ListaEstadoJugadores extends State<ListaEstadoJugadores> {
-  Future<List<Jugador>> jugadores;
+  /*Future<List<Jugador>> jugadores;
 
   refreshList() {
     setState(() {
       //jugadores = DBHelper.getJugadoresPorPosiciones();
     });
+  }*/
+
+  @override
+  void dispose() {
+    Hive.close();
+    super.dispose();
   }
 
   Color colorear(posicion) {
@@ -80,8 +87,9 @@ class _ListaEstadoJugadores extends State<ListaEstadoJugadores> {
     return coloreado.withOpacity(.7);
   }
 
-  Widget itemJugadores(List<Jugador> jugadores) {
-    int variable = 0;
+  //Widget itemJugadores(List<Jugador> jugadores) {
+  Widget itemJugadores() {
+    /*int variable = 0;
     jugadores.forEach((f) {
       variable++;
     });
@@ -98,7 +106,7 @@ class _ListaEstadoJugadores extends State<ListaEstadoJugadores> {
                 context,
                 MaterialPageRoute(
                   builder: (context) =>
-                      DetallesJugador(jugador: jugadores[iJugador]),
+                      DetallesJugador(jugador: jugadores[iJugador], posicion: iJugador,),
                 ),
               );
             },
@@ -140,12 +148,78 @@ class _ListaEstadoJugadores extends State<ListaEstadoJugadores> {
           ),
         );
       }),
-    );
+    );*/
+
+    final boxJugadores = Hive.box('jugadores');
+    if (boxJugadores.length > 0) {
+      return ListView(
+        children: List.generate(boxJugadores.length, (iJugador) {
+          final Jugador jugadorBox = boxJugadores.getAt(iJugador) as Jugador;
+          return Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0),
+            ),
+            child: new InkWell(
+              splashColor: MisterFootball.complementario,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DetallesJugador(
+                      jugador: jugadorBox,
+                      posicion: iJugador,
+                    ),
+                  ),
+                );
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                    color: colorear(jugadorBox.posicionFavorita),
+                    borderRadius: BorderRadius.circular(15)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    //Foto
+                    ConversorImagen.imageFromBase64String(
+                        jugadorBox.nombre_foto),
+                    //Nombre
+                    Text(
+                      jugadorBox.apodo,
+                      textAlign: TextAlign.center,
+                    ),
+                    //Estado
+                    Icon(
+                      Icons.check_box,
+                    ),
+                    //Posición
+                    Text(
+                      jugadorBox.posicionFavorita,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 10),
+                    ),
+                    //Edad
+                    Text(
+                      jugadorBox.calcularEdad() + " años",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 10),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        }),
+      );
+    } else {
+      return Center(
+        child: Text("No hay ningún jugador creado."),
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    refreshList();
+    //refreshList();
     return Scaffold(
       body: SafeArea(
         child: Row(
@@ -153,7 +227,7 @@ class _ListaEstadoJugadores extends State<ListaEstadoJugadores> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Expanded(
-              child: FutureBuilder(
+              /*child: FutureBuilder(
                 future: jugadores,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
@@ -165,6 +239,23 @@ class _ListaEstadoJugadores extends State<ListaEstadoJugadores> {
                   }
 
                   return CircularProgressIndicator();
+                },
+              ),
+            ),*/
+              child: FutureBuilder(
+                future: Hive.openBox('jugadores'),
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    if (snapshot.hasError) {
+                      print(snapshot.error.toString());
+                      return Text(snapshot.error.toString());
+                    } else {
+                      //return cartasJugadores(snapshot.data);
+                      return itemJugadores();
+                    }
+                  } else {
+                    return LinearProgressIndicator();
+                  }
                 },
               ),
             ),

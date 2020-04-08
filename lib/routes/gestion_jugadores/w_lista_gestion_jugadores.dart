@@ -183,8 +183,8 @@ class _ListaGestionJugadores extends State<ListaGestionJugadores> {
         crossAxisCount: 3,
         children: List.generate(boxJugadores.length, (iJugador) {
           final Jugador jugadorBox = boxJugadores.getAt(iJugador) as Jugador;
-          print("Jugador: ${jugadorBox.nombre} / id: ${iJugador}");
-          print("Tamaño ${boxJugadores.length}");
+          /*print("Jugador: ${jugadorBox.nombre} / id: ${iJugador}");
+          print("Tamaño ${boxJugadores.length}");*/
           return Card(
             child: new InkWell(
               splashColor: Colors.lightGreen,

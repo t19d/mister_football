@@ -5,7 +5,7 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
 
-class DBHelper {
+class DBHelper {/*
   static Database _db;
   static const String JUGADORES_ID = 'id';
   static const String JUGADORES_NOMBRE = 'nombre';
@@ -142,4 +142,5 @@ class DBHelper {
     var dbClient = await db;
     dbClient.close();
   }
+*/
 }

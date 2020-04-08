@@ -15,7 +15,7 @@ class _ListaEstadoJugadores extends State<ListaEstadoJugadores> {
 
   refreshList() {
     setState(() {
-      jugadores = DBHelper.getJugadoresPorPosiciones();
+      //jugadores = DBHelper.getJugadoresPorPosiciones();
     });
   }
 

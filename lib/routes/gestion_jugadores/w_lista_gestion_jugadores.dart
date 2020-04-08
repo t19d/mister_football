@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:mister_football/clases/conversor_imagen.dart';
 import 'package:mister_football/clases/jugador.dart';
 import 'package:mister_football/database/DBHelper.dart';
@@ -10,12 +11,18 @@ class ListaGestionJugadores extends StatefulWidget {
 }
 
 class _ListaGestionJugadores extends State<ListaGestionJugadores> {
-  Future<List<Jugador>> jugadores;
+  //Future<List<Jugador>> jugadores;
 
-  refreshList() {
+  /*refreshList() {
     setState(() {
-      jugadores = DBHelper.getJugadoresPorPosiciones();
+      //jugadores = DBHelper.getJugadoresPorPosiciones();
     });
+  }*/
+
+  @override
+  void dispose() {
+    Hive.close();
+    super.dispose();
   }
 
   Color colorear(posicion) {
@@ -119,8 +126,9 @@ class _ListaGestionJugadores extends State<ListaGestionJugadores> {
   }
  */
 
-  Widget cartasJugadores(List<Jugador> jugadores) {
-    int variable = 0;
+//  Widget cartasJugadores(List<Jugador> jugadores) {
+  Widget cartasJugadores() {
+    /*int variable = 0;
     jugadores.forEach((f) {
       variable++;
     });
@@ -163,12 +171,65 @@ class _ListaGestionJugadores extends State<ListaGestionJugadores> {
           ),
         );
       }),
-    );
+    );*/
+
+    final boxJugadores = Hive.box('jugadores');
+    if (boxJugadores.length > 0) {
+      print("entró");
+      //print("Tamaño ${boxJugadores.length}");
+      //boxJugadores.delete(1);
+      return GridView.count(
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        crossAxisCount: 3,
+        children: List.generate(boxJugadores.length, (iJugador) {
+          final Jugador jugadorBox = boxJugadores.getAt(iJugador) as Jugador;
+          print("Jugador: ${jugadorBox.nombre} / id: ${iJugador}");
+          print("Tamaño ${boxJugadores.length}");
+          return Card(
+            child: new InkWell(
+              splashColor: Colors.lightGreen,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DetallesJugador(jugador: jugadorBox),
+                  ),
+                );
+              },
+              child: Container(
+                color: colorear(jugadorBox.posicionFavorita),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    ConversorImagen.imageFromBase64String(
+                        jugadorBox.nombre_foto),
+                    Text(
+                      jugadorBox.apodo,
+                      textAlign: TextAlign.center,
+                    ),
+                    Text(
+                      jugadorBox.posicionFavorita,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 10),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        }),
+      );
+    } else {
+      return Center(
+        child: Text("No hay ningún jugador creado."),
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    refreshList();
+    //refreshList();
     return Scaffold(
       body: SafeArea(
         child: Row(
@@ -176,7 +237,7 @@ class _ListaGestionJugadores extends State<ListaGestionJugadores> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Expanded(
-              child: FutureBuilder(
+              /*child: FutureBuilder(
                 future: jugadores,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
@@ -188,6 +249,21 @@ class _ListaGestionJugadores extends State<ListaGestionJugadores> {
                   }
 
                   return CircularProgressIndicator();
+                },
+              ),*/
+              child: FutureBuilder(
+                future: Hive.openBox('jugadores'),
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    if (snapshot.hasError) {
+                      return Text(snapshot.error.toString());
+                    } else {
+                      //return cartasJugadores(snapshot.data);
+                      return cartasJugadores();
+                    }
+                  } else {
+                    return LinearProgressIndicator();
+                  }
                 },
               ),
             ),

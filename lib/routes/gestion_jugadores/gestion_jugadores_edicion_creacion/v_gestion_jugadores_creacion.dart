@@ -66,7 +66,7 @@ class _GestionJugadoresCreacion extends State<GestionJugadoresCreacion> {
           apellido2: apellido2.trim(),
           apodo: apodo.trim(),
           fechaNacimiento: fechaNacimiento.trim(),
-          piernaDerechaBuena: piernaDerechaBuena,
+          piernaBuena: (piernaDerechaBuena ? "Derecha" : "Izquierda"),
           posicionFavorita: posicionFavorita.trim(),
           anotaciones: anotaciones.trim(),
           nombre_foto: imgString);
@@ -75,12 +75,12 @@ class _GestionJugadoresCreacion extends State<GestionJugadoresCreacion> {
 
       //Almacenar al jugador en la Box de 'jugadores'
       if (Hive.isBoxOpen('jugadores')) {
-        boxJugadores.add(j);
-        print("Jugador ${j.nombre}");
+        boxJugadores.put(boxJugadores.length, j);
+        //print("Jugador ${j.nombre}");
       } else {
         abrirBoxJugadores();
         boxJugadores.add(j);
-        print("Jugador ${j.nombre}");
+        //print("Jugador ${j.nombre}");
       }
       Navigator.pop(context);
     }

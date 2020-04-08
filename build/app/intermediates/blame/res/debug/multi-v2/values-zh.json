@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "D:\\Documents\\mister_football\\build\\app\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-zh\\values-zh.xml",
+            "outputFile": "C:\\mister_football\\build\\app\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-zh\\values-zh.xml",
             "map": [
                 {
                     "source": "C:\\Users\\td\\.gradle\\caches\\transforms-2\\files-2.1\\c6dbea16383ad1e365ea5513ff6f6427\\ucrop-2.2.4\\res\\values-zh\\values-zh.xml",

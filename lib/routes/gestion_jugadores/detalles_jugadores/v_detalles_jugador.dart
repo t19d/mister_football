@@ -40,7 +40,7 @@ class _DetallesJugador extends State<DetallesJugador> {
               ),
               tooltip: 'Eliminar jugador',
               onPressed: () {
-                DBHelper.delete(widget.jugador.id);
+                //DBHelper.delete(widget.jugador.id);
                 Navigator.pop(context);
               },
             ),

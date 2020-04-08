@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:mister_football/clases/jugador.dart';
 import 'package:mister_football/routes/estado_jugadores/v_estado_jugadores.dart';
+import 'package:mister_football/routes/gestion_jugadores/gestion_jugadores_edicion_creacion/v_gestion_jugadores_creacion.dart';
+import 'package:mister_football/routes/gestion_jugadores/v_gestion_jugadores.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 
 //Almacenar el documento:
@@ -10,7 +13,7 @@ Future<void> almacenarBoxes() async {
       await path_provider.getApplicationDocumentsDirectory();
   await Hive
     ..init(appDocumentDirectory.path)
-    ..registerAdapter(PersonAdapter());
+    ..registerAdapter(JugadorAdapter());
 }
 
 //Esto podría fallar
@@ -55,7 +58,7 @@ class MisterFootball extends StatelessWidget {
     // TODO: implement build
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: EstadoJugadores(),
+      home: GestionJugadores(),
       theme: ThemeData(
         // Define the default brightness and colors.
         primaryColorDark: primarioDark,

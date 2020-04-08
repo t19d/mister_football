@@ -72,7 +72,7 @@ class _Formacion extends State<Formacion> {
 
   refreshList() {
     setState(() {
-      jugadores = DBHelper.getJugadoresPorPosiciones();
+      //jugadores = DBHelper.getJugadoresPorPosiciones();
     });
   }
 

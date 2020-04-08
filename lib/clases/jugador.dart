@@ -1,30 +1,53 @@
+import 'package:hive/hive.dart';
+part 'jugador.g.dart';
+
+@HiveType(typeId: 0)
 class Jugador {
-  int id;
-  String nombre;
-  String apellido1;
-  String apellido2;
-  String apodo = ""; //Opcional. En caso de estar vacío, se pone el apellido1
-  String fechaNacimiento;
-  bool piernaDerechaBuena;
-  String piernaBuena = "Derecha";
-  String posicionFavorita;
-  String anotaciones = ""; //Opcional.
-  String nombre_foto = ""; //Opcional.
+  @HiveField(0)
+  final String nombre;
+  @HiveField(1)
+  final String apellido1;
+  @HiveField(2)
+  final String apellido2;
+  //Opcional. En caso de estar vacío, se pone el apellido1
+  @HiveField(3)
+  final String apodo;// = "";
+  @HiveField(4)
+  final String fechaNacimiento;
+  @HiveField(5)
+  final String piernaBuena;
+  @HiveField(6)
+  final String posicionFavorita;
+  @HiveField(7)
+  final List otrasPosiciones = [];
+  @HiveField(8)
+  final bool lesion = false;
+  @HiveField(9)
+  final List lesiones = [];
+  @HiveField(10)
+  final bool sancion = false;
+  @HiveField(11)
+  final List tarjetas = [];
+  @HiveField(12)
+  final List partidos = [];
+  @HiveField(13)
+  final String anotaciones;// = ""; //Opcional.
+  @HiveField(14)
+  final String nombre_foto;// = ""; //Opcional.
 
   Jugador(
-      {this.id,
-      this.nombre,
+      {this.nombre,
       this.apellido1,
       this.apellido2,
       this.apodo,
       this.fechaNacimiento,
-      this.piernaDerechaBuena,
+      this.piernaBuena,
       this.posicionFavorita,
       this.anotaciones,
       this.nombre_foto});
-
+/*
   Jugador.sinApodo(
-      {this.id,
+      {
       this.nombre,
       this.apellido1,
       this.apellido2,
@@ -94,7 +117,6 @@ class Jugador {
       this.fechaNacimiento,
       this.piernaDerechaBuena,
       this.posicionFavorita});
-
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{
       'id': id,
@@ -129,12 +151,12 @@ class Jugador {
     anotaciones = map['anotaciones'];
     nombre_foto = map['nombre_foto'];
   }
-
+  */
 
   String calcularEdad() {
     int edad = 0;
     List<String> hoy =
-    DateTime.now().toLocal().toString().split(' ')[0].split('-');
+        DateTime.now().toLocal().toString().split(' ')[0].split('-');
     List<String> nacimiento = this.fechaNacimiento.split('-');
     edad = int.parse(hoy[0]) - int.parse(nacimiento[0]);
     //Si es el mes de nacimiento se comprueba si ya ha pasado el día o estamos en él

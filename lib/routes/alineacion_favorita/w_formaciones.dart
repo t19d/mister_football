@@ -1,9 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:mister_football/clases/conversor_imagen.dart';
 import 'package:mister_football/clases/jugador.dart';
-import 'package:mister_football/database/DBHelper.dart';
 import 'package:mister_football/routes/gestion_jugadores/detalles_jugadores/v_detalles_jugador.dart';
 
 class Formacion extends StatefulWidget {
@@ -53,7 +53,13 @@ Color colorear(String posicion) {
 }
 
 class _Formacion extends State<Formacion> {
-  Future<List<Jugador>> jugadores;
+  //Future<List<Jugador>> jugadores;
+
+  @override
+  void dispose() {
+    Hive.close();
+    super.dispose();
+  }
 
   //Posiciones ocupadas por jugadores
   Map<String, dynamic> posicionesOcupadas = {
@@ -70,11 +76,11 @@ class _Formacion extends State<Formacion> {
     '10': null
   };
 
-  refreshList() {
+/*refreshList() {
     setState(() {
       //jugadores = DBHelper.getJugadoresPorPosiciones();
     });
-  }
+  }*/
 
   refreshPosicionesOcupadas(Map<String, dynamic> posOcup) {
     setState(() {
@@ -84,7 +90,7 @@ class _Formacion extends State<Formacion> {
 
   @override
   Widget build(BuildContext context) {
-    refreshList();
+    //refreshList();
     return dibujoFormacion();
   }
 
@@ -123,8 +129,9 @@ class _Formacion extends State<Formacion> {
     return dibujo;
   }
 
-  cartasJugadores(List<Jugador> jugadores) {
-    int variable = 0;
+  //cartasJugadores(List<Jugador> jugadores) {
+  cartasJugadores() {
+    /*int variable = 0;
     jugadores.forEach((f) {
       variable++;
     });
@@ -171,7 +178,60 @@ class _Formacion extends State<Formacion> {
           ),
         );
       }),
-    );
+    );*/
+
+    final boxJugadores = Hive.box('jugadores');
+    if (boxJugadores.length > 0) {
+      return ListView(
+        children: List.generate(boxJugadores.length, (iJugador) {
+          final Jugador jugadorBox = boxJugadores.getAt(iJugador) as Jugador;
+          return Card(
+            child: new InkWell(
+              splashColor: Colors.lightGreen,
+              onTap: () {
+                Navigator.pop(context, jugadorBox);
+              },
+              onLongPress: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        DetallesJugador(jugador: jugadorBox, posicion: iJugador,),
+                  ),
+                );
+              },
+              child: Container(
+                color: colorear(jugadorBox.posicionFavorita),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    ConversorImagen.imageFromBase64String(
+                        jugadorBox.nombre_foto),
+                    Column(
+                      children: <Widget>[
+                        Text(
+                          jugadorBox.apodo,
+                          textAlign: TextAlign.center,
+                        ),
+                        Text(
+                          jugadorBox.posicionFavorita,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 10),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        }),
+      );
+    } else {
+      return Center(
+        child: Text("No hay ningún jugador creado."),
+      );
+    }
   }
 
   Widget jugadorElegidoContainer(Jugador j, String posicion) {
@@ -212,13 +272,14 @@ class _Formacion extends State<Formacion> {
         splashColor: Colors.lightGreen,
         onTap: () async {
           jugadorElegido = await showDialog<Jugador>(
-              context: context,
-              barrierDismissible: true,
-              builder: (BuildContext context) => Dialog(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.0)),
-                    //this right here
-                    child: FutureBuilder(
+            context: context,
+            barrierDismissible: true,
+            builder: (BuildContext context) => Dialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.0),
+              ),
+              //this right here
+              /*child: FutureBuilder(
                       future: jugadores,
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
@@ -232,8 +293,25 @@ class _Formacion extends State<Formacion> {
 
                         return CircularProgressIndicator();
                       },
-                    ),
-                  ));
+                    ),*/
+              child: FutureBuilder(
+                future: Hive.openBox('jugadores'),
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    if (snapshot.hasError) {
+                      print(snapshot.error.toString());
+                      return Text(snapshot.error.toString());
+                    } else {
+                      //return cartasJugadores(snapshot.data);
+                      return cartasJugadores();
+                    }
+                  } else {
+                    return LinearProgressIndicator();
+                  }
+                },
+              ),
+            ),
+          );
           if (jugadorElegido != null && jugadorElegido is Jugador) {
             //Actualizar contenido
             posicionesOcupadas['$numAlineacion'] = jugadorElegido;
@@ -242,7 +320,8 @@ class _Formacion extends State<Formacion> {
         },
         //Esto se puede quitar
         onLongPress: () {
-          if (posicionesOcupadas['$numAlineacion'] != null && posicionesOcupadas['$numAlineacion'] is Jugador) {
+          if (posicionesOcupadas['$numAlineacion'] != null &&
+              posicionesOcupadas['$numAlineacion'] is Jugador) {
             Navigator.push(
               context,
               MaterialPageRoute(

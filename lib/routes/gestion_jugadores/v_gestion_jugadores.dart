@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mister_football/main.dart';
 import 'package:mister_football/navigator/Navegador.dart';
 import 'package:mister_football/routes/gestion_jugadores/gestion_jugadores_edicion_creacion/v_gestion_jugadores_creacion.dart';
 import 'package:mister_football/routes/gestion_jugadores/w_lista_gestion_jugadores.dart';
@@ -33,7 +34,7 @@ class _GestionJugadores extends State<GestionJugadores> {
             'Gestión jugadores',
           ),
           actions: <Widget>[
-            IconButton(
+            /*IconButton(
               icon: const Icon(
                 Icons.add_to_photos,
                 color: Colors.yellowAccent,
@@ -48,11 +49,11 @@ class _GestionJugadores extends State<GestionJugadores> {
               ),
               tooltip: 'Jugadores/as lesionados/as',
               onPressed: () {},
-            ),
+            ),*/
             IconButton(
-              icon: const Icon(
+              icon: Icon(
                 Icons.add,
-                color: Colors.lightBlue,
+                color: MisterFootball.complementarioLight,
               ),
               tooltip: 'Nuevo jugador/a',
               onPressed: () {

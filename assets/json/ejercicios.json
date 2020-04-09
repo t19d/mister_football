@@ -1,14 +1,27 @@
 [
-	{"titulo": "",
-		"tipo":"",
-		"duracion":"",
-		"descripcion":"",
-		"dificultad":"",
-		"intensidad":"",
-		"elementos":[],
-		"dimension_campo":"",
-		"incidir":"",
-		"evitar":"",
-		"progresar":""
-	},
+  {
+    "titulo": "Carrera continua",
+    "tipo": "Físico",
+    "duracion": "20 minutos",
+    "descripcion": "Carrera continua de 20x20 metros.",
+    "dificultad": "Fácil",
+    "intensidad": "Media",
+    "elementos": [
+      "Conos",
+      "Agua"
+    ],
+    "dimension_campo": "20x20 metros",
+    "imagen": ""
+  },
+  {
+    "titulo": "Segundo",
+    "tipo": "Táctico",
+    "duracion": "25 minutos",
+    "descripcion": "Segundo ejercicio.",
+    "dificultad": "Media",
+    "intensidad": "Alta",
+    "elementos": [],
+    "dimension_campo": "",
+    "imagen": ""
+  }
 ]

@@ -319,7 +319,7 @@ class _Formacion extends State<Formacion> {
           }
         },
         //Esto se puede quitar
-        onLongPress: () {
+        /*onLongPress: () {
           if (posicionesOcupadas['$numAlineacion'] != null &&
               posicionesOcupadas['$numAlineacion'] is Jugador) {
             Navigator.push(
@@ -330,7 +330,7 @@ class _Formacion extends State<Formacion> {
               ),
             );
           }
-        },
+        },*/
         child: jugadorElegidoContainer(
             posicionesOcupadas["$numAlineacion"], posicion),
       ),

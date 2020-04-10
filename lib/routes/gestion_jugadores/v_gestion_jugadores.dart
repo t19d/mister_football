@@ -52,8 +52,8 @@ class _GestionJugadores extends State<GestionJugadores> {
             ),*/
             IconButton(
               icon: Icon(
-                Icons.add,
-                color: MisterFootball.complementarioLight,
+                Icons.person_add,
+                color: Colors.white,
               ),
               tooltip: 'Nuevo jugador/a',
               onPressed: () {

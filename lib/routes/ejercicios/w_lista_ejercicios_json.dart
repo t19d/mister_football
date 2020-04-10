@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:mister_football/main.dart';
+import 'package:mister_football/routes/ejercicios/ejercicio/v_detalles_ejercicio_json.dart';
 
 class ListaEjerciciosJSON extends StatefulWidget {
   @override
@@ -42,17 +43,13 @@ class _ListaEjerciciosJSON extends State<ListaEjerciciosJSON> {
             ),*/
             child: new InkWell(
               splashColor: MisterFootball.complementario,
-              /*onTap: () {
+              onTap: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => DetallesJugador(
-                      jugador: jugadorBox,
-                      posicion: iJugador,
-                    ),
-                  ),
+                      builder: (context) => DetallesEjercicioJSON(datos: ejercicios[iEjercicio],)),
                 );
-              },*/
+              },
               child: Container(
                 padding: EdgeInsets.all(16.0),
                 decoration: BoxDecoration(

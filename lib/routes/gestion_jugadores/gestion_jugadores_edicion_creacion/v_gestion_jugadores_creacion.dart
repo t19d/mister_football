@@ -75,7 +75,7 @@ class _GestionJugadoresCreacion extends State<GestionJugadoresCreacion> {
 
       //Almacenar al jugador en la Box de 'jugadores'
       if (Hive.isBoxOpen('jugadores')) {
-        boxJugadores.put(boxJugadores.length, j);
+        boxJugadores.add(j);
         //print("Jugador ${j.nombre}");
       } else {
         abrirBoxJugadores();

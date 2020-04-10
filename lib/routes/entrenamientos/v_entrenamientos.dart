@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mister_football/navigator/Navegador.dart';
+import 'package:mister_football/routes/entrenamientos/w_lista_entrenamientos.dart';
 
 class Entrenamientos extends StatefulWidget {
   Entrenamientos({Key key}) : super(key: key);
@@ -31,7 +32,7 @@ class _Entrenamientos extends State<Entrenamientos> {
             'Entrenamientos',
           ),
         ),
-        body: Text("Entrenamientos"),
+        body: ListaEntrenamientos(),
       ),
     );
   }

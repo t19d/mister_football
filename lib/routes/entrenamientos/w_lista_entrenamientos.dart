@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:mister_football/clases/conversor_imagen.dart';
-import 'package:mister_football/clases/jugador.dart';
+import 'package:mister_football/clases/entrenamiento.dart';
 import 'package:mister_football/main.dart';
-import 'package:mister_football/routes/gestion_jugadores/detalles_jugadores/v_detalles_jugador.dart';
 
 class ListaEntrenamientos extends StatefulWidget {
   @override
@@ -19,11 +17,11 @@ class _ListaEntrenamientos extends State<ListaEntrenamientos> {
 
 
   Widget itemEntrenamientos() {
-    final boxJugadores = Hive.box('entrenamientos');
-    if (boxJugadores.length > 0) {
+    final boxEntrenamientos = Hive.box('entrenamientos');
+    if (boxEntrenamientos.length > 0) {
       return ListView(
-        children: List.generate(boxJugadores.length, (iJugador) {
-          final Jugador jugadorBox = boxJugadores.getAt(iJugador) as Jugador;
+        children: List.generate(boxEntrenamientos.length, (iEntrenamiento) {
+          final Entrenamiento entrenamientoBox = boxEntrenamientos.getAt(iEntrenamiento) as Entrenamiento;
           return Card(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15.0),
@@ -31,7 +29,7 @@ class _ListaEntrenamientos extends State<ListaEntrenamientos> {
             child: new InkWell(
               splashColor: MisterFootball.complementario,
               onTap: () {
-                Navigator.push(
+                /*Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => DetallesJugador(
@@ -39,7 +37,7 @@ class _ListaEntrenamientos extends State<ListaEntrenamientos> {
                       posicion: iJugador,
                     ),
                   ),
-                );
+                );*/
               },
               child: Container(
                 decoration: BoxDecoration(
@@ -47,27 +45,14 @@ class _ListaEntrenamientos extends State<ListaEntrenamientos> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
-                    //Foto
-                    ConversorImagen.imageFromBase64String(
-                        jugadorBox.nombre_foto),
-                    //Nombre
+                    //Fecha
                     Text(
-                      jugadorBox.apodo,
+                      entrenamientoBox.fecha,
                       textAlign: TextAlign.center,
                     ),
-                    //Estado
-                    Icon(
-                      Icons.check_box,
-                    ),
-                    //Posición
+                    //Hora
                     Text(
-                      jugadorBox.posicionFavorita,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 10),
-                    ),
-                    //Edad
-                    Text(
-                      jugadorBox.calcularEdad() + " años",
+                      entrenamientoBox.hora,
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 10),
                     ),

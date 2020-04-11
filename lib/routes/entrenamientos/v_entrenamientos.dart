@@ -43,7 +43,8 @@ class _Entrenamientos extends State<Entrenamientos> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => EntrenamientosCreacion()),
+                    builder: (context) => EntrenamientosCreacion(),
+                  ),
                 );
               },
             ),

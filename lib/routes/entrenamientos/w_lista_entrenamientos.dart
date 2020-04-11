@@ -72,7 +72,6 @@ class _ListaEntrenamientos extends State<ListaEntrenamientos> {
 
   @override
   Widget build(BuildContext context) {
-    //refreshList();
     return Scaffold(
       body: SafeArea(
         child: Row(
@@ -80,20 +79,6 @@ class _ListaEntrenamientos extends State<ListaEntrenamientos> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Expanded(
-              /*child: FutureBuilder(
-                future: jugadores,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return cartasJugadores(snapshot.data);
-                  }
-
-                  if (null == snapshot.data || snapshot.data.length == 0) {
-                    return Text("No hay jugadores guardados.");
-                  }
-
-                  return CircularProgressIndicator();
-                },
-              ),*/
               child: FutureBuilder(
                 future: Hive.openBox('entrenamientos'),
                 builder: (BuildContext context, AsyncSnapshot snapshot) {

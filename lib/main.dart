@@ -5,6 +5,8 @@ import 'package:mister_football/clases/jugador.dart';
 import 'package:mister_football/routes/gestion_jugadores/v_gestion_jugadores.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 
+import 'clases/partido.dart';
+
 //Almacenar el documento:
 Future<void> almacenarBoxes() async {
   final appDocumentDirectory =
@@ -12,7 +14,8 @@ Future<void> almacenarBoxes() async {
   await Hive
     ..init(appDocumentDirectory.path)
     ..registerAdapter(JugadorAdapter())
-    ..registerAdapter(EntrenamientoAdapter());
+    ..registerAdapter(EntrenamientoAdapter())
+    ..registerAdapter(PartidoAdapter());
 }
 
 //Esto podría fallar

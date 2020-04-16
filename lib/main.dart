@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
 import 'package:mister_football/clases/entrenamiento.dart';
 import 'package:mister_football/clases/jugador.dart';
@@ -27,6 +29,7 @@ void main() async {
   ));*/
   //TEST
   WidgetsFlutterBinding.ensureInitialized();
+  //SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
   //Lugar donde se va a almacenar el documento:
   await almacenarBoxes();
   runApp(MisterFootball());
@@ -63,13 +66,14 @@ class MisterFootball extends StatelessWidget {
       home: GestionJugadores(),
       theme: ThemeData(
         // Define the default brightness and colors.
-        primaryColorDark: primarioDark,
         primaryColor: primario,
-        primaryColorLight: primarioLight,
         accentColor: complementario,
 
         // Define the default font family.
-        fontFamily: 'Georgia',
+        //fontFamily: 'Georgia',
+        textTheme: GoogleFonts.tenorSansTextTheme(
+          Theme.of(context).textTheme,
+        ),
       ),
     );
   }

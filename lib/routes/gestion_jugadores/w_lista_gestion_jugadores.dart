@@ -186,7 +186,7 @@ class _ListaGestionJugadores extends State<ListaGestionJugadores> {
           /*print("Jugador: ${jugadorBox.nombre} / id: ${iJugador}");
           print("Tamaño ${boxJugadores.length}");*/
           return Card(
-            child: new InkWell(
+            child: InkWell(
               splashColor: Colors.lightGreen,
               onTap: () {
                 Navigator.push(

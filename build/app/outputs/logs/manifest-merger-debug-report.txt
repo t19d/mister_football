@@ -11,7 +11,6 @@ MERGED from [:path_provider_macos] C:\mister_football\build\path_provider_macos\
 MERGED from [:flutter_image_compress] C:\mister_football\build\flutter_image_compress\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-11:12
 MERGED from [:image_picker] C:\mister_football\build\image_picker\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-22:12
 MERGED from [:flutter_plugin_android_lifecycle] C:\mister_football\build\flutter_plugin_android_lifecycle\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
-MERGED from [:sqflite] C:\mister_football\build\sqflite\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
 MERGED from [com.github.yalantis:ucrop:2.2.4] C:\Users\td\.gradle\caches\transforms-2\files-2.1\c6dbea16383ad1e365ea5513ff6f6427\ucrop-2.2.4\AndroidManifest.xml:2:1-11:12
 MERGED from [androidx.appcompat:appcompat:1.1.0] C:\Users\td\.gradle\caches\transforms-2\files-2.1\7def8d6c3751559765cf68c2d5a2dddd\appcompat-1.1.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.transition:transition:1.2.0-rc01] C:\Users\td\.gradle\caches\transforms-2\files-2.1\0d0364dd4dfbe053812679d71e9451b7\transition-1.2.0-rc01\AndroidManifest.xml:17:1-24:12
@@ -123,8 +122,6 @@ MERGED from [:image_picker] C:\mister_football\build\image_picker\intermediates\
 MERGED from [:image_picker] C:\mister_football\build\image_picker\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:flutter_plugin_android_lifecycle] C:\mister_football\build\flutter_plugin_android_lifecycle\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:flutter_plugin_android_lifecycle] C:\mister_football\build\flutter_plugin_android_lifecycle\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
-MERGED from [:sqflite] C:\mister_football\build\sqflite\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
-MERGED from [:sqflite] C:\mister_football\build\sqflite\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [com.github.yalantis:ucrop:2.2.4] C:\Users\td\.gradle\caches\transforms-2\files-2.1\c6dbea16383ad1e365ea5513ff6f6427\ucrop-2.2.4\AndroidManifest.xml:7:5-9:41
 MERGED from [com.github.yalantis:ucrop:2.2.4] C:\Users\td\.gradle\caches\transforms-2\files-2.1\c6dbea16383ad1e365ea5513ff6f6427\ucrop-2.2.4\AndroidManifest.xml:7:5-9:41
 MERGED from [androidx.appcompat:appcompat:1.1.0] C:\Users\td\.gradle\caches\transforms-2\files-2.1\7def8d6c3751559765cf68c2d5a2dddd\appcompat-1.1.0\AndroidManifest.xml:20:5-22:41

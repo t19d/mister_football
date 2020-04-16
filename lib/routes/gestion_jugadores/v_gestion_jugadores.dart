@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mister_football/main.dart';
 import 'package:mister_football/navigator/Navegador.dart';
+import 'package:mister_football/routes/app_bar/custom_app_bar.dart';
 import 'package:mister_football/routes/gestion_jugadores/gestion_jugadores_edicion_creacion/v_gestion_jugadores_creacion.dart';
 import 'package:mister_football/routes/gestion_jugadores/w_lista_gestion_jugadores.dart';
 
@@ -22,7 +23,8 @@ class _GestionJugadores extends State<GestionJugadores> {
         drawer: Drawer(
           child: Navegador(),
         ),
-        appBar: AppBar(
+        appBar: TopBar(title: "Gestión jugadores", drawer: _drawerKey), /*
+        AppBar(
           leading: IconButton(
             icon: const Icon(Icons.menu),
             tooltip: 'Menú',
@@ -66,7 +68,7 @@ class _GestionJugadores extends State<GestionJugadores> {
             ),
           ],
         ),
-        body: ListaGestionJugadores(),
+        */body: ListaGestionJugadores(),
       ),
     );
   }

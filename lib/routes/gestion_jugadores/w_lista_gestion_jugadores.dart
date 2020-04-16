@@ -192,7 +192,7 @@ class _ListaGestionJugadores extends State<ListaGestionJugadores> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => DetallesJugador(jugador: jugadorBox, posicion: iJugador,),
+                    builder: (context) => DetallesJugador(posicion: iJugador,),
                   ),
                 );
               },

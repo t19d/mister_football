@@ -166,7 +166,6 @@ class _ListaEstadoJugadores extends State<ListaEstadoJugadores> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => DetallesJugador(
-                      jugador: jugadorBox,
                       posicion: iJugador,
                     ),
                   ),

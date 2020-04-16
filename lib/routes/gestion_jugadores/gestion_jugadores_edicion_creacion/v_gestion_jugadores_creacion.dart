@@ -280,11 +280,11 @@ class _GestionJugadoresCreacion extends State<GestionJugadoresCreacion> {
                               setState(() {
                                 for (int i = 0; i < _isSelected.length; i++) {
                                   if (i == index) {
-                                    //Derecha
+                                    //Izquierda
                                     _isSelected[i] = true;
                                     piernaDerechaBuena = false;
                                   } else {
-                                    //Izquierda
+                                    //Derecha
                                     _isSelected[i] = false;
                                     piernaDerechaBuena = true;
                                   }

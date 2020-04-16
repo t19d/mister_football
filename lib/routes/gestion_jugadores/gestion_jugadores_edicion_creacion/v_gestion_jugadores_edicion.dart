@@ -10,14 +10,19 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:mister_football/main.dart';
 
-class GestionJugadoresCreacion extends StatefulWidget {
-  GestionJugadoresCreacion({Key key}) : super(key: key);
+class GestionJugadoresEdicion extends StatefulWidget {
+  final Jugador jugador;
+  final int posicion;
+
+  GestionJugadoresEdicion(
+      {Key key, @required this.jugador, @required this.posicion})
+      : super(key: key);
 
   @override
-  _GestionJugadoresCreacion createState() => _GestionJugadoresCreacion();
+  _GestionJugadoresEdicion createState() => _GestionJugadoresEdicion();
 }
 
-class _GestionJugadoresCreacion extends State<GestionJugadoresCreacion> {
+class _GestionJugadoresEdicion extends State<GestionJugadoresEdicion> {
   //Box jugadores
   Box boxJugadores = null;
 
@@ -75,11 +80,11 @@ class _GestionJugadoresCreacion extends State<GestionJugadoresCreacion> {
 
       //Almacenar al jugador en la Box de 'jugadores'
       if (Hive.isBoxOpen('jugadores')) {
-        boxJugadores.add(j);
+        boxJugadores.put(widget.posicion, j);
         //print("Jugador ${j.nombre}");
       } else {
         abrirBoxJugadores();
-        boxJugadores.add(j);
+        boxJugadores.put(widget.posicion, j);
         //print("Jugador ${j.nombre}");
       }
       Navigator.pop(context);
@@ -100,13 +105,34 @@ class _GestionJugadoresCreacion extends State<GestionJugadoresCreacion> {
   @override
   void initState() {
     _posicionesDisponibles = getDropDownMenuItems();
-    posicionFavorita = _posicionesDisponibles[0].value;
     _isSelected = [true, false];
 
     //Iniciar Box de jugadores
     //abrirBoxJugadores();
 
     super.initState();
+
+    //Poner valores del jugador
+    //Foto
+    imgString = widget.jugador.nombre_foto;
+    //Fecha nacimiento
+    fechaNacimiento = widget.jugador.fechaNacimiento;
+    List<String> arrayFechaNacimiento = fechaNacimiento.split("-");
+    selectedDate = new DateTime(int.parse(arrayFechaNacimiento[0]),int.parse(arrayFechaNacimiento[1]),int.parse(arrayFechaNacimiento[2]));
+    //Pierna buena
+    if(widget.jugador.piernaBuena == "Derecha"){
+      //Derecha
+      piernaDerechaBuena = true;
+      _isSelected[0] = true;
+      _isSelected[1] = false;
+    } else{
+      //Izquierda
+      piernaDerechaBuena = false;
+      _isSelected[0] = false;
+      _isSelected[1] = true;
+    }
+    //Posición
+    posicionFavorita = widget.jugador.posicionFavorita;
   }
 
   @override
@@ -118,7 +144,7 @@ class _GestionJugadoresCreacion extends State<GestionJugadoresCreacion> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            'Nuevo jugador',
+            "Editando ${widget.jugador.nombre}",
           ),
         ),
         body: Form(
@@ -142,10 +168,11 @@ class _GestionJugadoresCreacion extends State<GestionJugadoresCreacion> {
                     children: <Widget>[
                       //Nombre
                       TextFormField(
+                        initialValue: widget.jugador.nombre,
                         keyboardType: TextInputType.text,
                         validator: (val) =>
                             val.length == 0 ? 'Escribe el nombre' : null,
-                        onChanged: (val) => nombre = val,
+                        onSaved: (val) => nombre = val,
                         decoration: InputDecoration(
                           fillColor: Colors.white,
                           border: OutlineInputBorder(
@@ -159,11 +186,12 @@ class _GestionJugadoresCreacion extends State<GestionJugadoresCreacion> {
                       separadorFormulario(),
                       //Apellido1
                       TextFormField(
+                        initialValue: widget.jugador.apellido1,
                         keyboardType: TextInputType.text,
                         validator: (val) => val.length == 0
                             ? 'Escribe el primer apellido'
                             : null,
-                        onChanged: (val) => apellido1 = val,
+                        onSaved: (val) => apellido1 = val,
                         decoration: InputDecoration(
                           fillColor: Colors.white,
                           border: OutlineInputBorder(
@@ -177,11 +205,12 @@ class _GestionJugadoresCreacion extends State<GestionJugadoresCreacion> {
                       separadorFormulario(),
                       //Apellido2
                       TextFormField(
+                        initialValue: widget.jugador.apellido2,
                         keyboardType: TextInputType.text,
                         validator: (val) => val.length == 0
                             ? 'Escribe el segundo apellido'
                             : null,
-                        onChanged: (val) => apellido2 = val,
+                        onSaved: (val) => apellido2 = val,
                         decoration: InputDecoration(
                           fillColor: Colors.white,
                           border: OutlineInputBorder(
@@ -195,10 +224,11 @@ class _GestionJugadoresCreacion extends State<GestionJugadoresCreacion> {
                       separadorFormulario(),
                       //Apodo
                       TextFormField(
+                        initialValue: widget.jugador.apodo,
                         keyboardType: TextInputType.text,
                         validator: (val) =>
                             val.length == 0 ? 'Escribe el apodo' : null,
-                        onChanged: (val) => apodo = val,
+                        onSaved: (val) => apodo = val,
                         decoration: InputDecoration(
                           fillColor: Colors.white,
                           border: OutlineInputBorder(
@@ -280,11 +310,11 @@ class _GestionJugadoresCreacion extends State<GestionJugadoresCreacion> {
                               setState(() {
                                 for (int i = 0; i < _isSelected.length; i++) {
                                   if (i == index) {
-                                    //Derecha
+                                    //Izquierda
                                     _isSelected[i] = true;
                                     piernaDerechaBuena = false;
                                   } else {
-                                    //Izquierda
+                                    //Derecha
                                     _isSelected[i] = false;
                                     piernaDerechaBuena = true;
                                   }
@@ -314,10 +344,11 @@ class _GestionJugadoresCreacion extends State<GestionJugadoresCreacion> {
                       separadorFormulario(),
                       //Anotaciones
                       TextFormField(
+                        initialValue: widget.jugador.anotaciones,
                         keyboardType: TextInputType.text,
                         validator: (val) =>
                             val.length == 0 ? 'Escribe las anotaciones' : null,
-                        onChanged: (val) => anotaciones = val,
+                        onSaved: (val) => anotaciones = val,
                         decoration: InputDecoration(
                           fillColor: Colors.white,
                           border: OutlineInputBorder(
@@ -350,7 +381,7 @@ class _GestionJugadoresCreacion extends State<GestionJugadoresCreacion> {
                         borderRadius: new BorderRadius.circular(30.0),
                       ),
                       color: Colors.lightBlueAccent,
-                      child: Text("Crear jugador"),
+                      child: Text("Editar jugador"),
                       onPressed: () async {
                         validar();
                       },

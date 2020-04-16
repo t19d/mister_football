@@ -196,7 +196,7 @@ class _Formacion extends State<Formacion> {
                   context,
                   MaterialPageRoute(
                     builder: (context) =>
-                        DetallesJugador(jugador: jugadorBox, posicion: iJugador,),
+                        DetallesJugador(posicion: iJugador,),
                   ),
                 );
               },

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mister_football/clases/conversor_imagen.dart';
 import 'package:mister_football/clases/jugador.dart';
-import 'package:mister_football/database/DBHelper.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -118,14 +117,15 @@ class _GestionJugadoresEdicion extends State<GestionJugadoresEdicion> {
     //Fecha nacimiento
     fechaNacimiento = widget.jugador.fechaNacimiento;
     List<String> arrayFechaNacimiento = fechaNacimiento.split("-");
-    selectedDate = new DateTime(int.parse(arrayFechaNacimiento[0]),int.parse(arrayFechaNacimiento[1]),int.parse(arrayFechaNacimiento[2]));
+    selectedDate = new DateTime(int.parse(arrayFechaNacimiento[0]),
+        int.parse(arrayFechaNacimiento[1]), int.parse(arrayFechaNacimiento[2]));
     //Pierna buena
-    if(widget.jugador.piernaBuena == "Derecha"){
+    if (widget.jugador.piernaBuena == "Derecha") {
       //Derecha
       piernaDerechaBuena = true;
       _isSelected[0] = true;
       _isSelected[1] = false;
-    } else{
+    } else {
       //Izquierda
       piernaDerechaBuena = false;
       _isSelected[0] = false;
@@ -153,7 +153,7 @@ class _GestionJugadoresEdicion extends State<GestionJugadoresEdicion> {
             padding: EdgeInsets.all(8.0),
             child: Column(
               children: <Widget>[
-                ConversorImagen.imageFromBase64String(imgString),
+                ConversorImagen.imageFromBase64String(imgString, context),
                 RaisedButton(
                   color: Colors.lightGreen,
                   child: Text("Añadir imagen"),
@@ -251,11 +251,21 @@ class _GestionJugadoresEdicion extends State<GestionJugadoresEdicion> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Text("Fecha de nacimiento"),
+                            Text(
+                              "Fecha de nacimiento",
+                              style: TextStyle(
+                                fontSize:
+                                    MediaQuery.of(context).size.width / 25,
+                              ),
+                            ),
                             Row(
                               children: <Widget>[
-                                Text("${selectedDate.toLocal()}".split(' ')[0]),
-                                Icon(Icons.calendar_today),
+                                Text("${selectedDate.toLocal()}".split(' ')[0],
+                                  style: TextStyle(
+                                    fontSize:
+                                    MediaQuery.of(context).size.width / 25,
+                                  ),),
+                                Icon(Icons.calendar_today, size: MediaQuery.of(context).size.width / 25,),
                               ],
                             ),
                           ],
@@ -272,35 +282,48 @@ class _GestionJugadoresEdicion extends State<GestionJugadoresEdicion> {
                             children: <Widget>[
                               Container(
                                   width:
-                                      (MediaQuery.of(context).size.width - 80) /
-                                          2,
+                                  (MediaQuery.of(context).size.width - 80) /
+                                      2,
                                   child: new Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
                                       new Icon(
                                         Icons.airline_seat_legroom_normal,
                                         color: Colors.teal,
+                                        size: MediaQuery.of(context).size.width / 15,
                                       ),
                                       new Text(
                                         "DERECHA",
-                                        style: TextStyle(color: Colors.teal),
+                                        style: TextStyle(
+                                          color: Colors.teal,
+                                          fontSize: MediaQuery.of(context)
+                                              .size
+                                              .width /
+                                              25,
+                                        ),
                                       )
                                     ],
                                   )),
                               Container(
                                 width:
-                                    (MediaQuery.of(context).size.width - 80) /
-                                        2,
+                                (MediaQuery.of(context).size.width - 80) /
+                                    2,
                                 child: new Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: <Widget>[
                                     new Icon(
                                       Icons.airline_seat_legroom_normal,
                                       color: Colors.brown,
+                                      size: MediaQuery.of(context).size.width / 15,
                                     ),
                                     new Text(
                                       "IZQUIERDA",
-                                      style: TextStyle(color: Colors.brown),
+                                      style: TextStyle(
+                                        color: Colors.brown,
+                                        fontSize:
+                                        MediaQuery.of(context).size.width /
+                                            25,
+                                      ),
                                     ),
                                   ],
                                 ),

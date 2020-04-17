@@ -206,7 +206,7 @@ class _Formacion extends State<Formacion> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     ConversorImagen.imageFromBase64String(
-                        jugadorBox.nombre_foto),
+                        jugadorBox.nombre_foto, context),
                     Column(
                       children: <Widget>[
                         Text(
@@ -241,7 +241,7 @@ class _Formacion extends State<Formacion> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            ConversorImagen.imageFromBase64String(j.nombre_foto),
+            ConversorImagen.imageFromBase64String(j.nombre_foto, context),
             Text(j.apodo),
           ],
         ),
@@ -252,7 +252,7 @@ class _Formacion extends State<Formacion> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            ConversorImagen.imageFromBase64String(""),
+            ConversorImagen.imageFromBase64String("", context),
             Text(posicion),
           ],
         ),

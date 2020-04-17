@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:mister_football/clases/conversor_imagen.dart';
 import 'package:mister_football/clases/jugador.dart';
-import 'package:mister_football/database/DBHelper.dart';
 import 'package:mister_football/main.dart';
 import 'package:mister_football/routes/gestion_jugadores/detalles_jugadores/v_detalles_jugador.dart';
 
@@ -180,7 +179,7 @@ class _ListaEstadoJugadores extends State<ListaEstadoJugadores> {
                   children: <Widget>[
                     //Foto
                     ConversorImagen.imageFromBase64String(
-                        jugadorBox.nombre_foto),
+                        jugadorBox.nombre_foto, context),
                     //Nombre
                     Text(
                       jugadorBox.apodo,

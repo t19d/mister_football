@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:mister_football/clases/conversor_imagen.dart';
 import 'package:mister_football/clases/jugador.dart';
-import 'package:mister_football/database/DBHelper.dart';
 import 'package:mister_football/routes/gestion_jugadores/detalles_jugadores/v_detalles_jugador.dart';
 
 class ListaGestionJugadores extends StatefulWidget {
@@ -25,65 +24,101 @@ class _ListaGestionJugadores extends State<ListaGestionJugadores> {
     super.dispose();
   }
 
-  Color colorear(posicion) {
-    Color coloreado = Colors.white;
+  BoxDecoration colorear(posicion) {
+    Color coloreado1 = Colors.white;
+    Color coloreado2 = Colors.white70;
     switch (posicion) {
       case "Portero":
-        coloreado = Colors.orange;
+        coloreado1 = Colors.brown;
+        coloreado2 = Colors.orangeAccent;
         break;
       case "Lateral derecho":
-        coloreado = Colors.lightBlue;
-        break;
+      /*coloreado1 = Colors.lightBlue;
+        coloreado2 = Colors.lightBlueAccent;
+        break;*/
       case "Carrilero derecho":
-        coloreado = Colors.indigoAccent;
-        break;
+      /*coloreado1 = Colors.indigo;
+        coloreado2 = Colors.indigoAccent;
+        break;*/
       case "Central":
-        coloreado = Colors.blue;
-        break;
+      /*coloreado1 = Colors.blue;
+        coloreado2 = Colors.blueAccent;
+        break;*/
       case "Líbero":
-        coloreado = Colors.lightBlueAccent;
-        break;
+      /*coloreado1 = Colors.lightBlue;
+        coloreado2 = Colors.lightBlueAccent;
+        break;*/
       case "Lateral izquierdo":
-        coloreado = Colors.lightBlue;
-        break;
+      /*coloreado1 = Colors.lightBlue;
+        coloreado2 = Colors.lightBlueAccent;
+        break;*/
       case "Carrilero izquierdo":
-        coloreado = Colors.indigoAccent;
+        /*coloreado1 = Colors.indigo;
+        coloreado2 = Colors.indigoAccent;
+        break;*/
+        coloreado1 = Colors.blue;
+        coloreado2 = Colors.lightBlueAccent;
         break;
       case "Mediocentro defensivo":
-        coloreado = Colors.lightGreenAccent;
-        break;
+      /*coloreado1 = Colors.lightGreen;
+        coloreado2 = Colors.lightGreenAccent;
+        break;*/
       case "Mediocentro central":
-        coloreado = Colors.lightGreen;
-        break;
+      /*coloreado1 = Colors.lightGreen;
+        coloreado2 = Colors.lightGreenAccent;
+        break;*/
       case "Mediocentro ofensivo":
-        coloreado = Colors.green;
-        break;
+      /*coloreado1 = Colors.green;
+        coloreado2 = Colors.greenAccent;
+        break;*/
       case "Interior derecho":
-        coloreado = Colors.greenAccent;
-        break;
+      /*coloreado1 = Colors.green;
+        coloreado2 = Colors.greenAccent;
+        break;*/
       case "Interior izquierdo":
-        coloreado = Colors.greenAccent;
-        break;
+      /*coloreado1 = Colors.green;
+        coloreado2 = Colors.greenAccent;
+        break;*/
       case "Mediapunta":
-        coloreado = Colors.yellow;
+        /*coloreado1 = Colors.yellow;
+        coloreado2 = Colors.yellowAccent;
+        break;*/
+        coloreado1 = Colors.lightGreen;
+        coloreado2 = Colors.lightGreenAccent;
         break;
       case "Falso 9":
-        coloreado = Colors.yellowAccent;
+        coloreado1 = Colors.lightGreenAccent;
+        coloreado2 = Colors.redAccent;
         break;
       case "Segundo delantero":
-        coloreado = Colors.red;
-        break;
+      /*coloreado1 = Colors.red;
+        coloreado2 = Colors.redAccent;
+        break;*/
       case "Delantero centro":
-        coloreado = Colors.redAccent;
-        break;
+      /*coloreado1 = Colors.red;
+        coloreado2 = Colors.redAccent;
+        break;*/
       case "Extremo derecho":
-        coloreado = Colors.brown;
-        break;
+      /*coloreado1 = Colors.brown;
+        coloreado2 = Colors.brown.withOpacity(.2);
+        break;*/
       case "Extremo izquierdo":
-        coloreado = Colors.brown;
+        /*coloreado1 = Colors.brown;
+        coloreado2 = Colors.brown.withOpacity(.2);
+        break;*/
+        coloreado1 = Colors.red;
+        coloreado2 = Colors.purpleAccent;
         break;
     }
-    return coloreado.withOpacity(.7);
+    return BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topRight,
+          end: Alignment.bottomLeft,
+          colors: [coloreado1, coloreado2],
+        ),
+        border: Border.all(width: 1, color: coloreado1),
+        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+    );
   }
 
 /*
@@ -186,23 +221,28 @@ class _ListaGestionJugadores extends State<ListaGestionJugadores> {
           /*print("Jugador: ${jugadorBox.nombre} / id: ${iJugador}");
           print("Tamaño ${boxJugadores.length}");*/
           return Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10.0)),
+            ),
             child: InkWell(
               splashColor: Colors.lightGreen,
               onTap: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => DetallesJugador(posicion: iJugador,),
+                    builder: (context) => DetallesJugador(
+                      posicion: iJugador,
+                    ),
                   ),
                 );
               },
               child: Container(
-                color: colorear(jugadorBox.posicionFavorita),
+                decoration: colorear(jugadorBox.posicionFavorita),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     ConversorImagen.imageFromBase64String(
-                        jugadorBox.nombre_foto),
+                        jugadorBox.nombre_foto, context),
                     Text(
                       jugadorBox.apodo,
                       textAlign: TextAlign.center,

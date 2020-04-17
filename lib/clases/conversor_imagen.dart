@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 
 class ConversorImagen {
-  static Widget imageFromBase64String(String base64String) {
+  static Widget imageFromBase64String(String base64String, BuildContext context) {
     if (base64String.length != 0) {
       return Padding(
           padding: EdgeInsets.all(5),
@@ -12,14 +12,14 @@ class ConversorImagen {
             child: Image.memory(
               base64Decode(base64String),
               fit: BoxFit.fill,
-              height: 80,
+              height: MediaQuery.of(context).size.height / 10,
             ),
           ));
     } else {
       return Icon(
         Icons.person,
         color: Colors.black87,
-        size: 80,
+        size: MediaQuery.of(context).size.height / 10,
       );
     }
   }

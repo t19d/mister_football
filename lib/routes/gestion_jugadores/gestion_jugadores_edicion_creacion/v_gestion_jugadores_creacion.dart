@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mister_football/clases/conversor_imagen.dart';
 import 'package:mister_football/clases/jugador.dart';
-import 'package:mister_football/database/DBHelper.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -127,7 +126,7 @@ class _GestionJugadoresCreacion extends State<GestionJugadoresCreacion> {
             padding: EdgeInsets.all(8.0),
             child: Column(
               children: <Widget>[
-                ConversorImagen.imageFromBase64String(imgString),
+                ConversorImagen.imageFromBase64String(imgString, context),
                 RaisedButton(
                   color: Colors.lightGreen,
                   child: Text("Añadir imagen"),
@@ -221,11 +220,26 @@ class _GestionJugadoresCreacion extends State<GestionJugadoresCreacion> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Text("Fecha de nacimiento"),
+                            Text(
+                              "Fecha de nacimiento",
+                              style: TextStyle(
+                                fontSize:
+                                    MediaQuery.of(context).size.width / 25,
+                              ),
+                            ),
                             Row(
                               children: <Widget>[
-                                Text("${selectedDate.toLocal()}".split(' ')[0]),
-                                Icon(Icons.calendar_today),
+                                Text(
+                                  "${selectedDate.toLocal()}".split(' ')[0],
+                                  style: TextStyle(
+                                    fontSize:
+                                        MediaQuery.of(context).size.width / 25,
+                                  ),
+                                ),
+                                Icon(
+                                  Icons.calendar_today,
+                                  size: MediaQuery.of(context).size.width / 25,
+                                ),
                               ],
                             ),
                           ],
@@ -250,10 +264,17 @@ class _GestionJugadoresCreacion extends State<GestionJugadoresCreacion> {
                                       new Icon(
                                         Icons.airline_seat_legroom_normal,
                                         color: Colors.teal,
+                                      size: MediaQuery.of(context).size.width / 15,
                                       ),
                                       new Text(
                                         "DERECHA",
-                                        style: TextStyle(color: Colors.teal),
+                                        style: TextStyle(
+                                          color: Colors.teal,
+                                          fontSize: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              25,
+                                        ),
                                       )
                                     ],
                                   )),
@@ -267,10 +288,16 @@ class _GestionJugadoresCreacion extends State<GestionJugadoresCreacion> {
                                     new Icon(
                                       Icons.airline_seat_legroom_normal,
                                       color: Colors.brown,
+                                      size: MediaQuery.of(context).size.width / 15,
                                     ),
                                     new Text(
                                       "IZQUIERDA",
-                                      style: TextStyle(color: Colors.brown),
+                                      style: TextStyle(
+                                        color: Colors.brown,
+                                        fontSize:
+                                            MediaQuery.of(context).size.width /
+                                                25,
+                                      ),
                                     ),
                                   ],
                                 ),

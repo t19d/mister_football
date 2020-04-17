@@ -1,15 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:mister_football/clases/conversor_imagen.dart';
 import 'package:mister_football/clases/entrenamiento.dart';
-import 'package:mister_football/clases/jugador.dart';
-import 'package:mister_football/database/DBHelper.dart';
-import 'package:image_cropper/image_cropper.dart';
 import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:mister_football/main.dart';
 
 class EntrenamientosCreacion extends StatefulWidget {
   EntrenamientosCreacion({Key key}) : super(key: key);

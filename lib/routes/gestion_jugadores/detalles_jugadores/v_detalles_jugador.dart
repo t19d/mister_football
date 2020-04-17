@@ -77,7 +77,7 @@ class _DetallesJugador extends State<DetallesJugador> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
                       //Foto
-                      ConversorImagen.imageFromBase64String(jugador.nombre_foto),
+                      ConversorImagen.imageFromBase64String(jugador.nombre_foto, context),
                       //Nombre
                       Container(
                         child: Row(

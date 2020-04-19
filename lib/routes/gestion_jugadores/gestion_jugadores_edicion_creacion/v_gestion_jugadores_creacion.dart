@@ -129,7 +129,7 @@ class _GestionJugadoresCreacion extends State<GestionJugadoresCreacion> {
                 ConversorImagen.imageFromBase64String(imgString, context),
                 RaisedButton(
                   color: Colors.lightGreen,
-                  child: Text("Añadir imagen"),
+                  child: Text("Editar foto"),
                   onPressed: () {
                     _elegirOpcionFotoDialogo(context);
                   },
@@ -264,7 +264,9 @@ class _GestionJugadoresCreacion extends State<GestionJugadoresCreacion> {
                                       new Icon(
                                         Icons.airline_seat_legroom_normal,
                                         color: Colors.teal,
-                                      size: MediaQuery.of(context).size.width / 15,
+                                        size:
+                                            MediaQuery.of(context).size.width /
+                                                15,
                                       ),
                                       new Text(
                                         "DERECHA",
@@ -288,7 +290,8 @@ class _GestionJugadoresCreacion extends State<GestionJugadoresCreacion> {
                                     new Icon(
                                       Icons.airline_seat_legroom_normal,
                                       color: Colors.brown,
-                                      size: MediaQuery.of(context).size.width / 15,
+                                      size: MediaQuery.of(context).size.width /
+                                          15,
                                     ),
                                     new Text(
                                       "IZQUIERDA",
@@ -445,39 +448,68 @@ class _GestionJugadoresCreacion extends State<GestionJugadoresCreacion> {
           return AlertDialog(
             title: Text("Elegir imagen"),
             content: SingleChildScrollView(
-              child: Row(
+              child: Column(
                 children: <Widget>[
-                  Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.all(5),
-                      child: RaisedButton(
-                        child: Column(
-                          children: <Widget>[
-                            Icon(Icons.photo),
-                            Text("Galería"),
-                          ],
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: Padding(
+                          padding: EdgeInsets.all(5),
+                          child: RaisedButton(
+                            child: Column(
+                              children: <Widget>[
+                                Icon(Icons.photo),
+                                Text("Galería"),
+                              ],
+                            ),
+                            onPressed: () {
+                              _abrirGaleria(context);
+                            },
+                          ),
                         ),
-                        onPressed: () {
-                          _abrirGaleria(context);
-                        },
                       ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.all(5),
-                      child: RaisedButton(
-                        child: Column(
-                          children: <Widget>[
-                            Icon(Icons.photo_camera),
-                            Text("Cámara"),
-                          ],
+                      Expanded(
+                        child: Padding(
+                          padding: EdgeInsets.all(5),
+                          child: RaisedButton(
+                            child: Column(
+                              children: <Widget>[
+                                Icon(Icons.photo_camera),
+                                Text("Cámara"),
+                              ],
+                            ),
+                            onPressed: () {
+                              _abrirCamara(context);
+                            },
+                          ),
                         ),
-                        onPressed: () {
-                          _abrirCamara(context);
-                        },
                       ),
-                    ),
+                      Expanded(
+                        child: Padding(
+                          padding: EdgeInsets.all(5),
+                          child: RaisedButton(
+                            child: Column(
+                              children: <Widget>[
+                                Icon(
+                                  Icons.close,
+                                  color: Colors.red,
+                                ),
+                                Text(
+                                  "Eliminar",
+                                  /*style: TextStyle(
+                                    fontSize:
+                                        MediaQuery.of(context).size.width / 15,
+                                  ),*/
+                                ),
+                              ],
+                            ),
+                            onPressed: () {
+                              _eliminarImagen();
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -540,6 +572,14 @@ class _GestionJugadoresCreacion extends State<GestionJugadoresCreacion> {
           imgString = ConversorImagen.base64String(imgFile.readAsBytesSync());
         });*/
       }
+    });
+    Navigator.of(context).pop();
+  }
+
+  //Eliminar foto
+  _eliminarImagen() {
+    this.setState(() {
+      imgString = "";
     });
     Navigator.of(context).pop();
   }

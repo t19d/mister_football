@@ -29,8 +29,8 @@ class _ListaGestionJugadores extends State<ListaGestionJugadores> {
     Color coloreado2 = Colors.white70;
     switch (posicion) {
       case "Portero":
-        coloreado1 = Colors.brown;
-        coloreado2 = Colors.orangeAccent;
+        coloreado1 = Colors.lightGreen;
+        coloreado2 = Colors.redAccent;
         break;
       case "Lateral derecho":
       /*coloreado1 = Colors.lightBlue;
@@ -56,8 +56,8 @@ class _ListaGestionJugadores extends State<ListaGestionJugadores> {
         /*coloreado1 = Colors.indigo;
         coloreado2 = Colors.indigoAccent;
         break;*/
-        coloreado1 = Colors.blue;
-        coloreado2 = Colors.lightBlueAccent;
+        coloreado1 = Colors.yellow;
+        coloreado2 = Colors.purpleAccent;
         break;
       case "Mediocentro defensivo":
       /*coloreado1 = Colors.lightGreen;
@@ -83,12 +83,12 @@ class _ListaGestionJugadores extends State<ListaGestionJugadores> {
         /*coloreado1 = Colors.yellow;
         coloreado2 = Colors.yellowAccent;
         break;*/
-        coloreado1 = Colors.lightGreen;
-        coloreado2 = Colors.lightGreenAccent;
-        break;
       case "Falso 9":
-        coloreado1 = Colors.lightGreenAccent;
+        /*coloreado1 = Colors.lightGreenAccent;
         coloreado2 = Colors.redAccent;
+        break;*/
+        coloreado1 = Colors.orangeAccent;
+        coloreado2 = Colors.lightBlueAccent;
         break;
       case "Segundo delantero":
       /*coloreado1 = Colors.red;

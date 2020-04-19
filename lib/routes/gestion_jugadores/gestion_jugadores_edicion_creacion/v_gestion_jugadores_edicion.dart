@@ -1,12 +1,12 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mister_football/clases/conversor_imagen.dart';
 import 'package:mister_football/clases/jugador.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:mister_football/main.dart';
 
 class GestionJugadoresEdicion extends StatefulWidget {
@@ -36,7 +36,6 @@ class _GestionJugadoresEdicion extends State<GestionJugadoresEdicion> {
   String anotaciones = "";
   String imgString = "";
   final formKey = new GlobalKey<FormState>();
-  DateTime selectedDate = DateTime.now();
   List<bool> _isSelected;
   List<DropdownMenuItem<String>> _posicionesDisponibles;
   List _posiciones = [
@@ -116,9 +115,6 @@ class _GestionJugadoresEdicion extends State<GestionJugadoresEdicion> {
     imgString = widget.jugador.nombre_foto;
     //Fecha nacimiento
     fechaNacimiento = widget.jugador.fechaNacimiento;
-    List<String> arrayFechaNacimiento = fechaNacimiento.split("-");
-    selectedDate = new DateTime(int.parse(arrayFechaNacimiento[0]),
-        int.parse(arrayFechaNacimiento[1]), int.parse(arrayFechaNacimiento[2]));
     //Pierna buena
     if (widget.jugador.piernaBuena == "Derecha") {
       //Derecha
@@ -246,7 +242,22 @@ class _GestionJugadoresEdicion extends State<GestionJugadoresEdicion> {
                             borderRadius: BorderRadius.circular(10.0)),
                         elevation: 4.0,
                         onPressed: () {
-                          _selectDate(context);
+                          //Seleccionar fecha
+                          DatePicker.showDatePicker(context,
+                              showTitleActions: true,
+                              minTime: DateTime(1950, 1, 1),
+                              maxTime: DateTime.now(), onConfirm: (date) {
+                            setState(() {
+                              fechaNacimiento =
+                                  "${date.year}-${date.month}-${date.day}";
+                            });
+                          },
+                              currentTime: DateTime(
+                                int.parse(fechaNacimiento.split("-")[0]),
+                                int.parse(fechaNacimiento.split("-")[1]),
+                                int.parse(fechaNacimiento.split("-")[2]),
+                              ),
+                              locale: LocaleType.es);
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -260,12 +271,17 @@ class _GestionJugadoresEdicion extends State<GestionJugadoresEdicion> {
                             ),
                             Row(
                               children: <Widget>[
-                                Text("${selectedDate.toLocal()}".split(' ')[0],
+                                Text(
+                                  "${fechaNacimiento}",
                                   style: TextStyle(
                                     fontSize:
-                                    MediaQuery.of(context).size.width / 25,
-                                  ),),
-                                Icon(Icons.calendar_today, size: MediaQuery.of(context).size.width / 25,),
+                                        MediaQuery.of(context).size.width / 25,
+                                  ),
+                                ),
+                                Icon(
+                                  Icons.calendar_today,
+                                  size: MediaQuery.of(context).size.width / 25,
+                                ),
                               ],
                             ),
                           ],
@@ -282,23 +298,25 @@ class _GestionJugadoresEdicion extends State<GestionJugadoresEdicion> {
                             children: <Widget>[
                               Container(
                                   width:
-                                  (MediaQuery.of(context).size.width - 80) /
-                                      2,
+                                      (MediaQuery.of(context).size.width - 80) /
+                                          2,
                                   child: new Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
                                       new Icon(
                                         Icons.airline_seat_legroom_normal,
                                         color: Colors.teal,
-                                        size: MediaQuery.of(context).size.width / 15,
+                                        size:
+                                            MediaQuery.of(context).size.width /
+                                                15,
                                       ),
                                       new Text(
                                         "DERECHA",
                                         style: TextStyle(
                                           color: Colors.teal,
                                           fontSize: MediaQuery.of(context)
-                                              .size
-                                              .width /
+                                                  .size
+                                                  .width /
                                               25,
                                         ),
                                       )
@@ -306,23 +324,24 @@ class _GestionJugadoresEdicion extends State<GestionJugadoresEdicion> {
                                   )),
                               Container(
                                 width:
-                                (MediaQuery.of(context).size.width - 80) /
-                                    2,
+                                    (MediaQuery.of(context).size.width - 80) /
+                                        2,
                                 child: new Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: <Widget>[
                                     new Icon(
                                       Icons.airline_seat_legroom_normal,
                                       color: Colors.brown,
-                                      size: MediaQuery.of(context).size.width / 15,
+                                      size: MediaQuery.of(context).size.width /
+                                          15,
                                     ),
                                     new Text(
                                       "IZQUIERDA",
                                       style: TextStyle(
                                         color: Colors.brown,
                                         fontSize:
-                                        MediaQuery.of(context).size.width /
-                                            25,
+                                            MediaQuery.of(context).size.width /
+                                                25,
                                       ),
                                     ),
                                   ],
@@ -445,23 +464,6 @@ class _GestionJugadoresEdicion extends State<GestionJugadoresEdicion> {
       posicionFavorita = posicionElegida;
     });
   }
-
-  /*   */
-
-  //Seleccionar fecha
-  Future<Null> _selectDate(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
-        context: context,
-        initialDate: selectedDate,
-        firstDate: DateTime(1900),
-        lastDate: DateTime(2100));
-    if (picked != null && picked != selectedDate)
-      setState(() {
-        selectedDate = picked;
-        fechaNacimiento = "${selectedDate.toLocal()}".split(' ')[0];
-      });
-  }
-
 
   /* FOTOS */
 

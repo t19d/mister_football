@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mister_football/clases/conversor_imagen.dart';
 import 'package:mister_football/clases/jugador.dart';
@@ -31,7 +32,6 @@ class _GestionJugadoresCreacion extends State<GestionJugadoresCreacion> {
   String anotaciones = "";
   String imgString = "";
   final formKey = new GlobalKey<FormState>();
-  DateTime selectedDate = DateTime.now();
   List<bool> _isSelected;
   List<DropdownMenuItem<String>> _posicionesDisponibles;
   List _posiciones = [
@@ -215,7 +215,22 @@ class _GestionJugadoresCreacion extends State<GestionJugadoresCreacion> {
                             borderRadius: BorderRadius.circular(10.0)),
                         elevation: 4.0,
                         onPressed: () {
-                          _selectDate(context);
+                          //Seleccionar fecha
+                          DatePicker.showDatePicker(context,
+                              showTitleActions: true,
+                              minTime: DateTime(1950, 1, 1),
+                              maxTime: DateTime.now(), onConfirm: (date) {
+                                setState(() {
+                                  fechaNacimiento =
+                                  "${date.year}-${date.month}-${date.day}";
+                                });
+                              },
+                              currentTime: DateTime(
+                                int.parse(fechaNacimiento.split("-")[0]),
+                                int.parse(fechaNacimiento.split("-")[1]),
+                                int.parse(fechaNacimiento.split("-")[2]),
+                              ),
+                              locale: LocaleType.es);
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -230,7 +245,7 @@ class _GestionJugadoresCreacion extends State<GestionJugadoresCreacion> {
                             Row(
                               children: <Widget>[
                                 Text(
-                                  "${selectedDate.toLocal()}".split(' ')[0],
+                                  "${fechaNacimiento}",
                                   style: TextStyle(
                                     fontSize:
                                         MediaQuery.of(context).size.width / 25,
@@ -420,22 +435,6 @@ class _GestionJugadoresCreacion extends State<GestionJugadoresCreacion> {
     setState(() {
       posicionFavorita = posicionElegida;
     });
-  }
-
-  /*   */
-
-  //Seleccionar fecha
-  Future<Null> _selectDate(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
-        context: context,
-        initialDate: selectedDate,
-        firstDate: DateTime(1900),
-        lastDate: DateTime(2100));
-    if (picked != null && picked != selectedDate)
-      setState(() {
-        selectedDate = picked;
-        fechaNacimiento = "${selectedDate.toLocal()}".split(' ')[0];
-      });
   }
 
   /* FOTOS */

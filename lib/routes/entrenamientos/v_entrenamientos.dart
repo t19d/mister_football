@@ -35,10 +35,10 @@ class _Entrenamientos extends State<Entrenamientos> {
           actions: <Widget>[
             IconButton(
               icon: Icon(
-                Icons.person_add,
+                Icons.add_circle,
                 color: Colors.white,
               ),
-              tooltip: 'Nuevo jugador/a',
+              tooltip: 'Crear entrenamiento',
               onPressed: () {
                 Navigator.push(
                   context,

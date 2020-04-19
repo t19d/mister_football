@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:mister_football/clases/entrenamiento.dart';
 import 'package:hive/hive.dart';
 
@@ -16,22 +17,22 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
   Box boxEntrenamientos = null;
 
   //Datos
-  String fecha = DateTime.now().toLocal().toString().split(' ')[0];
+  DateTime fechaHoraInicial = DateTime.now();
+  String fecha = "";
   String hora = "";
   List<int> ejercicios = [];
   final formKey = new GlobalKey<FormState>();
-  DateTime selectedDate = DateTime.now();
 
   //Validar formulario
   validar() async {
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
       Entrenamiento e = Entrenamiento(
-          fecha: fecha.trim(),
-          //hora: hora.trim(),
-          hora: "19:30",
-          //ejercicios: ejercicios,
-          ejercicios: [],);
+        fecha: fecha.trim(),
+        hora: hora.trim(),
+        //ejercicios: ejercicios,
+        ejercicios: [],
+      );
 
       //Almacenar al jugador en la Box de 'entrenamientos'
       if (Hive.isBoxOpen('entrenamientos')) {
@@ -58,6 +59,9 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
   @override
   void initState() {
     super.initState();
+    fecha =
+        "${fechaHoraInicial.year}-${fechaHoraInicial.month}-${fechaHoraInicial.day}";
+    hora = "${fechaHoraInicial.hour}:${fechaHoraInicial.minute}";
   }
 
   @override
@@ -89,7 +93,22 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
                             borderRadius: BorderRadius.circular(10.0)),
                         elevation: 4.0,
                         onPressed: () {
-                          _selectDate(context);
+                          //Seleccionar fecha
+                          DatePicker.showDatePicker(context,
+                              showTitleActions: true,
+                              minTime: DateTime(1950, 1, 1),
+                              maxTime: DateTime(2200, 12, 31),
+                              onConfirm: (date) {
+                            setState(() {
+                              fecha = "${date.year}-${date.month}-${date.day}";
+                            });
+                          },
+                              currentTime: DateTime(
+                                int.parse(fecha.split("-")[0]),
+                                int.parse(fecha.split("-")[1]),
+                                int.parse(fecha.split("-")[2]),
+                              ),
+                              locale: LocaleType.es);
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -97,7 +116,7 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
                             Text("Fecha"),
                             Row(
                               children: <Widget>[
-                                Text("${selectedDate.toLocal()}".split(' ')[0]),
+                                Text("${fecha}"),
                                 Icon(Icons.calendar_today),
                               ],
                             ),
@@ -105,24 +124,37 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
                         ),
                       ),
                       separadorFormulario(),
-
                       //Hora
-                      /*TextFormField(
-                        keyboardType: TextInputType.text,
-                        validator: (val) =>
-                        val.length == 0 ? 'Escribe el nombre' : null,
-                        onChanged: (val) => hora = val,
-                        decoration: InputDecoration(
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(25.0),
-                            borderSide: BorderSide(),
-                          ),
-                          hintText: 'Nombre del jugador',
-                          labelText: 'Nombre',
+                      RaisedButton(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0)),
+                        elevation: 4.0,
+                        onPressed: () {
+                          //Seleccionar hora
+                          DatePicker.showTimePicker(context,
+                              showTitleActions: true, onConfirm: (time) {
+                            setState(() {
+                              hora = "${time.hour}:${time.minute}";
+                            });
+                          },
+                              currentTime: DateTime.now(),
+                              locale: LocaleType.es);
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text("Hora"),
+                            Row(
+                              children: <Widget>[
+                                Text("${hora}"),
+                                Icon(Icons.watch_later),
+                              ],
+                            ),
+                          ],
                         ),
                       ),
                       separadorFormulario(),
+                      /*
                       //Ejercicios
                       TextFormField(
                         keyboardType: TextInputType.text,
@@ -139,44 +171,7 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
                           hintText: 'Primer apellido del jugador',
                           labelText: 'Primer apellido',
                         ),
-                      ),
-                      separadorFormulario(),
-                      //Apellido2
-                      TextFormField(
-                        keyboardType: TextInputType.text,
-                        validator: (val) => val.length == 0
-                            ? 'Escribe el segundo apellido'
-                            : null,
-                        onChanged: (val) => apellido2 = val,
-                        decoration: InputDecoration(
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(25.0),
-                            borderSide: BorderSide(),
-                          ),
-                          hintText: 'Segundo apellido del jugador',
-                          labelText: 'Segundo apellido',
-                        ),
-                      ),
-                      separadorFormulario(),
-                      //Apodo
-                      TextFormField(
-                        keyboardType: TextInputType.text,
-                        validator: (val) =>
-                        val.length == 0 ? 'Escribe el apodo' : null,
-                        onChanged: (val) => apodo = val,
-                        decoration: InputDecoration(
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(25.0),
-                            borderSide: BorderSide(),
-                          ),
-                          hintText: 'Apodo del jugador',
-                          labelText: 'Apodo',
-                        ),
-                      ),
                       ),*/
-                      separadorFormulario(),
                     ],
                   ),
                 ),
@@ -185,7 +180,7 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
                   children: <Widget>[
                     RaisedButton(
                       shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30.0),
+                        borderRadius: new BorderRadius.circular(10.0),
                       ),
                       color: Colors.red,
                       child: Text("Cancelar"),
@@ -193,11 +188,12 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
                         Navigator.pop(context);
                       },
                     ),
+                    separadorFormulario(),
                     RaisedButton(
                       shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30.0),
+                        borderRadius: new BorderRadius.circular(10.0),
                       ),
-                      color: Colors.lightBlueAccent,
+                      color: Colors.lightGreen,
                       child: Text("Crear"),
                       onPressed: () async {
                         validar();
@@ -218,23 +214,8 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
   //Widget que separa los elementos del formulario
   separadorFormulario() {
     return SizedBox(
-      height: 8.0,
+      height: MediaQuery.of(context).size.width / 50,
+      width: MediaQuery.of(context).size.width / 50,
     );
-  }
-
-  /*   */
-
-  //Seleccionar fecha
-  Future<Null> _selectDate(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
-        context: context,
-        initialDate: selectedDate,
-        firstDate: DateTime(1900),
-        lastDate: DateTime(2100));
-    if (picked != null && picked != selectedDate)
-      setState(() {
-        selectedDate = picked;
-        fecha = "${selectedDate.toLocal()}".split(' ')[0];
-      });
   }
 }

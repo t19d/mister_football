@@ -1,9 +1,11 @@
+import 'dart:convert';
 import 'dart:io';
-
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:mister_football/clases/entrenamiento.dart';
 import 'package:hive/hive.dart';
+import 'package:mister_football/routes/ejercicios/ejercicio/v_detalles_ejercicio_json.dart';
 
 class EntrenamientosCreacion extends StatefulWidget {
   EntrenamientosCreacion({Key key}) : super(key: key);
@@ -20,7 +22,7 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
   DateTime fechaHoraInicial = DateTime.now();
   String fecha = "";
   String hora = "";
-  List<int> ejercicios = [];
+  List<String> ejercicios = [];
   final formKey = new GlobalKey<FormState>();
 
   //Validar formulario
@@ -154,24 +156,65 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
                         ),
                       ),
                       separadorFormulario(),
-                      /*
                       //Ejercicios
-                      TextFormField(
-                        keyboardType: TextInputType.text,
-                        validator: (val) => val.length == 0
-                            ? 'Escribe el primer apellido'
-                            : null,
-                        onChanged: (val) => apellido1 = val,
-                        decoration: InputDecoration(
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(25.0),
-                            borderSide: BorderSide(),
-                          ),
-                          hintText: 'Primer apellido del jugador',
-                          labelText: 'Primer apellido',
+                      Container(
+                        padding: EdgeInsets.fromLTRB(
+                            (MediaQuery.of(context).size.width * 0.05),
+                            0,
+                            0,
+                            0),
+                        width: MediaQuery.of(context).size.width / 1.20,
+                        color: Colors.grey.withOpacity(.15),
+                        child: Column(
+                          children: <Widget>[
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Text("Ejercicios"),
+                                IconButton(
+                                  icon: Icon(
+                                    Icons.edit,
+                                    color: Colors.lightBlueAccent,
+                                  ),
+                                  tooltip: 'Editar ejercicios',
+                                  onPressed: () async {
+                                    ejercicios = await showDialog<List<String>>(
+                                      context: context,
+                                      barrierDismissible: true,
+                                      builder: (BuildContext context) => Dialog(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(12.0),
+                                        ),
+                                        child: FutureBuilder(
+                                          future: cargarEjercicios(),
+                                          builder: (BuildContext context,
+                                              AsyncSnapshot snapshot) {
+                                            if (snapshot.connectionState ==
+                                                ConnectionState.done) {
+                                              if (snapshot.hasError) {
+                                                print(
+                                                    snapshot.error.toString());
+                                                return Text(
+                                                    snapshot.error.toString());
+                                              } else {
+                                                return listaSeleccionarEjercicios(
+                                                    snapshot.data, ejercicios);
+                                              }
+                                            } else {
+                                              return LinearProgressIndicator();
+                                            }
+                                          },
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ],
+                            )
+                          ],
                         ),
-                      ),*/
+                      ),
                     ],
                   ),
                 ),
@@ -218,4 +261,179 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
       width: MediaQuery.of(context).size.width / 50,
     );
   }
+
+  /* Ejercicios */
+  //Colorear ejercicios
+  Color colorearEjercicios(tipo) {
+    Color coloreado = Colors.white;
+    switch (tipo) {
+      case "Físico":
+        coloreado = Colors.orange;
+        break;
+      case "Táctico":
+        coloreado = Colors.lightBlue;
+        break;
+      case "Técnico":
+        coloreado = Colors.red;
+        break;
+    }
+    return coloreado.withOpacity(.7);
+  }
+
+  //Cargar lista de ejercicios desde JSON
+  Future<String> cargarEjercicios() async {
+    return await rootBundle.loadString('assets/json/ejercicios.json');
+  }
+
+  //Mostrar lista seleccionable de ejercicios JSON
+  listaSeleccionarEjercicios(String ejerciciosString, List<String> ejecicios) {
+    List<String> ejerciciosSeleccionados = ejecicios;
+    List<dynamic> listaEjerciciosJSON = jsonDecode(ejerciciosString);
+    if (listaEjerciciosJSON.length > 0) {
+      return Container(
+        /*width: MediaQuery.of(context).size.width / 1,
+        height: MediaQuery.of(context).size.height / 1,*/
+
+        child: Column(
+          children: <Widget>[
+            ListView(
+              shrinkWrap: true,
+              children: List.generate(listaEjerciciosJSON.length, (iEjercicio) {
+                bool _isSeleccionado = false;
+                return Row(
+                  children: <Widget>[
+                    Expanded(
+                    child: Text(listaEjerciciosJSON[iEjercicio]['titulo']),
+                  ),
+                    Checkbox(
+                      value: _isSeleccionado,
+                      onChanged: (bool nuevoEstado) {
+                        setState(() {
+                          _isSeleccionado = nuevoEstado;
+                        });
+                        if (_isSeleccionado) {
+                          print(listaEjerciciosJSON[iEjercicio]['id']);
+                          ejerciciosSeleccionados.add(listaEjerciciosJSON[iEjercicio]['id']);
+                        } else {
+                          ejerciciosSeleccionados.removeWhere((id) =>
+                              id == listaEjerciciosJSON[iEjercicio]['id']);
+                        }
+                      },
+                    ),
+                  ],
+                );
+              }),
+            ),
+          ],
+        ),
+      );
+      /*return Card(
+            /*shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0),
+            ),*/
+            child: new InkWell(
+              onLongPress: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => DetallesEjercicioJSON(
+                            datos: ejercicios[iEjercicio],
+                          )),
+                );
+              },
+              child: Container(
+                padding: EdgeInsets.all(16.0),
+                decoration: BoxDecoration(
+                  color: colorearEjercicios(ejercicios[iEjercicio]['tipo']),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    //Título
+                    Text(
+                      ejercicios[iEjercicio]['titulo'],
+                      textAlign: TextAlign.center,
+                    ),
+                    //Tipo
+                    Text(
+                      ejercicios[iEjercicio]['tipo'],
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 10),
+                    ),
+                    //Tiempo
+                    Text(
+                      ejercicios[iEjercicio]['duracion'],
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 10),
+                    ),
+                    //Dificultad
+                    Text(
+                      ejercicios[iEjercicio]['dificultad'],
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 10),
+                    ),
+                  ],
+                ),
+              ),
+              //),
+            ),
+          );*/
+    }
+  }
+
+/* Jugadores */
+/*cartasJugadores() {
+    final boxJugadores = Hive.box('jugadores');
+    if (boxJugadores.length > 0) {
+      return ListView(
+        children: List.generate(boxJugadores.length, (iJugador) {
+          final Jugador jugadorBox = boxJugadores.getAt(iJugador) as Jugador;
+          return Card(
+            child: new InkWell(
+              splashColor: Colors.lightGreen,
+              onTap: () {
+                Navigator.pop(context, jugadorBox);
+              },
+              onLongPress: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        DetallesJugador(posicion: iJugador,),
+                  ),
+                );
+              },
+              child: Container(
+                color: colorear(jugadorBox.posicionFavorita),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    ConversorImagen.imageFromBase64String(
+                        jugadorBox.nombre_foto, context),
+                    Column(
+                      children: <Widget>[
+                        Text(
+                          jugadorBox.apodo,
+                          textAlign: TextAlign.center,
+                        ),
+                        Text(
+                          jugadorBox.posicionFavorita,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 10),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        }),
+      );
+    } else {
+      return Center(
+        child: Text("No hay ningún jugador creado."),
+      );
+    }
+  }*/
 }

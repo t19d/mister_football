@@ -9,7 +9,9 @@ class Entrenamiento {
   @HiveField(1)
   final String hora;
   @HiveField(2)
-  final List<int> ejercicios;
+  //El JSON de ejercicios es estático y no dinámico.
+  //Las claves no se van a repetir.
+  final List<String> ejercicios;
   @HiveField(3)
   final List<dynamic> jugadoresOpiniones;
   @HiveField(4)

@@ -19,7 +19,7 @@ class EntrenamientoAdapter extends TypeAdapter<Entrenamiento> {
     return Entrenamiento(
       fecha: fields[0] as String,
       hora: fields[1] as String,
-      ejercicios: (fields[2] as List)?.cast<int>(),
+      ejercicios: (fields[2] as List)?.cast<String>(),
       jugadoresOpiniones: (fields[3] as List)?.cast<dynamic>(),
       anotaciones: fields[4] as String,
     );

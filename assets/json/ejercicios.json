@@ -1,5 +1,6 @@
 [
   {
+    "id": 1,
     "titulo": "Carrera continua",
     "tipo": "Físico",
     "duracion": "20 minutos",
@@ -14,6 +15,7 @@
     "imagen": ""
   },
   {
+    "id": 2,
     "titulo": "Segundo",
     "tipo": "Táctico",
     "duracion": "25 minutos",

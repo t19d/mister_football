@@ -66,6 +66,7 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
         "${fechaHoraInicial.year}-${fechaHoraInicial.month}-${fechaHoraInicial.day}";
     hora = "${fechaHoraInicial.hour}:${fechaHoraInicial.minute}";
     ejercicios = [];
+    listaJugadores = [];
   }
 
   @override
@@ -589,13 +590,12 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
 /* Jugadores */
 
   mostrarJugadoresSeleccionados(List<dynamic> jugadoresElegidos) {
-    final boxJugadores = Hive.box('jugadores');
-    if (boxJugadores.length > 0) {
+    if (jugadoresElegidos.length > 0) {
       return ListView(
         shrinkWrap: true,
-        children: List.generate(boxJugadores.length, (iJugador) {
-          final Jugador jugadorBox = boxJugadores.getAt(iJugador) as Jugador;
-          return Text("${iJugador + 1}-${jugadorBox.nombre}");
+        children: List.generate(jugadoresElegidos.length, (iJugador) {
+          final Jugador jugadorBox = jugadoresElegidos[iJugador] as Jugador;
+          return Text("-${jugadorBox.nombre}");
         }),
       );
     } else {
@@ -670,7 +670,7 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
         MediaQuery.of(context).size.width / 1,
         height:
         MediaQuery.of(context).size.height / 1,
-        child: LinearProgressIndicator(),
+        child: Text("Ningún jugador creado."),
       );
     }
   }

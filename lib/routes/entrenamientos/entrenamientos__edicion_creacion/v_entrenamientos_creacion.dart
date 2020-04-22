@@ -31,11 +31,7 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
   validar() async {
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
-      Entrenamiento e = Entrenamiento(
-          fecha: fecha.trim(),
-          hora: hora.trim(),
-          ejercicios: ejercicios,
-          jugadoresOpiniones: listaJugadores);
+      Entrenamiento e = Entrenamiento(fecha: fecha.trim(), hora: hora.trim(), ejercicios: ejercicios, jugadoresOpiniones: listaJugadores);
 
       //Almacenar al jugador en la Box de 'entrenamientos'
       if (Hive.isBoxOpen('entrenamientos')) {
@@ -62,8 +58,7 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
   @override
   void initState() {
     super.initState();
-    fecha =
-        "${fechaHoraInicial.year}-${fechaHoraInicial.month}-${fechaHoraInicial.day}";
+    fecha = "${fechaHoraInicial.year}-${fechaHoraInicial.month}-${fechaHoraInicial.day}";
     hora = "${fechaHoraInicial.hour}:${fechaHoraInicial.minute}";
     ejercicios = [];
     listaJugadores = [];
@@ -88,22 +83,16 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
             child: Column(
               children: <Widget>[
                 Padding(
-                  padding:
-                      EdgeInsets.only(left: 20, right: 20, top: 5, bottom: 8),
+                  padding: EdgeInsets.only(left: 20, right: 20, top: 5, bottom: 8),
                   child: Column(
                     children: <Widget>[
                       //Fecha
                       RaisedButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0)),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
                         elevation: 4.0,
                         onPressed: () {
                           //Seleccionar fecha
-                          DatePicker.showDatePicker(context,
-                              showTitleActions: true,
-                              minTime: DateTime(1950, 1, 1),
-                              maxTime: DateTime(2200, 12, 31),
-                              onConfirm: (date) {
+                          DatePicker.showDatePicker(context, showTitleActions: true, minTime: DateTime(1950, 1, 1), maxTime: DateTime(2200, 12, 31), onConfirm: (date) {
                             setState(() {
                               fecha = "${date.year}-${date.month}-${date.day}";
                             });
@@ -131,19 +120,15 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
                       separadorFormulario(),
                       //Hora
                       RaisedButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0)),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
                         elevation: 4.0,
                         onPressed: () {
                           //Seleccionar hora
-                          DatePicker.showTimePicker(context,
-                              showTitleActions: true, onConfirm: (time) {
+                          DatePicker.showTimePicker(context, showTitleActions: true, onConfirm: (time) {
                             setState(() {
                               hora = "${time.hour}:${time.minute}";
                             });
-                          },
-                              currentTime: DateTime.now(),
-                              locale: LocaleType.es);
+                          }, currentTime: DateTime.now(), locale: LocaleType.es);
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -161,11 +146,7 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
                       separadorFormulario(),
                       //Ejercicios
                       Container(
-                        padding: EdgeInsets.fromLTRB(
-                            (MediaQuery.of(context).size.width * 0.05),
-                            0,
-                            0,
-                            MediaQuery.of(context).size.width * 0.05),
+                        padding: EdgeInsets.fromLTRB((MediaQuery.of(context).size.width * 0.05), 0, 0, MediaQuery.of(context).size.width * 0.05),
                         width: MediaQuery.of(context).size.width / 1.20,
                         color: Colors.grey.withOpacity(.15),
                         child: Column(
@@ -190,10 +171,8 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
                                               cargarEjerciciosDialogo:
                                                   cargarEjercicios);
                                         }*/
-                                        return AlertDialog(
-                                            content: StatefulBuilder(
-                                          builder: (BuildContext context,
-                                              StateSetter setState) {
+                                        return AlertDialog(content: StatefulBuilder(
+                                          builder: (BuildContext context, StateSetter setState) {
                                             //return Dialog(
                                             /*shape: RoundedRectangleBorder(
                                                 borderRadius:
@@ -201,20 +180,13 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
                                               ),*/
                                             return FutureBuilder(
                                               future: cargarEjercicios(),
-                                              builder: (BuildContext context,
-                                                  AsyncSnapshot snapshot) {
-                                                if (snapshot.connectionState ==
-                                                    ConnectionState.done) {
+                                              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                                                if (snapshot.connectionState == ConnectionState.done) {
                                                   if (snapshot.hasError) {
-                                                    print(snapshot.error
-                                                        .toString());
-                                                    return Text(snapshot.error
-                                                        .toString());
+                                                    print(snapshot.error.toString());
+                                                    return Text(snapshot.error.toString());
                                                   } else {
-                                                    return listaSeleccionarEjercicios(
-                                                        snapshot.data,
-                                                        ejercicios,
-                                                        setState);
+                                                    return listaSeleccionarEjercicios(snapshot.data, ejercicios, setState);
                                                   }
                                                 } else {
                                                   return LinearProgressIndicator();
@@ -259,16 +231,13 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
                             ),
                             FutureBuilder(
                               future: cargarEjercicios(),
-                              builder: (BuildContext context,
-                                  AsyncSnapshot snapshot) {
-                                if (snapshot.connectionState ==
-                                    ConnectionState.done) {
+                              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                                if (snapshot.connectionState == ConnectionState.done) {
                                   if (snapshot.hasError) {
                                     print(snapshot.error.toString());
                                     return Text(snapshot.error.toString());
                                   } else {
-                                    return mostrarEjerciciosSeleccionados(
-                                        snapshot.data, ejercicios);
+                                    return mostrarEjerciciosSeleccionados(snapshot.data, ejercicios);
                                   }
                                 } else {
                                   return LinearProgressIndicator();
@@ -281,11 +250,7 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
                       separadorFormulario(),
                       //Jugadores
                       Container(
-                        padding: EdgeInsets.fromLTRB(
-                            (MediaQuery.of(context).size.width * 0.05),
-                            0,
-                            0,
-                            MediaQuery.of(context).size.width * 0.05),
+                        padding: EdgeInsets.fromLTRB((MediaQuery.of(context).size.width * 0.05), 0, 0, MediaQuery.of(context).size.width * 0.05),
                         width: MediaQuery.of(context).size.width / 1.20,
                         color: Colors.grey.withOpacity(.15),
                         child: Column(
@@ -301,57 +266,31 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
                                   ),
                                   tooltip: 'Editar jugadores',
                                   onPressed: () async {
-                                    listaJugadores =
-                                        await showDialog<List<dynamic>>(
+                                    listaJugadores = await showDialog<List<dynamic>>(
                                       context: context,
                                       barrierDismissible: true,
                                       builder: (BuildContext context) {
-                                        return AlertDialog(
-                                            content: StatefulBuilder(
-                                          builder: (BuildContext context,
-                                              StateSetter setState) {
+                                        return AlertDialog(content: StatefulBuilder(
+                                          builder: (BuildContext context, StateSetter setState) {
                                             return FutureBuilder(
                                               future: Hive.openBox('jugadores'),
-                                              builder: (BuildContext context,
-                                                  AsyncSnapshot snapshot) {
-                                                if (snapshot.connectionState ==
-                                                    ConnectionState.done) {
+                                              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                                                if (snapshot.connectionState == ConnectionState.done) {
                                                   if (snapshot.hasError) {
-                                                    print(snapshot.error
-                                                        .toString());
+                                                    print(snapshot.error.toString());
                                                     return Container(
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width /
-                                                              1,
-                                                      height:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .height /
-                                                              1,
-                                                      child: Text(snapshot.error
-                                                          .toString()),
+                                                      width: MediaQuery.of(context).size.width / 1,
+                                                      height: MediaQuery.of(context).size.height / 1,
+                                                      child: Text(snapshot.error.toString()),
                                                     );
                                                   } else {
-                                                    return listaSeleccionarJugadores(
-                                                        listaJugadores,
-                                                        setState);
+                                                    return listaSeleccionarJugadores(listaJugadores, setState);
                                                   }
                                                 } else {
                                                   return Container(
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width /
-                                                            1,
-                                                    height:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .height /
-                                                            1,
-                                                    child:
-                                                        LinearProgressIndicator(),
+                                                    width: MediaQuery.of(context).size.width / 1,
+                                                    height: MediaQuery.of(context).size.height / 1,
+                                                    child: LinearProgressIndicator(),
                                                   );
                                                 }
                                               },
@@ -386,30 +325,22 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
                             ),
                             FutureBuilder(
                               future: Hive.openBox('jugadores'),
-                              builder: (BuildContext context,
-                                  AsyncSnapshot snapshot) {
-                                if (snapshot.connectionState ==
-                                    ConnectionState.done) {
+                              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                                if (snapshot.connectionState == ConnectionState.done) {
                                   if (snapshot.hasError) {
                                     print(snapshot.error.toString());
                                     return Container(
-                                      width:
-                                          MediaQuery.of(context).size.width / 1,
-                                      height:
-                                          MediaQuery.of(context).size.height /
-                                              1,
+                                      width: MediaQuery.of(context).size.width / 1,
+                                      height: MediaQuery.of(context).size.height / 1,
                                       child: Text(snapshot.error.toString()),
                                     );
                                   } else {
-                                    return mostrarJugadoresSeleccionados(
-                                        listaJugadores);
+                                    return mostrarJugadoresSeleccionados(listaJugadores);
                                   }
                                 } else {
                                   return Container(
-                                    width:
-                                        MediaQuery.of(context).size.width / 1,
-                                    height:
-                                        MediaQuery.of(context).size.height / 1,
+                                    width: MediaQuery.of(context).size.width / 1,
+                                    height: MediaQuery.of(context).size.height / 1,
                                     child: LinearProgressIndicator(),
                                   );
                                 }
@@ -481,15 +412,13 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
   }
 
   /* Ejercicios */
-  mostrarEjerciciosSeleccionados(
-      String ejerciciosString, List<String> ejecicios) {
+  mostrarEjerciciosSeleccionados(String ejerciciosString, List<String> ejecicios) {
     List<dynamic> listaEjerciciosJSON = jsonDecode(ejerciciosString);
     if (ejercicios.length > 0) {
       return ListView(
         shrinkWrap: true,
         children: List.generate(ejercicios.length, (iEjercicio) {
-          return Text(
-              "${iEjercicio + 1}-${listaEjerciciosJSON[int.parse(ejercicios[iEjercicio]) - 1]['titulo']}");
+          return Text("${iEjercicio + 1}-${listaEjerciciosJSON[int.parse(ejercicios[iEjercicio]) - 1]['titulo']}");
         }),
       );
     } else {
@@ -522,8 +451,7 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
   }
 
 //Mostrar lista seleccionable de ejercicios JSON
-  listaSeleccionarEjercicios(
-      String ejerciciosString, List<String> ejecicios, StateSetter setState) {
+  listaSeleccionarEjercicios(String ejerciciosString, List<String> ejecicios, StateSetter setState) {
     List<String> ejerciciosSeleccionados = ejecicios;
     print(ejerciciosSeleccionados);
     List<dynamic> listaEjerciciosJSON = jsonDecode(ejerciciosString);
@@ -537,15 +465,11 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
             ListView(
               shrinkWrap: true,
               children: List.generate(listaEjerciciosJSON.length, (iEjercicio) {
-                bool _isSeleccionado = (ejerciciosSeleccionados
-                        .contains("${listaEjerciciosJSON[iEjercicio]['id']}"))
-                    ? true
-                    : false;
+                bool _isSeleccionado = (ejerciciosSeleccionados.contains("${listaEjerciciosJSON[iEjercicio]['id']}")) ? true : false;
                 return Row(
                   children: <Widget>[
                     Expanded(
-                      child:
-                          Text("-${listaEjerciciosJSON[iEjercicio]['titulo']}"),
+                      child: Text("-${listaEjerciciosJSON[iEjercicio]['titulo']}"),
                     ),
                     Checkbox(
                       value: _isSeleccionado,
@@ -556,16 +480,13 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
                         if (_isSeleccionado) {
                           print("Añadido");
                           setState(() {
-                            ejerciciosSeleccionados.add(
-                                "${listaEjerciciosJSON[iEjercicio]['id']}");
+                            ejerciciosSeleccionados.add("${listaEjerciciosJSON[iEjercicio]['id']}");
                           });
                           print(ejerciciosSeleccionados);
                         } else {
                           print("Eliminado");
                           setState(() {
-                            ejerciciosSeleccionados.removeWhere((id) =>
-                                id ==
-                                "${listaEjerciciosJSON[iEjercicio]['id']}");
+                            ejerciciosSeleccionados.removeWhere((id) => id == "${listaEjerciciosJSON[iEjercicio]['id']}");
                           });
                           print(ejerciciosSeleccionados);
                         }
@@ -606,8 +527,7 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
   }
 
 //Mostrar lista seleccionable de jugadores
-  listaSeleccionarJugadores(
-      List<dynamic> preListaJugadores, StateSetter setState) {
+  listaSeleccionarJugadores(List<dynamic> preListaJugadores, StateSetter setState) {
     List<dynamic> postListaJugadores = preListaJugadores;
     final boxJugadores = Hive.box('jugadores');
     if (boxJugadores.length > 0) {
@@ -620,10 +540,8 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
             ListView(
               shrinkWrap: true,
               children: List.generate(boxJugadores.length, (iJugador) {
-                final Jugador jugadorBox =
-                    boxJugadores.getAt(iJugador) as Jugador;
-                bool _isSeleccionado =
-                    (postListaJugadores.contains(jugadorBox)) ? true : false;
+                final Jugador jugadorBox = boxJugadores.getAt(iJugador) as Jugador;
+                bool _isSeleccionado = (postListaJugadores.contains(jugadorBox)) ? true : false;
                 return Row(
                   children: <Widget>[
                     Expanded(
@@ -644,8 +562,7 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
                         } else {
                           print("Eliminado");
                           setState(() {
-                            postListaJugadores
-                                .removeWhere((j) => j == jugadorBox);
+                            postListaJugadores.removeWhere((j) => j == jugadorBox);
                           });
                           print(postListaJugadores);
                         }
@@ -666,68 +583,12 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
       );
     } else {
       return Container(
-        width:
-        MediaQuery.of(context).size.width / 1,
-        height:
-        MediaQuery.of(context).size.height / 1,
+        width: MediaQuery.of(context).size.width / 1,
+        height: MediaQuery.of(context).size.height / 1,
         child: Text("Ningún jugador creado."),
       );
     }
   }
-/*cartasJugadores() {
-    final boxJugadores = Hive.box('jugadores');
-    if (boxJugadores.length > 0) {
-      return ListView(
-        children: List.generate(boxJugadores.length, (iJugador) {
-          final Jugador jugadorBox = boxJugadores.getAt(iJugador) as Jugador;
-          return Card(
-            child: new InkWell(
-              splashColor: Colors.lightGreen,
-              onTap: () {
-                Navigator.pop(context, jugadorBox);
-              },
-              onLongPress: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        DetallesJugador(posicion: iJugador,),
-                  ),
-                );
-              },
-              child: Container(
-                color: colorear(jugadorBox.posicionFavorita),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    ConversorImagen.imageFromBase64String(
-                        jugadorBox.nombre_foto, context),
-                    Column(
-                      children: <Widget>[
-                        Text(
-                          jugadorBox.apodo,
-                          textAlign: TextAlign.center,
-                        ),
-                        Text(
-                          jugadorBox.posicionFavorita,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 10),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          );
-        }),
-      );
-    } else {
-      return Center(
-        child: Text("No hay ningún jugador creado."),
-      );
-    }
-  }*/
 }
 
 //Pruebas

@@ -21,6 +21,7 @@ class _ListaEntrenamientos extends State<ListaEntrenamientos> {
     final boxEntrenamientos = Hive.box('entrenamientos');
     if (boxEntrenamientos.length > 0) {
       return ListView(
+        shrinkWrap: true,
         children: List.generate(boxEntrenamientos.length, (iEntrenamiento) {
           final Entrenamiento entrenamientoBox = boxEntrenamientos.getAt(iEntrenamiento) as Entrenamiento;
           return Card(

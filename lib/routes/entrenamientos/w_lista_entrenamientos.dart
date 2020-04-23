@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:mister_football/clases/entrenamiento.dart';
 import 'package:mister_football/main.dart';
+import 'package:mister_football/routes/entrenamientos/detalles_entrenamientos/v_detalles_entrenamientos.dart';
 
 class ListaEntrenamientos extends StatefulWidget {
   @override
@@ -29,15 +30,14 @@ class _ListaEntrenamientos extends State<ListaEntrenamientos> {
             child: new InkWell(
               splashColor: MisterFootball.complementario,
               onTap: () {
-                /*Navigator.push(
+                Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => DetallesJugador(
-                      jugador: jugadorBox,
-                      posicion: iJugador,
+                    builder: (context) => DetallesEnternamiento(
+                      posicion: iEntrenamiento,
                     ),
                   ),
-                );*/
+                );
               },
               child: Container(
                 decoration: BoxDecoration(

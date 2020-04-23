@@ -237,6 +237,7 @@ class _Formacion extends State<Formacion> {
   Widget jugadorElegidoContainer(Jugador j, String posicion) {
     if (j != null && j is Jugador) {
       return Container(
+        width: MediaQuery.of(context).size.width / 6,
         color: colorear(posicion),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -248,6 +249,7 @@ class _Formacion extends State<Formacion> {
       );
     } else {
       return Container(
+        width: MediaQuery.of(context).size.width / 6,
         color: colorear(posicion),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

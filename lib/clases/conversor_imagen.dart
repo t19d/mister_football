@@ -12,14 +12,15 @@ class ConversorImagen {
             child: Image.memory(
               base64Decode(base64String),
               fit: BoxFit.fill,
-              height: MediaQuery.of(context).size.height / 10,
+              height: MediaQuery.of(context).size.width / 6,
+              width: MediaQuery.of(context).size.width / 6,
             ),
           ));
     } else {
       return Icon(
         Icons.person,
         color: Colors.black87,
-        size: MediaQuery.of(context).size.height / 10,
+        size: MediaQuery.of(context).size.width / 6,
       );
     }
   }

@@ -412,7 +412,7 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
   }
 
   /* Ejercicios */
-  mostrarEjerciciosSeleccionados(String ejerciciosString, List<String> ejecicios) {
+  mostrarEjerciciosSeleccionados(String ejerciciosString, List<String> ejercicios) {
     List<dynamic> listaEjerciciosJSON = jsonDecode(ejerciciosString);
     if (ejercicios.length > 0) {
       return ListView(

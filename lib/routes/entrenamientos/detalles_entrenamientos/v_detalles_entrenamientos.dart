@@ -171,10 +171,12 @@ class _DetallesEnternamiento extends State<DetallesEnternamiento> {
     }
   }
 
+  /*  */
+
   /* Jugadores */
   //Mostrar jugadores seleccionados
   mostrarJugadoresSeleccionados(List<dynamic> jugadoresElegidos) {
-    if (jugadoresElegidos.length > 0 || jugadoresElegidos != null) {
+    if (jugadoresElegidos.length > 0) {
       return ListView(
         shrinkWrap: true,
         children: List.generate(jugadoresElegidos.length, (iJugador) {
@@ -184,8 +186,9 @@ class _DetallesEnternamiento extends State<DetallesEnternamiento> {
       );
     } else {
       return Center(
-        child: Text("No hay ningún ejercicio añadido."),
+        child: Text("No hay ningún jugador añadido."),
       );
     }
   }
+/*  */
 }

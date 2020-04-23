@@ -524,7 +524,7 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
       );
     } else {
       return Center(
-        child: Text("No hay ningún ejercicio añadido."),
+        child: Text("No hay ningún jugador añadido."),
       );
     }
   }

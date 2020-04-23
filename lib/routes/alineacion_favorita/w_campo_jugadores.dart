@@ -11,17 +11,7 @@ class _CampoJugadores extends State<CampoJugadores> {
   int filas = 0;
   String _formacionActual;
   List<DropdownMenuItem<String>> _formacionesDisponibles;
-  List _formaciones = [
-    "14231",
-    "1442",
-    "1433",
-    "1451",
-    "1532",
-    "1523",
-    "13232",
-    "1352",
-    "1334"
-  ];
+  List _formaciones = ["14231", "1442", "1433", "1451", "1532", "1523", "13232", "1352", "1334"];
 
   @override
   void initState() {
@@ -77,7 +67,8 @@ class _CampoJugadores extends State<CampoJugadores> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
+        body: SafeArea(
+      child: SingleChildScrollView(
         child: Column(
           children: <Widget>[
             DropdownButton(
@@ -91,6 +82,6 @@ class _CampoJugadores extends State<CampoJugadores> {
           ],
         ),
       ),
-    );
+    ));
   }
 }

@@ -46,6 +46,16 @@ class _ListaPartidos extends State<ListaPartidos> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     //Representar el tipo de partido cambiando el color
+                    //Rival
+                    Text(
+                      entrenamientoBox.rival,
+                      textAlign: TextAlign.center,
+                    ),
+                    //Tipo
+                    Text(
+                      entrenamientoBox.tipoPartido,
+                      textAlign: TextAlign.center,
+                    ),
                     //Fecha
                     Text(
                       entrenamientoBox.fecha,
@@ -54,12 +64,6 @@ class _ListaPartidos extends State<ListaPartidos> {
                     //Hora
                     Text(
                       entrenamientoBox.hora,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 10),
-                    ),
-                    //Rival
-                    Text(
-                      entrenamientoBox.rival,
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 10),
                     ),

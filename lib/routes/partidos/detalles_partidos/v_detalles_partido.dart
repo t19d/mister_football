@@ -44,9 +44,9 @@ class _DetallesPartido extends State<DetallesPartido> {
     super.initState();
     _contenido = [
       DetallesPartidoPrepartido(posicion: widget.posicion,),
-      DetallesPartidoConvocatoria(),
-      DetallesPartidoAlineacion(),
-      DetallesPartidoPostpartido(),
+      DetallesPartidoConvocatoria(posicion: widget.posicion,),
+      DetallesPartidoAlineacion(posicion: widget.posicion,),
+      DetallesPartidoPostpartido(posicion: widget.posicion,),
     ];
   }
 

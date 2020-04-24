@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:mister_football/clases/partido.dart';
 import 'package:mister_football/main.dart';
+import 'package:mister_football/routes/partidos/detalles_partidos/v_detalles_partido.dart';
 
 class ListaPartidos extends StatefulWidget {
   @override
@@ -30,14 +31,14 @@ class _ListaPartidos extends State<ListaPartidos> {
             child: new InkWell(
               splashColor: MisterFootball.complementario,
               onTap: () {
-                /*Navigator.push(
+                Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => DetallesPartido(
                       posicion: iPartido,
                     ),
                   ),
-                );*/
+                );
               },
               child: Container(
                 decoration: BoxDecoration(

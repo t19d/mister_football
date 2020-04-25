@@ -53,14 +53,6 @@ Color colorear(String posicion) {
 }
 
 class _Formacion extends State<Formacion> {
-  //Future<List<Jugador>> jugadores;
-
-  @override
-  void dispose() {
-    Hive.close();
-    super.dispose();
-  }
-
   //Posiciones ocupadas por jugadores
   Map<String, dynamic> posicionesOcupadas = {
     '0': null,

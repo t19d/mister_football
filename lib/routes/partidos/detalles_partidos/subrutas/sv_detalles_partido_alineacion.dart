@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:mister_football/clases/partido.dart';
+import 'package:mister_football/routes/alineacion_favorita/w_campo_jugadores.dart';
 
 class DetallesPartidoAlineacion extends StatefulWidget {
   final int posicion;
 
   DetallesPartidoAlineacion({Key key, @required this.posicion}) : super(key: key);
+
   @override
   createState() => _DetallesPartidoAlineacion();
 }
@@ -27,20 +29,8 @@ class _DetallesPartidoAlineacion extends State<DetallesPartidoAlineacion> {
             partido = boxEntrenamientos.getAt(widget.posicion);
             return Scaffold(
               body: SafeArea(
-                  child: Column(
-                    children: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: <Widget>[
-                          Text("${partido.fecha}"),
-                          Text("${partido.hora}"),
-                        ],
-                      ),
-                      Text("${partido.tipoPartido}"),
-                      Text("${partido.rival}"),
-                      Text("${partido.lugar}"),
-                    ],
-                  )),
+                child: CampoJugadores(),
+              ),
             );
           }
         } else {

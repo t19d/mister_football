@@ -70,21 +70,6 @@ class _DetallesPartido extends State<DetallesPartido> {
                 actions: <Widget>[
                   IconButton(
                     icon: const Icon(
-                      Icons.edit,
-                      color: Colors.lightGreen,
-                    ),
-                    tooltip: 'Editar jugador',
-                    onPressed: () {
-                      /*Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => GestionPartidosEdicion(posicion: widget.posicion,),
-                          ),
-                        );*/
-                    },
-                  ),
-                  IconButton(
-                    icon: const Icon(
                       Icons.delete,
                       color: Colors.redAccent,
                     ),

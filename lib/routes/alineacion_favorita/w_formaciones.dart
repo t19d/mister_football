@@ -117,7 +117,6 @@ class _Formacion extends State<Formacion> {
         dibujo = Dibujo1334();
         break;
     }
-
     return dibujo;
   }
 
@@ -272,22 +271,6 @@ class _Formacion extends State<Formacion> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12.0),
               ),
-              //this right here
-              /*child: FutureBuilder(
-                      future: jugadores,
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          return cartasJugadores(snapshot.data);
-                        }
-
-                        if (null == snapshot.data ||
-                            snapshot.data.length == 0) {
-                          return Text("No hay jugadores guardados.");
-                        }
-
-                        return CircularProgressIndicator();
-                      },
-                    ),*/
               child: FutureBuilder(
                 future: Hive.openBox('jugadores'),
                 builder: (BuildContext context, AsyncSnapshot snapshot) {

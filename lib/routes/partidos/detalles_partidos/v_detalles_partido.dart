@@ -1,12 +1,8 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:mister_football/clases/entrenamiento.dart';
-import 'package:flutter/services.dart' show rootBundle;
-import 'package:mister_football/clases/jugador.dart';
 import 'package:mister_football/clases/partido.dart';
-import 'package:mister_football/routes/partidos/detalles_partidos/subrutas/sv_detalles_partido_alineacion.dart';
+import 'package:mister_football/main.dart';
+import 'package:mister_football/routes/partidos/detalles_partidos/subrutas/detalles_partido_alineacion/sv_detalles_partido_alineacion.dart';
 import 'package:mister_football/routes/partidos/detalles_partidos/subrutas/sv_detalles_partido_convocatoria.dart';
 import 'package:mister_football/routes/partidos/detalles_partidos/subrutas/sv_detalles_partido_postpartido.dart';
 import 'package:mister_football/routes/partidos/detalles_partidos/subrutas/sv_detalles_partido_prepartido.dart';
@@ -84,6 +80,8 @@ class _DetallesPartido extends State<DetallesPartido> {
                 ],
               ),
               bottomNavigationBar: BottomNavigationBar(
+                selectedIconTheme: IconThemeData(color: MisterFootball.primarioLight),
+                showUnselectedLabels: false,
                 items: const <BottomNavigationBarItem>[
                   BottomNavigationBarItem(
                     icon: Icon(Icons.filter_frames),
@@ -95,7 +93,7 @@ class _DetallesPartido extends State<DetallesPartido> {
                   ),
                   BottomNavigationBarItem(
                     icon: Icon(Icons.ac_unit),
-                    title: Text('Alineación'),
+                    title: Text('Alineación'/*\ninicial', textAlign: TextAlign.center,*/),
                   ),
                   BottomNavigationBarItem(
                     icon: Icon(Icons.insert_chart),

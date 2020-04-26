@@ -18,7 +18,17 @@ class Partido {
   @HiveField(5)
   final List<Jugador> convocatoria;
   @HiveField(6)
-  final List<dynamic> alineacion;
+  final Map<String, List> alineacion;
+  /*{
+    //Minuto [Formación, Alineación]
+    '0':['1442', {
+      //Posición y jugador
+      '0': Jugador,
+      '1': Jugador,
+      '2': Jugador,
+      '3': Jugador,
+      '4': Jugador,...}],
+  }*/
   @HiveField(7)
   final List<dynamic> golesAFavor;
   @HiveField(8)

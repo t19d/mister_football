@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:mister_football/clases/conversor_imagen.dart';
 import 'package:hive/hive.dart';
+import 'package:mister_football/clases/jugador.dart';
 import 'package:mister_football/clases/partido.dart';
 
 class PartidosCreacion extends StatefulWidget {
@@ -32,7 +33,21 @@ class _PartidosCreacion extends State<PartidosCreacion> {
   validar() async {
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
-      Partido p = Partido(fecha: fecha.trim(), hora: hora.trim(), lugar: lugar.trim(), rival: rival.trim(), tipoPartido: tipoPartido.trim());
+      Map<String, Jugador> alineacionVacia = {
+        '0': null,
+        '1': null,
+        '2': null,
+        '3': null,
+        '4': null,
+        '5': null,
+        '6': null,
+        '7': null,
+        '8': null,
+        '9': null,
+        '10': null
+      };
+      Partido p = Partido(fecha: fecha.trim(), hora: hora.trim(), lugar: lugar.trim(), rival: rival.trim(), tipoPartido: tipoPartido.trim(),
+          convocatoria: [], alineacion: {'0': ["14231", alineacionVacia]});
 
       //Almacenar el partido en la Box de 'partidos'
       if (Hive.isBoxOpen('partidos')) {

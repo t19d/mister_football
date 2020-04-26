@@ -103,8 +103,32 @@ class _DetallesPartidoAlineacionFormacion extends State<DetallesPartidoAlineacio
             if (partidoActual.alineacion != null) {
               if (partidoActual.alineacion['0'][0] != null) {
                 posicionesOcupadas = Map<String, Jugador>.from(partidoActual.alineacion['0'][1]);
+                //Comprobar si los jugadores alineados están convocados.
+                for (var keyPosicion in posicionesOcupadas.keys) {
+                  print('$keyPosicion was written by ${posicionesOcupadas[keyPosicion]}');
+                  if (posicionesOcupadas[keyPosicion] != null) {
+                    bool _isConvocado = false;
+                    for (int i = 0; i < partidoActual.convocatoria.length; i++) {
+                      if (posicionesOcupadas[keyPosicion].nombre == partidoActual.convocatoria[i].nombre &&
+                          posicionesOcupadas[keyPosicion].apellido1 == partidoActual.convocatoria[i].apellido1 &&
+                          posicionesOcupadas[keyPosicion].apellido2 == partidoActual.convocatoria[i].apellido2 &&
+                          posicionesOcupadas[keyPosicion].apodo == partidoActual.convocatoria[i].apodo &&
+                          posicionesOcupadas[keyPosicion].fechaNacimiento == partidoActual.convocatoria[i].fechaNacimiento &&
+                          posicionesOcupadas[keyPosicion].piernaBuena == partidoActual.convocatoria[i].piernaBuena &&
+                          posicionesOcupadas[keyPosicion].posicionFavorita == partidoActual.convocatoria[i].posicionFavorita &&
+                          posicionesOcupadas[keyPosicion].anotaciones == partidoActual.convocatoria[i].anotaciones &&
+                          posicionesOcupadas[keyPosicion].nombre_foto == partidoActual.convocatoria[i].nombre_foto) {
+                        _isConvocado = true;
+                      }
+                    }
+                    if(!_isConvocado){
+                      posicionesOcupadas[keyPosicion] = null;
+                    }
+                  }
+                }
               }
             }
+
             return dibujoFormacion();
           }
         } else {
@@ -161,7 +185,7 @@ class _DetallesPartidoAlineacionFormacion extends State<DetallesPartidoAlineacio
     Partido partidoActual = boxPartidos.getAt(widget.posicion);
     List<Jugador> jugadoresConvocados = [];
     //Si la lista es null
-    if(partidoActual.convocatoria != null){
+    if (partidoActual.convocatoria != null) {
       jugadoresConvocados = partidoActual.convocatoria;
     }
     if (jugadoresConvocados.length > 0) {
@@ -174,15 +198,39 @@ class _DetallesPartidoAlineacionFormacion extends State<DetallesPartidoAlineacio
               onTap: () async {
                 //Guardar y actualizar
                 //Actualizar contenido
+                for (var keyPosicion in posicionesOcupadas.keys) {
+                  print('$keyPosicion was written by ${posicionesOcupadas[keyPosicion]}');
+                  if (posicionesOcupadas[keyPosicion] != null) {
+                    bool _isRepetido = false;
+                    for (int i = 0; i < partidoActual.convocatoria.length; i++) {
+                      if (posicionesOcupadas[keyPosicion].nombre == jugadorBox.nombre &&
+                          posicionesOcupadas[keyPosicion].apellido1 == jugadorBox.apellido1 &&
+                          posicionesOcupadas[keyPosicion].apellido2 == jugadorBox.apellido2 &&
+                          posicionesOcupadas[keyPosicion].apodo == jugadorBox.apodo &&
+                          posicionesOcupadas[keyPosicion].fechaNacimiento == jugadorBox.fechaNacimiento &&
+                          posicionesOcupadas[keyPosicion].piernaBuena == jugadorBox.piernaBuena &&
+                          posicionesOcupadas[keyPosicion].posicionFavorita == jugadorBox.posicionFavorita &&
+                          posicionesOcupadas[keyPosicion].anotaciones == jugadorBox.anotaciones &&
+                          posicionesOcupadas[keyPosicion].nombre_foto == jugadorBox.nombre_foto) {
+                        _isRepetido = true;
+                      }
+                    }
+                    if(_isRepetido){
+                      posicionesOcupadas[keyPosicion] = null;
+                    }
+                  }
+                }
                 posicionesOcupadas['${posicionAlineacion}'] = jugadorBox;
                 refreshPosicionesOcupadas(posicionesOcupadas);
                 //Guardar partido
                 Map<String, List> alineacionActualizada = {};
-                if(partidoActual.alineacion != null){
+                if (partidoActual.alineacion != null) {
                   alineacionActualizada = await partidoActual.alineacion;
+                  alineacionActualizada['0'][1] = posicionesOcupadas;
+                  print(alineacionActualizada['0'][1]);
+                } else {
+                  alineacionActualizada['0'] = [widget.formacion, posicionAlineacion];
                 }
-                alineacionActualizada['0'][1] = posicionesOcupadas;
-                print(alineacionActualizada['0'][1]);
                 Partido p = Partido(
                     fecha: partidoActual.fecha,
                     hora: partidoActual.hora,

@@ -28,7 +28,7 @@ class _CampoJugadores extends State<CampoJugadores> {
     return items;
   }
 
-  Widget alineacion(int formacion) {
+  /*Widget alineacion(int formacion) {
     switch (formacion) {
       case 1442:
         columnas = 5;
@@ -56,7 +56,7 @@ class _CampoJugadores extends State<CampoJugadores> {
         );
       }),
     );
-  }
+  }*/
 
   cambiarFormacion(formacionElegida) {
     setState(() {

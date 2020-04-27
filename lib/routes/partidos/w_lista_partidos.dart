@@ -1,3 +1,4 @@
+import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:mister_football/clases/partido.dart';
@@ -34,9 +35,10 @@ class _ListaPartidos extends State<ListaPartidos> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => DetallesPartido(
-                      posicion: iPartido,
-                    ),
+                    builder: (context) =>
+                        DetallesPartido(
+                          posicion: iPartido,
+                        ),
                   ),
                 );
               },
@@ -84,6 +86,10 @@ class _ListaPartidos extends State<ListaPartidos> {
 
   @override
   Widget build(BuildContext context) {
+    //FirebaseAdMob.initializeApp(this);
+    FirebaseAdMob.instance.initialize(appId: 'ca-app-pub-8505501288716754~2552531320').then((response){
+      myBanner..load()..show();
+    });
     return Scaffold(
       body: SafeArea(
         child: Row(
@@ -113,3 +119,19 @@ class _ListaPartidos extends State<ListaPartidos> {
     );
   }
 }
+BannerAd myBanner = BannerAd(
+    adUnitId: 'ca-app-pub-8505501288716754/8100371478',
+    size: AdSize.smartBanner,
+    targetingInfo: targetingInfo,
+    listener: (MobileAdEvent event) {
+      print("BannerAd event is $event");
+    },
+  );
+
+MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo(
+  keywords: <String>['juegos', 'Pato Juego'],
+  contentUrl: 'https://flutter.io',
+  childDirected: false,
+  nonPersonalizedAds: false,
+  testDevices: <String>[],
+);

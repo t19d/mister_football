@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "513792072842",
+    "firebase_url": "https://mister-football.firebaseio.com",
+    "project_id": "mister-football",
+    "storage_bucket": "mister-football.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:513792072842:android:fe45997f67ae4d46bca173",
+        "android_client_info": {
+          "package_name": "misterfootball.mister_football"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "513792072842-u5vgmbtu8ti1i5pcthchkitfdj5eqr54.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgOzmiWj7Y_416qXWf7XQprmUyRI2XG8g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "513792072842-u5vgmbtu8ti1i5pcthchkitfdj5eqr54.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -31,7 +31,9 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
   validar() async {
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
-      Entrenamiento e = Entrenamiento(fecha: fecha.trim(), hora: hora.trim(), ejercicios: ejercicios, jugadoresOpiniones: listaJugadores);
+
+      Entrenamiento e =
+          Entrenamiento(fecha: fecha.trim(), hora: hora.trim(), ejercicios: ejercicios, jugadoresOpiniones: listaJugadores, anotaciones: "");
 
       //Almacenar al jugador en la Box de 'entrenamientos'
       if (Hive.isBoxOpen('entrenamientos')) {

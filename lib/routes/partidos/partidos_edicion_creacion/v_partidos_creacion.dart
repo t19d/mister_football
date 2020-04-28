@@ -46,8 +46,22 @@ class _PartidosCreacion extends State<PartidosCreacion> {
         '9': null,
         '10': null
       };
-      Partido p = Partido(fecha: fecha.trim(), hora: hora.trim(), lugar: lugar.trim(), rival: rival.trim(), tipoPartido: tipoPartido.trim(),
-          convocatoria: [], alineacion: {'0': ["14231", alineacionVacia]});
+      Partido p = Partido(
+          fecha: fecha.trim(),
+          hora: hora.trim(),
+          lugar: lugar.trim(),
+          rival: rival.trim(),
+          tipoPartido: tipoPartido.trim(),
+          convocatoria: [],
+          alineacion: {
+            '0': ["14231", alineacionVacia]
+          },
+          golesAFavor: [],
+          golesEnContra: [],
+          lesiones: [],
+          tarjetas: [],
+          cambios: [],
+          observaciones: "");
 
       //Almacenar el partido en la Box de 'partidos'
       if (Hive.isBoxOpen('partidos')) {
@@ -111,10 +125,10 @@ class _PartidosCreacion extends State<PartidosCreacion> {
                           //Seleccionar fecha
                           DatePicker.showDatePicker(context, showTitleActions: true, minTime: DateTime(1950, 1, 1), maxTime: DateTime(2200, 12, 31),
                               onConfirm: (date) {
-                                setState(() {
-                                  fecha = "${date.year}-${date.month}-${date.day}";
-                                });
-                              },
+                            setState(() {
+                              fecha = "${date.year}-${date.month}-${date.day}";
+                            });
+                          },
                               currentTime: DateTime(
                                 int.parse(fecha.split("-")[0]),
                                 int.parse(fecha.split("-")[1]),

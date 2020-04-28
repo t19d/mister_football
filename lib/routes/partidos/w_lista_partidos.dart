@@ -5,18 +5,63 @@ import 'package:mister_football/clases/partido.dart';
 import 'package:mister_football/main.dart';
 import 'package:mister_football/routes/partidos/detalles_partidos/v_detalles_partido.dart';
 
+const String testDevice = 'MobileId';
+
 class ListaPartidos extends StatefulWidget {
   @override
   createState() => _ListaPartidos();
 }
 
 class _ListaPartidos extends State<ListaPartidos> {
+  /*static const MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo(
+    testDevices: testDevice != null ? <String>[testDevice] : null,
+    nonPersonalizedAds: true,
+    keywords: <String>['Game', 'Mario'],
+  );
+
+  BannerAd myBanner;*/
+
   @override
   void dispose() {
     Hive.close();
+    //myBanner.dispose();
     super.dispose();
   }
 
+  /*
+  BannerAd myBanner = BannerAd(
+    adUnitId: BannerAd.testAdUnitId, //'ca-app-pub-8505501288716754/8100371478',
+    size: AdSize.banner,
+    targetingInfo: targetingInfo,
+    listener: (MobileAdEvent event) {
+      print("BannerAd event is $event");
+    },
+  );
+  */
+  /*static MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo(
+    keywords: <String>['juegos', 'Mario Kart'],
+    contentUrl: 'https://flutter.io',
+    childDirected: false,
+    nonPersonalizedAds: true,
+    testDevices: <String>[],
+  );*/
+/*
+  @override
+  void initState() {
+    FirebaseAdMob.instance.initialize(appId: 'ca-app-pub-8505501288716754~2552531320').then((response) {
+      myBanner = BannerAd(
+        adUnitId: BannerAd.testAdUnitId, //'ca-app-pub-8505501288716754/8100371478',
+        size: AdSize.banner,
+        targetingInfo: targetingInfo,
+        listener: (MobileAdEvent event) {
+          print("BannerAd event is $event");
+        },
+      )
+        ..load()
+        ..show();
+    });
+    super.initState();
+  }*/
 
   Widget itemPartidos() {
     final boxPartidos = Hive.box('partidos');
@@ -35,16 +80,14 @@ class _ListaPartidos extends State<ListaPartidos> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) =>
-                        DetallesPartido(
-                          posicion: iPartido,
-                        ),
+                    builder: (context) => DetallesPartido(
+                      posicion: iPartido,
+                    ),
                   ),
                 );
               },
               child: Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15)),
+                decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
@@ -86,10 +129,6 @@ class _ListaPartidos extends State<ListaPartidos> {
 
   @override
   Widget build(BuildContext context) {
-    //FirebaseAdMob.initializeApp(this);
-    FirebaseAdMob.instance.initialize(appId: 'ca-app-pub-8505501288716754~2552531320').then((response){
-      myBanner..load()..show();
-    });
     return Scaffold(
       body: SafeArea(
         child: Row(
@@ -119,19 +158,3 @@ class _ListaPartidos extends State<ListaPartidos> {
     );
   }
 }
-BannerAd myBanner = BannerAd(
-    adUnitId: 'ca-app-pub-8505501288716754/8100371478',
-    size: AdSize.smartBanner,
-    targetingInfo: targetingInfo,
-    listener: (MobileAdEvent event) {
-      print("BannerAd event is $event");
-    },
-  );
-
-MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo(
-  keywords: <String>['juegos', 'Pato Juego'],
-  contentUrl: 'https://flutter.io',
-  childDirected: false,
-  nonPersonalizedAds: false,
-  testDevices: <String>[],
-);

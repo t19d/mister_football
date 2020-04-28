@@ -165,6 +165,7 @@ class _PartidosCreacion extends State<PartidosCreacion> {
                       //Rival
                       TextFormField(
                         keyboardType: TextInputType.text,
+                        textCapitalization: TextCapitalization.sentences,
                         validator: (val) => val.length == 0 ? 'Escribe el equipo rival' : null,
                         onChanged: (val) => rival = val,
                         decoration: InputDecoration(
@@ -181,6 +182,7 @@ class _PartidosCreacion extends State<PartidosCreacion> {
                       //Lugar
                       TextFormField(
                         keyboardType: TextInputType.text,
+                        textCapitalization: TextCapitalization.sentences,
                         validator: (val) => val.length == 0 ? 'Escribe el lugar' : null,
                         onChanged: (val) => lugar = val,
                         decoration: InputDecoration(

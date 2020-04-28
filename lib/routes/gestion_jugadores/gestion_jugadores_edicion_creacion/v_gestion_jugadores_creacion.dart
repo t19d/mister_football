@@ -142,6 +142,7 @@ class _GestionJugadoresCreacion extends State<GestionJugadoresCreacion> {
                       //Nombre
                       TextFormField(
                         keyboardType: TextInputType.text,
+                        textCapitalization: TextCapitalization.sentences,
                         validator: (val) =>
                             val.length == 0 ? 'Escribe el nombre' : null,
                         onChanged: (val) => nombre = val,
@@ -159,6 +160,7 @@ class _GestionJugadoresCreacion extends State<GestionJugadoresCreacion> {
                       //Apellido1
                       TextFormField(
                         keyboardType: TextInputType.text,
+                        textCapitalization: TextCapitalization.sentences,
                         validator: (val) => val.length == 0
                             ? 'Escribe el primer apellido'
                             : null,
@@ -177,6 +179,7 @@ class _GestionJugadoresCreacion extends State<GestionJugadoresCreacion> {
                       //Apellido2
                       TextFormField(
                         keyboardType: TextInputType.text,
+                        textCapitalization: TextCapitalization.sentences,
                         validator: (val) => val.length == 0
                             ? 'Escribe el segundo apellido'
                             : null,
@@ -195,6 +198,7 @@ class _GestionJugadoresCreacion extends State<GestionJugadoresCreacion> {
                       //Apodo
                       TextFormField(
                         keyboardType: TextInputType.text,
+                        textCapitalization: TextCapitalization.sentences,
                         validator: (val) =>
                             val.length == 0 ? 'Escribe el apodo' : null,
                         onChanged: (val) => apodo = val,
@@ -360,6 +364,7 @@ class _GestionJugadoresCreacion extends State<GestionJugadoresCreacion> {
                       //Anotaciones
                       TextFormField(
                         keyboardType: TextInputType.text,
+                        textCapitalization: TextCapitalization.sentences,
                         validator: (val) =>
                             val.length == 0 ? 'Escribe las anotaciones' : null,
                         onChanged: (val) => anotaciones = val,

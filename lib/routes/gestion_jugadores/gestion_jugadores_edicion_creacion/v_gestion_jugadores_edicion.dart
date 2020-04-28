@@ -165,6 +165,7 @@ class _GestionJugadoresEdicion extends State<GestionJugadoresEdicion> {
                       //Nombre
                       TextFormField(
                         initialValue: widget.jugador.nombre,
+                        textCapitalization: TextCapitalization.sentences,
                         keyboardType: TextInputType.text,
                         validator: (val) =>
                             val.length == 0 ? 'Escribe el nombre' : null,
@@ -183,6 +184,7 @@ class _GestionJugadoresEdicion extends State<GestionJugadoresEdicion> {
                       //Apellido1
                       TextFormField(
                         initialValue: widget.jugador.apellido1,
+                        textCapitalization: TextCapitalization.sentences,
                         keyboardType: TextInputType.text,
                         validator: (val) => val.length == 0
                             ? 'Escribe el primer apellido'
@@ -202,6 +204,7 @@ class _GestionJugadoresEdicion extends State<GestionJugadoresEdicion> {
                       //Apellido2
                       TextFormField(
                         initialValue: widget.jugador.apellido2,
+                        textCapitalization: TextCapitalization.sentences,
                         keyboardType: TextInputType.text,
                         validator: (val) => val.length == 0
                             ? 'Escribe el segundo apellido'
@@ -221,6 +224,7 @@ class _GestionJugadoresEdicion extends State<GestionJugadoresEdicion> {
                       //Apodo
                       TextFormField(
                         initialValue: widget.jugador.apodo,
+                        textCapitalization: TextCapitalization.sentences,
                         keyboardType: TextInputType.text,
                         validator: (val) =>
                             val.length == 0 ? 'Escribe el apodo' : null,
@@ -387,6 +391,7 @@ class _GestionJugadoresEdicion extends State<GestionJugadoresEdicion> {
                       //Anotaciones
                       TextFormField(
                         initialValue: widget.jugador.anotaciones,
+                        textCapitalization: TextCapitalization.sentences,
                         keyboardType: TextInputType.text,
                         validator: (val) =>
                             val.length == 0 ? 'Escribe las anotaciones' : null,

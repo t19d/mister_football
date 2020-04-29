@@ -13,9 +13,7 @@ class GestionJugadoresEdicion extends StatefulWidget {
   final Jugador jugador;
   final int posicion;
 
-  GestionJugadoresEdicion(
-      {Key key, @required this.jugador, @required this.posicion})
-      : super(key: key);
+  GestionJugadoresEdicion({Key key, @required this.jugador, @required this.posicion}) : super(key: key);
 
   @override
   _GestionJugadoresEdicion createState() => _GestionJugadoresEdicion();
@@ -64,25 +62,28 @@ class _GestionJugadoresEdicion extends State<GestionJugadoresEdicion> {
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
       Jugador j = Jugador(
+          nombre_foto: imgString,
           nombre: nombre.trim(),
           apellido1: apellido1.trim(),
           apellido2: apellido2.trim(),
-          apodo: apodo.trim(),
-          fechaNacimiento: fechaNacimiento.trim(),
-          piernaBuena: (piernaDerechaBuena ? "Derecha" : "Izquierda"),
-          posicionFavorita: posicionFavorita.trim(),
+          apodo: (apodo.trim() != "") ? apodo.trim() : apellido1,
           anotaciones: anotaciones.trim(),
-          nombre_foto: imgString);
+          posicionFavorita: posicionFavorita.trim(),
+          piernaBuena: (piernaDerechaBuena ? "Derecha" : "Izquierda"),
+          fechaNacimiento: fechaNacimiento.trim(),
+          id: widget.jugador.id,
+          //Se dehabilitará en el momento en el que quiera eliminarlo
+          habilitado: widget.jugador.habilitado);
       //Almacenar en base de datos SQLite
       //DBHelper.save(j);
 
       //Almacenar al jugador en la Box de 'jugadores'
       if (Hive.isBoxOpen('jugadores')) {
-        boxJugadores.put(widget.posicion, j);
+        boxJugadores.putAt(widget.posicion, j);
         //print("Jugador ${j.nombre}");
       } else {
         abrirBoxJugadores();
-        boxJugadores.put(widget.posicion, j);
+        boxJugadores.putAt(widget.posicion, j);
         //print("Jugador ${j.nombre}");
       }
       Navigator.pop(context);
@@ -158,8 +159,7 @@ class _GestionJugadoresEdicion extends State<GestionJugadoresEdicion> {
                   },
                 ),
                 Padding(
-                  padding:
-                      EdgeInsets.only(left: 20, right: 20, top: 5, bottom: 8),
+                  padding: EdgeInsets.only(left: 20, right: 20, top: 5, bottom: 8),
                   child: Column(
                     children: <Widget>[
                       //Nombre
@@ -167,8 +167,7 @@ class _GestionJugadoresEdicion extends State<GestionJugadoresEdicion> {
                         initialValue: widget.jugador.nombre,
                         textCapitalization: TextCapitalization.sentences,
                         keyboardType: TextInputType.text,
-                        validator: (val) =>
-                            val.length == 0 ? 'Escribe el nombre' : null,
+                        validator: (val) => val.length == 0 ? 'Escribe el nombre' : null,
                         onSaved: (val) => nombre = val,
                         decoration: InputDecoration(
                           fillColor: Colors.white,
@@ -176,8 +175,8 @@ class _GestionJugadoresEdicion extends State<GestionJugadoresEdicion> {
                             borderRadius: BorderRadius.circular(25.0),
                             borderSide: BorderSide(),
                           ),
+                          labelText: 'Nombre*',
                           hintText: 'Nombre del jugador',
-                          labelText: 'Nombre',
                         ),
                       ),
                       separadorFormulario(),
@@ -186,9 +185,7 @@ class _GestionJugadoresEdicion extends State<GestionJugadoresEdicion> {
                         initialValue: widget.jugador.apellido1,
                         textCapitalization: TextCapitalization.sentences,
                         keyboardType: TextInputType.text,
-                        validator: (val) => val.length == 0
-                            ? 'Escribe el primer apellido'
-                            : null,
+                        validator: (val) => val.length == 0 ? 'Escribe el primer apellido' : null,
                         onSaved: (val) => apellido1 = val,
                         decoration: InputDecoration(
                           fillColor: Colors.white,
@@ -196,8 +193,8 @@ class _GestionJugadoresEdicion extends State<GestionJugadoresEdicion> {
                             borderRadius: BorderRadius.circular(25.0),
                             borderSide: BorderSide(),
                           ),
+                          labelText: 'Primer apellido*',
                           hintText: 'Primer apellido del jugador',
-                          labelText: 'Primer apellido',
                         ),
                       ),
                       separadorFormulario(),
@@ -206,9 +203,9 @@ class _GestionJugadoresEdicion extends State<GestionJugadoresEdicion> {
                         initialValue: widget.jugador.apellido2,
                         textCapitalization: TextCapitalization.sentences,
                         keyboardType: TextInputType.text,
-                        validator: (val) => val.length == 0
+                        /*validator: (val) => val.length == 0
                             ? 'Escribe el segundo apellido'
-                            : null,
+                            : null,*/
                         onSaved: (val) => apellido2 = val,
                         decoration: InputDecoration(
                           fillColor: Colors.white,
@@ -226,8 +223,8 @@ class _GestionJugadoresEdicion extends State<GestionJugadoresEdicion> {
                         initialValue: widget.jugador.apodo,
                         textCapitalization: TextCapitalization.sentences,
                         keyboardType: TextInputType.text,
-                        validator: (val) =>
-                            val.length == 0 ? 'Escribe el apodo' : null,
+                        /*validator: (val) =>
+                            val.length == 0 ? 'Escribe el apodo' : null,*/
                         onSaved: (val) => apodo = val,
                         decoration: InputDecoration(
                           fillColor: Colors.white,
@@ -240,56 +237,37 @@ class _GestionJugadoresEdicion extends State<GestionJugadoresEdicion> {
                         ),
                       ),
                       separadorFormulario(),
-                      //Fecha de nacimiento
-                      RaisedButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0)),
-                        elevation: 4.0,
-                        onPressed: () {
-                          //Seleccionar fecha
-                          DatePicker.showDatePicker(context,
-                              showTitleActions: true,
-                              minTime: DateTime(1950, 1, 1),
-                              maxTime: DateTime.now(), onConfirm: (date) {
-                            setState(() {
-                              fechaNacimiento =
-                                  "${date.year}-${date.month}-${date.day}";
-                            });
-                          },
-                              currentTime: DateTime(
-                                int.parse(fechaNacimiento.split("-")[0]),
-                                int.parse(fechaNacimiento.split("-")[1]),
-                                int.parse(fechaNacimiento.split("-")[2]),
-                              ),
-                              locale: LocaleType.es);
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Text(
-                              "Fecha de nacimiento",
-                              style: TextStyle(
-                                fontSize:
-                                    MediaQuery.of(context).size.width / 25,
-                              ),
-                            ),
-                            Row(
-                              children: <Widget>[
-                                Text(
-                                  "${fechaNacimiento}",
-                                  style: TextStyle(
-                                    fontSize:
-                                        MediaQuery.of(context).size.width / 25,
-                                  ),
-                                ),
-                                Icon(
-                                  Icons.calendar_today,
-                                  size: MediaQuery.of(context).size.width / 25,
-                                ),
-                              ],
-                            ),
-                          ],
+                      //Anotaciones
+                      TextFormField(
+                        initialValue: widget.jugador.anotaciones,
+                        textCapitalization: TextCapitalization.sentences,
+                        keyboardType: TextInputType.text,
+                        /*validator: (val) =>
+                        val.length == 0 ? 'Escribe las anotaciones' : null,*/
+                        onSaved: (val) => anotaciones = val,
+                        decoration: InputDecoration(
+                          fillColor: Colors.white,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(25.0),
+                            borderSide: BorderSide(),
+                          ),
+                          hintText: 'Anotaciones sobre el jugador',
+                          labelText: 'Anotaciones',
                         ),
+                      ),
+                      separadorFormulario(),
+                      //Posición favorita Spinner
+                      Column(
+                        children: <Widget>[
+                          Text("Posición favorita"),
+                          DropdownButton(
+                            elevation: 2,
+                            iconSize: 40.0,
+                            value: posicionFavorita,
+                            items: _posicionesDisponibles,
+                            onChanged: cambiarPosicion,
+                          ),
+                        ],
                       ),
                       separadorFormulario(),
                       //Pierna buena (derecha)
@@ -301,51 +279,39 @@ class _GestionJugadoresEdicion extends State<GestionJugadoresEdicion> {
                             selectedBorderColor: Colors.blueAccent,
                             children: <Widget>[
                               Container(
-                                  width:
-                                      (MediaQuery.of(context).size.width - 80) /
-                                          2,
+                                  width: (MediaQuery.of(context).size.width - 80) / 2,
                                   child: new Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
                                       new Icon(
                                         Icons.airline_seat_legroom_normal,
                                         color: Colors.teal,
-                                        size:
-                                            MediaQuery.of(context).size.width /
-                                                15,
+                                        size: MediaQuery.of(context).size.width / 15,
                                       ),
                                       new Text(
                                         "DERECHA",
                                         style: TextStyle(
                                           color: Colors.teal,
-                                          fontSize: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              25,
+                                          fontSize: MediaQuery.of(context).size.width / 25,
                                         ),
                                       )
                                     ],
                                   )),
                               Container(
-                                width:
-                                    (MediaQuery.of(context).size.width - 80) /
-                                        2,
+                                width: (MediaQuery.of(context).size.width - 80) / 2,
                                 child: new Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: <Widget>[
                                     new Icon(
                                       Icons.airline_seat_legroom_normal,
                                       color: Colors.brown,
-                                      size: MediaQuery.of(context).size.width /
-                                          15,
+                                      size: MediaQuery.of(context).size.width / 15,
                                     ),
                                     new Text(
                                       "IZQUIERDA",
                                       style: TextStyle(
                                         color: Colors.brown,
-                                        fontSize:
-                                            MediaQuery.of(context).size.width /
-                                                25,
+                                        fontSize: MediaQuery.of(context).size.width / 25,
                                       ),
                                     ),
                                   ],
@@ -374,36 +340,49 @@ class _GestionJugadoresEdicion extends State<GestionJugadoresEdicion> {
                         ],
                       ),
                       separadorFormulario(),
-                      //Posición favorita Spinner
-                      Column(
-                        children: <Widget>[
-                          Text("Posición favorita"),
-                          DropdownButton(
-                            elevation: 2,
-                            iconSize: 40.0,
-                            value: posicionFavorita,
-                            items: _posicionesDisponibles,
-                            onChanged: cambiarPosicion,
-                          ),
-                        ],
-                      ),
-                      separadorFormulario(),
-                      //Anotaciones
-                      TextFormField(
-                        initialValue: widget.jugador.anotaciones,
-                        textCapitalization: TextCapitalization.sentences,
-                        keyboardType: TextInputType.text,
-                        validator: (val) =>
-                            val.length == 0 ? 'Escribe las anotaciones' : null,
-                        onSaved: (val) => anotaciones = val,
-                        decoration: InputDecoration(
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(25.0),
-                            borderSide: BorderSide(),
-                          ),
-                          hintText: 'Anotaciones sobre el jugador',
-                          labelText: 'Anotaciones',
+                      //Fecha de nacimiento
+                      RaisedButton(
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                        elevation: 4.0,
+                        onPressed: () {
+                          //Seleccionar fecha
+                          DatePicker.showDatePicker(context, showTitleActions: true, minTime: DateTime(1950, 1, 1), maxTime: DateTime.now(),
+                              onConfirm: (date) {
+                            setState(() {
+                              fechaNacimiento = "${date.year}-${date.month}-${date.day}";
+                            });
+                          },
+                              currentTime: DateTime(
+                                int.parse(fechaNacimiento.split("-")[0]),
+                                int.parse(fechaNacimiento.split("-")[1]),
+                                int.parse(fechaNacimiento.split("-")[2]),
+                              ),
+                              locale: LocaleType.es);
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text(
+                              "Fecha de nacimiento",
+                              style: TextStyle(
+                                fontSize: MediaQuery.of(context).size.width / 25,
+                              ),
+                            ),
+                            Row(
+                              children: <Widget>[
+                                Text(
+                                  "${fechaNacimiento}",
+                                  style: TextStyle(
+                                    fontSize: MediaQuery.of(context).size.width / 25,
+                                  ),
+                                ),
+                                Icon(
+                                  Icons.calendar_today,
+                                  size: MediaQuery.of(context).size.width / 25,
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ),
                       separadorFormulario(),
@@ -446,9 +425,10 @@ class _GestionJugadoresEdicion extends State<GestionJugadoresEdicion> {
   /*   */
 
   //Widget que separa los elementos del formulario
-  separadorFormulario() {
+  Widget separadorFormulario() {
     return SizedBox(
-      height: 8.0,
+      height: MediaQuery.of(context).size.height * .015,
+      width: MediaQuery.of(context).size.width,
     );
   }
 
@@ -464,7 +444,7 @@ class _GestionJugadoresEdicion extends State<GestionJugadoresEdicion> {
   }
 
   //Actualizar la posición cuando eliges en el Spinner
-  cambiarPosicion(posicionElegida) {
+  void cambiarPosicion(posicionElegida) {
     setState(() {
       posicionFavorita = posicionElegida;
     });
@@ -474,75 +454,136 @@ class _GestionJugadoresEdicion extends State<GestionJugadoresEdicion> {
 
   //Diálogo elegir forma de coger foto
   Future<void> _elegirOpcionFotoDialogo(BuildContext context) {
+    //Estilo
+    RoundedRectangleBorder _formaDialogo = RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0), side: BorderSide(color: Colors.black26));
+    RoundedRectangleBorder _formaBoton = RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0));
+    BoxDecoration _formaBotones = BoxDecoration(
+        gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [Colors.lightBlue, Colors.lightBlueAccent]),
+        borderRadius: BorderRadius.circular(15.0));
+    BoxDecoration _formaBotonEliminar = BoxDecoration(
+        gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [Colors.red, Colors.redAccent]),
+        borderRadius: BorderRadius.circular(15.0));
+    SizedBox _separadorBotonesDialogo = SizedBox(height: MediaQuery.of(context).size.height * .015, width: MediaQuery.of(context).size.width);
+    //Diálogo
     return showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text("Elegir imagen"),
+            shape: _formaDialogo,
+            title: Text(
+              (imgString != "") ? "Editar imagen" : "Añadir imagen",
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: MediaQuery.of(context).size.width * .07, fontWeight: FontWeight.bold),
+            ),
             content: SingleChildScrollView(
               child: Column(
                 children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: Padding(
-                          padding: EdgeInsets.all(5),
-                          child: RaisedButton(
-                            child: Column(
+                  Container(
+                    padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
+                    width: MediaQuery.of(context).size.width * .45,
+                    decoration: _formaBotones,
+                    child: Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                          onTap: () {
+                            _abrirGaleria(context);
+                          },
+                          child: Center(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: <Widget>[
                                 Icon(Icons.photo),
-                                Text("Galería"),
-                              ],
-                            ),
-                            onPressed: () {
-                              _abrirGaleria(context);
-                            },
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: EdgeInsets.all(5),
-                          child: RaisedButton(
-                            child: Column(
-                              children: <Widget>[
-                                Icon(Icons.photo_camera),
-                                Text("Cámara"),
-                              ],
-                            ),
-                            onPressed: () {
-                              _abrirCamara(context);
-                            },
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: EdgeInsets.all(5),
-                          child: RaisedButton(
-                            child: Column(
-                              children: <Widget>[
-                                Icon(
-                                  Icons.close,
-                                  color: Colors.red,
-                                ),
                                 Text(
-                                  "Eliminar",
-                                  /*style: TextStyle(
-                                    fontSize:
-                                        MediaQuery.of(context).size.width / 15,
-                                  ),*/
+                                  "Galería",
+                                  style: TextStyle(
+                                    fontSize: MediaQuery.of(context).size.width * .07,
+                                  ),
                                 ),
                               ],
                             ),
-                            onPressed: () {
-                              _eliminarImagen();
-                            },
-                          ),
-                        ),
-                      ),
-                    ],
+                          )),
+                    ),
                   ),
+                  _separadorBotonesDialogo,
+                  Container(
+                    padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
+                    width: MediaQuery.of(context).size.width * .45,
+                    decoration: _formaBotones,
+                    child: Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                          onTap: () {
+                            _abrirCamara(context);
+                          },
+                          child: Center(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: <Widget>[
+                                Icon(Icons.camera_alt),
+                                Text(
+                                  "Cámara",
+                                  style: TextStyle(
+                                    fontSize: MediaQuery.of(context).size.width * .065,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )),
+                    ),
+                  ),
+                  _separadorBotonesDialogo,
+                  /*RaisedButton(
+                    shape: _formaBoton,
+                    child: Container(
+                      decoration: _degradadoBotones,
+                      width: MediaQuery.of(context).size.width * .32,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          Icon(Icons.photo),
+                          Text(
+                            "Galería",
+                            style: TextStyle(
+                              fontSize: MediaQuery.of(context).size.width * .05,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    onPressed: () {
+                      _abrirGaleria(context);
+                    },
+                  ),*/
+                  (imgString != "")
+                      ? Container(
+                          padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
+                          width: MediaQuery.of(context).size.width * .45,
+                          decoration: _formaBotonEliminar,
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                                onTap: () {
+                                  _eliminarImagen();
+                                },
+                                child: Center(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                    children: <Widget>[
+                                      Icon(Icons.close),
+                                      Text(
+                                        "Eliminar",
+                                        style: TextStyle(
+                                          fontSize: MediaQuery.of(context).size.width * .06,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )),
+                          ),
+                        )
+                      : Container(
+                          width: 0,
+                        ),
                 ],
               ),
             ),
@@ -551,7 +592,7 @@ class _GestionJugadoresEdicion extends State<GestionJugadoresEdicion> {
   }
 
   //Recortar imagen
-  _recortarImagen(File image) async {
+  void _recortarImagen(File image) async {
     File croppedFile = await ImageCropper.cropImage(
         sourcePath: image.path,
         aspectRatioPresets: Platform.isAndroid
@@ -582,9 +623,8 @@ class _GestionJugadoresEdicion extends State<GestionJugadoresEdicion> {
   }
 
   //Coger imagen de la galería
-  _abrirGaleria(BuildContext context) async {
-    await ImagePicker.pickImage(source: ImageSource.gallery)
-        .then((imgFile) async {
+  void _abrirGaleria(BuildContext context) async {
+    await ImagePicker.pickImage(source: ImageSource.gallery).then((imgFile) async {
       if (imgFile != null) {
         /*this.setState(() {
           imgString = ConversorImagen.base64String(imgFile.readAsBytesSync());
@@ -596,7 +636,7 @@ class _GestionJugadoresEdicion extends State<GestionJugadoresEdicion> {
   }
 
   //Sacar foto
-  _abrirCamara(BuildContext context) async {
+  void _abrirCamara(BuildContext context) async {
     await ImagePicker.pickImage(source: ImageSource.camera).then((imgFile) {
       if (imgFile != null) {
         _recortarImagen(imgFile);
@@ -609,7 +649,7 @@ class _GestionJugadoresEdicion extends State<GestionJugadoresEdicion> {
   }
 
   //Eliminar foto
-  _eliminarImagen() {
+  void _eliminarImagen() {
     this.setState(() {
       imgString = "";
     });

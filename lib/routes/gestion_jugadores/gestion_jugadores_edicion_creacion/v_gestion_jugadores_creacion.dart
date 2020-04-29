@@ -60,7 +60,7 @@ class _GestionJugadoresCreacion extends State<GestionJugadoresCreacion> {
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
       String _apodoGuardar = (apodo.trim() != "") ? apodo.trim() : apellido1;
-      String _claveJugador = "${DateTime.now()}+${nombre.trim()}+${apellido1.trim()}+${apellido2.trim()}+${_apodoGuardar}+${fechaNacimiento.trim()}";
+      String _claveJugador = "${DateTime.now()}+${nombre.trim()}+${apellido1.trim()}+${apellido2.trim()}+$_apodoGuardar+${fechaNacimiento.trim()}";
       print(_claveJugador);
       Jugador j = Jugador(
           nombre_foto: imgString,

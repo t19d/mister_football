@@ -26,13 +26,14 @@ class JugadorAdapter extends TypeAdapter<Jugador> {
       posicionFavorita: fields[6] as String,
       anotaciones: fields[13] as String,
       nombre_foto: fields[14] as String,
+      id: fields[15] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, Jugador obj) {
     writer
-      ..writeByte(15)
+      ..writeByte(16)
       ..writeByte(0)
       ..write(obj.nombre)
       ..writeByte(1)
@@ -62,6 +63,8 @@ class JugadorAdapter extends TypeAdapter<Jugador> {
       ..writeByte(13)
       ..write(obj.anotaciones)
       ..writeByte(14)
-      ..write(obj.nombre_foto);
+      ..write(obj.nombre_foto)
+      ..writeByte(15)
+      ..write(obj.id);
   }
 }

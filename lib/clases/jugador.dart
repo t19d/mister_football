@@ -31,9 +31,11 @@ class Jugador {
   @HiveField(12)
   final List partidos = [];
   @HiveField(13)
-  final String anotaciones;// = ""; //Opcional.
+  final String anotaciones;
   @HiveField(14)
-  final String nombre_foto;// = ""; //Opcional.
+  final String nombre_foto;
+  @HiveField(15)
+  final String id;
 
   Jugador(
       {this.nombre,
@@ -44,7 +46,8 @@ class Jugador {
       this.piernaBuena,
       this.posicionFavorita,
       this.anotaciones,
-      this.nombre_foto});
+      this.nombre_foto,
+      this.id});
 /*
   Jugador.sinApodo(
       {

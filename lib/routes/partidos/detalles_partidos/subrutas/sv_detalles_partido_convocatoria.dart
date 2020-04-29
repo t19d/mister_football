@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:mister_football/clases/conversor_imagen.dart';
 import 'package:mister_football/clases/jugador.dart';
 import 'package:mister_football/clases/partido.dart';
 
@@ -110,14 +111,44 @@ class _DetallesPartidoConvocatoria extends State<DetallesPartidoConvocatoria> {
 
   /* Jugadores */
   //Mostrar lista de los jugadores seleccionados en la convocatoria
-  mostrarJugadoresSeleccionados(List<dynamic> jugadoresConvocados) {
+  mostrarJugadoresSeleccionados(List<String> jugadoresConvocados) {
+    Box boxJugadoresEquipo = Hive.box('jugadores');
     if (jugadoresConvocados != null) {
       if (jugadoresConvocados.length > 0) {
+        Widget widgetJugador;
         return ListView(
           shrinkWrap: true,
-          children: List.generate(jugadoresConvocados.length, (iJugador) {
-            final Jugador jugadorBox = jugadoresConvocados[iJugador] as Jugador;
-            return Text("-${jugadorBox.nombre}");
+          children: List.generate(jugadoresConvocados.length, (idJugador) {
+            //Buscar lista de jugadores con ese id
+            Jugador jugadorBox;
+            /*boxJugadoresEquipo.values.where((j) {
+              print(j.apodo);
+              if (j != null) {
+                if (j.id == '${jugadoresConvocados[idJugador]}') {
+                  jugadorBox = j;
+                }
+              }
+            });*/
+            for (var i = 0; i < boxJugadoresEquipo.length; i++) {
+              print("Nombre: ${boxJugadoresEquipo.getAt(i).nombre}");
+              print("ID: ${boxJugadoresEquipo.getAt(i).id}");
+              if ('${jugadoresConvocados[idJugador]}' == boxJugadoresEquipo.getAt(i).id) {
+                jugadorBox = boxJugadoresEquipo.getAt(i);
+                widgetJugador = Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    ConversorImagen.imageFromBase64String("${jugadorBox.nombre_foto}", context),
+                    Text("${jugadorBox.apodo}"),
+                    Text("${jugadorBox.posicionFavorita}"),
+                  ],
+                );
+              } else {
+                widgetJugador = Container(
+                  height: 0,
+                );
+              }
+            }
+            return widgetJugador;
           }),
         );
       } else {
@@ -133,18 +164,16 @@ class _DetallesPartidoConvocatoria extends State<DetallesPartidoConvocatoria> {
   }
 
 //Mostrar lista seleccionable de jugadores
-  listaSeleccionarJugadores(Partido partidoActual, StateSetter setState) {
+  Widget listaSeleccionarJugadores(Partido partidoActual, StateSetter setState) {
     //Almacenar el partido en la Box de 'partidos'
-    Box boxPartidosEditarConvocatoria = null;
-    List<Jugador> postListaJugadoresConvocatoria = [];
+    Box boxPartidosEditarConvocatoria;
+    List<String> postListaJugadoresConvocatoria = [];
     if (partidoActual.convocatoria != null) {
       postListaJugadoresConvocatoria = partidoActual.convocatoria;
       /*for (Jugador jugadorItemLista in partidoActual.convocatoria) {
         postListaJugadoresConvocatoria.add(jugadorItemLista);
       }*/
     }
-
-    print(postListaJugadoresConvocatoria);
     final boxJugadores = Hive.box('jugadores');
     if (boxJugadores.length > 0) {
       return Container(
@@ -157,8 +186,11 @@ class _DetallesPartidoConvocatoria extends State<DetallesPartidoConvocatoria> {
               children: <Widget>[
                 Text("Modificar convocatoria"),
                 IconButton(
-                  icon: Icon(Icons.close, color: Colors.red,),
-                  onPressed: (){
+                  icon: Icon(
+                    Icons.close,
+                    color: Colors.red,
+                  ),
+                  onPressed: () {
                     Navigator.pop(context);
                   },
                 )
@@ -170,23 +202,21 @@ class _DetallesPartidoConvocatoria extends State<DetallesPartidoConvocatoria> {
                 Jugador jugadorBox = boxJugadores.getAt(iJugador);
                 //bool _isSeleccionado = (postListaJugadoresConvocatoria.contains(jugadorBox)) ? true : false;
                 bool _isSeleccionado = false;
-                for (Jugador jugadorItemLista in postListaJugadoresConvocatoria) {
-                  if (jugadorItemLista.nombre == jugadorBox.nombre &&
-                      jugadorItemLista.apellido1 == jugadorBox.apellido1 &&
-                      jugadorItemLista.apellido2 == jugadorBox.apellido2 &&
-                      jugadorItemLista.apodo == jugadorBox.apodo &&
-                      jugadorItemLista.fechaNacimiento == jugadorBox.fechaNacimiento &&
-                      jugadorItemLista.piernaBuena == jugadorBox.piernaBuena &&
-                      jugadorItemLista.posicionFavorita == jugadorBox.posicionFavorita &&
-                      jugadorItemLista.anotaciones == jugadorBox.anotaciones &&
-                      jugadorItemLista.nombre_foto == jugadorBox.nombre_foto) {
+                for (String idJugadorItemLista in postListaJugadoresConvocatoria) {
+                  if (idJugadorItemLista == jugadorBox.id) {
                     _isSeleccionado = true;
                   }
                 }
                 return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Expanded(
-                      child: Text("-${jugadorBox.nombre}"),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        ConversorImagen.imageFromBase64String(jugadorBox.nombre_foto, context),
+                        Text("${jugadorBox.apodo}"), //, style: TextStyle(fontSize: MediaQuery.of(context).size.width * .04)),
+                        //Text("${jugadorBox.posicionFavorita}", style: TextStyle(fontSize: MediaQuery.of(context).size.width * .05),),
+                      ],
                     ),
                     Checkbox(
                       value: _isSeleccionado,
@@ -195,20 +225,12 @@ class _DetallesPartidoConvocatoria extends State<DetallesPartidoConvocatoria> {
                           _isSeleccionado = nuevoEstado;
                         });
                         if (_isSeleccionado) {
-                          postListaJugadoresConvocatoria.add(jugadorBox);
+                          postListaJugadoresConvocatoria.add(jugadorBox.id);
                           print("Añadido");
                         } else {
                           //postListaJugadoresConvocatoria.removeWhere((j) => j == jugadorBox);
                           for (int i = 0; i < postListaJugadoresConvocatoria.length; i++) {
-                            if (postListaJugadoresConvocatoria[i].nombre == jugadorBox.nombre &&
-                                postListaJugadoresConvocatoria[i].apellido1 == jugadorBox.apellido1 &&
-                                postListaJugadoresConvocatoria[i].apellido2 == jugadorBox.apellido2 &&
-                                postListaJugadoresConvocatoria[i].apodo == jugadorBox.apodo &&
-                                postListaJugadoresConvocatoria[i].fechaNacimiento == jugadorBox.fechaNacimiento &&
-                                postListaJugadoresConvocatoria[i].piernaBuena == jugadorBox.piernaBuena &&
-                                postListaJugadoresConvocatoria[i].posicionFavorita == jugadorBox.posicionFavorita &&
-                                postListaJugadoresConvocatoria[i].anotaciones == jugadorBox.anotaciones &&
-                                postListaJugadoresConvocatoria[i].nombre_foto == jugadorBox.nombre_foto) {
+                            if (postListaJugadoresConvocatoria[i] == jugadorBox.id) {
                               postListaJugadoresConvocatoria.removeAt(i);
                             }
                           }

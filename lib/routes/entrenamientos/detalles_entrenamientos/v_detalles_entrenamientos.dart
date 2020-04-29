@@ -175,7 +175,29 @@ class _DetallesEnternamiento extends State<DetallesEnternamiento> {
 
   /* Jugadores */
   //Mostrar jugadores seleccionados
+
   mostrarJugadoresSeleccionados(List<dynamic> jugadoresElegidos) {
+    Box boxJugadoresEquipo = Hive.box('jugadores');
+    if (jugadoresElegidos.length > 0) {
+      return ListView(
+        shrinkWrap: true,
+        children: List.generate(jugadoresElegidos.length, (iFila) {
+          Jugador jugadorFila;
+          for (var i = 0; i < boxJugadoresEquipo.length; i++) {
+            if (jugadoresElegidos[iFila]['idJugador'] == boxJugadoresEquipo.getAt(i).id) {
+              jugadorFila = boxJugadoresEquipo.getAt(i);
+            }
+          }
+          return Text("-${jugadorFila.nombre}");
+        }),
+      );
+    } else {
+      return Center(
+        child: Text("No hay ningún jugador añadido."),
+      );
+    }
+  }
+  /*mostrarJugadoresSeleccionados(List<dynamic> jugadoresElegidos) {
     if (jugadoresElegidos.length > 0) {
       return ListView(
         shrinkWrap: true,
@@ -189,6 +211,6 @@ class _DetallesEnternamiento extends State<DetallesEnternamiento> {
         child: Text("No hay ningún jugador añadido."),
       );
     }
-  }
+  }*/
 /*  */
 }

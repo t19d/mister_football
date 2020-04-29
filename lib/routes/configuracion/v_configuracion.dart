@@ -27,12 +27,6 @@ class _Configuracion extends State<Configuracion> {
             tooltip: 'Menú',
             onPressed: () async {
               _drawerKey.currentState.openDrawer();
-              //Pruebas de Hive
-              /*var box = await Hive.openBox('test');
-
-              box.put('name', 'David');
-
-              print('Name: ${box.get('name')}');*/
             },
           ),
           title: Text(

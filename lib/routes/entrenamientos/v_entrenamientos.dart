@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mister_football/navigator/Navegador.dart';
-import 'package:mister_football/routes/entrenamientos/entrenamientos__edicion_creacion/v_entrenamientos_creacion.dart';
+import 'package:mister_football/routes/entrenamientos/entrenamientos_edicion_creacion/v_entrenamientos_creacion.dart';
 import 'package:mister_football/routes/entrenamientos/w_lista_entrenamientos.dart';
 
 class Entrenamientos extends StatefulWidget {

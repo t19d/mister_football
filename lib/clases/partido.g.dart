@@ -22,7 +22,7 @@ class PartidoAdapter extends TypeAdapter<Partido> {
       lugar: fields[2] as String,
       rival: fields[3] as String,
       tipoPartido: fields[4] as String,
-      convocatoria: (fields[5] as List)?.cast<Jugador>(),
+      convocatoria: (fields[5] as List)?.cast<String>(),
       alineacion: (fields[6] as Map)?.map((dynamic k, dynamic v) =>
           MapEntry(k as String, (v as List)?.cast<dynamic>())),
       golesAFavor: (fields[7] as List)?.cast<dynamic>(),

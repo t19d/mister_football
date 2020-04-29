@@ -130,8 +130,6 @@ class _DetallesPartidoConvocatoria extends State<DetallesPartidoConvocatoria> {
               }
             });*/
             for (var i = 0; i < boxJugadoresEquipo.length; i++) {
-              print("Nombre: ${boxJugadoresEquipo.getAt(i).nombre}");
-              print("ID: ${boxJugadoresEquipo.getAt(i).id}");
               if ('${jugadoresConvocados[idJugador]}' == boxJugadoresEquipo.getAt(i).id) {
                 jugadorBox = boxJugadoresEquipo.getAt(i);
                 widgetJugador = Row(

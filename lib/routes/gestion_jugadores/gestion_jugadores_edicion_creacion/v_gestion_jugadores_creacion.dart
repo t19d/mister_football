@@ -72,7 +72,8 @@ class _GestionJugadoresCreacion extends State<GestionJugadoresCreacion> {
           posicionFavorita: posicionFavorita.trim(),
           piernaBuena: (piernaDerechaBuena ? "Derecha" : "Izquierda"),
           fechaNacimiento: fechaNacimiento.trim(),
-          id: _claveJugador);
+          id: _claveJugador,
+          habilitado: true);
 
       //Almacenar al jugador en la Box de 'jugadores'
       if (Hive.isBoxOpen('jugadores')) {

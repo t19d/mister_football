@@ -36,6 +36,8 @@ class Jugador {
   final String nombre_foto;
   @HiveField(15)
   final String id;
+  @HiveField(16)
+  final bool habilitado;
 
   Jugador(
       {this.nombre,
@@ -47,7 +49,8 @@ class Jugador {
       this.posicionFavorita,
       this.anotaciones,
       this.nombre_foto,
-      this.id});
+      this.id,
+      this.habilitado});
 /*
   Jugador.sinApodo(
       {

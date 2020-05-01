@@ -298,6 +298,7 @@ class _DetallesPartidoAlineacionFormacion extends State<DetallesPartidoAlineacio
     if (j != null && j is Jugador) {
       return Container(
         width: MediaQuery.of(context).size.width / 6,
+        //width: MediaQuery.of(context).size.width * .1,
         color: colorear(posicion),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -310,6 +311,7 @@ class _DetallesPartidoAlineacionFormacion extends State<DetallesPartidoAlineacio
     } else {
       return Container(
         width: MediaQuery.of(context).size.width / 6,
+        //width: MediaQuery.of(context).size.width * .1,
         color: colorear(posicion),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -402,8 +404,8 @@ class _DetallesPartidoAlineacionFormacion extends State<DetallesPartidoAlineacio
                     if (snapshot.hasError) {
                       print(snapshot.error.toString());
                       return Container(
-                        height: MediaQuery.of(context).size.height * .5,
-                        width: MediaQuery.of(context).size.width * .9,
+                        height: MediaQuery.of(context).size.height * .015,
+                        width: MediaQuery.of(context).size.width * .015,
                         child: Text(snapshot.error.toString()),
                       );
                     } else {
@@ -411,8 +413,8 @@ class _DetallesPartidoAlineacionFormacion extends State<DetallesPartidoAlineacio
                     }
                   } else {
                     return Container(
-                      height: MediaQuery.of(context).size.height * .5,
-                      width: MediaQuery.of(context).size.width * .9,
+                      height: MediaQuery.of(context).size.height * .015,
+                      width: MediaQuery.of(context).size.width * .015,
                       child: LinearProgressIndicator(),
                     );
                   }
@@ -438,7 +440,7 @@ class _DetallesPartidoAlineacionFormacion extends State<DetallesPartidoAlineacio
             } else {
               return Container(
                 height: MediaQuery.of(context).size.height * .5,
-                width: MediaQuery.of(context).size.width * .9,
+                width: MediaQuery.of(context).size.width * .225,
                 child: LinearProgressIndicator(),
               );
             }

@@ -58,8 +58,14 @@ class _DetallesPartidoConvocatoria extends State<DetallesPartidoConvocatoria> {
                                             if (snapshot.hasError) {
                                               print(snapshot.error.toString());
                                               return Container(
-                                                width: MediaQuery.of(context).size.width / 1,
-                                                height: MediaQuery.of(context).size.height / 1,
+                                                width: MediaQuery
+                                                    .of(context)
+                                                    .size
+                                                    .width / 1,
+                                                height: MediaQuery
+                                                    .of(context)
+                                                    .size
+                                                    .height / 1,
                                                 child: Text(snapshot.error.toString()),
                                               );
                                             } else {
@@ -115,7 +121,8 @@ class _DetallesPartidoConvocatoria extends State<DetallesPartidoConvocatoria> {
     Box boxJugadoresEquipo = Hive.box('jugadores');
     if (jugadoresConvocados != null) {
       if (jugadoresConvocados.length > 0) {
-        Widget widgetJugador;
+        Widget widgetJugador = Container(height: 0);
+
         return ListView(
           shrinkWrap: true,
           children: List.generate(jugadoresConvocados.length, (idJugador) {
@@ -130,7 +137,9 @@ class _DetallesPartidoConvocatoria extends State<DetallesPartidoConvocatoria> {
               }
             });*/
             for (var i = 0; i < boxJugadoresEquipo.length; i++) {
-              if ('${jugadoresConvocados[idJugador]}' == boxJugadoresEquipo.getAt(i).id) {
+              if ('${jugadoresConvocados[idJugador]}' == boxJugadoresEquipo
+                  .getAt(i)
+                  .id) {
                 jugadorBox = boxJugadoresEquipo.getAt(i);
                 widgetJugador = Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -139,10 +148,6 @@ class _DetallesPartidoConvocatoria extends State<DetallesPartidoConvocatoria> {
                     Text("${jugadorBox.apodo}"),
                     Text("${jugadorBox.posicionFavorita}"),
                   ],
-                );
-              } else {
-                widgetJugador = Container(
-                  height: 0,
                 );
               }
             }
@@ -175,8 +180,14 @@ class _DetallesPartidoConvocatoria extends State<DetallesPartidoConvocatoria> {
     final boxJugadores = Hive.box('jugadores');
     if (boxJugadores.length > 0) {
       return Container(
-        width: MediaQuery.of(context).size.width / 1,
-        height: MediaQuery.of(context).size.height / 1,
+        width: MediaQuery
+            .of(context)
+            .size
+            .width / 1,
+        height: MediaQuery
+            .of(context)
+            .size
+            .height / 1,
         child: Column(
           children: <Widget>[
             Row(
@@ -222,6 +233,7 @@ class _DetallesPartidoConvocatoria extends State<DetallesPartidoConvocatoria> {
                         setState(() {
                           _isSeleccionado = nuevoEstado;
                         });
+                        Map postAlineacion = partidoActual.alineacion;
                         if (_isSeleccionado) {
                           postListaJugadoresConvocatoria.add(jugadorBox.id);
                           print("Añadido");
@@ -230,6 +242,25 @@ class _DetallesPartidoConvocatoria extends State<DetallesPartidoConvocatoria> {
                           for (int i = 0; i < postListaJugadoresConvocatoria.length; i++) {
                             if (postListaJugadoresConvocatoria[i] == jugadorBox.id) {
                               postListaJugadoresConvocatoria.removeAt(i);
+                              //Eliminar Jugador de la alineación
+                              /*
+                              Recorrer mapa de alineación y eliminar id coincidente
+                               */
+                              //partidoActual.alineacion['0'][1] //Recorrer este array
+                              postAlineacion.forEach((min, alin) {
+                                print("Minuto $min");
+                                print("Alineacion: $alin");
+                                Map postAlinPartidoActual = alin[1];
+                                alin[1].forEach((posicion, jugadorIDAlineacion) {
+                                  if (jugadorIDAlineacion == jugadorBox.id) {
+                                    //jugadorIDAlineacion = null;
+                                    postAlinPartidoActual['$posicion'] = null;
+                                  }
+                                });
+                                print("Alineacion post: $postAlinPartidoActual");
+                                alin[1] = postAlinPartidoActual;
+                                print("Alineacion post: $alin");
+                              });
                             }
                           }
                           print("Eliminado");
@@ -241,7 +272,7 @@ class _DetallesPartidoConvocatoria extends State<DetallesPartidoConvocatoria> {
                             rival: partidoActual.rival,
                             tipoPartido: partidoActual.tipoPartido,
                             convocatoria: postListaJugadoresConvocatoria,
-                            alineacion: partidoActual.alineacion,
+                            alineacion: postAlineacion,
                             golesAFavor: partidoActual.golesAFavor,
                             golesEnContra: partidoActual.golesEnContra,
                             lesiones: partidoActual.lesiones,
@@ -296,8 +327,14 @@ class _DetallesPartidoConvocatoria extends State<DetallesPartidoConvocatoria> {
       );
     } else {
       return Container(
-        width: MediaQuery.of(context).size.width / 1,
-        height: MediaQuery.of(context).size.height / 1,
+        width: MediaQuery
+            .of(context)
+            .size
+            .width / 1,
+        height: MediaQuery
+            .of(context)
+            .size
+            .height / 1,
         child: Text("Ningún jugador creado."),
       );
     }

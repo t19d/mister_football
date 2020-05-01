@@ -56,7 +56,7 @@ class _GestionJugadoresCreacion extends State<GestionJugadoresCreacion> {
   ];
 
   //Validar formulario
-  validar() async {
+  void validar() async {
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
       String _apodoGuardar = (apodo.trim() != "") ? apodo.trim() : apellido1;

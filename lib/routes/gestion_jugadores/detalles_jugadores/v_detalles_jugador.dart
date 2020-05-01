@@ -33,6 +33,7 @@ class _DetallesJugador extends State<DetallesJugador> {
       height: MediaQuery.of(context).size.height * .01,
       color: MisterFootball.primarioLight,
     );
+    TextStyle estiloTexto = TextStyle(fontSize: MediaQuery.of(context).size.width * .05);
 
     return FutureBuilder(
       future: Hive.openBox('jugadores'),
@@ -103,9 +104,15 @@ class _DetallesJugador extends State<DetallesJugador> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               //Nombre  | Apellido1 | Apellido2
-                              Text(jugador.nombre + " " + jugador.apellido1 + " " + jugador.apellido2),
+                              Text(
+                                "${jugador.nombre} ${jugador.apellido1} ${jugador.apellido2}",
+                                style: estiloTexto,
+                              ),
                               //Edad
-                              Text(jugador.calcularEdad() + " años (${jugador.fechaNacimiento})"),
+                              Text(
+                                "${jugador.calcularEdad()} años (${jugador.fechaNacimiento})",
+                                style: estiloTexto,
+                              ),
                             ],
                           ),
                         ],
@@ -116,12 +123,14 @@ class _DetallesJugador extends State<DetallesJugador> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: <Widget>[
-                          Text("Nombre:"),
+                          Text("Nombre:",
+                            style: estiloTexto,),
                           Container(
                             width: MediaQuery.of(context).size.width * .4,
                             child: Text(
                               jugador.nombre,
                               textAlign: TextAlign.right,
+                              style: estiloTexto,
                             ),
                           ),
                         ],
@@ -133,12 +142,14 @@ class _DetallesJugador extends State<DetallesJugador> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: <Widget>[
-                          Text("Primer apellido:"),
+                          Text("Primer apellido:",
+                            style: estiloTexto,),
                           Container(
                             width: MediaQuery.of(context).size.width * .4,
                             child: Text(
                               jugador.apellido1,
                               textAlign: TextAlign.right,
+                              style: estiloTexto,
                             ),
                           ),
                         ],
@@ -150,12 +161,14 @@ class _DetallesJugador extends State<DetallesJugador> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: <Widget>[
-                          Text("Segundo apellido:"),
+                          Text("Segundo apellido:",
+                            style: estiloTexto,),
                           Container(
                             width: MediaQuery.of(context).size.width * .4,
                             child: Text(
                               jugador.apellido2,
                               textAlign: TextAlign.right,
+                              style: estiloTexto,
                             ),
                           ),
                         ],
@@ -167,12 +180,14 @@ class _DetallesJugador extends State<DetallesJugador> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: <Widget>[
-                          Text("Apodo:"),
+                          Text("Apodo:",
+                            style: estiloTexto,),
                           Container(
                             width: MediaQuery.of(context).size.width * .4,
                             child: Text(
                               jugador.apodo,
                               textAlign: TextAlign.right,
+                              style: estiloTexto,
                             ),
                           ),
                         ],
@@ -184,12 +199,14 @@ class _DetallesJugador extends State<DetallesJugador> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: <Widget>[
-                          Text("Pierna buena:"),
+                          Text("Pierna buena:",
+                            style: estiloTexto,),
                           Container(
                             width: MediaQuery.of(context).size.width * .4,
                             child: Text(
                               jugador.piernaBuena,
                               textAlign: TextAlign.right,
+                              style: estiloTexto,
                             ),
                           ),
                         ],
@@ -201,12 +218,14 @@ class _DetallesJugador extends State<DetallesJugador> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: <Widget>[
-                          Text("Posición favorita:"),
+                          Text("Posición favorita:",
+                            style: estiloTexto,),
                           Container(
                             width: MediaQuery.of(context).size.width * .4,
                             child: Text(
                               jugador.posicionFavorita,
                               textAlign: TextAlign.right,
+                              style: estiloTexto,
                             ),
                           ),
                         ],
@@ -218,12 +237,14 @@ class _DetallesJugador extends State<DetallesJugador> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: <Widget>[
-                          Text("Anotaciones:"),
+                          Text("Anotaciones:",
+                            style: estiloTexto,),
                           Container(
                             width: MediaQuery.of(context).size.width * .4,
                             child: Text(
                               jugador.anotaciones,
                               textAlign: TextAlign.right,
+                              style: estiloTexto,
                             ),
                           ),
                         ],
@@ -231,7 +252,8 @@ class _DetallesJugador extends State<DetallesJugador> {
                       //Text("Anotaciones: " + jugador.anotaciones),
                       divisorGrupos,
                       //Historial y medias
-                      Text("Histórico"),
+                      Text("Histórico",
+                        style: estiloTexto,),
                     ],
                   ),
                 ),

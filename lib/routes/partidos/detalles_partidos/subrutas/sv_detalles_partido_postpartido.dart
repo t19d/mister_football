@@ -658,15 +658,13 @@ class _DetallesPartidoPostpartido extends State<DetallesPartidoPostpartido> {
         children: List.generate(partidoActual.golesAFavor.length, (iFila) {
           Jugador jugadorFila;
           for (var i = 0; i < boxJugadoresEquipo.length; i++) {
-            if (partidoActual.golesAFavor[iFila][2] == boxJugadoresEquipo.getAt(i).id) {
+            if (partidoActual.golesAFavor[iFila][1] == boxJugadoresEquipo.getAt(i).id) {
               jugadorFila = boxJugadoresEquipo.getAt(i);
             }
           }
           return Row(
             children: <Widget>[
-              Text("${partidoActual.golesAFavor[iFila][0]}"),
-              Spacer(flex: 1,),
-              Text("${partidoActual.golesAFavor[iFila][1]}'"),
+              Text("${partidoActual.golesAFavor[iFila][0]}'"),
               Spacer(flex: 1,),
               Text("${jugadorFila.nombre}"),
             ],
@@ -738,7 +736,7 @@ class _DetallesPartidoPostpartido extends State<DetallesPartidoPostpartido> {
                     formKey.currentState.save();
                     //Actualizar los goles a favor del partido
                     List golesAFavorActuales = partidoActual.golesAFavor;
-                    golesAFavorActuales.add(["0-0", "$_minutoSeleccionadoGolesAFavor", "$_idJugadorSeleccionadoGolesAFavor"]);
+                    golesAFavorActuales.add(["$_minutoSeleccionadoGolesAFavor", "$_idJugadorSeleccionadoGolesAFavor"]);
                     Partido p = Partido(
                         fecha: partidoActual.fecha,
                         hora: partidoActual.hora,

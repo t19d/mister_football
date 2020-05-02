@@ -44,7 +44,7 @@ class _DetallesPartidoPostpartido extends State<DetallesPartidoPostpartido> {
                         CAMBIAR ALINEACIÓN
                         String observaciones;
                        */
-                  //Goles a Favor //[["0-0", "10", "idJugador"], ...] Resultado, Minuto, Jugador
+                  //Goles a Favor //["10", "idJugador"], ...] //Minuto, Jugador
                   Container(
                     //padding: EdgeInsets.fromLTRB((MediaQuery.of(context).size.width * 0.05), 0, 0, MediaQuery.of(context).size.width * 0.05),
                     //width: MediaQuery.of(context).size.width * 0.9,

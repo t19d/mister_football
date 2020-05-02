@@ -663,10 +663,42 @@ class _DetallesPartidoPostpartido extends State<DetallesPartidoPostpartido> {
             }
           }
           return Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
               Text("${partidoActual.golesAFavor[iFila][0]}'"),
-              Spacer(flex: 1,),
               Text("${jugadorFila.nombre}"),
+              IconButton(
+                  icon: Icon(
+                    Icons.close,
+                    color: Colors.red,
+                  ),
+                  tooltip: 'Eliminar gol',
+                  onPressed: () async {
+                    //Actualizar los goles a favor del partido
+                    List golesAFavorActuales = partidoActual.golesAFavor;
+                    for (int i = 0; i < golesAFavorActuales.length; i++) {
+                      if (golesAFavorActuales[i][1] == jugadorFila.id) {
+                        golesAFavorActuales.removeAt(i);
+                        Partido p = Partido(
+                            fecha: partidoActual.fecha,
+                            hora: partidoActual.hora,
+                            lugar: partidoActual.lugar,
+                            rival: partidoActual.rival,
+                            tipoPartido: partidoActual.tipoPartido,
+                            convocatoria: partidoActual.convocatoria,
+                            alineacion: partidoActual.alineacion,
+                            golesAFavor: golesAFavorActuales,
+                            golesEnContra: partidoActual.golesEnContra,
+                            lesiones: partidoActual.lesiones,
+                            tarjetas: partidoActual.tarjetas,
+                            cambios: partidoActual.cambios,
+                            observaciones: partidoActual.observaciones);
+                        Box boxPartidosEditarConvocatoria = await Hive.openBox('partidos');
+                        boxPartidosEditarConvocatoria.putAt(widget.posicion, p);
+                        setState(() {});
+                      }
+                    }
+                  }),
             ],
           );
         }),
@@ -679,7 +711,7 @@ class _DetallesPartidoPostpartido extends State<DetallesPartidoPostpartido> {
   }
 
   //Mostrar formulario de añadir un nuevo gol
-  Widget listaSeleccionarJugadores(Partido partidoActual,StateSetter setState) {
+  Widget listaSeleccionarJugadores(Partido partidoActual, StateSetter setState) {
     //Datos formulario
     final formKey = new GlobalKey<FormState>();
     final boxJugadores = Hive.box('jugadores');

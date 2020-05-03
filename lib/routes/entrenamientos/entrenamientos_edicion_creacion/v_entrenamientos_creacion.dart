@@ -293,7 +293,6 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
                                                   } else {
                                                     return Container(
                                                       width: MediaQuery.of(context).size.width / 1,
-                                                      height: MediaQuery.of(context).size.height / 1,
                                                       child: LinearProgressIndicator(),
                                                     );
                                                   }

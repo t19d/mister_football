@@ -13,13 +13,6 @@ class ListaPartidos extends StatefulWidget {
 }
 
 class _ListaPartidos extends State<ListaPartidos> {
-  /*static const MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo(
-    testDevices: testDevice != null ? <String>[testDevice] : null,
-    nonPersonalizedAds: true,
-    keywords: <String>['Game', 'Mario'],
-  );
-
-  BannerAd myBanner;*/
 
   @override
   void dispose() {
@@ -28,48 +21,13 @@ class _ListaPartidos extends State<ListaPartidos> {
     super.dispose();
   }
 
-  /*
-  BannerAd myBanner = BannerAd(
-    adUnitId: BannerAd.testAdUnitId, //'ca-app-pub-8505501288716754/8100371478',
-    size: AdSize.banner,
-    targetingInfo: targetingInfo,
-    listener: (MobileAdEvent event) {
-      print("BannerAd event is $event");
-    },
-  );
-  */
-  /*static MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo(
-    keywords: <String>['juegos', 'Mario Kart'],
-    contentUrl: 'https://flutter.io',
-    childDirected: false,
-    nonPersonalizedAds: true,
-    testDevices: <String>[],
-  );*/
-/*
-  @override
-  void initState() {
-    FirebaseAdMob.instance.initialize(appId: 'ca-app-pub-8505501288716754~2552531320').then((response) {
-      myBanner = BannerAd(
-        adUnitId: BannerAd.testAdUnitId, //'ca-app-pub-8505501288716754/8100371478',
-        size: AdSize.banner,
-        targetingInfo: targetingInfo,
-        listener: (MobileAdEvent event) {
-          print("BannerAd event is $event");
-        },
-      )
-        ..load()
-        ..show();
-    });
-    super.initState();
-  }*/
-
   Widget itemPartidos() {
     final boxPartidos = Hive.box('partidos');
     if (boxPartidos.length > 0) {
       return ListView(
         shrinkWrap: true,
         children: List.generate(boxPartidos.length, (iPartido) {
-          final Partido entrenamientoBox = boxPartidos.getAt(iPartido) as Partido;
+          final Partido partidoBox = boxPartidos.getAt(iPartido) as Partido;
           return Card(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15.0),
@@ -91,25 +49,29 @@ class _ListaPartidos extends State<ListaPartidos> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
+                    Text(
+                      //Entendiendo que es local
+                      "${partidoBox.golesAFavor.length}-${partidoBox.golesEnContra.length}",
+                    ),
                     //Representar el tipo de partido cambiando el color
                     //Rival
                     Text(
-                      entrenamientoBox.rival,
+                      partidoBox.rival,
                       textAlign: TextAlign.center,
                     ),
                     //Tipo
                     Text(
-                      entrenamientoBox.tipoPartido,
+                      partidoBox.tipoPartido,
                       textAlign: TextAlign.center,
                     ),
                     //Fecha
                     Text(
-                      entrenamientoBox.fecha,
+                      partidoBox.fecha,
                       textAlign: TextAlign.center,
                     ),
                     //Hora
                     Text(
-                      entrenamientoBox.hora,
+                      partidoBox.hora,
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 10),
                     ),

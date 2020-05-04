@@ -278,7 +278,8 @@ class _DetallesPartidoConvocatoria extends State<DetallesPartidoConvocatoria> {
                             lesiones: partidoActual.lesiones,
                             tarjetas: partidoActual.tarjetas,
                             cambios: partidoActual.cambios,
-                            observaciones: partidoActual.observaciones);
+                            observaciones: partidoActual.observaciones,
+                            isLocal: partidoActual.isLocal);
                         boxPartidosEditarConvocatoria = await Hive.openBox('partidos');
                         boxPartidosEditarConvocatoria.putAt(widget.posicion, p);
                         setState(() {});

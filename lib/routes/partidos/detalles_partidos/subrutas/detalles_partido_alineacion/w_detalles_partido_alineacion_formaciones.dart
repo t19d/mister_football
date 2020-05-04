@@ -236,7 +236,8 @@ class _DetallesPartidoAlineacionFormacion extends State<DetallesPartidoAlineacio
                     lesiones: partidoActual.lesiones,
                     tarjetas: partidoActual.tarjetas,
                     cambios: partidoActual.cambios,
-                    observaciones: partidoActual.observaciones);
+                    observaciones: partidoActual.observaciones,
+                    isLocal: partidoActual.isLocal);
                 Box boxPartidosEditarAlineacion = await Hive.openBox('partidos');
                 await boxPartidosEditarAlineacion.putAt(widget.posicion, p);
                 setState(() {});

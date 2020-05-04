@@ -56,7 +56,9 @@ class _DetallesPartidoPostpartido extends State<DetallesPartidoPostpartido> {
                     children: <Widget>[
                       //Entendiendo que es local
                       Text(
-                        "${partido.golesAFavor.length}-${partido.golesEnContra.length}",
+                        (partido.isLocal)
+                            ? "${partido.golesAFavor.length}-${partido.golesEnContra.length}"
+                            : "${partido.golesEnContra.length}-${partido.golesAFavor.length}",
                         style: TextStyle(fontSize: 25),
                       ),
                       /*
@@ -512,7 +514,8 @@ class _DetallesPartidoPostpartido extends State<DetallesPartidoPostpartido> {
                           lesiones: partidoActual.lesiones,
                           tarjetas: partidoActual.tarjetas,
                           cambios: partidoActual.cambios,
-                          observaciones: partidoActual.observaciones);
+                          observaciones: partidoActual.observaciones,
+                          isLocal: partidoActual.isLocal);
                       Box boxPartidosEditarConvocatoria = await Hive.openBox('partidos');
                       boxPartidosEditarConvocatoria.putAt(widget.posicion, p);
                       setState(() {});
@@ -616,7 +619,8 @@ class _DetallesPartidoPostpartido extends State<DetallesPartidoPostpartido> {
                               lesiones: partidoActual.lesiones,
                               tarjetas: partidoActual.tarjetas,
                               cambios: partidoActual.cambios,
-                              observaciones: partidoActual.observaciones);
+                              observaciones: partidoActual.observaciones,
+                              isLocal: partidoActual.isLocal);
                           Box boxPartidosEditarConvocatoria = await Hive.openBox('partidos');
                           boxPartidosEditarConvocatoria.putAt(widget.posicion, p);
 
@@ -675,7 +679,8 @@ class _DetallesPartidoPostpartido extends State<DetallesPartidoPostpartido> {
                           lesiones: partidoActual.lesiones,
                           tarjetas: partidoActual.tarjetas,
                           cambios: partidoActual.cambios,
-                          observaciones: partidoActual.observaciones);
+                          observaciones: partidoActual.observaciones,
+                          isLocal: partidoActual.isLocal);
                       Box boxPartidosEditarConvocatoria = await Hive.openBox('partidos');
                       boxPartidosEditarConvocatoria.putAt(widget.posicion, p);
                       setState(() {});
@@ -743,7 +748,8 @@ class _DetallesPartidoPostpartido extends State<DetallesPartidoPostpartido> {
                       lesiones: partidoActual.lesiones,
                       tarjetas: partidoActual.tarjetas,
                       cambios: partidoActual.cambios,
-                      observaciones: partidoActual.observaciones);
+                      observaciones: partidoActual.observaciones,
+                      isLocal: partidoActual.isLocal);
                   Box boxPartidosEditarConvocatoria = await Hive.openBox('partidos');
                   boxPartidosEditarConvocatoria.putAt(widget.posicion, p);
 
@@ -835,7 +841,8 @@ class _DetallesPartidoPostpartido extends State<DetallesPartidoPostpartido> {
                           lesiones: partidoActual.lesiones,
                           tarjetas: tarjetasActuales,
                           cambios: partidoActual.cambios,
-                          observaciones: partidoActual.observaciones);
+                          observaciones: partidoActual.observaciones,
+                          isLocal: partidoActual.isLocal);
                       Box boxPartidosEditarConvocatoria = await Hive.openBox('partidos');
                       boxPartidosEditarConvocatoria.putAt(widget.posicion, p);
                       setState(() {});
@@ -1006,7 +1013,8 @@ class _DetallesPartidoPostpartido extends State<DetallesPartidoPostpartido> {
                               lesiones: partidoActual.lesiones,
                               tarjetas: tarjetasActuales,
                               cambios: partidoActual.cambios,
-                              observaciones: partidoActual.observaciones);
+                              observaciones: partidoActual.observaciones,
+                              isLocal: partidoActual.isLocal);
                           Box boxPartidosEditarConvocatoria = await Hive.openBox('partidos');
                           boxPartidosEditarConvocatoria.putAt(widget.posicion, p);
 
@@ -1095,9 +1103,7 @@ class _DetallesPartidoPostpartido extends State<DetallesPartidoPostpartido> {
                     Text("${jugadorFilaEntra.apodo}"),
                   ],
                 ),
-
                 //Jugador sale
-
                 Row(
                   children: <Widget>[
                     Icon(
@@ -1130,7 +1136,8 @@ class _DetallesPartidoPostpartido extends State<DetallesPartidoPostpartido> {
                           lesiones: partidoActual.lesiones,
                           tarjetas: partidoActual.tarjetas,
                           cambios: cambiosActuales,
-                          observaciones: partidoActual.observaciones);
+                          observaciones: partidoActual.observaciones,
+                          isLocal: partidoActual.isLocal);
                       Box boxPartidosEditarConvocatoria = await Hive.openBox('partidos');
                       boxPartidosEditarConvocatoria.putAt(widget.posicion, p);
                       setState(() {});
@@ -1265,7 +1272,8 @@ class _DetallesPartidoPostpartido extends State<DetallesPartidoPostpartido> {
                                 lesiones: partidoActual.lesiones,
                                 tarjetas: partidoActual.tarjetas,
                                 cambios: cambiosActuales,
-                                observaciones: partidoActual.observaciones);
+                                observaciones: partidoActual.observaciones,
+                                isLocal: partidoActual.isLocal);
                             Box boxPartidosEditarConvocatoria = await Hive.openBox('partidos');
                             boxPartidosEditarConvocatoria.putAt(widget.posicion, p);
 
@@ -1358,7 +1366,8 @@ class _DetallesPartidoPostpartido extends State<DetallesPartidoPostpartido> {
                           lesiones: lesionesActuales,
                           tarjetas: partidoActual.tarjetas,
                           cambios: partidoActual.cambios,
-                          observaciones: partidoActual.observaciones);
+                          observaciones: partidoActual.observaciones,
+                          isLocal: partidoActual.isLocal);
                       Box boxPartidosEditarConvocatoria = await Hive.openBox('partidos');
                       boxPartidosEditarConvocatoria.putAt(widget.posicion, p);
                       setState(() {});
@@ -1459,7 +1468,8 @@ class _DetallesPartidoPostpartido extends State<DetallesPartidoPostpartido> {
                               lesiones: lesionesActuales,
                               tarjetas: partidoActual.tarjetas,
                               cambios: partidoActual.cambios,
-                              observaciones: partidoActual.observaciones);
+                              observaciones: partidoActual.observaciones,
+                              isLocal: partidoActual.isLocal);
                           Box boxPartidosEditarConvocatoria = await Hive.openBox('partidos');
                           boxPartidosEditarConvocatoria.putAt(widget.posicion, p);
 

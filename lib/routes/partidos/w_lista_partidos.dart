@@ -13,7 +13,6 @@ class ListaPartidos extends StatefulWidget {
 }
 
 class _ListaPartidos extends State<ListaPartidos> {
-
   @override
   void dispose() {
     Hive.close();
@@ -51,7 +50,9 @@ class _ListaPartidos extends State<ListaPartidos> {
                   children: <Widget>[
                     Text(
                       //Entendiendo que es local
-                      "${partidoBox.golesAFavor.length}-${partidoBox.golesEnContra.length}",
+                      (partidoBox.isLocal)
+                          ? "${partidoBox.golesAFavor.length}-${partidoBox.golesEnContra.length}" :
+                           "${partidoBox.golesEnContra.length}-${partidoBox.golesAFavor.length}",
                     ),
                     //Representar el tipo de partido cambiando el color
                     //Rival

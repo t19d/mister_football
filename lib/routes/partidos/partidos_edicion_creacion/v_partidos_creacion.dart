@@ -25,6 +25,8 @@ class _PartidosCreacion extends State<PartidosCreacion> {
   String lugar = "";
   String rival = "";
   String tipoPartido = "";
+  bool isLocal = true;
+  List<bool> _isSelected = [true, false];
   final formKey = new GlobalKey<FormState>();
   List<DropdownMenuItem<String>> _tipoDePartidoDisponibles;
   List _tipoDePartido = ["Liga", "Copa", "Amistoso", "Torneo amistoso"];
@@ -46,6 +48,7 @@ class _PartidosCreacion extends State<PartidosCreacion> {
         '9': null,
         '10': null
       };
+      print(isLocal);
       Partido p = Partido(
           fecha: fecha.trim(),
           hora: hora.trim(),
@@ -61,7 +64,8 @@ class _PartidosCreacion extends State<PartidosCreacion> {
           lesiones: [],
           tarjetas: [],
           cambios: [],
-          observaciones: "");
+          observaciones: "",
+          isLocal: isLocal);
 
       //Almacenar el partido en la Box de 'partidos'
       if (Hive.isBoxOpen('partidos')) {
@@ -208,6 +212,61 @@ class _PartidosCreacion extends State<PartidosCreacion> {
                           hintText: 'Lugar del partido',
                           labelText: 'Lugar',
                         ),
+                      ),
+                      separadorFormulario(),
+                      //Local/Visitante
+                      Column(
+                        children: <Widget>[
+                          ToggleButtons(
+                            borderColor: Colors.blueAccent.withOpacity(.5),
+                            selectedBorderColor: Colors.blueAccent,
+                            children: <Widget>[
+                              Container(
+                                  width: MediaQuery.of(context).size.width * .4,
+                                  child: new Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      new Icon(
+                                        Icons.home,
+                                      ),
+                                      new Text(
+                                        "LOCAL",
+                                      )
+                                    ],
+                                  )),
+                              Container(
+                                width: MediaQuery.of(context).size.width * .4,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Icon(
+                                      Icons.directions_bus,
+                                    ),
+                                    Text(
+                                      "VISITANTE",
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                            onPressed: (int index) {
+                              setState(() {
+                                for (int i = 0; i < _isSelected.length; i++) {
+                                  if (i == index) {
+                                    //Roja
+                                    _isSelected[i] = true;
+                                    isLocal = false;
+                                  } else {
+                                    //Amarilla
+                                    _isSelected[i] = false;
+                                    isLocal = true;
+                                  }
+                                }
+                              });
+                            },
+                            isSelected: _isSelected,
+                          ),
+                        ],
                       ),
                       separadorFormulario(),
                       //Tipo partido

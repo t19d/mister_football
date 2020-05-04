@@ -6,6 +6,7 @@ import 'package:mister_football/clases/conversor_imagen.dart';
 import 'package:hive/hive.dart';
 import 'package:mister_football/clases/jugador.dart';
 import 'package:mister_football/clases/partido.dart';
+import 'package:mister_football/main.dart';
 
 class PartidosCreacion extends StatefulWidget {
   PartidosCreacion({Key key}) : super(key: key);
@@ -93,6 +94,7 @@ class _PartidosCreacion extends State<PartidosCreacion> {
   void initState() {
     fecha = "${fechaHoraInicial.year}-${fechaHoraInicial.month}-${fechaHoraInicial.day}";
     hora = "${fechaHoraInicial.hour}:${fechaHoraInicial.minute}";
+    lugar = "";
     _tipoDePartidoDisponibles = getDropDownMenuItems();
     tipoPartido = _tipoDePartidoDisponibles[0].value;
 
@@ -110,6 +112,19 @@ class _PartidosCreacion extends State<PartidosCreacion> {
           title: Text(
             'Nuevo partido',
           ),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.close,
+                size: MediaQuery.of(context).size.width * .09,
+                color: Colors.redAccent,
+              ),
+              tooltip: 'Cancelar',
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ],
         ),
         body: Form(
           key: formKey,
@@ -121,6 +136,23 @@ class _PartidosCreacion extends State<PartidosCreacion> {
                   padding: EdgeInsets.only(left: 20, right: 20, top: 5, bottom: 8),
                   child: Column(
                     children: <Widget>[
+                      //Rival
+                      TextFormField(
+                        keyboardType: TextInputType.text,
+                        textCapitalization: TextCapitalization.sentences,
+                        validator: (val) => val.length == 0 ? 'Escribe el equipo rival' : null,
+                        onChanged: (val) => rival = val,
+                        decoration: InputDecoration(
+                          fillColor: Colors.white,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(25.0),
+                            borderSide: BorderSide(),
+                          ),
+                          hintText: 'Equipo rival*',
+                          labelText: 'Equipo rival*',
+                        ),
+                      ),
+                      separadorFormulario(),
                       //Fecha
                       RaisedButton(
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
@@ -164,7 +196,15 @@ class _PartidosCreacion extends State<PartidosCreacion> {
                             setState(() {
                               hora = "${time.hour}:${time.minute}";
                             });
-                          }, currentTime: DateTime.now(), locale: LocaleType.es);
+                          },
+                              currentTime: DateTime(
+                                int.parse(fecha.split("-")[0]),
+                                int.parse(fecha.split("-")[1]),
+                                int.parse(fecha.split("-")[2]),
+                                int.parse(hora.split(":")[0]),
+                                int.parse(hora.split(":")[1]),
+                              ),
+                              locale: LocaleType.es);
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -180,28 +220,12 @@ class _PartidosCreacion extends State<PartidosCreacion> {
                         ),
                       ),
                       separadorFormulario(),
-                      //Rival
-                      TextFormField(
-                        keyboardType: TextInputType.text,
-                        textCapitalization: TextCapitalization.sentences,
-                        validator: (val) => val.length == 0 ? 'Escribe el equipo rival' : null,
-                        onChanged: (val) => rival = val,
-                        decoration: InputDecoration(
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(25.0),
-                            borderSide: BorderSide(),
-                          ),
-                          hintText: 'Equipo rival',
-                          labelText: 'Equipo rival',
-                        ),
-                      ),
-                      separadorFormulario(),
                       //Lugar
                       TextFormField(
+                        initialValue: "",
                         keyboardType: TextInputType.text,
                         textCapitalization: TextCapitalization.sentences,
-                        validator: (val) => val.length == 0 ? 'Escribe el lugar' : null,
+                        /*validator: (val) => val.length == 0 ? 'Escribe el lugar' : null,*/
                         onChanged: (val) => lugar = val,
                         decoration: InputDecoration(
                           fillColor: Colors.white,
@@ -275,7 +299,10 @@ class _PartidosCreacion extends State<PartidosCreacion> {
                           Text("Tipo de partido"),
                           DropdownButton(
                             elevation: 2,
-                            iconSize: 40.0,
+                            icon: Icon(
+                              Icons.keyboard_arrow_down,
+                              size: MediaQuery.of(context).size.width * .07,
+                            ),
                             value: tipoPartido,
                             items: _tipoDePartidoDisponibles,
                             onChanged: cambiarTipoDePartido,
@@ -286,30 +313,15 @@ class _PartidosCreacion extends State<PartidosCreacion> {
                     ],
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    RaisedButton(
-                      shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30.0),
-                      ),
-                      color: Colors.red,
-                      child: Text("Cancelar"),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                    RaisedButton(
-                      shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30.0),
-                      ),
-                      color: Colors.lightBlueAccent,
-                      child: Text("Crear jugador"),
-                      onPressed: () async {
-                        validar();
-                      },
-                    ),
-                  ],
+                RaisedButton(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                  color: Colors.lightGreenAccent,
+                  child: Text("CREAR"),
+                  onPressed: () async {
+                    validar();
+                  },
                 ),
               ],
             ),
@@ -324,7 +336,7 @@ class _PartidosCreacion extends State<PartidosCreacion> {
   //Widget que separa los elementos del formulario
   separadorFormulario() {
     return SizedBox(
-      height: 8.0,
+      height: MediaQuery.of(context).size.height * .02,
     );
   }
 
@@ -332,9 +344,14 @@ class _PartidosCreacion extends State<PartidosCreacion> {
 
   //Hacer el Spinner de tipo de partido
   List<DropdownMenuItem<String>> getDropDownMenuItems() {
-    List<DropdownMenuItem<String>> items = new List();
+    List<DropdownMenuItem<String>> items = List();
     for (String tp in _tipoDePartido) {
-      items.add(new DropdownMenuItem(value: tp, child: new Text(tp)));
+      items.add(
+        DropdownMenuItem(
+          value: tp,
+          child: Text(tp),
+        ),
+      );
     }
     return items;
   }

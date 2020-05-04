@@ -41,6 +41,8 @@ class Partido {
   final List<dynamic> cambios;
   @HiveField(12)
   final String observaciones;
+  @HiveField(13)
+  final bool isLocal;
 
   Partido(
       {this.fecha,
@@ -55,5 +57,6 @@ class Partido {
       this.lesiones,
       this.tarjetas,
       this.cambios,
-      this.observaciones});
+      this.observaciones,
+      this.isLocal});
 }

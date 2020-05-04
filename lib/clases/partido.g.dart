@@ -31,13 +31,14 @@ class PartidoAdapter extends TypeAdapter<Partido> {
       tarjetas: (fields[10] as List)?.cast<dynamic>(),
       cambios: (fields[11] as List)?.cast<dynamic>(),
       observaciones: fields[12] as String,
+      isLocal: fields[13] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, Partido obj) {
     writer
-      ..writeByte(13)
+      ..writeByte(14)
       ..writeByte(0)
       ..write(obj.fecha)
       ..writeByte(1)
@@ -63,6 +64,8 @@ class PartidoAdapter extends TypeAdapter<Partido> {
       ..writeByte(11)
       ..write(obj.cambios)
       ..writeByte(12)
-      ..write(obj.observaciones);
+      ..write(obj.observaciones)
+      ..writeByte(13)
+      ..write(obj.isLocal);
   }
 }

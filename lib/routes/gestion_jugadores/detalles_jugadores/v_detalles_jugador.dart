@@ -15,7 +15,7 @@ class DetallesJugador extends StatefulWidget {
 }
 
 class _DetallesJugador extends State<DetallesJugador> {
-  Jugador jugador = null;
+  Jugador jugador;
 
   @override
   void dispose() {

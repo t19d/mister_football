@@ -17,7 +17,7 @@ class PartidosCreacion extends StatefulWidget {
 
 class _PartidosCreacion extends State<PartidosCreacion> {
   //Box partidos
-  Box boxPartidos = null;
+  Box boxPartidos;
 
   //Datos
   DateTime fechaHoraInicial = DateTime.now();
@@ -33,7 +33,7 @@ class _PartidosCreacion extends State<PartidosCreacion> {
   List _tipoDePartido = ["Liga", "Copa", "Amistoso", "Torneo amistoso"];
 
   //Validar formulario
-  validar() async {
+  void validar() async {
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
       Map<String, Jugador> alineacionVacia = {
@@ -334,7 +334,7 @@ class _PartidosCreacion extends State<PartidosCreacion> {
   /*   */
 
   //Widget que separa los elementos del formulario
-  separadorFormulario() {
+  Widget separadorFormulario() {
     return SizedBox(
       height: MediaQuery.of(context).size.height * .02,
     );
@@ -357,7 +357,7 @@ class _PartidosCreacion extends State<PartidosCreacion> {
   }
 
   //Actualizar la posición cuando eliges en el Spinner
-  cambiarTipoDePartido(tipoPartidoElegido) {
+  void cambiarTipoDePartido(tipoPartidoElegido) {
     setState(() {
       tipoPartido = tipoPartidoElegido;
     });

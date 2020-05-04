@@ -58,7 +58,7 @@ class _CampoJugadores extends State<CampoJugadores> {
     );
   }*/
 
-  cambiarFormacion(formacionElegida) {
+  void cambiarFormacion(formacionElegida) {
     setState(() {
       _formacionActual = formacionElegida;
     });

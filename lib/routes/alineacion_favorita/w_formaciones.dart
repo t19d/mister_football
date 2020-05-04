@@ -68,13 +68,7 @@ class _Formacion extends State<Formacion> {
     '10': null
   };
 
-/*refreshList() {
-    setState(() {
-      //jugadores = DBHelper.getJugadoresPorPosiciones();
-    });
-  }*/
-
-  refreshPosicionesOcupadas(Map<String, dynamic> posOcup) {
+  void refreshPosicionesOcupadas(Map<String, dynamic> posOcup) {
     setState(() {
       posicionesOcupadas = posOcup;
     });
@@ -121,7 +115,7 @@ class _Formacion extends State<Formacion> {
   }
 
   //cartasJugadores(List<Jugador> jugadores) {
-  cartasJugadores() {
+  Widget cartasJugadores() {
     /*int variable = 0;
     jugadores.forEach((f) {
       variable++;

@@ -16,7 +16,7 @@ class DetallesEnternamiento extends StatefulWidget {
 }
 
 class _DetallesEnternamiento extends State<DetallesEnternamiento> {
-  Entrenamiento entrenamiento = null;
+  Entrenamiento entrenamiento;
 
   @override
   void dispose() {
@@ -155,7 +155,7 @@ class _DetallesEnternamiento extends State<DetallesEnternamiento> {
   }
 
   //Mostrar ejercicios seleccionados
-  mostrarEjerciciosSeleccionados(String ejerciciosString, List<String> ejercicios) {
+  Widget mostrarEjerciciosSeleccionados(String ejerciciosString, List<String> ejercicios) {
     List<dynamic> listaEjerciciosJSON = jsonDecode(ejerciciosString);
     if (ejercicios.length > 0) {
       return ListView(
@@ -175,8 +175,7 @@ class _DetallesEnternamiento extends State<DetallesEnternamiento> {
 
   /* Jugadores */
   //Mostrar jugadores seleccionados
-
-  mostrarJugadoresSeleccionados(List<dynamic> jugadoresElegidos) {
+  Widget mostrarJugadoresSeleccionados(List<dynamic> jugadoresElegidos) {
     Box boxJugadoresEquipo = Hive.box('jugadores');
     if (jugadoresElegidos.length > 0) {
       return ListView(

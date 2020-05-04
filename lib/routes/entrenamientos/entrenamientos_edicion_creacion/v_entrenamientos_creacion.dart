@@ -28,7 +28,7 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
   final formKey = new GlobalKey<FormState>();
 
   //Validar formulario
-  validar() async {
+  void validar() async {
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
 
@@ -408,7 +408,7 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
   /*   */
 
   //Widget que separa los elementos del formulario
-  separadorFormulario() {
+  Widget separadorFormulario() {
     return SizedBox(
       height: MediaQuery.of(context).size.width / 50,
       width: MediaQuery.of(context).size.width / 50,
@@ -416,7 +416,7 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
   }
 
   /* Ejercicios */
-  mostrarEjerciciosSeleccionados(String ejerciciosString, List<String> ejercicios) {
+  Widget mostrarEjerciciosSeleccionados(String ejerciciosString, List<String> ejercicios) {
     List<dynamic> listaEjerciciosJSON = jsonDecode(ejerciciosString);
     if (ejercicios.length > 0) {
       return ListView(
@@ -455,7 +455,7 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
   }
 
 //Mostrar lista seleccionable de ejercicios JSON
-  listaSeleccionarEjercicios(String ejerciciosString, List<String> ejecicios, StateSetter setState) {
+  Widget listaSeleccionarEjercicios(String ejerciciosString, List<String> ejecicios, StateSetter setState) {
     List<String> ejerciciosSeleccionados = ejecicios;
     print(ejerciciosSeleccionados);
     List<dynamic> listaEjerciciosJSON = jsonDecode(ejerciciosString);
@@ -514,7 +514,7 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
 
 /* Jugadores */
 
-  mostrarJugadoresSeleccionados(List<dynamic> jugadoresElegidos) {
+  Widget mostrarJugadoresSeleccionados(List<dynamic> jugadoresElegidos) {
     Box boxJugadoresEquipo = Hive.box('jugadores');
     if (jugadoresElegidos.length > 0) {
       return ListView(
@@ -537,7 +537,7 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
   }
 
 //Mostrar lista seleccionable de jugadores
-  listaSeleccionarJugadores(List<dynamic> preListaJugadores, StateSetter setState) {
+  Widget listaSeleccionarJugadores(List<dynamic> preListaJugadores, StateSetter setState) {
     List<Map<String, String>> postListaJugadores = preListaJugadores; //{"idJugador": "XXXX", "opinion":"No"}
     final boxJugadores = Hive.box('jugadores');
     if (boxJugadores.length > 0) {

@@ -117,7 +117,7 @@ class _DetallesPartidoConvocatoria extends State<DetallesPartidoConvocatoria> {
 
   /* Jugadores */
   //Mostrar lista de los jugadores seleccionados en la convocatoria
-  mostrarJugadoresSeleccionados(List<String> jugadoresConvocados) {
+  Widget mostrarJugadoresSeleccionados(List<String> jugadoresConvocados) {
     Box boxJugadoresEquipo = Hive.box('jugadores');
     if (jugadoresConvocados != null) {
       if (jugadoresConvocados.length > 0) {

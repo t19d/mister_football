@@ -21,7 +21,7 @@ class GestionJugadoresEdicion extends StatefulWidget {
 
 class _GestionJugadoresEdicion extends State<GestionJugadoresEdicion> {
   //Box jugadores
-  Box boxJugadores = null;
+  Box boxJugadores;
 
   //Datos
   String nombre = "";
@@ -58,7 +58,7 @@ class _GestionJugadoresEdicion extends State<GestionJugadoresEdicion> {
   ];
 
   //Validar formulario
-  validar() async {
+  void validar() async {
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
       Jugador j = Jugador(

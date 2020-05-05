@@ -66,17 +66,20 @@ class MisterFootball extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Partidos(),
-      theme: ThemeData(
+      /*theme: ThemeData(
         // Define the default brightness and colors.
         primaryColor: primario,
         accentColor: complementario,
+        //brightness: Brightness.dark,
 
         // Define the default font family.
         fontFamily: 'Georgia',
         /*textTheme: GoogleFonts.tenorSansTextTheme(
           Theme.of(context).textTheme,
         ),*/
-      ),
+      ),*/
+      theme: ThemeData.light(),
+      darkTheme: ThemeData.dark(),
     );
   }
 }

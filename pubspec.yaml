@@ -22,6 +22,8 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
+  # Icono app
+  flutter_launcher_icons: ^0.7.5
   # Ruta
   path_provider:
   # Selector imagen
@@ -37,7 +39,13 @@ dependencies:
   google_fonts: ^0.4.0
   # Seleccionador de fecha y hora
   flutter_datetime_picker: 1.2.5
+  # Anuncios
   firebase_admob: ^0.9.3+2
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icon/icon.jpg"
 
 dev_dependencies:
   flutter_test:

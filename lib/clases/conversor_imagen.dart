@@ -25,6 +25,32 @@ class ConversorImagen {
     }
   }
 
+  static Widget devolverEscudoImageFromBase64String(String base64String, BuildContext context) {
+    if (base64String.length != 0) {
+      return Padding(
+          padding: EdgeInsets.all(5),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(5.0),
+            child: Image.memory(
+              base64Decode(base64String),
+              height: MediaQuery
+                  .of(context)
+                  .size
+                  .width / 6,
+            ),
+          ));
+    } else {
+      return Icon(
+        Icons.verified_user,
+        color: Colors.black87,
+        size: MediaQuery
+            .of(context)
+            .size
+            .width / 6,
+      );
+    }
+  }
+
   static Uint8List dataFromBase64String(String base64String) {
     return base64Decode(base64String);
   }

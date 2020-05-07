@@ -20,8 +20,10 @@ class _ListaPartidos extends State<ListaPartidos> {
     super.dispose();
   }
 
+  //Devuelve el item de la lista de los partidos
   Widget itemPartidos() {
     final boxPartidos = Hive.box('partidos');
+    final boxPerfil = Hive.box('perfil');
     if (boxPartidos.length > 0) {
       return ListView(
         shrinkWrap: true,
@@ -48,13 +50,13 @@ class _ListaPartidos extends State<ListaPartidos> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
-                    Text(
-                      //Entendiendo que es local
-                      (partidoBox.isLocal)
-                          ? "${partidoBox.golesAFavor.length}-${partidoBox.golesEnContra.length}" :
-                           "${partidoBox.golesEnContra.length}-${partidoBox.golesAFavor.length}",
-                    ),
                     //Representar el tipo de partido cambiando el color
+                    //Mostrar el orden del resultado según si es local o visitante
+                    Text(
+                      (partidoBox.isLocal)
+                          ? "${partidoBox.golesAFavor.length}-${partidoBox.golesEnContra.length}"
+                          : "${partidoBox.golesEnContra.length}-${partidoBox.golesAFavor.length}",
+                    ),
                     //Rival
                     Text(
                       partidoBox.rival,
@@ -90,6 +92,11 @@ class _ListaPartidos extends State<ListaPartidos> {
     }
   }
 
+  Future<void> _openBox() async {
+    Hive.openBox("partidos");
+    Hive.openBox("perfil");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -100,7 +107,7 @@ class _ListaPartidos extends State<ListaPartidos> {
           children: <Widget>[
             Expanded(
               child: FutureBuilder(
-                future: Hive.openBox('partidos'),
+                future: _openBox(),
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
                     if (snapshot.hasError) {

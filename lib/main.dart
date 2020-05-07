@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
 import 'package:mister_football/clases/entrenamiento.dart';
 import 'package:mister_football/clases/jugador.dart';
+import 'package:mister_football/routes/configuracion/v_configuracion.dart';
 import 'package:mister_football/routes/entrenamientos/v_entrenamientos.dart';
 import 'package:mister_football/routes/gestion_jugadores/v_gestion_jugadores.dart';
 import 'package:mister_football/routes/partidos/v_partidos.dart';
@@ -65,7 +66,7 @@ class MisterFootball extends StatelessWidget {
     // TODO: implement build
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Partidos(),
+      home: Configuracion(),
       /*theme: ThemeData(
         // Define the default brightness and colors.
         primaryColor: primario,

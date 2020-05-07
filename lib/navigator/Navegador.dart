@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:mister_football/clases/conversor_imagen.dart';
 import 'package:mister_football/main.dart';
 import 'package:mister_football/routes/alineacion_favorita/v_alineacion.dart';
 import 'package:mister_football/routes/configuracion/v_configuracion.dart';
@@ -28,42 +30,94 @@ class _Navegador extends State<Navegador> {
     color: MisterFootball.analogo1Light,
   );
 
+  //Devuelve encabezado del navigator
+  Widget devolverEncabezado() {
+    final boxPerfil = Hive.box('perfil');
+    Map<String, dynamic> equipo = {};
+    if (boxPerfil.get(0) != null) {
+      equipo = Map.from(boxPerfil.get(0));
+    }
+    if (boxPerfil.length > 0) {
+      return Container(
+        padding: EdgeInsets.fromLTRB(
+          (MediaQuery.of(context).size.width * .05),
+          (MediaQuery.of(context).size.width * .025),
+          (MediaQuery.of(context).size.width * .05),
+          0,
+        ),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
+          //Cambiar por el escudo del equipo (si el usuario quiere)
+          (equipo['escudo'].length == 0)
+              ? ConversorImagen.devolverEscudoImageFromBase64String("", context)
+              : ConversorImagen.devolverEscudoImageFromBase64String(equipo['escudo'], context),
+          Text(
+            (equipo['nombre_equipo'].length == 0) ? "Equipo" : equipo['nombre_equipo'],
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: (MediaQuery.of(context).size.width * .05),
+              color: Colors.white,
+              height: 3,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ]),
+      );
+    } else {
+      return Container(
+        padding: EdgeInsets.fromLTRB(
+          (MediaQuery.of(context).size.width * .05),
+          (MediaQuery.of(context).size.width * .025),
+          (MediaQuery.of(context).size.width * .05),
+          0,
+        ),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
+          Icon(
+            Icons.verified_user,
+            color: Colors.white70,
+            size: (MediaQuery.of(context).size.width * .25),
+          ),
+          Text(
+            "Equipo",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: (MediaQuery.of(context).size.width * .05),
+              color: Colors.white,
+              height: 3,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ]),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       //color: MisterFootball.primario,
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-            colors: [MisterFootball.primario, MisterFootball.primarioDark]),
+        gradient:
+            LinearGradient(begin: Alignment.topRight, end: Alignment.bottomLeft, colors: [MisterFootball.primario, MisterFootball.primarioDark]),
       ),
       child: ListView(
         children: <Widget>[
           //Título equipo
-          Container(
-            //color: MisterFootball.primarioLight,
-            padding: const EdgeInsets.fromLTRB(15, 30, 30, 10),
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  //Cambiar por el escudo del equipo (si el usuario quiere)
-                  Image.asset(
-                    'assets/img/escudo.png',
-                    width: 100,
-                  ),
-                  Text(
-                    "Pastoriza SCD",
-                    textAlign: TextAlign.right,
-                    style: TextStyle(
-                      fontSize: 20.0,
-                      color: Colors.white,
-                      height: 3,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ]),
+          FutureBuilder(
+            future: Hive.openBox('perfil'),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                if (snapshot.hasError) {
+                  print(snapshot.error.toString());
+                  return Text(snapshot.error.toString());
+                } else {
+                  return devolverEncabezado();
+                }
+              } else {
+                return LinearProgressIndicator();
+              }
+            },
           ),
+
           divisor,
           //Item Estado Jugadores
           ListTile(
@@ -77,9 +131,9 @@ class _Navegador extends State<Navegador> {
             ),
             onTap: () {
               Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => EstadoJugadores()),
-            );
+                context,
+                MaterialPageRoute(builder: (context) => EstadoJugadores()),
+              );
             },
           ),
           //Item Gestión
@@ -112,9 +166,9 @@ class _Navegador extends State<Navegador> {
             ),
             onTap: () {
               Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => Partidos()),
-            );
+                context,
+                MaterialPageRoute(builder: (context) => Partidos()),
+              );
             },
           ),
           //Item Resultados
@@ -147,9 +201,9 @@ class _Navegador extends State<Navegador> {
             ),
             onTap: () {
               Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => Entrenamientos()),
-            );
+                context,
+                MaterialPageRoute(builder: (context) => Entrenamientos()),
+              );
             },
           ),
           //Item Ejercicios
@@ -164,9 +218,9 @@ class _Navegador extends State<Navegador> {
             ),
             onTap: () {
               Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => Ejercicios()),
-            );
+                context,
+                MaterialPageRoute(builder: (context) => Ejercicios()),
+              );
             },
           ),
           divisor,
@@ -199,9 +253,9 @@ class _Navegador extends State<Navegador> {
             ),
             onTap: () {
               Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => Equipo()),
-            );
+                context,
+                MaterialPageRoute(builder: (context) => Equipo()),
+              );
             },
           ),
           //Item Eventos
@@ -216,14 +270,14 @@ class _Navegador extends State<Navegador> {
             ),
             onTap: () {
               Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => Eventos()),
-            );
+                context,
+                MaterialPageRoute(builder: (context) => Eventos()),
+              );
             },
           ),
           divisor,
           //Item Perfil
-          ListTile(
+          /*ListTile(
             title: Text(
               "Perfil",
               style: estiloEnlaces,
@@ -234,11 +288,11 @@ class _Navegador extends State<Navegador> {
             ),
             onTap: () {
               Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => Perfil()),
-            );
+                context,
+                MaterialPageRoute(builder: (context) => Perfil()),
+              );
             },
-          ),
+          ),*/
           //Item Configuración
           ListTile(
             title: Text(
@@ -251,9 +305,9 @@ class _Navegador extends State<Navegador> {
             ),
             onTap: () {
               Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => Configuracion()),
-            );
+                context,
+                MaterialPageRoute(builder: (context) => Configuracion()),
+              );
             },
           ),
         ],

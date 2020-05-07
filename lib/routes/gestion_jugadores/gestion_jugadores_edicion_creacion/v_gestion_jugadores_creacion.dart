@@ -75,22 +75,12 @@ class _GestionJugadoresCreacion extends State<GestionJugadoresCreacion> {
           id: _claveJugador,
           habilitado: true);
 
+      //Abrir box
+      boxJugadores = Hive.box('perfil');
       //Almacenar al jugador en la Box de 'jugadores'
-      if (Hive.isBoxOpen('jugadores')) {
-        boxJugadores.add(j);
-        //print("Jugador ${j.nombre}");
-      } else {
-        abrirBoxJugadores();
-        boxJugadores.add(j);
-        //print("Jugador ${j.nombre}");
-      }
+      boxJugadores.add(j);
       Navigator.pop(context);
     }
-  }
-
-  void abrirBoxJugadores() async {
-    //Abrir box
-    boxJugadores = await Hive.openBox('jugadores');
   }
 
   @override
@@ -113,9 +103,6 @@ class _GestionJugadoresCreacion extends State<GestionJugadoresCreacion> {
 
   @override
   Widget build(BuildContext context) {
-    setState(() {
-      abrirBoxJugadores();
-    });
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(

@@ -7,6 +7,7 @@ import 'package:mister_football/routes/configuracion/v_configuracion.dart';
 import 'package:mister_football/routes/ejercicios/v_ejercicios.dart';
 import 'package:mister_football/routes/entrenamientos/v_entrenamientos.dart';
 import 'package:mister_football/routes/equipo/v_equipo.dart';
+import 'package:mister_football/routes/estadisticas/v_estadisticas.dart';
 import 'package:mister_football/routes/estado_jugadores/v_estado_jugadores.dart';
 import 'package:mister_football/routes/eventos/v_eventos.dart';
 import 'package:mister_football/routes/gestion_jugadores/v_gestion_jugadores.dart';
@@ -117,10 +118,9 @@ class _Navegador extends State<Navegador> {
               }
             },
           ),
-
           divisor,
           //Item Estado Jugadores
-          ListTile(
+          /*ListTile(
             title: Text(
               "Estado jugadores",
               style: estiloEnlaces,
@@ -135,7 +135,7 @@ class _Navegador extends State<Navegador> {
                 MaterialPageRoute(builder: (context) => EstadoJugadores()),
               );
             },
-          ),
+          ),*/
           //Item Gestión
           ListTile(
             title: Text(
@@ -172,7 +172,7 @@ class _Navegador extends State<Navegador> {
             },
           ),
           //Item Resultados
-          ListTile(
+          /*ListTile(
             title: Text(
               "Resultados",
               style: estiloEnlaces,
@@ -185,6 +185,24 @@ class _Navegador extends State<Navegador> {
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(builder: (context) => Resultados()),
+              );
+            },
+          ),*/
+          divisor,
+          //Item Estadísticas
+          ListTile(
+            title: Text(
+              "Estadísticas",
+              style: estiloEnlaces,
+            ),
+            leading: Icon(
+              Icons.insert_chart,
+              color: Colors.white70,
+            ),
+            onTap: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => Estadisticas()),
               );
             },
           ),

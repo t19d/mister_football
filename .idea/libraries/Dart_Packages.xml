@@ -17,6 +17,8 @@
       <root url="file://$PROJECT_DIR$/../src/flutter/.pub-cache/hosted/pub.dartlang.org/built_value-7.0.9/lib" />
       <root url="file://$PROJECT_DIR$/../src/flutter/.pub-cache/hosted/pub.dartlang.org/characters-0.3.1/lib" />
       <root url="file://$PROJECT_DIR$/../src/flutter/.pub-cache/hosted/pub.dartlang.org/charcode-1.1.2/lib" />
+      <root url="file://$PROJECT_DIR$/../src/flutter/.pub-cache/hosted/pub.dartlang.org/charts_common-0.9.0/lib" />
+      <root url="file://$PROJECT_DIR$/../src/flutter/.pub-cache/hosted/pub.dartlang.org/charts_flutter-0.9.0/lib" />
       <root url="file://$PROJECT_DIR$/../src/flutter/.pub-cache/hosted/pub.dartlang.org/checked_yaml-1.0.2/lib" />
       <root url="file://$PROJECT_DIR$/../src/flutter/.pub-cache/hosted/pub.dartlang.org/code_builder-3.2.1/lib" />
       <root url="file://$PROJECT_DIR$/../src/flutter/.pub-cache/hosted/pub.dartlang.org/collection-1.14.11/lib" />
@@ -49,6 +51,7 @@
       <root url="file://$PROJECT_DIR$/../src/flutter/.pub-cache/hosted/pub.dartlang.org/image-2.1.4/lib" />
       <root url="file://$PROJECT_DIR$/../src/flutter/.pub-cache/hosted/pub.dartlang.org/image_cropper-1.2.1/lib" />
       <root url="file://$PROJECT_DIR$/../src/flutter/.pub-cache/hosted/pub.dartlang.org/image_picker-0.6.3+1/lib" />
+      <root url="file://$PROJECT_DIR$/../src/flutter/.pub-cache/hosted/pub.dartlang.org/intl-0.16.1/lib" />
       <root url="file://$PROJECT_DIR$/../src/flutter/.pub-cache/hosted/pub.dartlang.org/io-0.3.4/lib" />
       <root url="file://$PROJECT_DIR$/../src/flutter/.pub-cache/hosted/pub.dartlang.org/js-0.6.1+1/lib" />
       <root url="file://$PROJECT_DIR$/../src/flutter/.pub-cache/hosted/pub.dartlang.org/json_annotation-3.0.1/lib" />
@@ -66,6 +69,7 @@
       <root url="file://$PROJECT_DIR$/../src/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_platform_interface-1.0.1/lib" />
       <root url="file://$PROJECT_DIR$/../src/flutter/.pub-cache/hosted/pub.dartlang.org/pedantic-1.8.0+1/lib" />
       <root url="file://$PROJECT_DIR$/../src/flutter/.pub-cache/hosted/pub.dartlang.org/petitparser-2.4.0/lib" />
+      <root url="file://$PROJECT_DIR$/../src/flutter/.pub-cache/hosted/pub.dartlang.org/pie_chart-3.1.1/lib" />
       <root url="file://$PROJECT_DIR$/../src/flutter/.pub-cache/hosted/pub.dartlang.org/platform-2.2.1/lib" />
       <root url="file://$PROJECT_DIR$/../src/flutter/.pub-cache/hosted/pub.dartlang.org/plugin_platform_interface-1.0.2/lib" />
       <root url="file://$PROJECT_DIR$/../src/flutter/.pub-cache/hosted/pub.dartlang.org/pool-1.4.0/lib" />

@@ -29,10 +29,12 @@ class _Estadisticas extends State<Estadisticas> {
             },
           ),
           title: Text(
-            'Resultados',
+            'Estadísticas',
           ),
         ),
-        body: EstadisticasGoles(),
+        body: SingleChildScrollView(
+          child: EstadisticasGoles(),
+        ),
       ),
     );
   }

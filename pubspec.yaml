@@ -41,6 +41,9 @@ dependencies:
   flutter_datetime_picker: 1.2.5
   # Anuncios
   firebase_admob: ^0.9.3+2
+  # Gráficos
+  charts_flutter: ^0.9.0
+  pie_chart: ^3.1.1
 
 flutter_icons:
   android: "launcher_icon"

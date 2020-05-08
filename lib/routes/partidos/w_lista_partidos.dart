@@ -93,8 +93,8 @@ class _ListaPartidos extends State<ListaPartidos> {
   }
 
   Future<void> _openBox() async {
-    Hive.openBox("partidos");
-    Hive.openBox("perfil");
+    await Hive.openBox("partidos");
+    await Hive.openBox("perfil");
   }
 
   @override

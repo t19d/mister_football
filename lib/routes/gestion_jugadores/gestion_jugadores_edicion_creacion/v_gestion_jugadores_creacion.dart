@@ -76,7 +76,8 @@ class _GestionJugadoresCreacion extends State<GestionJugadoresCreacion> {
           habilitado: true);
 
       //Abrir box
-      boxJugadores = Hive.box('perfil');
+      Hive.openBox('jugadores');
+      boxJugadores = Hive.box('jugadores');
       //Almacenar al jugador en la Box de 'jugadores'
       boxJugadores.add(j);
       Navigator.pop(context);

@@ -32,7 +32,9 @@ class _Eventos extends State<Eventos> {
             'Eventos',
           ),
         ),
-        body: EventosCalendario(),
+        body: SingleChildScrollView(
+          child: EventosCalendario(),
+        ),
       ),
     );
   }

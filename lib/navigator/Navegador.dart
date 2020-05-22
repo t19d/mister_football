@@ -119,41 +119,6 @@ class _Navegador extends State<Navegador> {
             },
           ),
           divisor,
-          //Item Estado Jugadores
-          /*ListTile(
-            title: Text(
-              "Estado jugadores",
-              style: estiloEnlaces,
-            ),
-            leading: Icon(
-              Icons.playlist_add_check,
-              color: Colors.white70,
-            ),
-            onTap: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => EstadoJugadores()),
-              );
-            },
-          ),*/
-          //Item Gestión
-          ListTile(
-            title: Text(
-              "Gestión jugadores",
-              style: estiloEnlaces,
-            ),
-            leading: Icon(
-              Icons.transfer_within_a_station,
-              color: Colors.white70,
-            ),
-            onTap: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => GestionJugadores()),
-              );
-            },
-          ),
-          divisor,
           //Item Partidos
           ListTile(
             title: Text(
@@ -189,24 +154,23 @@ class _Navegador extends State<Navegador> {
             },
           ),*/
           divisor,
-          //Item Estadísticas
+          //Item Ejercicios
           ListTile(
             title: Text(
-              "Estadísticas",
+              "Ejercicios",
               style: estiloEnlaces,
             ),
             leading: Icon(
-              Icons.insert_chart,
+              Icons.directions_run,
               color: Colors.white70,
             ),
             onTap: () {
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) => Estadisticas()),
+                MaterialPageRoute(builder: (context) => Ejercicios()),
               );
             },
           ),
-          divisor,
           //Item Entrenamientos
           ListTile(
             title: Text(
@@ -224,20 +188,38 @@ class _Navegador extends State<Navegador> {
               );
             },
           ),
-          //Item Ejercicios
-          ListTile(
+          divisor,
+          //Item Estado Jugadores
+          /*ListTile(
             title: Text(
-              "Ejercicios",
+              "Estado jugadores",
               style: estiloEnlaces,
             ),
             leading: Icon(
-              Icons.directions_run,
+              Icons.playlist_add_check,
               color: Colors.white70,
             ),
             onTap: () {
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) => Ejercicios()),
+                MaterialPageRoute(builder: (context) => EstadoJugadores()),
+              );
+            },
+          ),*/
+          //Item Gestión
+          ListTile(
+            title: Text(
+              "Gestión jugadores",
+              style: estiloEnlaces,
+            ),
+            leading: Icon(
+              Icons.transfer_within_a_station,
+              color: Colors.white70,
+            ),
+            onTap: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => GestionJugadores()),
               );
             },
           ),
@@ -259,8 +241,25 @@ class _Navegador extends State<Navegador> {
               );
             },
           ),
-          //Item Detalles Equipo
+          //Item Estadísticas
           ListTile(
+            title: Text(
+              "Estadísticas",
+              style: estiloEnlaces,
+            ),
+            leading: Icon(
+              Icons.insert_chart,
+              color: Colors.white70,
+            ),
+            onTap: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => Estadisticas()),
+              );
+            },
+          ),
+          //Item Detalles Equipo
+          /*ListTile(
             title: Text(
               "Equipo",
               style: estiloEnlaces,
@@ -275,7 +274,7 @@ class _Navegador extends State<Navegador> {
                 MaterialPageRoute(builder: (context) => Equipo()),
               );
             },
-          ),
+          ),*/
           //Item Eventos
           ListTile(
             title: Text(

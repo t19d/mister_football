@@ -119,6 +119,24 @@ class _Navegador extends State<Navegador> {
             },
           ),
           divisor,
+          //Item Jugadores
+          ListTile(
+            title: Text(
+              "Jugadores",
+              style: estiloEnlaces,
+            ),
+            leading: Icon(
+              Icons.directions_run,
+              color: Colors.white70,
+            ),
+            onTap: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => GestionJugadores()),
+              );
+            },
+          ),
+          divisor,
           //Item Partidos
           ListTile(
             title: Text(
@@ -161,7 +179,7 @@ class _Navegador extends State<Navegador> {
               style: estiloEnlaces,
             ),
             leading: Icon(
-              Icons.directions_run,
+              Icons.fitness_center,
               color: Colors.white70,
             ),
             onTap: () {
@@ -206,24 +224,6 @@ class _Navegador extends State<Navegador> {
               );
             },
           ),*/
-          //Item Gestión
-          ListTile(
-            title: Text(
-              "Gestión jugadores",
-              style: estiloEnlaces,
-            ),
-            leading: Icon(
-              Icons.transfer_within_a_station,
-              color: Colors.white70,
-            ),
-            onTap: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => GestionJugadores()),
-              );
-            },
-          ),
-          divisor,
           //Item Alineación Favorita
           ListTile(
             title: Text(
@@ -231,7 +231,7 @@ class _Navegador extends State<Navegador> {
               style: estiloEnlaces,
             ),
             leading: Icon(
-              Icons.ac_unit,
+              Icons.people,
               color: Colors.white70,
             ),
             onTap: () {

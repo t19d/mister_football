@@ -84,15 +84,15 @@ class _DetallesPartido extends State<DetallesPartido> {
                 showUnselectedLabels: false,
                 items: const <BottomNavigationBarItem>[
                   BottomNavigationBarItem(
-                    icon: Icon(Icons.filter_frames),
+                    icon: Icon(Icons.featured_play_list),
                     title: Text('Prepartido'),
                   ),
                   BottomNavigationBarItem(
-                    icon: Icon(Icons.weekend),
+                    icon: Icon(Icons.filter_frames),
                     title: Text('Convocatoria'),
                   ),
                   BottomNavigationBarItem(
-                    icon: Icon(Icons.ac_unit),
+                    icon: Icon(Icons.people),
                     title: Text('Alineación'/*\ninicial', textAlign: TextAlign.center,*/),
                   ),
                   BottomNavigationBarItem(

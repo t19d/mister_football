@@ -33,7 +33,7 @@ class _GestionJugadores extends State<GestionJugadores> {
             },
           ),
           title: Text(
-            'Gestión jugadores',
+            'Jugadores',
           ),
           actions: <Widget>[
             /*IconButton(

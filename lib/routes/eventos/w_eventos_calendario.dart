@@ -102,11 +102,10 @@ class _EventosCalendario extends State<EventosCalendario> with TickerProviderSta
       },
       calendarStyle: CalendarStyle(
         outsideDaysVisible: false,
-        weekendStyle: TextStyle(color: Colors.blue[800]),
-        holidayStyle: TextStyle(color: Colors.blue[800]),
+        weekendStyle: TextStyle(color: Colors.lightBlue),
       ),
       daysOfWeekStyle: DaysOfWeekStyle(
-        weekendStyle: TextStyle(color: Colors.blue[600]),
+        weekendStyle: TextStyle(color: Colors.lightBlue),
       ),
       headerStyle: HeaderStyle(
         centerHeaderTitle: true,
@@ -119,7 +118,7 @@ class _EventosCalendario extends State<EventosCalendario> with TickerProviderSta
             child: Container(
               margin: const EdgeInsets.all(4.0),
               padding: const EdgeInsets.only(top: 5.0, left: 6.0),
-              color: Colors.deepOrange[300],
+              color: MisterFootball.complementario,
               width: 100,
               height: 100,
               child: Text(
@@ -186,14 +185,6 @@ class _EventosCalendario extends State<EventosCalendario> with TickerProviderSta
           ),
         ),
       ),
-    );
-  }
-
-  Widget _buildHolidaysMarker() {
-    return Icon(
-      Icons.add_box,
-      size: 20.0,
-      color: Colors.blueGrey[800],
     );
   }
 

@@ -100,24 +100,24 @@ class _Configuracion extends State<Configuracion> {
                 onPressed: (!isEscudoEditado && !isNombreEquipoEditado)
                     ? null
                     : () {
-                  //Escudo editado y nombre NO editado
-                  if (isEscudoEditado && !isNombreEquipoEditado) {
-                    equipoEditado = {"nombre_equipo": equipo['nombre_equipo'], "escudo": "$imgString", "modo_oscuro": false};
-                  } else {
-                    //Nombre editado y escudo NO editado
-                    if (!isEscudoEditado && isNombreEquipoEditado) {
-                      equipoEditado = {"nombre_equipo": "$nombreEquipo", "escudo": equipo['escudo'], "modo_oscuro": false};
-                    } else {
-                      equipoEditado = {"nombre_equipo": "$nombreEquipo", "escudo": "$imgString", "modo_oscuro": false};
-                    }
-                  }
-                  //boxPerfil.putAt(0, equipoEditado);
-                  boxPerfil.putAt(0, equipoEditado);
-                  setState(() {
-                    isEscudoEditado = false;
-                    isNombreEquipoEditado = false;
-                  });
-                },
+                        //Escudo editado y nombre NO editado
+                        if (isEscudoEditado && !isNombreEquipoEditado) {
+                          equipoEditado = {"nombre_equipo": equipo['nombre_equipo'], "escudo": "$imgString", "modo_oscuro": false};
+                        } else {
+                          //Nombre editado y escudo NO editado
+                          if (!isEscudoEditado && isNombreEquipoEditado) {
+                            equipoEditado = {"nombre_equipo": "$nombreEquipo", "escudo": equipo['escudo'], "modo_oscuro": false};
+                          } else {
+                            equipoEditado = {"nombre_equipo": "$nombreEquipo", "escudo": "$imgString", "modo_oscuro": false};
+                          }
+                        }
+                        //boxPerfil.putAt(0, equipoEditado);
+                        boxPerfil.putAt(0, equipoEditado);
+                        setState(() {
+                          isEscudoEditado = false;
+                          isNombreEquipoEditado = false;
+                        });
+                      },
               ),
               Container(
                 height: 0,
@@ -173,24 +173,24 @@ class _Configuracion extends State<Configuracion> {
                 onPressed: (!isEscudoEditado && !isNombreEquipoEditado)
                     ? null
                     : () {
-                  //Escudo editado y nombre NO editado
-                  if (isEscudoEditado && !isNombreEquipoEditado) {
-                    equipoEditado = {"nombre_equipo": "", "escudo": "$imgString", "modo_oscuro": false};
-                  } else {
-                    //Nombre editado y escudo NO editado
-                    if (!isEscudoEditado && isNombreEquipoEditado) {
-                      equipoEditado = {"nombre_equipo": "$nombreEquipo", "escudo": "", "modo_oscuro": false};
-                    } else {
-                      equipoEditado = {"nombre_equipo": "$nombreEquipo", "escudo": "$imgString", "modo_oscuro": false};
-                    }
-                  }
-                  //boxPerfil.putAt(0, equipoEditado);
-                  boxPerfil.add(equipoEditado);
-                  setState(() {
-                    isEscudoEditado = false;
-                    isNombreEquipoEditado = false;
-                  });
-                },
+                        //Escudo editado y nombre NO editado
+                        if (isEscudoEditado && !isNombreEquipoEditado) {
+                          equipoEditado = {"nombre_equipo": "", "escudo": "$imgString", "modo_oscuro": false};
+                        } else {
+                          //Nombre editado y escudo NO editado
+                          if (!isEscudoEditado && isNombreEquipoEditado) {
+                            equipoEditado = {"nombre_equipo": "$nombreEquipo", "escudo": "", "modo_oscuro": false};
+                          } else {
+                            equipoEditado = {"nombre_equipo": "$nombreEquipo", "escudo": "$imgString", "modo_oscuro": false};
+                          }
+                        }
+                        //boxPerfil.putAt(0, equipoEditado);
+                        boxPerfil.add(equipoEditado);
+                        setState(() {
+                          isEscudoEditado = false;
+                          isNombreEquipoEditado = false;
+                        });
+                      },
               ),
               Container(
                 height: 0,
@@ -253,6 +253,7 @@ class _Configuracion extends State<Configuracion> {
         borderRadius: BorderRadius.circular(15.0));
     //Diálogo
     return showDialog(
+        barrierDismissible: false,
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
@@ -260,10 +261,7 @@ class _Configuracion extends State<Configuracion> {
             title: Text(
               "Nombre equipo:",
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: MediaQuery
-                  .of(context)
-                  .size
-                  .width * .07, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: MediaQuery.of(context).size.width * .07, fontWeight: FontWeight.bold),
             ),
             content: SingleChildScrollView(
               child: Column(
@@ -271,15 +269,9 @@ class _Configuracion extends State<Configuracion> {
                   Container(
                     padding: EdgeInsets.fromLTRB(
                       0,
-                      (MediaQuery
-                          .of(context)
-                          .size
-                          .height * .01),
+                      (MediaQuery.of(context).size.height * .01),
                       0,
-                      (MediaQuery
-                          .of(context)
-                          .size
-                          .height * .01),
+                      (MediaQuery.of(context).size.height * .01),
                     ),
                     child: Form(
                       key: formKey,
@@ -333,13 +325,7 @@ class _Configuracion extends State<Configuracion> {
     BoxDecoration _formaBotonEliminar = BoxDecoration(
         gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [Colors.red, Colors.redAccent]),
         borderRadius: BorderRadius.circular(15.0));
-    SizedBox _separadorBotonesDialogo = SizedBox(height: MediaQuery
-        .of(context)
-        .size
-        .height * .015, width: MediaQuery
-        .of(context)
-        .size
-        .width);
+    SizedBox _separadorBotonesDialogo = SizedBox(height: MediaQuery.of(context).size.height * .015, width: MediaQuery.of(context).size.width);
     //Diálogo
     return showDialog(
         context: context,
@@ -349,20 +335,14 @@ class _Configuracion extends State<Configuracion> {
             title: Text(
               (imgString != "") ? "Editar imagen" : "Añadir imagen",
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: MediaQuery
-                  .of(context)
-                  .size
-                  .width * .07, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: MediaQuery.of(context).size.width * .07, fontWeight: FontWeight.bold),
             ),
             content: SingleChildScrollView(
               child: Column(
                 children: <Widget>[
                   Container(
                     padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width * .45,
+                    width: MediaQuery.of(context).size.width * .45,
                     decoration: _formaBotones,
                     child: Material(
                       color: Colors.transparent,
@@ -378,10 +358,7 @@ class _Configuracion extends State<Configuracion> {
                                 Text(
                                   "Galería",
                                   style: TextStyle(
-                                    fontSize: MediaQuery
-                                        .of(context)
-                                        .size
-                                        .width * .07,
+                                    fontSize: MediaQuery.of(context).size.width * .07,
                                   ),
                                 ),
                               ],
@@ -392,10 +369,7 @@ class _Configuracion extends State<Configuracion> {
                   _separadorBotonesDialogo,
                   Container(
                     padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width * .45,
+                    width: MediaQuery.of(context).size.width * .45,
                     decoration: _formaBotones,
                     child: Material(
                       color: Colors.transparent,
@@ -411,10 +385,7 @@ class _Configuracion extends State<Configuracion> {
                                 Text(
                                   "Cámara",
                                   style: TextStyle(
-                                    fontSize: MediaQuery
-                                        .of(context)
-                                        .size
-                                        .width * .065,
+                                    fontSize: MediaQuery.of(context).size.width * .065,
                                   ),
                                 ),
                               ],
@@ -425,40 +396,34 @@ class _Configuracion extends State<Configuracion> {
                   _separadorBotonesDialogo,
                   (imagenEscudo != "")
                       ? Container(
-                    padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width * .45,
-                    decoration: _formaBotonEliminar,
-                    child: Material(
-                      color: Colors.transparent,
-                      child: InkWell(
-                          onTap: () {
-                            _eliminarImagen();
-                          },
-                          child: Center(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: <Widget>[
-                                Icon(Icons.close),
-                                Text(
-                                  "Eliminar",
-                                  style: TextStyle(
-                                    fontSize: MediaQuery
-                                        .of(context)
-                                        .size
-                                        .width * .06,
+                          padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
+                          width: MediaQuery.of(context).size.width * .45,
+                          decoration: _formaBotonEliminar,
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                                onTap: () {
+                                  _eliminarImagen();
+                                },
+                                child: Center(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                    children: <Widget>[
+                                      Icon(Icons.close),
+                                      Text(
+                                        "Eliminar",
+                                        style: TextStyle(
+                                          fontSize: MediaQuery.of(context).size.width * .06,
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ),
-                              ],
-                            ),
-                          )),
-                    ),
-                  )
+                                )),
+                          ),
+                        )
                       : Container(
-                    width: 0,
-                  ),
+                          width: 0,
+                        ),
                 ],
               ),
             ),
@@ -472,11 +437,11 @@ class _Configuracion extends State<Configuracion> {
         sourcePath: image.path,
         aspectRatioPresets: Platform.isAndroid
             ? [
-          CropAspectRatioPreset.square,
-        ]
+                CropAspectRatioPreset.square,
+              ]
             : [
-          CropAspectRatioPreset.square,
-        ],
+                CropAspectRatioPreset.square,
+              ],
         androidUiSettings: AndroidUiSettings(
             toolbarTitle: 'Recortar imagen',
             toolbarColor: MisterFootball.primario,

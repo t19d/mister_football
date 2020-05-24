@@ -2,6 +2,8 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 
+import 'package:mister_football/main.dart';
+
 class ConversorImagen {
   static Widget imageFromBase64String(String base64String, BuildContext context) {
     if (base64String.length != 0) {
@@ -42,7 +44,7 @@ class ConversorImagen {
     } else {
       return Icon(
         Icons.verified_user,
-        color: Colors.black87,
+        color: MisterFootball.complementarioLight,
         size: MediaQuery
             .of(context)
             .size

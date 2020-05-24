@@ -1,6 +1,7 @@
 import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:mister_football/clases/conversor_imagen.dart';
 import 'package:mister_football/clases/partido.dart';
 import 'package:mister_football/main.dart';
 import 'package:mister_football/routes/partidos/detalles_partidos/v_detalles_partido.dart';
@@ -22,6 +23,15 @@ class _ListaPartidos extends State<ListaPartidos> {
 
   //Devuelve el item de la lista de los partidos
   Widget itemPartidos() {
+    //Estilo de los textos de los equipos
+    TextStyle estiloEquipos = TextStyle(
+        /*fontSize: MediaQuery.of(context).size.width * .04,*/
+        fontWeight: FontWeight.bold);
+    //Estilo de los resultados de los equipos
+    TextStyle estiloResultado = TextStyle(
+      fontSize: MediaQuery.of(context).size.width * .04,
+      fontWeight: FontWeight.bold,
+    );
     final boxPartidos = Hive.box('partidos');
     final boxPerfil = Hive.box('perfil');
     List partidosOrdenados = [];
@@ -53,7 +63,7 @@ class _ListaPartidos extends State<ListaPartidos> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => DetallesPartido(
-                      posicion: iPartido,
+                      posicion: partidosOrdenados[iPartido][0],
                     ),
                   ),
                 );
@@ -61,6 +71,11 @@ class _ListaPartidos extends State<ListaPartidos> {
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
+                  color: (partidoBox.golesAFavor.length > partidoBox.golesEnContra.length)
+                      //Victoria
+                      ? Colors.lightGreen.withOpacity(.6)
+                      //Derrota
+                      : (partidoBox.golesAFavor.length < partidoBox.golesEnContra.length) ? Colors.redAccent.withOpacity(.4) : Colors.white10,
                 ),
                 child: (DateTime.now()
                             .difference(DateTime(
@@ -73,38 +88,105 @@ class _ListaPartidos extends State<ListaPartidos> {
                             ))
                             .inSeconds >
                         0)
-                    ? Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: <Widget>[
-                          //Nosotros
-                          Text(
-                            perfil['nombre_equipo'],
-                            textAlign: TextAlign.center,
-                          ),
-                          //Representar el tipo de partido cambiando el color
-                          //Mostrar el orden del resultado según si es local o visitante
-                          Text(
-                            (partidoBox.isLocal)
-                                ? "${partidoBox.golesAFavor.length}-${partidoBox.golesEnContra.length}"
-                                : "${partidoBox.golesEnContra.length}-${partidoBox.golesAFavor.length}",
-                          ),
-                          //Rival
-                          Text(
-                            partidoBox.rival,
-                            textAlign: TextAlign.center,
-                          ),
-                          //Tipo
-                          Text(
-                            partidoBox.tipoPartido,
-                            textAlign: TextAlign.center,
-                          ),
-                          //Fecha
-                          Text(
-                            partidoBox.fecha,
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
-                      )
+                    ? (partidoBox.isLocal)
+                        //Partido de local
+                        ? Column(
+                            children: <Widget>[
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: <Widget>[
+                                  //Escudo Rival
+                                  Icon(
+                                    Icons.verified_user,
+                                    color: Colors.red,
+                                    size: MediaQuery.of(context).size.width / 6,
+                                  ),
+                                  //Rival
+                                  Text(
+                                    partidoBox.rival,
+                                    textAlign: TextAlign.center,
+                                    style: estiloEquipos,
+                                  ),
+                                  Text(
+                                    "${partidoBox.golesAFavor.length}-${partidoBox.golesEnContra.length}",
+                                    style: estiloResultado,
+                                  ),
+                                  //Nosotros
+                                  Text(
+                                    perfil['nombre_equipo'],
+                                    textAlign: TextAlign.center,
+                                    style: estiloEquipos,
+                                  ),
+                                  //Nuestro Escudo
+                                  ConversorImagen.devolverEscudoImageFromBase64String(perfil['escudo'], context),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: <Widget>[
+                                  //Fecha y hora
+                                  Text(
+                                    "${partidoBox.fecha.split("-")[2]}-${partidoBox.fecha.split("-")[1]}-${partidoBox.fecha.split("-")[0]}  ${partidoBox.hora}",
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  //Tipo
+                                  Text(
+                                    partidoBox.tipoPartido,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          )
+                        //Partido de visitante
+                        : Column(
+                            children: <Widget>[
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: <Widget>[
+                                  //Nuestro Escudo
+                                  ConversorImagen.devolverEscudoImageFromBase64String(perfil['escudo'], context),
+                                  //Nosotros
+                                  Text(
+                                    perfil['nombre_equipo'],
+                                    textAlign: TextAlign.center,
+                                    style: estiloEquipos,
+                                  ),
+                                  Text(
+                                    "${partidoBox.golesAFavor.length}-${partidoBox.golesEnContra.length}",
+                                    style: estiloResultado,
+                                  ),
+                                  //Rival
+                                  Text(
+                                    partidoBox.rival,
+                                    textAlign: TextAlign.center,
+                                    style: estiloEquipos,
+                                  ),
+                                  //Escudo Rival
+                                  Icon(
+                                    Icons.verified_user,
+                                    color: Colors.red,
+                                    size: MediaQuery.of(context).size.width / 6,
+                                  )
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: <Widget>[
+                                  //Fecha y hora
+                                  Text(
+                                    "${partidoBox.fecha.split("-")[2]}-${partidoBox.fecha.split("-")[1]}-${partidoBox.fecha.split("-")[0]}  ${partidoBox.hora}",
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  //Tipo
+                                  Text(
+                                    partidoBox.tipoPartido,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          )
                     : Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: <Widget>[

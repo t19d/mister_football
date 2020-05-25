@@ -49,7 +49,6 @@ class _PartidosCreacion extends State<PartidosCreacion> {
         '9': null,
         '10': null
       };
-      print(isLocal);
       Partido p = Partido(
           fecha: fecha.trim(),
           hora: hora.trim(),
@@ -194,7 +193,7 @@ class _PartidosCreacion extends State<PartidosCreacion> {
                           //Seleccionar hora
                           DatePicker.showTimePicker(context, showTitleActions: true, onConfirm: (time) {
                             setState(() {
-                              hora = "${time.hour}:${time.minute}";
+                              hora = "${time.hour}:" + ((time.minute.toString().length == 1) ? "0${time.minute}" : "${time.minute}");
                             });
                           },
                               currentTime: DateTime(

@@ -1,5 +1,7 @@
 import 'package:firebase_admob/firebase_admob.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:hive/hive.dart';
 import 'package:mister_football/clases/conversor_imagen.dart';
 import 'package:mister_football/clases/partido.dart';
@@ -24,13 +26,14 @@ class _ListaPartidos extends State<ListaPartidos> {
   //Devuelve el item de la lista de los partidos
   Widget itemPartidos() {
     //Estilo de los textos de los equipos
-    TextStyle estiloEquipos = TextStyle(
-        /*fontSize: MediaQuery.of(context).size.width * .04,*/
-        fontWeight: FontWeight.bold);
+    TextStyle estiloEquipos = TextStyle(fontWeight: FontWeight.bold, color: MisterFootball.primarioDark);
+    //Estilo de los textos
+    TextStyle estiloTextos = TextStyle(color: MisterFootball.primarioDark);
     //Estilo de los resultados de los equipos
     TextStyle estiloResultado = TextStyle(
       fontSize: MediaQuery.of(context).size.width * .04,
       fontWeight: FontWeight.bold,
+      color: MisterFootball.primarioDark,
     );
     final boxPartidos = Hive.box('partidos');
     final boxPerfil = Hive.box('perfil');
@@ -51,10 +54,11 @@ class _ListaPartidos extends State<ListaPartidos> {
       return ListView(
         shrinkWrap: true,
         children: List.generate(boxPartidos.length, (iPartido) {
-          final Partido partidoBox = boxPartidos.getAt(partidosOrdenados[iPartido][0]) as Partido;
+          //Poner primero los más nuevos
+          final Partido partidoBox = boxPartidos.getAt(partidosOrdenados[((partidosOrdenados.length - 1) - iPartido)][0]) as Partido;
           return Card(
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15.0),
+              borderRadius: BorderRadius.circular(5.0),
             ),
             child: new InkWell(
               splashColor: MisterFootball.complementario,
@@ -63,19 +67,36 @@ class _ListaPartidos extends State<ListaPartidos> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => DetallesPartido(
-                      posicion: partidosOrdenados[iPartido][0],
+                      posicion: partidosOrdenados[((partidosOrdenados.length - 1) - iPartido)][0],
                     ),
                   ),
                 );
               },
               child: Container(
+                padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
+                  borderRadius: BorderRadius.circular(5),
+                  border: Border.all(color: Colors.black),
                   color: (partidoBox.golesAFavor.length > partidoBox.golesEnContra.length)
                       //Victoria
-                      ? Colors.lightGreen.withOpacity(.6)
+                      ? Colors.lightGreen.withOpacity(.75)
                       //Derrota
-                      : (partidoBox.golesAFavor.length < partidoBox.golesEnContra.length) ? Colors.redAccent.withOpacity(.4) : Colors.white10,
+                      : (partidoBox.golesAFavor.length < partidoBox.golesEnContra.length)
+                          ? Colors.red.withOpacity(.6)
+                          //Sin jugar
+                          : (DateTime.now()
+                                      .difference(DateTime(
+                                        int.parse(partidoBox.fecha.split("-")[0]),
+                                        int.parse(partidoBox.fecha.split("-")[1]),
+                                        int.parse(partidoBox.fecha.split("-")[2]),
+                                        //Suponiendo que los partidos duran aproximadamente 1 hora y media
+                                        int.parse(partidoBox.hora.split(":")[0]) + 1,
+                                        int.parse(partidoBox.hora.split(":")[1]) + 30,
+                                      ))
+                                      .inSeconds >
+                                  0)
+                              ? Colors.white.withOpacity(.8)
+                              : Colors.yellow.withOpacity(.4),
                 ),
                 child: (DateTime.now()
                             .difference(DateTime(
@@ -90,16 +111,28 @@ class _ListaPartidos extends State<ListaPartidos> {
                         0)
                     ? (partidoBox.isLocal)
                         //Partido de local
-                        ? Column(
-                            children: <Widget>[
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: <Widget>[
-                                  //Escudo Rival
-                                  Icon(
-                                    Icons.verified_user,
-                                    color: Colors.red,
-                                    size: MediaQuery.of(context).size.width / 6,
+                        ? Table(
+                            defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                            children: [
+                              TableRow(
+                                decoration: BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(color: MisterFootball.complementarioLight),
+                                  ),
+                                ),
+                                children: [
+                                  //Nuestro Escudo
+                                  ConversorImagen.devolverEscudoImageFromBase64String(perfil['escudo'], context),
+                                  //Nosotros
+                                  Text(
+                                    perfil['nombre_equipo'],
+                                    textAlign: TextAlign.center,
+                                    style: estiloEquipos,
+                                  ),
+                                  Text(
+                                    "${partidoBox.golesAFavor.length}-${partidoBox.golesEnContra.length}",
+                                    style: estiloResultado,
+                                    textAlign: TextAlign.center,
                                   ),
                                   //Rival
                                   Text(
@@ -107,43 +140,116 @@ class _ListaPartidos extends State<ListaPartidos> {
                                     textAlign: TextAlign.center,
                                     style: estiloEquipos,
                                   ),
-                                  Text(
-                                    "${partidoBox.golesAFavor.length}-${partidoBox.golesEnContra.length}",
-                                    style: estiloResultado,
+                                  //Escudo Rival
+                                  Icon(
+                                    Icons.verified_user,
+                                    color: Colors.blueAccent,
+                                    size: MediaQuery.of(context).size.width / 6,
                                   ),
-                                  //Nosotros
-                                  Text(
-                                    perfil['nombre_equipo'],
-                                    textAlign: TextAlign.center,
-                                    style: estiloEquipos,
-                                  ),
-                                  //Nuestro Escudo
-                                  ConversorImagen.devolverEscudoImageFromBase64String(perfil['escudo'], context),
                                 ],
                               ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                children: <Widget>[
-                                  //Fecha y hora
-                                  Text(
-                                    "${partidoBox.fecha.split("-")[2]}-${partidoBox.fecha.split("-")[1]}-${partidoBox.fecha.split("-")[0]}  ${partidoBox.hora}",
-                                    textAlign: TextAlign.center,
-                                  ),
+                              TableRow(
+                                children: [
+                                  Container(),
                                   //Tipo
                                   Text(
                                     partidoBox.tipoPartido,
                                     textAlign: TextAlign.center,
+                                    style: estiloTextos,
                                   ),
+                                  //Hora
+                                  Text(
+                                    "${partidoBox.hora}",
+                                    textAlign: TextAlign.center,
+                                    style: estiloTextos,
+                                  ),
+                                  //Fecha
+                                  Text(
+                                    "${partidoBox.fecha.split("-")[2]}-${partidoBox.fecha.split("-")[1]}-${partidoBox.fecha.split("-")[0]}",
+                                    textAlign: TextAlign.center,
+                                    style: estiloTextos,
+                                  ),
+                                  Container(),
                                 ],
                               ),
                             ],
                           )
                         //Partido de visitante
-                        : Column(
-                            children: <Widget>[
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: <Widget>[
+                        : Table(
+                            defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                            children: [
+                              TableRow(
+                                decoration: BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(color: MisterFootball.complementarioLight),
+                                  ),
+                                ),
+                                children: [
+                                  //Escudo Rival
+                                  Icon(
+                                    Icons.verified_user,
+                                    color: Colors.blueAccent,
+                                    size: MediaQuery.of(context).size.width / 6,
+                                  ),
+                                  //Rival
+                                  Text(
+                                    partidoBox.rival,
+                                    textAlign: TextAlign.center,
+                                    style: estiloEquipos,
+                                  ),
+                                  Text(
+                                    "${partidoBox.golesAFavor.length}-${partidoBox.golesEnContra.length}",
+                                    style: estiloResultado,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  //Nosotros
+                                  Text(
+                                    perfil['nombre_equipo'],
+                                    textAlign: TextAlign.center,
+                                    style: estiloEquipos,
+                                  ),
+                                  //Nuestro Escudo
+                                  ConversorImagen.devolverEscudoImageFromBase64String(perfil['escudo'], context),
+                                ],
+                              ),
+                              TableRow(
+                                children: [
+                                  Container(),
+                                  //Tipo
+                                  Text(
+                                    partidoBox.tipoPartido,
+                                    textAlign: TextAlign.center,
+                                    style: estiloTextos,
+                                  ),
+                                  //Hora
+                                  Text(
+                                    "${partidoBox.hora}",
+                                    textAlign: TextAlign.center,
+                                    style: estiloTextos,
+                                  ),
+                                  //Fecha
+                                  Text(
+                                    "${partidoBox.fecha.split("-")[2]}-${partidoBox.fecha.split("-")[1]}-${partidoBox.fecha.split("-")[0]}",
+                                    textAlign: TextAlign.center,
+                                    style: estiloTextos,
+                                  ),
+                                  Container(),
+                                ],
+                              ),
+                            ],
+                          )
+                    //Sin jugar local
+                    : (partidoBox.isLocal)
+                        ? Table(
+                            defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                            children: [
+                              TableRow(
+                                decoration: BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(color: MisterFootball.complementarioLight),
+                                  ),
+                                ),
+                                children: [
                                   //Nuestro Escudo
                                   ConversorImagen.devolverEscudoImageFromBase64String(perfil['escudo'], context),
                                   //Nosotros
@@ -152,9 +258,22 @@ class _ListaPartidos extends State<ListaPartidos> {
                                     textAlign: TextAlign.center,
                                     style: estiloEquipos,
                                   ),
-                                  Text(
-                                    "${partidoBox.golesAFavor.length}-${partidoBox.golesEnContra.length}",
-                                    style: estiloResultado,
+                                  //Fecha y hora
+                                  Column(
+                                    children: <Widget>[
+                                      //Hora
+                                      Text(
+                                        "${partidoBox.hora}",
+                                        textAlign: TextAlign.center,
+                                        style: estiloTextos,
+                                      ),
+                                      //Fecha
+                                      Text(
+                                        "${partidoBox.fecha.split("-")[2]}-${partidoBox.fecha.split("-")[1]}-${partidoBox.fecha.split("-")[0]}",
+                                        textAlign: TextAlign.center,
+                                        style: estiloTextos,
+                                      ),
+                                    ],
                                   ),
                                   //Rival
                                   Text(
@@ -165,59 +284,103 @@ class _ListaPartidos extends State<ListaPartidos> {
                                   //Escudo Rival
                                   Icon(
                                     Icons.verified_user,
-                                    color: Colors.red,
+                                    color: Colors.blueAccent,
                                     size: MediaQuery.of(context).size.width / 6,
-                                  )
+                                  ),
                                 ],
                               ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                children: <Widget>[
-                                  //Fecha y hora
+                              TableRow(
+                                children: [
+                                  Container(),
+                                  //Tipo
                                   Text(
-                                    "${partidoBox.fecha.split("-")[2]}-${partidoBox.fecha.split("-")[1]}-${partidoBox.fecha.split("-")[0]}  ${partidoBox.hora}",
+                                    "Sin disputar",
                                     textAlign: TextAlign.center,
+                                    style: estiloTextos,
                                   ),
+                                  Container(),
                                   //Tipo
                                   Text(
                                     partidoBox.tipoPartido,
                                     textAlign: TextAlign.center,
+                                    style: estiloTextos,
                                   ),
+                                  Container(),
                                 ],
                               ),
                             ],
                           )
-                    : Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: <Widget>[
-                          //Nosotros
-                          Text(
-                            perfil['nombre_equipo'],
-                            textAlign: TextAlign.center,
+                        //Sin jugar visitante
+                        : Table(
+                            defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                            children: [
+                              TableRow(
+                                decoration: BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(color: MisterFootball.complementarioLight),
+                                  ),
+                                ),
+                                children: [
+                                  //Escudo Rival
+                                  Icon(
+                                    Icons.verified_user,
+                                    color: Colors.blueAccent,
+                                    size: MediaQuery.of(context).size.width / 6,
+                                  ),
+                                  //Rival
+                                  Text(
+                                    partidoBox.rival,
+                                    textAlign: TextAlign.center,
+                                    style: estiloEquipos,
+                                  ),
+                                  //Fecha y hora
+                                  Column(
+                                    children: <Widget>[
+                                      //Hora
+                                      Text(
+                                        "${partidoBox.hora}",
+                                        textAlign: TextAlign.center,
+                                        style: estiloTextos,
+                                      ),
+                                      //Fecha
+                                      Text(
+                                        "${partidoBox.fecha.split("-")[2]}-${partidoBox.fecha.split("-")[1]}-${partidoBox.fecha.split("-")[0]}",
+                                        textAlign: TextAlign.center,
+                                        style: estiloTextos,
+                                      ),
+                                    ],
+                                  ),
+                                  //Nosotros
+                                  Text(
+                                    perfil['nombre_equipo'],
+                                    textAlign: TextAlign.center,
+                                    style: estiloEquipos,
+                                  ),
+                                  //Nuestro Escudo
+                                  ConversorImagen.devolverEscudoImageFromBase64String(perfil['escudo'], context),
+                                ],
+                              ),
+                              TableRow(
+                                children: [
+                                  Container(),
+                                  //Tipo
+                                  Text(
+                                    "Sin disputar",
+                                    textAlign: TextAlign.center,
+                                    style: estiloTextos,
+                                  ),
+                                  Container(),
+                                  //Tipo
+                                  Text(
+                                    partidoBox.tipoPartido,
+                                    textAlign: TextAlign.center,
+                                    style: estiloTextos,
+                                  ),
+                                  Container(),
+                                ],
+                              ),
+                            ],
                           ),
-                          //Rival
-                          Text(
-                            partidoBox.rival,
-                            textAlign: TextAlign.center,
-                          ),
-                          //Tipo
-                          Text(
-                            partidoBox.tipoPartido,
-                            textAlign: TextAlign.center,
-                          ),
-                          //Fecha
-                          Text(
-                            partidoBox.fecha,
-                            textAlign: TextAlign.center,
-                          ),
-                          //Hora
-                          Text(
-                            partidoBox.hora,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 10),
-                          ),
-                        ],
-                      ),
               ),
             ),
           );

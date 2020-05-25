@@ -43,8 +43,8 @@ class ConversorImagen {
           ));
     } else {
       return Icon(
-        Icons.verified_user,
-        color: MisterFootball.complementarioLight,
+        Icons.assignment_ind,
+        color: Colors.blueAccent,
         size: MediaQuery
             .of(context)
             .size

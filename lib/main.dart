@@ -115,12 +115,12 @@ class MisterFootball extends StatelessWidget {
         accentColor: complementario,
         fontFamily: 'Georgia',
       ),
-      darkTheme: ThemeData(
+      /*darkTheme: ThemeData(
         primaryColor: primario,
         brightness: Brightness.dark,
         fontFamily: 'Georgia',
         accentColor: complementario,
-      ),
+      ),*/
     );
   }
 }

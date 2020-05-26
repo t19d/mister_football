@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:mister_football/clases/entrenamiento.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:mister_football/clases/eventos.dart';
 import 'package:mister_football/clases/jugador.dart';
 
 class DetallesEnternamiento extends StatefulWidget {
@@ -48,7 +49,7 @@ class _DetallesEnternamiento extends State<DetallesEnternamiento> {
                         Icons.edit,
                         color: Colors.lightGreen,
                       ),
-                      tooltip: 'Editar jugador',
+                      tooltip: 'Editar entrenamiento',
                       onPressed: () {
                         /*Navigator.push(
                           context,
@@ -63,12 +64,17 @@ class _DetallesEnternamiento extends State<DetallesEnternamiento> {
                         Icons.delete,
                         color: Colors.redAccent,
                       ),
-                      tooltip: 'Eliminar jugador',
+                      tooltip: 'Eliminar entrenamiento',
                       onPressed: () async {
                         //DBHelper.delete(widget.jugador.id);
                         var boxEntrenamientos = await Hive.openBox('entrenamientos');
                         print(widget.posicion);
+                        var boxEventos = await Hive.openBox('eventos');
+                        Eventos eventosActuales = boxEventos.get(0);
+                        //Eliminar evento
+                        eventosActuales.listaEventos.remove("${entrenamiento.fecha}/${entrenamiento.hora}");
                         boxEntrenamientos.deleteAt(widget.posicion);
+                        boxEventos.putAt(0, eventosActuales);
                         Navigator.pop(context);
                       },
                     ),
@@ -196,7 +202,7 @@ class _DetallesEnternamiento extends State<DetallesEnternamiento> {
       );
     }
   }
-  /*mostrarJugadoresSeleccionados(List<dynamic> jugadoresElegidos) {
+/*mostrarJugadoresSeleccionados(List<dynamic> jugadoresElegidos) {
     if (jugadoresElegidos.length > 0) {
       return ListView(
         shrinkWrap: true,

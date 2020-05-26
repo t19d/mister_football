@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:mister_football/clases/entrenamiento.dart';
 import 'package:hive/hive.dart';
+import 'package:mister_football/clases/eventos.dart';
 import 'package:mister_football/clases/jugador.dart';
 import 'package:mister_football/routes/ejercicios/ejercicio/v_detalles_ejercicio_json.dart';
 
@@ -24,7 +25,7 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
   String fecha = "";
   String hora = "";
   List<String> ejercicios;
-  List<Map<String, String>> listaJugadores;//[{"idJugador": "XXXX", "opinion":"No"}]
+  List<Map<String, String>> listaJugadores; //[{"idJugador": "XXXX", "opinion":"No"}]
   final formKey = new GlobalKey<FormState>();
 
   //Validar formulario
@@ -36,19 +37,31 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
           Entrenamiento(fecha: fecha.trim(), hora: hora.trim(), ejercicios: ejercicios, jugadoresOpiniones: listaJugadores, anotaciones: "");
 
       //Almacenar al jugador en la Box de 'entrenamientos'
-      if (Hive.isBoxOpen('entrenamientos')) {
+      /*if (Hive.isBoxOpen('entrenamientos')) {
         boxEntrenamientos.add(e);
       } else {
         abrirBoxEntrenamentos();
         boxEntrenamientos.add(e);
       }
+      Navigator.pop(context);*/
+      await _openBox();
+      final boxEntrenamientos = Hive.box('entrenamientos');
+      final boxEventos = Hive.box('eventos');
+      boxEntrenamientos.add(e);
+      Eventos eventosActualesObjeto = new Eventos(listaEventos: {});
+      if (boxEventos.get(0) != null) {
+        eventosActualesObjeto = boxEventos.get(0);
+      }
+      eventosActualesObjeto.listaEventos["${fecha}/${hora}"] = ["Entrenamiento"];
+      boxEventos.put(0, eventosActualesObjeto);
+      print(eventosActualesObjeto.listaEventos);
       Navigator.pop(context);
     }
   }
 
-  void abrirBoxEntrenamentos() async {
-    //Abrir box
-    boxEntrenamientos = await Hive.openBox('entrenamientos');
+  Future<void> _openBox() async {
+    await Hive.openBox("entrenamientos");
+    await Hive.openBox("eventos");
   }
 
   @override
@@ -68,9 +81,6 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
 
   @override
   Widget build(BuildContext context) {
-    setState(() {
-      abrirBoxEntrenamentos();
-    });
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -572,7 +582,7 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
                         if (_isSeleccionado) {
                           print("Añadido");
                           setState(() {
-                            postListaJugadores.add({"idJugador": "${jugadorBox.id}", "opinion":""});
+                            postListaJugadores.add({"idJugador": "${jugadorBox.id}", "opinion": ""});
                           });
                           print(postListaJugadores);
                         } else {

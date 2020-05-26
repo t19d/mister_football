@@ -182,7 +182,7 @@ class _PartidosCreacion extends State<PartidosCreacion> {
                             Text("Fecha"),
                             Row(
                               children: <Widget>[
-                                Text("${fecha}"),
+                                Text("${fecha.split("-")[2]}-${fecha.split("-")[1]}-${fecha.split("-")[0]}"),
                                 Icon(Icons.calendar_today),
                               ],
                             ),

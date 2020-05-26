@@ -100,7 +100,9 @@ class _PartidosCreacion extends State<PartidosCreacion> {
   @override
   void initState() {
     fecha = "${fechaHoraInicial.year}-${fechaHoraInicial.month}-${fechaHoraInicial.day}";
-    hora = "${fechaHoraInicial.hour}:" + ((fechaHoraInicial.minute.toString().length == 1) ? "0${fechaHoraInicial.minute}" : "${fechaHoraInicial.minute}");
+    hora = ((fechaHoraInicial.hour.toString().length == 1) ? "0${fechaHoraInicial.hour}" : "${fechaHoraInicial.hour}") +
+        ":" +
+        ((fechaHoraInicial.minute.toString().length == 1) ? "0${fechaHoraInicial.minute}" : "${fechaHoraInicial.minute}");
     lugar = "";
     _tipoDePartidoDisponibles = getDropDownMenuItems();
     tipoPartido = _tipoDePartidoDisponibles[0].value;
@@ -198,7 +200,9 @@ class _PartidosCreacion extends State<PartidosCreacion> {
                           //Seleccionar hora
                           DatePicker.showTimePicker(context, showTitleActions: true, onConfirm: (time) {
                             setState(() {
-                              hora = "${time.hour}:" + ((time.minute.toString().length == 1) ? "0${time.minute}" : "${time.minute}");
+                              hora = ((time.hour.toString().length == 1) ? "0${time.hour}" : "${time.hour}") +
+                                  ":" +
+                                  ((time.minute.toString().length == 1) ? "0${time.minute}" : "${time.minute}");
                             });
                           },
                               currentTime: DateTime(

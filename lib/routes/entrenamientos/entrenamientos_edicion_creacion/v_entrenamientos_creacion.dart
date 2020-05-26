@@ -74,7 +74,9 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
   void initState() {
     super.initState();
     fecha = "${fechaHoraInicial.year}-${fechaHoraInicial.month}-${fechaHoraInicial.day}";
-    hora = "${fechaHoraInicial.hour}:${fechaHoraInicial.minute}";
+    hora = ((fechaHoraInicial.hour.toString().length == 1) ? "0${fechaHoraInicial.hour}" : "${fechaHoraInicial.hour}") +
+        ":" +
+        ((fechaHoraInicial.minute.toString().length == 1) ? "0${fechaHoraInicial.minute}" : "${fechaHoraInicial.minute}");
     ejercicios = [];
     listaJugadores = [];
   }
@@ -140,7 +142,9 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
                             //Seleccionar hora
                             DatePicker.showTimePicker(context, showTitleActions: true, onConfirm: (time) {
                               setState(() {
-                                hora = "${time.hour}:${time.minute}";
+                                hora = ((time.hour.toString().length == 1) ? "0${time.hour}" : "${time.hour}") +
+                                    ":" +
+                                    ((time.minute.toString().length == 1) ? "0${time.minute}" : "${time.minute}");
                               });
                             }, currentTime: DateTime.now(), locale: LocaleType.es);
                           },

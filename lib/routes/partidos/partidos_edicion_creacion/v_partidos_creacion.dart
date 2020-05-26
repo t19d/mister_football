@@ -79,7 +79,7 @@ class _PartidosCreacion extends State<PartidosCreacion> {
       if (boxEventos.get(0) != null) {
         eventosActualesObjeto = boxEventos.get(0);
       }
-      eventosActualesObjeto.listaEventos["${fecha}/${hora}"] = "Partido";
+      eventosActualesObjeto.listaEventos["${fecha}/${hora}"] = ["Partido", rival, tipoPartido];
       boxEventos.put(0, eventosActualesObjeto);
       print(eventosActualesObjeto.listaEventos);
       Navigator.pop(context);

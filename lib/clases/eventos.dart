@@ -6,7 +6,7 @@ part 'eventos.g.dart';
 class Eventos {
   @HiveField(0)
   //{"2020-2-18/17:50": "Partido", }
-  final Map<String, String> listaEventos;
+  final Map<String, List<String>> listaEventos;
 
   Eventos({
     this.listaEventos,

@@ -1,16 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:mister_football/clases/eventos.dart';
 import 'package:mister_football/navigator/Navegador.dart';
 import 'package:mister_football/routes/eventos/w_eventos_calendario.dart';
 
-class Eventos extends StatefulWidget {
-  Eventos({Key key}) : super(key: key);
+class VentanaEventos extends StatefulWidget {
+  VentanaEventos({Key key}) : super(key: key);
 
   @override
   _Eventos createState() => _Eventos();
 }
 
-class _Eventos extends State<Eventos> {
+class _Eventos extends State<VentanaEventos> {
   GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
+
+  @override
+  void dispose() {
+    Hive.close();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +41,27 @@ class _Eventos extends State<Eventos> {
           ),
         ),
         body: SingleChildScrollView(
-          child: EventosCalendario(),
+          child: FutureBuilder(
+            future: Hive.openBox('eventos'),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                if (snapshot.hasError) {
+                  print(snapshot.error.toString());
+                  return Text(snapshot.error.toString());
+                } else {
+                  var boxEventos = Hive.box('eventos');
+                  Map listaEventosAEnviar = {};
+                  if (boxEventos.get(0) != null) {
+                    Eventos eventosActuales = boxEventos.get(0);
+                    listaEventosAEnviar = eventosActuales.listaEventos;
+                  }
+                  return EventosCalendario(listaEventos: listaEventosAEnviar);
+                }
+              } else {
+                return CircularProgressIndicator();
+              }
+            },
+          ),
         ),
       ),
     );

@@ -4,7 +4,9 @@ import 'package:mister_football/main.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class EventosCalendario extends StatefulWidget {
-  EventosCalendario({Key key}) : super(key: key);
+  final Map listaEventos;
+
+  EventosCalendario({Key key, @required this.listaEventos}) : super(key: key);
 
   @override
   _EventosCalendario createState() => _EventosCalendario();
@@ -21,7 +23,30 @@ class _EventosCalendario extends State<EventosCalendario> with TickerProviderSta
     super.initState();
     final _selectedDay = DateTime.now();
 
-    _events = {
+    _events = {};
+    //Añadir eventos
+    widget.listaEventos.forEach((key, value) {
+      String fechaString = key.split("/")[0];
+      DateTime fecha = DateTime(int.parse(fechaString.split("-")[0]), int.parse(fechaString.split("-")[1]), int.parse(fechaString.split("-")[2]));
+      String horaString = key.split("/")[1];
+      print(horaString);
+      if (_events[fecha] != null) {
+        List eventosItem = _events[fecha].toList();
+        List nuevoEventoAGuardar = [];
+        nuevoEventoAGuardar.add(horaString);
+        nuevoEventoAGuardar.add(value);
+        eventosItem.add(nuevoEventoAGuardar);
+        //Ordenar por hora
+        eventosItem.sort((a, b) => a[0].compareTo(b[0]));
+        _events[fecha] = eventosItem;
+      } else {
+        List nuevoEventoAGuardar = [];
+        nuevoEventoAGuardar.add(horaString);
+        nuevoEventoAGuardar.add(value);
+        _events[fecha] = [nuevoEventoAGuardar];
+      }
+    });
+    /*_events = {
       _selectedDay.subtract(Duration(days: 30)): ['Event A0', 'Event B0', 'Event C0'],
       _selectedDay.subtract(Duration(days: 27)): ['Event A1'],
       _selectedDay.subtract(Duration(days: 20)): ['Event A2', 'Event B2', 'Event C2', 'Event D2'],
@@ -37,7 +62,7 @@ class _EventosCalendario extends State<EventosCalendario> with TickerProviderSta
       _selectedDay.add(Duration(days: 17)): ['Event A12', 'Event B12', 'Event C12', 'Event D12'],
       _selectedDay.add(Duration(days: 22)): ['Event A13', 'Event B13'],
       _selectedDay.add(Duration(days: 26)): ['Event A14', 'Event B14', 'Event C14'],
-    };
+    };*/
 
     _selectedEvents = _events[_selectedDay] ?? [];
     _calendarController = CalendarController();
@@ -143,7 +168,6 @@ class _EventosCalendario extends State<EventosCalendario> with TickerProviderSta
         },
         markersBuilder: (context, date, events, holidays) {
           final children = <Widget>[];
-
           /* Mostrar los eventos */
           if (events.isNotEmpty) {
             children.add(
@@ -194,17 +218,97 @@ class _EventosCalendario extends State<EventosCalendario> with TickerProviderSta
       /* Eliminar Scroll para pantallas pequeñas */
       physics: NeverScrollableScrollPhysics(),
       children: _selectedEvents
-          .map((event) => Container(
+          .map((event) =>
+              //Entrenami,ento
+              Container(
+                margin: EdgeInsets.fromLTRB(
+                  MediaQuery.of(context).size.width * .05,
+                  MediaQuery.of(context).size.width * .015,
+                  MediaQuery.of(context).size.width * .05,
+                  MediaQuery.of(context).size.width * .015,
+                ),
+                padding: EdgeInsets.fromLTRB(
+                  MediaQuery.of(context).size.width * .05,
+                  MediaQuery.of(context).size.width * .05,
+                  MediaQuery.of(context).size.width * .05,
+                  MediaQuery.of(context).size.width * .05,
+                ),
                 decoration: BoxDecoration(
-                  border: Border.all(width: 0.8),
+                  border: Border.all(width: 1),
                   borderRadius: BorderRadius.circular(12.0),
+                  gradient: (event[1].length == 1)
+                      ? LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            MisterFootball.complementarioLight.withOpacity(.3),
+                            MisterFootball.complementario.withOpacity(.3),
+                          ],
+                        )
+                      : LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            MisterFootball.analogo1Light.withOpacity(.3),
+                            MisterFootball.analogo1.withOpacity(.3),
+                          ],
+                        ),
                 ),
-                margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-                child: ListTile(
-                  title: Text(event.toString()),
-                  onTap: () => print('$event tapped!'),
-                ),
+                child: (event[1].length == 1)
+                    //Entrenamiento
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(event[0]),
+                          Text(event[1][0]),
+                        ],
+                      )
+                    //Partido
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.max,
+                        children: <Widget>[
+                          Container(
+                            width: MediaQuery.of(context).size.width * .15,
+                            child: Text(event[0]),
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: <Widget>[
+                              Container(
+                                width: MediaQuery.of(context).size.width * .55,
+                                child: Text(
+                                  "${event[1][0]} de ${event[1][2]}",
+                                  textAlign: TextAlign.right,
+                                ),
+                              ),
+                              Container(
+                                width: MediaQuery.of(context).size.width * .55,
+                                child: Text(
+                                  "contra ${event[1][1]}",
+                                  textAlign: TextAlign.right,
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
               ))
+          //Partido
+          /*: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(width: 0.8),
+                    borderRadius: BorderRadius.circular(12.0),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      Text(event[0]),
+                      Text(event[1][0]),
+                    ],
+                  ),
+                ))*/
           .toList(),
     );
   }

@@ -288,7 +288,7 @@ class _Navegador extends State<Navegador> {
             onTap: () {
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) => Eventos()),
+                MaterialPageRoute(builder: (context) => VentanaEventos()),
               );
             },
           ),

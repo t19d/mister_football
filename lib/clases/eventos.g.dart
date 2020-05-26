@@ -17,8 +17,7 @@ class EventosAdapter extends TypeAdapter<Eventos> {
       for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Eventos(
-      listaEventos: (fields[0] as Map)?.map((dynamic k, dynamic v) =>
-          MapEntry(k as String, (v as List)?.cast<String>())),
+      listaEventos: (fields[0] as Map)?.cast<String, String>(),
     );
   }
 

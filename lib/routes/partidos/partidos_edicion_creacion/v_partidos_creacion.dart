@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:mister_football/clases/conversor_imagen.dart';
 import 'package:hive/hive.dart';
+import 'package:mister_football/clases/eventos.dart';
 import 'package:mister_football/clases/jugador.dart';
 import 'package:mister_football/clases/partido.dart';
 import 'package:mister_football/main.dart';
@@ -18,6 +19,9 @@ class PartidosCreacion extends StatefulWidget {
 class _PartidosCreacion extends State<PartidosCreacion> {
   //Box partidos
   Box boxPartidos;
+
+  //Box eventos
+  Box boxEventos;
 
   //Datos
   DateTime fechaHoraInicial = DateTime.now();
@@ -68,19 +72,33 @@ class _PartidosCreacion extends State<PartidosCreacion> {
           isLocal: isLocal);
 
       //Almacenar el partido en la Box de 'partidos'
-      if (Hive.isBoxOpen('partidos')) {
+      /*if (Hive.isBoxOpen('partidos')) {
         boxPartidos.add(p);
       } else {
         abrirBoxPartidos();
         boxPartidos.add(p);
+      }*/
+      await _openBox();
+      final boxPartidos = Hive.box('partidos');
+      final boxEventos = Hive.box('eventos');
+      boxPartidos.add(p);
+      Eventos eventosActualesObjeto = new Eventos(listaEventos: {});
+      //Map eventosActuales = {};
+      if (boxEventos.get(0) != null) {
+        eventosActualesObjeto = boxEventos.get(0);
+        //eventosActuales = Map.from(boxEventos.get(0).listaEventos);
       }
+      //eventosActuales["${fecha}/${hora}"] = "Partido";
+      eventosActualesObjeto.listaEventos["${fecha}/${hora}"] = "Partido";
+      boxEventos.put(0, eventosActualesObjeto);
+      print(eventosActualesObjeto.listaEventos);
       Navigator.pop(context);
     }
   }
 
-  void abrirBoxPartidos() async {
-    //Abrir box
-    boxPartidos = await Hive.openBox('partidos');
+  Future<void> _openBox() async {
+    await Hive.openBox("partidos");
+    await Hive.openBox("eventos");
   }
 
   @override
@@ -92,7 +110,7 @@ class _PartidosCreacion extends State<PartidosCreacion> {
   @override
   void initState() {
     fecha = "${fechaHoraInicial.year}-${fechaHoraInicial.month}-${fechaHoraInicial.day}";
-    hora = "${fechaHoraInicial.hour}:${fechaHoraInicial.minute}";
+    hora = "${fechaHoraInicial.hour}:" + ((fechaHoraInicial.minute.toString().length == 1) ? "0${fechaHoraInicial.minute}" : "${fechaHoraInicial.minute}");
     lugar = "";
     _tipoDePartidoDisponibles = getDropDownMenuItems();
     tipoPartido = _tipoDePartidoDisponibles[0].value;
@@ -102,9 +120,6 @@ class _PartidosCreacion extends State<PartidosCreacion> {
 
   @override
   Widget build(BuildContext context) {
-    setState(() {
-      abrirBoxPartidos();
-    });
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(

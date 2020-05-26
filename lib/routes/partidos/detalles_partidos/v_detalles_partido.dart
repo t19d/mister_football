@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:mister_football/clases/eventos.dart';
 import 'package:mister_football/clases/partido.dart';
 import 'package:mister_football/main.dart';
 import 'package:mister_football/routes/partidos/detalles_partidos/subrutas/detalles_partido_alineacion/sv_detalles_partido_alineacion.dart';
@@ -56,8 +57,8 @@ class _DetallesPartido extends State<DetallesPartido> {
             print(snapshot.error.toString());
             return Text(snapshot.error.toString());
           } else {
-            final boxEntrenamientos = Hive.box('partidos');
-            partido = boxEntrenamientos.getAt(widget.posicion);
+            final boxPartidos = Hive.box('partidos');
+            partido = boxPartidos.getAt(widget.posicion);
             return Scaffold(
               appBar: AppBar(
                 title: Text(
@@ -72,8 +73,12 @@ class _DetallesPartido extends State<DetallesPartido> {
                     tooltip: 'Eliminar jugador',
                     onPressed: () async {
                       var boxPartidos = await Hive.openBox('partidos');
-                      print(widget.posicion);
+                      var boxEventos = await Hive.openBox('eventos');
+                      Eventos eventosActuales = boxEventos.get(0);
+                      //Eliminar evento
+                      eventosActuales.listaEventos.remove("${partido.fecha}/${partido.hora}");
                       boxPartidos.deleteAt(widget.posicion);
+                      boxEventos.putAt(0, eventosActuales);
                       Navigator.pop(context);
                     },
                   ),

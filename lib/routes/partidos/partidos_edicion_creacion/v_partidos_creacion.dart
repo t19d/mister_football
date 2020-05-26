@@ -71,24 +71,14 @@ class _PartidosCreacion extends State<PartidosCreacion> {
           observaciones: "",
           isLocal: isLocal);
 
-      //Almacenar el partido en la Box de 'partidos'
-      /*if (Hive.isBoxOpen('partidos')) {
-        boxPartidos.add(p);
-      } else {
-        abrirBoxPartidos();
-        boxPartidos.add(p);
-      }*/
       await _openBox();
       final boxPartidos = Hive.box('partidos');
       final boxEventos = Hive.box('eventos');
       boxPartidos.add(p);
       Eventos eventosActualesObjeto = new Eventos(listaEventos: {});
-      //Map eventosActuales = {};
       if (boxEventos.get(0) != null) {
         eventosActualesObjeto = boxEventos.get(0);
-        //eventosActuales = Map.from(boxEventos.get(0).listaEventos);
       }
-      //eventosActuales["${fecha}/${hora}"] = "Partido";
       eventosActualesObjeto.listaEventos["${fecha}/${hora}"] = "Partido";
       boxEventos.put(0, eventosActualesObjeto);
       print(eventosActualesObjeto.listaEventos);

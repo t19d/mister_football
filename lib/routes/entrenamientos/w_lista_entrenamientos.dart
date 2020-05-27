@@ -16,7 +16,6 @@ class _ListaEntrenamientos extends State<ListaEntrenamientos> {
     super.dispose();
   }
 
-
   Widget itemEntrenamientos() {
     final boxEntrenamientos = Hive.box('entrenamientos');
     if (boxEntrenamientos.length > 0) {
@@ -41,22 +40,35 @@ class _ListaEntrenamientos extends State<ListaEntrenamientos> {
                 );
               },
               child: Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15)),
+                //padding: const EdgeInsets.only(top: 5.0, bottom: 6.0),
+                padding: EdgeInsets.all(6),
+                decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
-                    //Fecha
-                    Text(
-                      entrenamientoBox.fecha,
-                      textAlign: TextAlign.center,
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        //Hora
+                        Text(
+                          entrenamientoBox.hora,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 10),
+                        ),
+                        //Fecha
+                        Text(
+                          entrenamientoBox.fecha,
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
                     ),
-                    //Hora
-                    Text(
-                      entrenamientoBox.hora,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 10),
+                    Row(
+                      children: <Widget>[
+                        Text("${entrenamientoBox.jugadoresOpiniones.length}"),
+                        Icon(Icons.person),
+                      ],
                     ),
+                    //Icon(Icons.remove_red_eye),
                   ],
                 ),
               ),

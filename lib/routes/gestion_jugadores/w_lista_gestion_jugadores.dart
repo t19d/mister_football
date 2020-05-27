@@ -80,7 +80,7 @@ class _ListaGestionJugadores extends State<ListaGestionJugadores> {
         coloreado2 = Colors.greenAccent;
         break;*/
       case "Mediapunta":
-        /*coloreado1 = Colors.yellow;
+      /*coloreado1 = Colors.yellow;
         coloreado2 = Colors.yellowAccent;
         break;*/
       case "Falso 9":
@@ -111,13 +111,13 @@ class _ListaGestionJugadores extends State<ListaGestionJugadores> {
         break;
     }
     return BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topRight,
-          end: Alignment.bottomLeft,
-          colors: [coloreado1, coloreado2],
-        ),
-        border: Border.all(width: 1, color: coloreado1),
-        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+      gradient: LinearGradient(
+        begin: Alignment.topRight,
+        end: Alignment.bottomLeft,
+        colors: [coloreado1, coloreado2],
+      ),
+      border: Border.all(width: 1, color: coloreado1),
+      borderRadius: BorderRadius.all(Radius.circular(10.0)),
     );
   }
 
@@ -161,65 +161,15 @@ class _ListaGestionJugadores extends State<ListaGestionJugadores> {
   }
  */
 
-//  Widget cartasJugadores(List<Jugador> jugadores) {
   Widget cartasJugadores() {
-    /*int variable = 0;
-    jugadores.forEach((f) {
-      variable++;
-    });
-    return GridView.count(
-      scrollDirection: Axis.vertical,
-      shrinkWrap: true,
-      crossAxisCount: 3,
-      children: List.generate(variable, (iJugador) {
-        return Card(
-          child: new InkWell(
-            splashColor: Colors.lightGreen,
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      DetallesJugador(jugador: jugadores[iJugador]),
-                ),
-              );
-            },
-            child: Container(
-              color: colorear(jugadores[iJugador].posicionFavorita),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  ConversorImagen.imageFromBase64String(
-                      jugadores[iJugador].nombre_foto),
-                  Text(
-                    jugadores[iJugador].apodo,
-                    textAlign: TextAlign.center,
-                  ),
-                  Text(
-                    jugadores[iJugador].posicionFavorita,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 10),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        );
-      }),
-    );*/
-
     final boxJugadores = Hive.box('jugadores');
     if (boxJugadores.length > 0) {
-      //print("Tamaño ${boxJugadores.length}");
-      //boxJugadores.delete(1);
-      return GridView.count(
+      /*return GridView.count(
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
         crossAxisCount: 3,
         children: List.generate(boxJugadores.length, (iJugador) {
           final Jugador jugadorBox = boxJugadores.getAt(iJugador) as Jugador;
-          /*print("Jugador: ${jugadorBox.nombre} / id: ${iJugador}");
-          print("Tamaño ${boxJugadores.length}");*/
           return Card(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(10.0)),
@@ -251,6 +201,83 @@ class _ListaGestionJugadores extends State<ListaGestionJugadores> {
                       jugadorBox.posicionFavorita,
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 10),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        }),
+      );*/
+      return ListView(
+        shrinkWrap: true,
+        children: List.generate(boxJugadores.length, (iJugador) {
+          final Jugador jugadorBox = boxJugadores.getAt(iJugador) as Jugador;
+          return Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10.0)),
+            ),
+            child: InkWell(
+              splashColor: Colors.lightGreen,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DetallesJugador(
+                      posicion: iJugador,
+                    ),
+                  ),
+                );
+              },
+              child: Container(
+                padding: EdgeInsets.fromLTRB(
+                  MediaQuery.of(context).size.width * .05,
+                  MediaQuery.of(context).size.width * .01,
+                  MediaQuery.of(context).size.width * .1,
+                  MediaQuery.of(context).size.width * .01,
+                ),
+                //decoration: colorear(jugadorBox.posicionFavorita),
+                decoration: BoxDecoration(
+                  border: Border.all(),
+                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Container(
+                      width: MediaQuery.of(context).size.width * .5,
+                      /*child: Table(
+                        children: [
+                          TableRow(
+                            children: [
+                              ConversorImagen.imageFromBase64String(jugadorBox.nombre_foto, context),
+                              Text(
+                                jugadorBox.apodo,
+                                overflow: TextOverflow.clip,
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),*/
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          ConversorImagen.imageFromBase64String(jugadorBox.nombre_foto, context),
+                          Text(
+                            jugadorBox.apodo,
+                            overflow: TextOverflow.clip,
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width * .3,
+                      child: Text(
+                        jugadorBox.posicionFavorita,
+                        textAlign: TextAlign.right,
+                      ),
                     ),
                   ],
                 ),

@@ -77,11 +77,17 @@ class MisterFootball extends StatelessWidget {
   static Color complementarioLight = const Color(0xFF48B8B4);
   static Color complementarioLight2 = const Color(0xFF77D3CF);
 
-  static Color analogo1Dark2 = const Color(0xFFFFFFFF);
-  static Color analogo1Dark = const Color(0xFFD5FDE3);
+  static Color complementarioDelComplementarioDark2 = const Color(0xFF510004);
+  static Color complementarioDelComplementarioDark = const Color(0xFF7B0B11);
+  static Color complementarioDelComplementario = const Color(0xFFa1282d);
+  static Color complementarioDelComplementarioLight = const Color(0xFFC1484E);
+  static Color complementarioDelComplementarioLight2 = const Color(0xFFEA7F84);
+
+  static Color analogo1Dark2 = const Color(0xFF52DA80);
+  static Color analogo1Dark = const Color(0xFF78EC9F);
   static Color analogo1 = const Color(0xFFa3f7bf);
-  static Color analogo1Light = const Color(0xFF78EC9F);
-  static Color analogo1Light2 = const Color(0xFF52DA80);
+  static Color analogo1Light = const Color(0xFFD5FDE3);
+  static Color analogo1Light2 = const Color(0xFFFFFFFF);
 
   /*static Color analogo2 = const Color(0xFF021bbd);
   static Color analogo2Light = const Color(0xFF3728c7);

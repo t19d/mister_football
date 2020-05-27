@@ -29,7 +29,6 @@ class _EventosCalendario extends State<EventosCalendario> with TickerProviderSta
       String fechaString = key.split("/")[0];
       DateTime fecha = DateTime(int.parse(fechaString.split("-")[0]), int.parse(fechaString.split("-")[1]), int.parse(fechaString.split("-")[2]));
       String horaString = key.split("/")[1];
-      print(horaString);
       if (_events[fecha] != null) {
         List eventosItem = _events[fecha].toList();
         List nuevoEventoAGuardar = [];
@@ -46,23 +45,6 @@ class _EventosCalendario extends State<EventosCalendario> with TickerProviderSta
         _events[fecha] = [nuevoEventoAGuardar];
       }
     });
-    /*_events = {
-      _selectedDay.subtract(Duration(days: 30)): ['Event A0', 'Event B0', 'Event C0'],
-      _selectedDay.subtract(Duration(days: 27)): ['Event A1'],
-      _selectedDay.subtract(Duration(days: 20)): ['Event A2', 'Event B2', 'Event C2', 'Event D2'],
-      _selectedDay.subtract(Duration(days: 16)): ['Event A3', 'Event B3'],
-      _selectedDay.subtract(Duration(days: 10)): ['Event A4', 'Event B4', 'Event C4'],
-      _selectedDay.subtract(Duration(days: 4)): ['Event A5', 'Event B5', 'Event C5'],
-      _selectedDay.subtract(Duration(days: 2)): ['Event A6', 'Event B6'],
-      _selectedDay: ['Event A7', 'Event B7', 'Event C7', 'Event D7'],
-      DateTime(2020, 05, 23): ['Event A8', 'Event B8', 'Event C8', 'Event D8', 'Event C8', 'Event D8', 'Event C8', 'Event D8'],
-      _selectedDay.add(Duration(days: 3)): Set.from(['Event A9', 'Event A9', 'Event B9']).toList(),
-      _selectedDay.add(Duration(days: 7)): ['Event A10', 'Event B10', 'Event C10'],
-      _selectedDay.add(Duration(days: 11)): ['Event A11', 'Event B11'],
-      _selectedDay.add(Duration(days: 17)): ['Event A12', 'Event B12', 'Event C12', 'Event D12'],
-      _selectedDay.add(Duration(days: 22)): ['Event A13', 'Event B13'],
-      _selectedDay.add(Duration(days: 26)): ['Event A14', 'Event B14', 'Event C14'],
-    };*/
 
     _selectedEvents = _events[_selectedDay] ?? [];
     _calendarController = CalendarController();
@@ -126,11 +108,10 @@ class _EventosCalendario extends State<EventosCalendario> with TickerProviderSta
         CalendarFormat.week: '',
       },
       calendarStyle: CalendarStyle(
-        outsideDaysVisible: false,
-        weekendStyle: TextStyle(color: Colors.lightBlue),
+        weekendStyle: TextStyle(color: MisterFootball.primarioDark2),
       ),
       daysOfWeekStyle: DaysOfWeekStyle(
-        weekendStyle: TextStyle(color: Colors.lightBlue),
+        weekendStyle: TextStyle(color: MisterFootball.primarioLight2),
       ),
       headerStyle: HeaderStyle(
         centerHeaderTitle: true,
@@ -143,26 +124,45 @@ class _EventosCalendario extends State<EventosCalendario> with TickerProviderSta
             child: Container(
               margin: const EdgeInsets.all(4.0),
               padding: const EdgeInsets.only(top: 5.0, left: 6.0),
-              color: MisterFootball.complementario,
+              decoration: BoxDecoration(
+                color: MisterFootball.complementarioLight2.withOpacity(.2),
+                border: Border(
+                  bottom: BorderSide(width: 1),
+                  top: BorderSide(width: 1),
+                  left: BorderSide(width: 1),
+                  right: BorderSide(width: 1),
+                ),
+              ),
               width: 100,
               height: 100,
               child: Text(
                 '${date.day}',
-                style: TextStyle(fontSize: 16.0),
+                style: TextStyle(
+                  fontSize: 16.0
+                ),
               ),
             ),
           );
         },
         todayDayBuilder: (context, date, _) {
+          /* Selecciona el día de hoy */
           return Container(
             margin: const EdgeInsets.all(4.0),
             padding: const EdgeInsets.only(top: 5.0, left: 6.0),
-            color: Colors.amber[400],
+            //color: MisterFootball.complementarioLight2.withOpacity(.3),
+            decoration: BoxDecoration(
+              color: Colors.transparent,
+              border: Border(
+                bottom: BorderSide(width: 1, color: MisterFootball.primarioDark2.withOpacity(.3)),
+                top: BorderSide(width: 1, color: MisterFootball.primarioDark2.withOpacity(.3)),
+                left: BorderSide(width: 1, color: MisterFootball.primarioDark2.withOpacity(.3)),
+                right: BorderSide(width: 1, color: MisterFootball.primarioDark2.withOpacity(.3)),
+              ),
+            ),
             width: 100,
             height: 100,
             child: Text(
               '${date.day}',
-              style: TextStyle(fontSize: 16.0),
             ),
           );
         },
@@ -195,18 +195,17 @@ class _EventosCalendario extends State<EventosCalendario> with TickerProviderSta
       duration: Duration(milliseconds: 200),
       decoration: BoxDecoration(
         shape: BoxShape.rectangle,
-        color:
-            (_calendarController.isSelected(date) ? Colors.brown[500] : (_calendarController.isToday(date) ? Colors.brown[300] : Colors.blue[400])),
+        color: (_calendarController.isSelected(date)
+            ? MisterFootball.complementarioDelComplementarioDark
+            //: (_calendarController.isToday(date) ? MisterFootball.primarioLight2 : Colors.blue[400])
+            : MisterFootball.primario),
       ),
       width: 16.0,
       height: 16.0,
       child: Center(
         child: Text(
           '${events.length}',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 12.0,
-          ),
+          style: TextStyle(color: Colors.white, fontSize: 12.0, fontWeight: FontWeight.bold),
         ),
       ),
     );

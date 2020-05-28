@@ -44,19 +44,9 @@ class _Configuracion extends State<Configuracion> {
       "nombre_equipo": "",
       "escudo": "",
       "modo_oscuro": false,
-      "alineacion_favorita": {
-        '0': null,
-        '1': null,
-        '2': null,
-        '3': null,
-        '4': null,
-        '5': null,
-        '6': null,
-        '7': null,
-        '8': null,
-        '9': null,
-        '10': null
-      }
+      "alineacion_favorita": [
+        {'0': null, '1': null, '2': null, '3': null, '4': null, '5': null, '6': null, '7': null, '8': null, '9': null, '10': null}
+      ]
     };
     if (boxPerfil.get(0) != null) {
       equipo = Map.from(boxPerfil.get(0));
@@ -119,13 +109,73 @@ class _Configuracion extends State<Configuracion> {
                     : () {
                         //Escudo editado y nombre NO editado
                         if (isEscudoEditado && !isNombreEquipoEditado) {
-                          equipoEditado = {"nombre_equipo": equipo['nombre_equipo'], "escudo": "$imgString", "modo_oscuro": false};
+                          equipoEditado = {
+                            "nombre_equipo": equipo['nombre_equipo'],
+                            "escudo": "$imgString",
+                            "modo_oscuro": false,
+                            "alineacion_favorita": [
+                              {
+                                '0': null,
+                                '1': null,
+                                '2': null,
+                                '3': null,
+                                '4': null,
+                                '5': null,
+                                '6': null,
+                                '7': null,
+                                '8': null,
+                                '9': null,
+                                '10': null
+                              },
+                              "14231"
+                            ]
+                          };
                         } else {
                           //Nombre editado y escudo NO editado
                           if (!isEscudoEditado && isNombreEquipoEditado) {
-                            equipoEditado = {"nombre_equipo": "$nombreEquipo", "escudo": equipo['escudo'], "modo_oscuro": false};
+                            equipoEditado = {
+                              "nombre_equipo": "$nombreEquipo",
+                              "escudo": equipo['escudo'],
+                              "modo_oscuro": false,
+                              "alineacion_favorita": [
+                                {
+                                  '0': null,
+                                  '1': null,
+                                  '2': null,
+                                  '3': null,
+                                  '4': null,
+                                  '5': null,
+                                  '6': null,
+                                  '7': null,
+                                  '8': null,
+                                  '9': null,
+                                  '10': null
+                                },
+                                "14231"
+                              ]
+                            };
                           } else {
-                            equipoEditado = {"nombre_equipo": "$nombreEquipo", "escudo": "$imgString", "modo_oscuro": false};
+                            equipoEditado = {
+                              "nombre_equipo": "$nombreEquipo",
+                              "escudo": "$imgString",
+                              "modo_oscuro": false,
+                              "alineacion_favorita": [
+                                {
+                                  '0': null,
+                                  '1': null,
+                                  '2': null,
+                                  '3': null,
+                                  '4': null,
+                                  '5': null,
+                                  '6': null,
+                                  '7': null,
+                                  '8': null,
+                                  '9': null,
+                                  '10': null
+                                },
+                                "14231"
+                              ]
+                            };
                           }
                         }
                         //boxPerfil.putAt(0, equipoEditado);
@@ -192,13 +242,73 @@ class _Configuracion extends State<Configuracion> {
                     : () {
                         //Escudo editado y nombre NO editado
                         if (isEscudoEditado && !isNombreEquipoEditado) {
-                          equipoEditado = {"nombre_equipo": "", "escudo": "$imgString", "modo_oscuro": false};
+                          equipoEditado = {
+                            "nombre_equipo": "",
+                            "escudo": "$imgString",
+                            "modo_oscuro": false,
+                            "alineacion_favorita": [
+                              {
+                                '0': null,
+                                '1': null,
+                                '2': null,
+                                '3': null,
+                                '4': null,
+                                '5': null,
+                                '6': null,
+                                '7': null,
+                                '8': null,
+                                '9': null,
+                                '10': null
+                              },
+                              "14231"
+                            ]
+                          };
                         } else {
                           //Nombre editado y escudo NO editado
                           if (!isEscudoEditado && isNombreEquipoEditado) {
-                            equipoEditado = {"nombre_equipo": "$nombreEquipo", "escudo": "", "modo_oscuro": false};
+                            equipoEditado = {
+                              "nombre_equipo": "$nombreEquipo",
+                              "escudo": "",
+                              "modo_oscuro": false,
+                              "alineacion_favorita": [
+                                {
+                                  '0': null,
+                                  '1': null,
+                                  '2': null,
+                                  '3': null,
+                                  '4': null,
+                                  '5': null,
+                                  '6': null,
+                                  '7': null,
+                                  '8': null,
+                                  '9': null,
+                                  '10': null
+                                },
+                                "14231"
+                              ]
+                            };
                           } else {
-                            equipoEditado = {"nombre_equipo": "$nombreEquipo", "escudo": "$imgString", "modo_oscuro": false};
+                            equipoEditado = {
+                              "nombre_equipo": "$nombreEquipo",
+                              "escudo": "$imgString",
+                              "modo_oscuro": false,
+                              "alineacion_favorita": [
+                                {
+                                  '0': null,
+                                  '1': null,
+                                  '2': null,
+                                  '3': null,
+                                  '4': null,
+                                  '5': null,
+                                  '6': null,
+                                  '7': null,
+                                  '8': null,
+                                  '9': null,
+                                  '10': null
+                                },
+                                "14231"
+                              ]
+                            };
                           }
                         }
                         //boxPerfil.putAt(0, equipoEditado);

@@ -40,7 +40,24 @@ class _Configuracion extends State<Configuracion> {
   //Devuelve la lista de configuración
   Widget devolverConfiguracion() {
     final boxPerfil = Hive.box('perfil');
-    Map<String, dynamic> equipo = {"nombre_equipo": "", "escudo": "", "modo_oscuro": false, "alineacion_favorita" : {}};
+    Map<String, dynamic> equipo = {
+      "nombre_equipo": "",
+      "escudo": "",
+      "modo_oscuro": false,
+      "alineacion_favorita": {
+        '0': null,
+        '1': null,
+        '2': null,
+        '3': null,
+        '4': null,
+        '5': null,
+        '6': null,
+        '7': null,
+        '8': null,
+        '9': null,
+        '10': null
+      }
+    };
     if (boxPerfil.get(0) != null) {
       equipo = Map.from(boxPerfil.get(0));
     }

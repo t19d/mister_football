@@ -49,14 +49,14 @@ class _Navegador extends State<Navegador> {
         child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
           //Cambiar por el escudo del equipo (si el usuario quiere)
           (equipo['escudo'].length == 0)
-              ? ConversorImagen.devolverEscudoImageFromBase64String("", context)
-              : ConversorImagen.devolverEscudoImageFromBase64String(equipo['escudo'], context),
+              ? ConversorImagen.devolverEscudoNavegadorImageFromBase64String("", context)
+              : ConversorImagen.devolverEscudoNavegadorImageFromBase64String(equipo['escudo'], context),
           Text(
             (equipo['nombre_equipo'].length == 0) ? "Equipo" : equipo['nombre_equipo'],
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: (MediaQuery.of(context).size.width * .05),
-              color: Colors.white,
+              color: Colors.white70,
               height: 3,
               fontWeight: FontWeight.bold,
             ),
@@ -82,7 +82,7 @@ class _Navegador extends State<Navegador> {
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: (MediaQuery.of(context).size.width * .05),
-              color: Colors.white,
+              color: Colors.white70,
               height: 3,
               fontWeight: FontWeight.bold,
             ),

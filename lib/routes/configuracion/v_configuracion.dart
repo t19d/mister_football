@@ -45,7 +45,8 @@ class _Configuracion extends State<Configuracion> {
       "escudo": "",
       "modo_oscuro": false,
       "alineacion_favorita": [
-        {'0': null, '1': null, '2': null, '3': null, '4': null, '5': null, '6': null, '7': null, '8': null, '9': null, '10': null}
+        {'0': null, '1': null, '2': null, '3': null, '4': null, '5': null, '6': null, '7': null, '8': null, '9': null, '10': null},
+        "14231"
       ]
     };
     if (boxPerfil.get(0) != null) {
@@ -92,7 +93,9 @@ class _Configuracion extends State<Configuracion> {
                   color: Colors.lightBlueAccent,
                 ),
                 onPressed: () async {
-                  _cambiarNombreEquipo(context);
+                  print(isNombreEquipoEditado);
+                  _cambiarNombreEquipo(context, (!isNombreEquipoEditado)
+                      ? equipo['nombre_equipo'] : nombreEquipo);
                 },
               ),
             ],
@@ -113,22 +116,7 @@ class _Configuracion extends State<Configuracion> {
                             "nombre_equipo": equipo['nombre_equipo'],
                             "escudo": "$imgString",
                             "modo_oscuro": false,
-                            "alineacion_favorita": [
-                              {
-                                '0': null,
-                                '1': null,
-                                '2': null,
-                                '3': null,
-                                '4': null,
-                                '5': null,
-                                '6': null,
-                                '7': null,
-                                '8': null,
-                                '9': null,
-                                '10': null
-                              },
-                              "14231"
-                            ]
+                            "alineacion_favorita": equipo["alineacion_favorita"]
                           };
                         } else {
                           //Nombre editado y escudo NO editado
@@ -137,44 +125,14 @@ class _Configuracion extends State<Configuracion> {
                               "nombre_equipo": "$nombreEquipo",
                               "escudo": equipo['escudo'],
                               "modo_oscuro": false,
-                              "alineacion_favorita": [
-                                {
-                                  '0': null,
-                                  '1': null,
-                                  '2': null,
-                                  '3': null,
-                                  '4': null,
-                                  '5': null,
-                                  '6': null,
-                                  '7': null,
-                                  '8': null,
-                                  '9': null,
-                                  '10': null
-                                },
-                                "14231"
-                              ]
+                              "alineacion_favorita": equipo["alineacion_favorita"]
                             };
                           } else {
                             equipoEditado = {
                               "nombre_equipo": "$nombreEquipo",
                               "escudo": "$imgString",
                               "modo_oscuro": false,
-                              "alineacion_favorita": [
-                                {
-                                  '0': null,
-                                  '1': null,
-                                  '2': null,
-                                  '3': null,
-                                  '4': null,
-                                  '5': null,
-                                  '6': null,
-                                  '7': null,
-                                  '8': null,
-                                  '9': null,
-                                  '10': null
-                                },
-                                "14231"
-                              ]
+                              "alineacion_favorita": equipo["alineacion_favorita"]
                             };
                           }
                         }
@@ -225,7 +183,7 @@ class _Configuracion extends State<Configuracion> {
                   color: Colors.lightBlueAccent,
                 ),
                 onPressed: () async {
-                  _cambiarNombreEquipo(context);
+                  _cambiarNombreEquipo(context, nombreEquipo);
                 },
               ),
             ],
@@ -246,22 +204,7 @@ class _Configuracion extends State<Configuracion> {
                             "nombre_equipo": "",
                             "escudo": "$imgString",
                             "modo_oscuro": false,
-                            "alineacion_favorita": [
-                              {
-                                '0': null,
-                                '1': null,
-                                '2': null,
-                                '3': null,
-                                '4': null,
-                                '5': null,
-                                '6': null,
-                                '7': null,
-                                '8': null,
-                                '9': null,
-                                '10': null
-                              },
-                              "14231"
-                            ]
+                            "alineacion_favorita": equipo["alineacion_favorita"]
                           };
                         } else {
                           //Nombre editado y escudo NO editado
@@ -270,44 +213,14 @@ class _Configuracion extends State<Configuracion> {
                               "nombre_equipo": "$nombreEquipo",
                               "escudo": "",
                               "modo_oscuro": false,
-                              "alineacion_favorita": [
-                                {
-                                  '0': null,
-                                  '1': null,
-                                  '2': null,
-                                  '3': null,
-                                  '4': null,
-                                  '5': null,
-                                  '6': null,
-                                  '7': null,
-                                  '8': null,
-                                  '9': null,
-                                  '10': null
-                                },
-                                "14231"
-                              ]
+                              "alineacion_favorita": equipo["alineacion_favorita"]
                             };
                           } else {
                             equipoEditado = {
                               "nombre_equipo": "$nombreEquipo",
                               "escudo": "$imgString",
                               "modo_oscuro": false,
-                              "alineacion_favorita": [
-                                {
-                                  '0': null,
-                                  '1': null,
-                                  '2': null,
-                                  '3': null,
-                                  '4': null,
-                                  '5': null,
-                                  '6': null,
-                                  '7': null,
-                                  '8': null,
-                                  '9': null,
-                                  '10': null
-                                },
-                                "14231"
-                              ]
+                              "alineacion_favorita": equipo["alineacion_favorita"]
                             };
                           }
                         }
@@ -370,7 +283,7 @@ class _Configuracion extends State<Configuracion> {
 
   /* NOMBRE EQUIPO */
   //Diálogo cambiar nombre equipo
-  Future<String> _cambiarNombreEquipo(BuildContext context) {
+  Future<String> _cambiarNombreEquipo(BuildContext context, String strEquipo) {
     //Datos formulario
     final formKey = new GlobalKey<FormState>();
     //Estilo
@@ -403,7 +316,7 @@ class _Configuracion extends State<Configuracion> {
                     child: Form(
                       key: formKey,
                       child: TextFormField(
-                        initialValue: nombreEquipo,
+                        initialValue: strEquipo,
                         textCapitalization: TextCapitalization.sentences,
                         keyboardType: TextInputType.text,
                         validator: (val) => (val.length == 0) ? 'Escribe el nombre del equipo' : null,

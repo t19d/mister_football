@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:mister_football/routes/alineacion_favorita/w_formaciones.dart';
 
 class CampoJugadores extends StatefulWidget {
+  CampoJugadores({Key key}) : super(key: key);
+
   @override
   createState() => _CampoJugadores();
 }
@@ -28,60 +31,88 @@ class _CampoJugadores extends State<CampoJugadores> {
     return items;
   }
 
-  /*Widget alineacion(int formacion) {
-    switch (formacion) {
-      case 1442:
-        columnas = 5;
-        filas = (4 * columnas);
-        break;
-      case 1532:
-        columnas = 7;
-        filas = (4 * columnas);
-        break;
-    }
-
-    return GridView.count(
-      scrollDirection: Axis.vertical,
-      shrinkWrap: true,
-      crossAxisCount: columnas,
-      children: List.generate(filas, (index) {
-        return Card(
-          child: new InkWell(
-            onTap: () {
-              print("futuro");
-            },
-            focusColor: Colors.green,
-            child: Text("$index"),
-          ),
-        );
-      }),
-    );
-  }*/
-
   void cambiarFormacion(formacionElegida) {
     setState(() {
       _formacionActual = formacionElegida;
     });
   }
+  void actualizarFormacionFavorita(String formacionElegida) async {
+    cambiarFormacion(formacionElegida);
+    final boxPerfil = Hive.box('perfil');
+    Map<String, dynamic> equipo = {
+      "nombre_equipo": "",
+      "escudo": "",
+      "modo_oscuro": false,
+      "alineacion_favorita": [
+        {'0': null, '1': null, '2': null, '3': null, '4': null, '5': null, '6': null, '7': null, '8': null, '9': null, '10': null},
+        formacionElegida
+      ]
+    };
+    if (boxPerfil.get(0) != null) {
+      equipo = Map.from(boxPerfil.get(0));
+      equipo["alineacion_favorita"][1] = formacionElegida;
+    }
+    boxPerfil.putAt(0, equipo);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SafeArea(
-      child: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            DropdownButton(
-              value: _formacionActual,
-              items: _formacionesDisponibles,
-              onChanged: cambiarFormacion,
-            ),
-            Formacion(
-              formacion: _formacionActual,
-            ),
-          ],
+      body: SafeArea(
+        child: FutureBuilder(
+          future: Hive.openBox('perfil'),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.hasError) {
+                print(snapshot.error.toString());
+                return Text(snapshot.error.toString());
+              } else {
+                final boxPerfil = Hive.box('perfil');
+                Map<String, dynamic> equipo = {
+                  "nombre_equipo": "",
+                  "escudo": "",
+                  "modo_oscuro": false,
+                  "alineacion_favorita": [
+                    {'0': null, '1': null, '2': null, '3': null, '4': null, '5': null, '6': null, '7': null, '8': null, '9': null, '10': null},
+                    "14231"
+                  ]
+                };
+                //Seleccionar formación inicial
+                String formacionInicialFavorita = "14231";
+                if (boxPerfil.get(0) != null) {
+                  equipo = Map.from(boxPerfil.get(0));
+                  formacionInicialFavorita = equipo["alineacion_favorita"][1];
+                }
+                //PONER VALOR INICIAL
+                int _posicionFormacionInicial = _formaciones.indexOf(formacionInicialFavorita);
+                _formacionActual = _formacionesDisponibles[_posicionFormacionInicial].value;
+                return SingleChildScrollView(
+                  child: Column(
+                    children: <Widget>[
+                      DropdownButton(
+                        value: _formacionActual,
+                        items: _formacionesDisponibles,
+                        onChanged: (val) async {
+                          actualizarFormacionFavorita(val);
+                          cambiarFormacion(val);
+                          setState(() {});
+                        },
+                      ),
+                      Formacion(formacion: formacionInicialFavorita),
+                    ],
+                  ),
+                );
+              }
+            } else {
+              return Container(
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                child: LinearProgressIndicator(),
+              );
+            }
+          },
         ),
       ),
-    ));
+    );
   }
 }

@@ -29,6 +29,11 @@ class _ListaPartidos extends State<ListaPartidos> {
     TextStyle estiloEquipos = TextStyle(fontWeight: FontWeight.bold, color: MisterFootball.primarioDark);
     //Estilo de los textos
     TextStyle estiloTextos = TextStyle(color: MisterFootball.primarioDark);
+    //Estilo de las fechas
+    TextStyle estiloFechasTextos = TextStyle(
+      color: MisterFootball.primarioDark,
+      fontSize: MediaQuery.of(context).size.width * .025,
+    );
     //Estilo de los resultados de los equipos
     TextStyle estiloResultado = TextStyle(
       fontSize: MediaQuery.of(context).size.width * .04,
@@ -77,26 +82,28 @@ class _ListaPartidos extends State<ListaPartidos> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
                   border: Border.all(color: Colors.black),
-                  color: (partidoBox.golesAFavor.length > partidoBox.golesEnContra.length)
+                  color:
+                      /*(partidoBox.golesAFavor.length > partidoBox.golesEnContra.length)
                       //Victoria
                       ? Colors.lightGreen.withOpacity(.75)
                       //Derrota
                       : (partidoBox.golesAFavor.length < partidoBox.golesEnContra.length)
                           ? Colors.red.withOpacity(.6)
                           //Sin jugar
-                          : (DateTime.now()
-                                      .difference(DateTime(
-                                        int.parse(partidoBox.fecha.split("-")[0]),
-                                        int.parse(partidoBox.fecha.split("-")[1]),
-                                        int.parse(partidoBox.fecha.split("-")[2]),
-                                        //Suponiendo que los partidos duran aproximadamente 1 hora y media
-                                        int.parse(partidoBox.hora.split(":")[0]) + 1,
-                                        int.parse(partidoBox.hora.split(":")[1]) + 30,
-                                      ))
-                                      .inSeconds >
-                                  0)
-                              ? Colors.white.withOpacity(.8)
-                              : Colors.yellow.withOpacity(.4),
+                          :*/
+                      (DateTime.now()
+                                  .difference(DateTime(
+                                    int.parse(partidoBox.fecha.split("-")[0]),
+                                    int.parse(partidoBox.fecha.split("-")[1]),
+                                    int.parse(partidoBox.fecha.split("-")[2]),
+                                    //Suponiendo que los partidos duran aproximadamente 1 hora y media
+                                    int.parse(partidoBox.hora.split(":")[0]) + 1,
+                                    int.parse(partidoBox.hora.split(":")[1]) + 30,
+                                  ))
+                                  .inSeconds >
+                              0)
+                          ? Colors.white
+                          : Colors.yellow.withOpacity(.15),
                 ),
                 child: (DateTime.now()
                             .difference(DateTime(
@@ -244,11 +251,11 @@ class _ListaPartidos extends State<ListaPartidos> {
                             defaultVerticalAlignment: TableCellVerticalAlignment.middle,
                             children: [
                               TableRow(
-                                decoration: BoxDecoration(
+                                /*decoration: BoxDecoration(
                                   border: Border(
                                     bottom: BorderSide(color: MisterFootball.complementarioLight),
                                   ),
-                                ),
+                                ),*/
                                 children: [
                                   //Nuestro Escudo
                                   ConversorImagen.devolverEscudoImageFromBase64String(perfil['escudo'], context),
@@ -259,21 +266,24 @@ class _ListaPartidos extends State<ListaPartidos> {
                                     style: estiloEquipos,
                                   ),
                                   //Fecha y hora
-                                  Column(
-                                    children: <Widget>[
-                                      //Hora
-                                      Text(
-                                        "${partidoBox.hora}",
-                                        textAlign: TextAlign.center,
-                                        style: estiloTextos,
-                                      ),
-                                      //Fecha
-                                      Text(
-                                        "${partidoBox.fecha.split("-")[2]}-${partidoBox.fecha.split("-")[1]}-${partidoBox.fecha.split("-")[0]}",
-                                        textAlign: TextAlign.center,
-                                        style: estiloTextos,
-                                      ),
-                                    ],
+                                  Container(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Column(
+                                      children: <Widget>[
+                                        //Hora
+                                        Text(
+                                          "${partidoBox.hora}",
+                                          textAlign: TextAlign.center,
+                                          style: estiloTextos,
+                                        ),
+                                        //Fecha
+                                        Text(
+                                          "${partidoBox.fecha.split("-")[2]}-${partidoBox.fecha.split("-")[1]}-${partidoBox.fecha.split("-")[0]}",
+                                          textAlign: TextAlign.center,
+                                          style: estiloFechasTextos,
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                   //Rival
                                   Text(
@@ -289,7 +299,7 @@ class _ListaPartidos extends State<ListaPartidos> {
                                   ),
                                 ],
                               ),
-                              TableRow(
+                              /*TableRow(
                                 children: [
                                   Container(),
                                   //Tipo
@@ -307,7 +317,7 @@ class _ListaPartidos extends State<ListaPartidos> {
                                   ),
                                   Container(),
                                 ],
-                              ),
+                              ),*/
                             ],
                           )
                         //Sin jugar visitante
@@ -315,11 +325,11 @@ class _ListaPartidos extends State<ListaPartidos> {
                             defaultVerticalAlignment: TableCellVerticalAlignment.middle,
                             children: [
                               TableRow(
-                                decoration: BoxDecoration(
+                                /*decoration: BoxDecoration(
                                   border: Border(
                                     bottom: BorderSide(color: MisterFootball.complementarioLight),
                                   ),
-                                ),
+                                ),*/
                                 children: [
                                   //Escudo Rival
                                   Icon(
@@ -334,21 +344,24 @@ class _ListaPartidos extends State<ListaPartidos> {
                                     style: estiloEquipos,
                                   ),
                                   //Fecha y hora
-                                  Column(
-                                    children: <Widget>[
-                                      //Hora
-                                      Text(
-                                        "${partidoBox.hora}",
-                                        textAlign: TextAlign.center,
-                                        style: estiloTextos,
-                                      ),
-                                      //Fecha
-                                      Text(
-                                        "${partidoBox.fecha.split("-")[2]}-${partidoBox.fecha.split("-")[1]}-${partidoBox.fecha.split("-")[0]}",
-                                        textAlign: TextAlign.center,
-                                        style: estiloTextos,
-                                      ),
-                                    ],
+                                  Container(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Column(
+                                      children: <Widget>[
+                                        //Hora
+                                        Text(
+                                          "${partidoBox.hora}",
+                                          textAlign: TextAlign.center,
+                                          style: estiloTextos,
+                                        ),
+                                        //Fecha
+                                        Text(
+                                          "${partidoBox.fecha.split("-")[2]}-${partidoBox.fecha.split("-")[1]}-${partidoBox.fecha.split("-")[0]}",
+                                          textAlign: TextAlign.center,
+                                          style: estiloFechasTextos,
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                   //Nosotros
                                   Text(
@@ -360,7 +373,7 @@ class _ListaPartidos extends State<ListaPartidos> {
                                   ConversorImagen.devolverEscudoImageFromBase64String(perfil['escudo'], context),
                                 ],
                               ),
-                              TableRow(
+                              /*TableRow(
                                 children: [
                                   Container(),
                                   //Tipo
@@ -378,7 +391,7 @@ class _ListaPartidos extends State<ListaPartidos> {
                                   ),
                                   Container(),
                                 ],
-                              ),
+                              ),*/
                             ],
                           ),
               ),

@@ -53,8 +53,11 @@ Color colorear(String posicion) {
 }
 
 class _Formacion extends State<Formacion> {
+//Posiciones ocupadas por jugadores
+  /*List<dynamic> posicionesOcupadas = [];*/
+
   //Posiciones ocupadas por jugadores
-  Map<String, dynamic> posicionesOcupadas = {
+  Map<String, String> posicionesOcupadas = {
     '0': null,
     '1': null,
     '2': null,
@@ -68,6 +71,17 @@ class _Formacion extends State<Formacion> {
     '10': null
   };
 
+  Future<void> _openBox() async {
+    await Hive.openBox("jugadores");
+    await Hive.openBox("perfil");
+  }
+
+/*refreshList() {
+    setState(() {
+      //jugadores = DBHelper.getJugadoresPorPosiciones();
+    });
+  }*/
+
   void refreshPosicionesOcupadas(Map<String, dynamic> posOcup) {
     setState(() {
       posicionesOcupadas = posOcup;
@@ -77,7 +91,46 @@ class _Formacion extends State<Formacion> {
   @override
   Widget build(BuildContext context) {
     //refreshList();
-    return dibujoFormacion();
+    /*return dibujoFormacion();*/
+    return FutureBuilder(
+      future: Hive.openBox('perfil'),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasError) {
+            print(snapshot.error.toString());
+            return Container(
+              height: MediaQuery.of(context).size.height * .5,
+              width: MediaQuery.of(context).size.width * .9,
+              child: Text(snapshot.error.toString()),
+            );
+          } else {
+            final boxPerfil = Hive.box('perfil');
+            Map<String, dynamic> equipo = {
+              "nombre_equipo": "",
+              "escudo": "",
+              "modo_oscuro": false,
+              "alineacion_favorita": [
+                {'0': null, '1': null, '2': null, '3': null, '4': null, '5': null, '6': null, '7': null, '8': null, '9': null, '10': null},
+                "14231"
+              ]
+            };
+            if (boxPerfil.get(0) != null) {
+              equipo = Map.from(boxPerfil.get(0));
+            }
+            if (equipo['alineacion_favorita'] != null) {
+              posicionesOcupadas = Map<String, String>.from(equipo['alineacion_favorita'][0]);
+            }
+            return dibujoFormacion();
+          }
+        } else {
+          return Container(
+            height: MediaQuery.of(context).size.height * .5,
+            width: MediaQuery.of(context).size.width * .9,
+            child: LinearProgressIndicator(),
+          );
+        }
+      },
+    );
   }
 
   Widget dibujoFormacion() {
@@ -111,87 +164,78 @@ class _Formacion extends State<Formacion> {
         dibujo = Dibujo1334();
         break;
     }
+
     return dibujo;
   }
 
-  //cartasJugadores(List<Jugador> jugadores) {
-  Widget cartasJugadores() {
-    /*int variable = 0;
-    jugadores.forEach((f) {
-      variable++;
-    });
-    return ListView(
-      children: List.generate(variable, (iJugador) {
-        return Card(
-          child: new InkWell(
-            splashColor: Colors.lightGreen,
-            onTap: () {
-              Navigator.pop(context, jugadores[iJugador]);
-            },
-            onLongPress: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      DetallesJugador(jugador: jugadores[iJugador]),
-                ),
-              );
-            },
-            child: Container(
-              color: colorear(jugadores[iJugador].posicionFavorita),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  ConversorImagen.imageFromBase64String(
-                      jugadores[iJugador].nombre_foto),
-                  Column(
-                    children: <Widget>[
-                      Text(
-                        jugadores[iJugador].apodo,
-                        textAlign: TextAlign.center,
-                      ),
-                      Text(
-                        jugadores[iJugador].posicionFavorita,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 10),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-        );
-      }),
-    );*/
+  /* CONVOCATORIA */
+  //DIÁLOGO CON LOS JUGADORES CONVOCADOS
 
-    final boxJugadores = Hive.box('jugadores');
-    if (boxJugadores.length > 0) {
+  Widget cartasJugadores(String posicionAlineacion) {
+    final boxPerfil = Hive.box('perfil');
+    Map<String, dynamic> equipo = {
+      "nombre_equipo": "",
+      "escudo": "",
+      "modo_oscuro": false,
+      "alineacion_favorita": [
+        {'0': null, '1': null, '2': null, '3': null, '4': null, '5': null, '6': null, '7': null, '8': null, '9': null, '10': null},
+        "14231"
+      ]
+    };
+    if (boxPerfil.get(0) != null) {
+      equipo = Map.from(boxPerfil.get(0));
+    }
+    final boxJugadoresEquipo = Hive.box('jugadores');
+
+    if (boxJugadoresEquipo.length > 0) {
       return ListView(
-        children: List.generate(boxJugadores.length, (iJugador) {
-          final Jugador jugadorBox = boxJugadores.getAt(iJugador) as Jugador;
+        children: List.generate(boxJugadoresEquipo.length, (iJugador) {
+          Jugador jugadorBox = boxJugadoresEquipo.get(iJugador);
           return Card(
             child: new InkWell(
               splashColor: Colors.lightGreen,
-              onTap: () {
+              onTap: () async {
+                //Guardar y actualizar
+                //Actualizar contenido
+                for (var keyPosicion in posicionesOcupadas.keys) {
+                  if (posicionesOcupadas[keyPosicion] != null) {
+                    bool _isRepetido = false;
+                    for (int i = 0; i < boxJugadoresEquipo.length; i++) {
+                      if (posicionesOcupadas[keyPosicion] == jugadorBox.id) {
+                        _isRepetido = true;
+                      }
+                    }
+                    if (_isRepetido) {
+                      posicionesOcupadas[keyPosicion] = null;
+                    }
+                  }
+                }
+
+                posicionesOcupadas['${posicionAlineacion}'] = jugadorBox.id;
+                refreshPosicionesOcupadas(posicionesOcupadas);
+                //Guardar partido
+                //Map<String, String> alineacionActualizada = equipo["alineacion_favorita"][0];
+                /*Map<String, String> alineacionActualizada = {};
+                if (equipo["alineacion_favorita"] != null) {
+                  alineacionActualizada = await equipo["alineacion_favorita"];
+                  print(alineacionActualizada);
+                } else {
+                  alineacionActualizada['0'] = [widget.formacion, posicionAlineacion];
+                }*/
+
+                //Actualizar alineación
+                equipo["alineacion_favorita"][0] = posicionesOcupadas;
+
+                await boxPerfil.putAt(0, equipo);
+                setState(() {});
                 Navigator.pop(context, jugadorBox);
-              },
-              onLongPress: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        DetallesJugador(posicion: iJugador,),
-                  ),
-                );
               },
               child: Container(
                 color: colorear(jugadorBox.posicionFavorita),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
-                    ConversorImagen.imageFromBase64String(
-                        jugadorBox.nombre_foto, context),
+                    ConversorImagen.imageFromBase64String(jugadorBox.nombre_foto, context),
                     Column(
                       children: <Widget>[
                         Text(
@@ -214,16 +258,30 @@ class _Formacion extends State<Formacion> {
       );
     } else {
       return Center(
-        child: Text("No hay ningún jugador creado."),
+        child: Text("No hay ningún jugador convocado."),
       );
     }
   }
 
-  Widget jugadorElegidoContainer(Jugador j, String posicion) {
+  /*  */
+
+  /* ALINEACIÓN */
+  //CONTENIDO DEL ITEM DE CADA FILA CON EL JUGADOR SELECCIONADO
+  Widget jugadorElegidoContainer(String idJugador, String posicion) {
+    final boxJugadoresEquipo = Hive.box('jugadores');
+    Jugador j;
+    for (var i = 0; i < boxJugadoresEquipo.length; i++) {
+      if ('${idJugador}' == boxJugadoresEquipo.getAt(i).id) {
+        j = boxJugadoresEquipo.getAt(i);
+      }
+    }
     if (j != null && j is Jugador) {
       return Container(
         width: MediaQuery.of(context).size.width / 6,
-        color: colorear(posicion),
+        decoration: BoxDecoration(
+          color: colorear(posicion),
+          border: Border.all(width: .5),
+        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -235,7 +293,8 @@ class _Formacion extends State<Formacion> {
     } else {
       return Container(
         width: MediaQuery.of(context).size.width / 6,
-        color: colorear(posicion),
+        //width: MediaQuery.of(context).size.width * .1,
+        decoration: BoxDecoration(border: Border.all(width: .5)),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -247,16 +306,17 @@ class _Formacion extends State<Formacion> {
     }
   }
 
+  //ITEM DE CADA FILA CON EL JUGADOR SELECCIONADO
   /*
   @posicion = Posición del jugador, se utiliza para el color y el nombre del
     jugador (no elegido).
   @numAlineacion = Posición del jugador respecto al número que ocupa.
    */
   Widget jugadorFormacion(String posicion, int numAlineacion) {
-    Jugador jugadorElegido = null;
+    Jugador jugadorElegido;
     return Card(
       child: new InkWell(
-        splashColor: Colors.lightGreen,
+        splashColor: Colors.red,
         onTap: () async {
           jugadorElegido = await showDialog<Jugador>(
             context: context,
@@ -266,48 +326,59 @@ class _Formacion extends State<Formacion> {
                 borderRadius: BorderRadius.circular(12.0),
               ),
               child: FutureBuilder(
-                future: Hive.openBox('jugadores'),
+                future: _openBox(),
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
                     if (snapshot.hasError) {
                       print(snapshot.error.toString());
-                      return Text(snapshot.error.toString());
+                      return Container(
+                        height: MediaQuery.of(context).size.height * .015,
+                        width: MediaQuery.of(context).size.width * .015,
+                        child: Text(snapshot.error.toString()),
+                      );
                     } else {
-                      //return cartasJugadores(snapshot.data);
-                      return cartasJugadores();
+                      return cartasJugadores('${numAlineacion}');
                     }
                   } else {
-                    return LinearProgressIndicator();
+                    return Container(
+                      height: MediaQuery.of(context).size.height * .015,
+                      width: MediaQuery.of(context).size.width * .015,
+                      child: LinearProgressIndicator(),
+                    );
                   }
                 },
               ),
             ),
           );
-          if (jugadorElegido != null && jugadorElegido is Jugador) {
-            //Actualizar contenido
-            posicionesOcupadas['$numAlineacion'] = jugadorElegido;
-            refreshPosicionesOcupadas(posicionesOcupadas);
-          }
         },
-        //Esto se puede quitar
-        /*onLongPress: () {
-          if (posicionesOcupadas['$numAlineacion'] != null &&
-              posicionesOcupadas['$numAlineacion'] is Jugador) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => DetallesJugador(
-                    jugador: posicionesOcupadas['$numAlineacion']),
-              ),
-            );
-          }
-        },*/
-        child: jugadorElegidoContainer(
-            posicionesOcupadas["$numAlineacion"], posicion),
+        child: FutureBuilder(
+          future: Hive.openBox('jugadores'),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.hasError) {
+                print(snapshot.error.toString());
+                return Container(
+                  height: MediaQuery.of(context).size.height * .5,
+                  width: MediaQuery.of(context).size.width * .9,
+                  child: Text(snapshot.error.toString()),
+                );
+              } else {
+                return jugadorElegidoContainer(posicionesOcupadas["$numAlineacion"], posicion);
+              }
+            } else {
+              return Container(
+                height: MediaQuery.of(context).size.height * .5,
+                width: MediaQuery.of(context).size.width * .225,
+                child: LinearProgressIndicator(),
+              );
+            }
+          },
+        ),
       ),
     );
   }
 
+/*  */
   /*----------------------------------------------------------------------------
   ------------------------------------------------------------------------------
   ----------------------------Dibujos de formaciones----------------------------

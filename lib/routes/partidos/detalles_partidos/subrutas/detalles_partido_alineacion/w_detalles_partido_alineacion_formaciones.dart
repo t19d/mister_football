@@ -299,8 +299,10 @@ class _DetallesPartidoAlineacionFormacion extends State<DetallesPartidoAlineacio
     if (j != null && j is Jugador) {
       return Container(
         width: MediaQuery.of(context).size.width / 6,
-        //width: MediaQuery.of(context).size.width * .1,
-        color: colorear(posicion),
+        decoration: BoxDecoration(
+          color: colorear(posicion),
+          border: Border.all(width: .5),
+        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -313,7 +315,7 @@ class _DetallesPartidoAlineacionFormacion extends State<DetallesPartidoAlineacio
       return Container(
         width: MediaQuery.of(context).size.width / 6,
         //width: MediaQuery.of(context).size.width * .1,
-        color: colorear(posicion),
+        decoration: BoxDecoration(border: Border.all(width: .5)),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[

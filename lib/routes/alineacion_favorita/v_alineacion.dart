@@ -38,7 +38,7 @@ class _Alineacion extends State<Alineacion> {
           title: Text(
             'Alineación favorita',
           ),
-          actions: <Widget>[
+          /*actions: <Widget>[
             IconButton(
               icon: const Icon(
                 Icons.save,
@@ -47,7 +47,7 @@ class _Alineacion extends State<Alineacion> {
               tooltip: 'Guardar',
               onPressed: () {},
             ),
-          ],
+          ],*/
         ),
         body: CampoJugadores(),
         ),

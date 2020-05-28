@@ -231,7 +231,7 @@ class _ListaGestionJugadores extends State<ListaGestionJugadores> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => DetallesJugador(
-                      posicion: iJugador,
+                      posicion: jugadoresOrdenados[iJugador][0],
                     ),
                   ),
                 );

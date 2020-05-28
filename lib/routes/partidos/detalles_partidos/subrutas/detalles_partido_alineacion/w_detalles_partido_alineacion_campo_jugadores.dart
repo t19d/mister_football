@@ -104,20 +104,22 @@ class _DetallesPartidoAlineacionCampoJugadores extends State<DetallesPartidoAlin
                         child: DetallesPartidoAlineacionCampoJugadores(posicion: widget.posicion, formacionPartido: formacionInicialPartido),
                       ),
                     );*/
-                return SingleChildScrollView(child:  Column(
-                  children: <Widget>[
-                    DropdownButton(
-                      value: _formacionActual,
-                      items: _formacionesDisponibles,
-                      onChanged: (val) async {
-                        actualizarFormacionPartido(val);
-                        cambiarFormacion(val);
-                        setState(() {});
-                      },
-                    ),
-                    DetallesPartidoAlineacionFormacion(posicion: widget.posicion, formacion: formacionInicialPartido),
-                  ],
-                ),);
+                return SingleChildScrollView(
+                  child: Column(
+                    children: <Widget>[
+                      DropdownButton(
+                        value: _formacionActual,
+                        items: _formacionesDisponibles,
+                        onChanged: (val) async {
+                          actualizarFormacionPartido(val);
+                          cambiarFormacion(val);
+                          setState(() {});
+                        },
+                      ),
+                      DetallesPartidoAlineacionFormacion(posicion: widget.posicion, formacion: formacionInicialPartido),
+                    ],
+                  ),
+                );
               }
             } else {
               return Container(

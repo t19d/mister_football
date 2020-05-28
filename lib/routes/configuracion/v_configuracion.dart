@@ -54,7 +54,150 @@ class _Configuracion extends State<Configuracion> {
     }
     Map<String, dynamic> equipoEditado = equipo;
     if (boxPerfil.length > 0) {
-      return Table(
+      return Container(
+        padding: EdgeInsets.all(8.0),
+        child: Column(
+          children: <Widget>[
+            Container(
+              width: MediaQuery.of(context).size.width * .9,
+              padding: EdgeInsets.only(top: 10, bottom: 10),
+              margin: EdgeInsets.only(top: 10, bottom: 10),
+              decoration: BoxDecoration(
+                color: MisterFootball.primario,
+                border: Border.all(),
+                borderRadius: BorderRadius.all(Radius.circular(5)),
+              ),
+              child: Text(
+                "Escudo",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: MediaQuery.of(context).size.width * .05,
+                  color: Colors.white70,
+                ),
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                IconButton(
+                  icon: Icon(
+                    Icons.settings,
+                    color: Colors.white,
+                  ),
+                ),
+                (!isEscudoEditado)
+                    ? ConversorImagen.devolverEscudoImageFromBase64String(equipo['escudo'], context)
+                    : ConversorImagen.devolverEscudoImageFromBase64String(imgString, context),
+                IconButton(
+                  icon: Icon(
+                    Icons.mode_edit,
+                    color: MisterFootball.complementarioDark,
+                  ),
+                  onPressed: () async {
+                    if (!isEscudoEditado) {
+                      _elegirOpcionFotoDialogo(equipo['escudo'], context);
+                    } else {
+                      _elegirOpcionFotoDialogo(imgString, context);
+                    }
+                  },
+                ),
+              ],
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width * .9,
+              padding: EdgeInsets.only(top: 10, bottom: 10),
+              margin: EdgeInsets.only(top: 10, bottom: 10),
+              decoration: BoxDecoration(
+                color: MisterFootball.primario,
+                border: Border.all(),
+                borderRadius: BorderRadius.all(Radius.circular(5)),
+              ),
+              child: Text(
+                "Nombre del equipo",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: MediaQuery.of(context).size.width * .05,
+                  color: Colors.white70,
+                ),
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                IconButton(
+                  icon: Icon(
+                    Icons.settings,
+                    color: Colors.white,
+                  ),
+                ),
+                Text(
+                  (!isNombreEquipoEditado)
+                      ? (equipo['nombre_equipo'].length == 0) ? "-" : equipo['nombre_equipo']
+                      : (nombreEquipo.length == 0) ? "-" : nombreEquipo,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: MediaQuery.of(context).size.width * .04,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                IconButton(
+                  icon: Icon(
+                    Icons.mode_edit,
+                    color: MisterFootball.complementarioDark,
+                  ),
+                  onPressed: () async {
+                    print(isNombreEquipoEditado);
+                    _cambiarNombreEquipo(context, (!isNombreEquipoEditado) ? equipo['nombre_equipo'] : nombreEquipo);
+                  },
+                ),
+              ],
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 10),
+              child: RaisedButton(
+                child: Text("Aceptar"),
+                onPressed: (!isEscudoEditado && !isNombreEquipoEditado)
+                    ? null
+                    : () {
+                        //Escudo editado y nombre NO editado
+                        if (isEscudoEditado && !isNombreEquipoEditado) {
+                          equipoEditado = {
+                            "nombre_equipo": equipo['nombre_equipo'],
+                            "escudo": "$imgString",
+                            "modo_oscuro": false,
+                            "alineacion_favorita": equipo["alineacion_favorita"]
+                          };
+                        } else {
+                          //Nombre editado y escudo NO editado
+                          if (!isEscudoEditado && isNombreEquipoEditado) {
+                            equipoEditado = {
+                              "nombre_equipo": "$nombreEquipo",
+                              "escudo": equipo['escudo'],
+                              "modo_oscuro": false,
+                              "alineacion_favorita": equipo["alineacion_favorita"]
+                            };
+                          } else {
+                            equipoEditado = {
+                              "nombre_equipo": "$nombreEquipo",
+                              "escudo": "$imgString",
+                              "modo_oscuro": false,
+                              "alineacion_favorita": equipo["alineacion_favorita"]
+                            };
+                          }
+                        }
+                        //boxPerfil.putAt(0, equipoEditado);
+                        boxPerfil.putAt(0, equipoEditado);
+                        setState(() {
+                          isEscudoEditado = false;
+                          isNombreEquipoEditado = false;
+                        });
+                      },
+              ),
+            ),
+          ],
+        ),
+      );
+      /*return Table(
         defaultVerticalAlignment: TableCellVerticalAlignment.middle,
         children: [
           TableRow(
@@ -94,8 +237,7 @@ class _Configuracion extends State<Configuracion> {
                 ),
                 onPressed: () async {
                   print(isNombreEquipoEditado);
-                  _cambiarNombreEquipo(context, (!isNombreEquipoEditado)
-                      ? equipo['nombre_equipo'] : nombreEquipo);
+                  _cambiarNombreEquipo(context, (!isNombreEquipoEditado) ? equipo['nombre_equipo'] : nombreEquipo);
                 },
               ),
             ],
@@ -150,7 +292,7 @@ class _Configuracion extends State<Configuracion> {
             ],
           ),
         ],
-      );
+      );*/
     } else {
       return Table(
         defaultVerticalAlignment: TableCellVerticalAlignment.middle,

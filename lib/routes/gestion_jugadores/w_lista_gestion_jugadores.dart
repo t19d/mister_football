@@ -163,6 +163,13 @@ class _ListaGestionJugadores extends State<ListaGestionJugadores> {
 
   Widget cartasJugadores() {
     final boxJugadores = Hive.box('jugadores');
+
+    List jugadoresOrdenados = [];
+    for (var i = 0; i < boxJugadores.length; i++) {
+      jugadoresOrdenados.add([i, boxJugadores.getAt(i).apodo, boxJugadores.getAt(i).posicionFavorita]);
+    }
+    //Ordenar por apodo
+    jugadoresOrdenados.sort((a, b) => (a[1]).compareTo(b[1]));
     if (boxJugadores.length > 0) {
       /*return GridView.count(
         scrollDirection: Axis.vertical,
@@ -212,7 +219,7 @@ class _ListaGestionJugadores extends State<ListaGestionJugadores> {
       return ListView(
         shrinkWrap: true,
         children: List.generate(boxJugadores.length, (iJugador) {
-          final Jugador jugadorBox = boxJugadores.getAt(iJugador) as Jugador;
+          final Jugador jugadorBox = boxJugadores.getAt(jugadoresOrdenados[iJugador][0]) as Jugador;
           return Card(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(10.0)),

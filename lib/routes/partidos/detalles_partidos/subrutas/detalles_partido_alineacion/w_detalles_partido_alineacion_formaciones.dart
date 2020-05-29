@@ -442,8 +442,8 @@ class _DetallesPartidoAlineacionFormacion extends State<DetallesPartidoAlineacio
               }
             } else {
               return Container(
-                height: MediaQuery.of(context).size.height * .5,
-                width: MediaQuery.of(context).size.width * .225,
+                height: MediaQuery.of(context).size.height * .05,
+                width: MediaQuery.of(context).size.width * .0225,
                 child: LinearProgressIndicator(),
               );
             }

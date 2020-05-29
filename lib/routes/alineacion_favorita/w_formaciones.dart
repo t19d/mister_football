@@ -258,7 +258,7 @@ class _Formacion extends State<Formacion> {
       );
     } else {
       return Center(
-        child: Text("No hay ningún jugador convocado."),
+        child: Text("No hay ningún jugador creado."),
       );
     }
   }
@@ -367,8 +367,8 @@ class _Formacion extends State<Formacion> {
               }
             } else {
               return Container(
-                height: MediaQuery.of(context).size.height * .5,
-                width: MediaQuery.of(context).size.width * .225,
+                height: MediaQuery.of(context).size.height * .05,
+                width: MediaQuery.of(context).size.width * .0225,
                 child: LinearProgressIndicator(),
               );
             }

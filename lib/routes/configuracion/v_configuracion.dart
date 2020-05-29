@@ -84,6 +84,7 @@ class _Configuracion extends State<Configuracion> {
                     Icons.settings,
                     color: Colors.white,
                   ),
+                  onPressed: () {},
                 ),
                 (!isEscudoEditado)
                     ? ConversorImagen.devolverEscudoImageFromBase64String(equipo['escudo'], context)
@@ -129,6 +130,7 @@ class _Configuracion extends State<Configuracion> {
                     Icons.settings,
                     color: Colors.white,
                   ),
+                  onPressed: () {},
                 ),
                 Text(
                   (!isNombreEquipoEditado)

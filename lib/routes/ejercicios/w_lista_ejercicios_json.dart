@@ -15,7 +15,7 @@ class _ListaEjerciciosJSON extends State<ListaEjerciciosJSON> {
     return await rootBundle.loadString('assets/json/ejercicios.json');
   }
 
-  Color colorear(tipo) {
+  /*Color colorear(tipo) {
     Color coloreado = Colors.white;
     switch (tipo) {
       case "Físico":
@@ -29,7 +29,7 @@ class _ListaEjerciciosJSON extends State<ListaEjerciciosJSON> {
         break;
     }
     return coloreado.withOpacity(.7);
-  }
+  }*/
 
   Widget itemEjercicio(String ejerciciosString) {
     List<dynamic> ejercicios = jsonDecode(ejerciciosString);
@@ -50,7 +50,7 @@ class _ListaEjerciciosJSON extends State<ListaEjerciciosJSON> {
                         : BorderSide(color: colorear(ejercicios[iEjercicio]['tipo']).withOpacity(.4)),
                   ),
                   color: colorear(ejercicios[iEjercicio]['tipo']).withOpacity(.4),*/
-                  color: (iEjercicio.isEven) ? MisterFootball.primario : Colors.transparent,
+                  color: (iEjercicio.isEven) ? MisterFootball.primario : MisterFootball.semiprimarioLight2.withOpacity(.25),
                 ),
                 children: [
                   //Título
@@ -215,45 +215,60 @@ class _ListaEjerciciosJSON extends State<ListaEjerciciosJSON> {
                     } else {
                       return Container(
                         padding: EdgeInsets.all(8),
-                        child: Column(
-                          children: <Widget>[
-                            Container(
-                              padding: EdgeInsets.only(top: 10, bottom: 10),
-                              child: Table(
-                                children: [
-                                  TableRow(
-                                    children: [
-                                      //Título
-                                      Text(
-                                        "Titulo",
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(fontWeight: FontWeight.bold),
-                                      ),
-                                      //Tipo
-                                      Text(
-                                        "Tipo",
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(fontWeight: FontWeight.bold),
-                                      ),
-                                      //Tiempo
-                                      Text(
-                                        "Duración",
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(fontWeight: FontWeight.bold),
-                                      ),
-                                      //Dificultad
-                                      Text(
-                                        "Dificultad",
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(fontWeight: FontWeight.bold),
-                                      ),
-                                    ],
-                                  ),
-                                ],
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: <Widget>[
+                              Container(
+                                padding: EdgeInsets.only(top: 10, bottom: 10),
+                                child: Table(
+                                  border: TableBorder(verticalInside: BorderSide()),
+                                  children: [
+                                    TableRow(
+                                      children: [
+                                        //Título
+                                        Text(
+                                          "Titulo",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            decoration: TextDecoration.underline,
+                                          ),
+                                        ),
+                                        //Tipo
+                                        Text(
+                                          "Tipo",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            decoration: TextDecoration.underline,
+                                          ),
+                                        ),
+                                        //Tiempo
+                                        Text(
+                                          "Duración",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            decoration: TextDecoration.underline,
+                                          ),
+                                        ),
+                                        //Dificultad
+                                        Text(
+                                          "Dificultad",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            decoration: TextDecoration.underline,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                            itemEjercicio(snapshot.data),
-                          ],
+                              itemEjercicio(snapshot.data),
+                            ],
+                          ),
                         ),
                       );
                     }

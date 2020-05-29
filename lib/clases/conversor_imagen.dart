@@ -43,7 +43,7 @@ class ConversorImagen {
           ));
     } else {
       return Icon(
-        Icons.assignment_ind,
+        Icons.security,
         color: MisterFootball.primario,
         size: MediaQuery
             .of(context)
@@ -52,6 +52,29 @@ class ConversorImagen {
       );
     }
   }
+
+  static Widget imageEntrenamientoFromBase64String(String base64String, BuildContext context) {
+    if (base64String.length != 0) {
+      return Padding(
+          padding: EdgeInsets.all(5),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(5.0),
+            child: Image.memory(
+              base64Decode(base64String),
+              fit: BoxFit.fill,
+              height: MediaQuery.of(context).size.width / 6,
+              width: MediaQuery.of(context).size.width / 6,
+            ),
+          ));
+    } else {
+      return Icon(
+        Icons.fitness_center,
+        color: MisterFootball.primario,
+        size: MediaQuery.of(context).size.width / 6,
+      );
+    }
+  }
+
   static Widget devolverEscudoNavegadorImageFromBase64String(String base64String, BuildContext context) {
     if (base64String.length != 0) {
       return Padding(
@@ -68,7 +91,7 @@ class ConversorImagen {
           ));
     } else {
       return Icon(
-        Icons.assignment_ind,
+        Icons.security,
         color: Colors.white70,
         size: MediaQuery
             .of(context)

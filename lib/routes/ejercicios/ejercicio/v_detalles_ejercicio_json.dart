@@ -32,6 +32,7 @@ class _DetallesEjercicioJSON extends State<DetallesEjercicioJSON> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Text("Título: " + widget.datos['titulo']),
+                    ConversorImagen.imageFromBase64String(widget.datos['imagen'], context),
                   ],
                 ),
               ),

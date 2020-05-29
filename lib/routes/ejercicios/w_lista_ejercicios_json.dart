@@ -34,10 +34,113 @@ class _ListaEjerciciosJSON extends State<ListaEjerciciosJSON> {
   Widget itemEjercicio(String ejerciciosString) {
     List<dynamic> ejercicios = jsonDecode(ejerciciosString);
     if (ejercicios.length > 0) {
-      return ListView(
-        children: List.generate(ejercicios.length, (iEjercicio) {
-          //print(ejercicios[iEjercicio].runtimeType);
-          return Card(
+      return Table(
+        defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+        children: List.generate(
+          ejercicios.length,
+          (iEjercicio) {
+            return TableRow(
+                decoration: BoxDecoration(
+                  /*border: Border(
+                    top: BorderSide(color: MisterFootball.primario),
+                    left: BorderSide(color: MisterFootball.primario),
+                    right: BorderSide(color: MisterFootball.primario),
+                    bottom: (iEjercicio == ejercicios.length - 1)
+                        ? BorderSide(color: MisterFootball.primario)
+                        : BorderSide(color: colorear(ejercicios[iEjercicio]['tipo']).withOpacity(.4)),
+                  ),
+                  color: colorear(ejercicios[iEjercicio]['tipo']).withOpacity(.4),*/
+                  color: (iEjercicio.isEven) ? MisterFootball.primario : Colors.transparent,
+                ),
+                children: [
+                  //Título
+                  InkWell(
+                    child: Container(
+                      padding: EdgeInsets.only(top: 10, bottom: 10),
+                      child: Text(
+                        ejercicios[iEjercicio]['titulo'],
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: (iEjercicio.isEven) ? Colors.white : MisterFootball.primario,
+                        ),
+                      ),
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DetallesEjercicioJSON(
+                            datos: ejercicios[iEjercicio],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                  //Tipo
+                  InkWell(
+                    child: Text(
+                      ejercicios[iEjercicio]['tipo'],
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 10,
+                        color: (iEjercicio.isEven) ? Colors.white : MisterFootball.primario,
+                      ),
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DetallesEjercicioJSON(
+                            datos: ejercicios[iEjercicio],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                  //Duración
+                  InkWell(
+                    child: Text(
+                      "${ejercicios[iEjercicio]['duracion']} min",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 10,
+                        color: (iEjercicio.isEven) ? Colors.white : MisterFootball.primario,
+                      ),
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DetallesEjercicioJSON(
+                            datos: ejercicios[iEjercicio],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                  //Dificultad
+                  InkWell(
+                    child: Text(
+                      ejercicios[iEjercicio]['dificultad'],
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 10,
+                        color: (iEjercicio.isEven) ? Colors.white : MisterFootball.primario,
+                      ),
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DetallesEjercicioJSON(
+                            datos: ejercicios[iEjercicio],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ]);
+            /*return Card(
             /*shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15.0),
             ),*/
@@ -71,7 +174,7 @@ class _ListaEjerciciosJSON extends State<ListaEjerciciosJSON> {
                     ),
                     //Tiempo
                     Text(
-                      ejercicios[iEjercicio]['duracion'],
+                      "${ejercicios[iEjercicio]['duracion']} min",
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 10),
                     ),
@@ -86,8 +189,9 @@ class _ListaEjerciciosJSON extends State<ListaEjerciciosJSON> {
               ),
               //),
             ),
-          );
-        }),
+          );*/
+          },
+        ),
       );
     }
   }
@@ -109,7 +213,49 @@ class _ListaEjerciciosJSON extends State<ListaEjerciciosJSON> {
                       print(snapshot.error.toString());
                       return Text(snapshot.error.toString());
                     } else {
-                      return itemEjercicio(snapshot.data);
+                      return Container(
+                        padding: EdgeInsets.all(8),
+                        child: Column(
+                          children: <Widget>[
+                            Container(
+                              padding: EdgeInsets.only(top: 10, bottom: 10),
+                              child: Table(
+                                children: [
+                                  TableRow(
+                                    children: [
+                                      //Título
+                                      Text(
+                                        "Titulo",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(fontWeight: FontWeight.bold),
+                                      ),
+                                      //Tipo
+                                      Text(
+                                        "Tipo",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(fontWeight: FontWeight.bold),
+                                      ),
+                                      //Tiempo
+                                      Text(
+                                        "Duración",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(fontWeight: FontWeight.bold),
+                                      ),
+                                      //Dificultad
+                                      Text(
+                                        "Dificultad",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                            itemEjercicio(snapshot.data),
+                          ],
+                        ),
+                      );
                     }
                   } else {
                     return LinearProgressIndicator();

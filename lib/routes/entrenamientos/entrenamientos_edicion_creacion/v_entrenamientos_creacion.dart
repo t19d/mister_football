@@ -8,6 +8,7 @@ import 'package:hive/hive.dart';
 import 'package:mister_football/clases/eventos.dart';
 import 'package:mister_football/clases/jugador.dart';
 import 'package:mister_football/routes/ejercicios/ejercicio/v_detalles_ejercicio_json.dart';
+import 'package:mister_football/routes/entrenamientos/v_entrenamientos.dart';
 
 class EntrenamientosCreacion extends StatefulWidget {
   EntrenamientosCreacion({Key key}) : super(key: key);
@@ -55,7 +56,10 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
       eventosActualesObjeto.listaEventos["${fecha}/${hora}"] = ["Entrenamiento"];
       boxEventos.put(0, eventosActualesObjeto);
       print(eventosActualesObjeto.listaEventos);
-      Navigator.pop(context);
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => Entrenamientos()),
+      );
     }
   }
 

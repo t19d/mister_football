@@ -9,6 +9,7 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:mister_football/main.dart';
+import 'package:mister_football/routes/gestion_jugadores/v_gestion_jugadores.dart';
 
 class GestionJugadoresCreacion extends StatefulWidget {
   GestionJugadoresCreacion({Key key}) : super(key: key);
@@ -76,11 +77,14 @@ class _GestionJugadoresCreacion extends State<GestionJugadoresCreacion> {
           habilitado: true);
 
       //Abrir box
-      Hive.openBox('jugadores');
+      await Hive.openBox('jugadores');
       boxJugadores = Hive.box('jugadores');
       //Almacenar al jugador en la Box de 'jugadores'
       boxJugadores.add(j);
-      Navigator.pop(context);
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => GestionJugadores()),
+      );
     }
   }
 
@@ -119,7 +123,7 @@ class _GestionJugadoresCreacion extends State<GestionJugadoresCreacion> {
               children: <Widget>[
                 ConversorImagen.imageFromBase64String(imgString, context),
                 RaisedButton(
-                  color: Colors.lightGreen,
+                  color: Colors.lightBlueAccent,
                   child: (imgString == "") ? Text("Añadir foto") : Text("Editar foto"),
                   onPressed: () {
                     _elegirOpcionFotoDialogo(context);
@@ -355,30 +359,15 @@ class _GestionJugadoresCreacion extends State<GestionJugadoresCreacion> {
                     ],
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    RaisedButton(
-                      shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30.0),
-                      ),
-                      color: Colors.red,
-                      child: Text("Cancelar"),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                    RaisedButton(
-                      shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30.0),
-                      ),
-                      color: Colors.lightBlueAccent,
-                      child: Text("Crear jugador"),
-                      onPressed: () async {
-                        validar();
-                      },
-                    ),
-                  ],
+                RaisedButton(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                  color: Colors.lightGreenAccent,
+                  child: Text("CREAR"),
+                  onPressed: () async {
+                    validar();
+                  },
                 ),
               ],
             ),

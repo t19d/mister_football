@@ -169,7 +169,7 @@ class _ListaGestionJugadores extends State<ListaGestionJugadores> {
       jugadoresOrdenados.add([i, boxJugadores.getAt(i).apodo, boxJugadores.getAt(i).posicionFavorita]);
     }
     //Ordenar por apodo
-    jugadoresOrdenados.sort((a, b) => (a[1]).compareTo(b[1]));
+    jugadoresOrdenados.sort((a, b) => (a[1].toString().toLowerCase()).compareTo(b[1].toString().toLowerCase()));
     if (boxJugadores.length > 0) {
       /*return GridView.count(
         scrollDirection: Axis.vertical,

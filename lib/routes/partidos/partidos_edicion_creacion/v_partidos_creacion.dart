@@ -8,6 +8,7 @@ import 'package:mister_football/clases/eventos.dart';
 import 'package:mister_football/clases/jugador.dart';
 import 'package:mister_football/clases/partido.dart';
 import 'package:mister_football/main.dart';
+import 'package:mister_football/routes/partidos/v_partidos.dart';
 
 class PartidosCreacion extends StatefulWidget {
   PartidosCreacion({Key key}) : super(key: key);
@@ -82,7 +83,10 @@ class _PartidosCreacion extends State<PartidosCreacion> {
       eventosActualesObjeto.listaEventos["${fecha}/${hora}"] = ["Partido", rival, tipoPartido];
       boxEventos.put(0, eventosActualesObjeto);
       print(eventosActualesObjeto.listaEventos);
-      Navigator.pop(context);
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => Partidos()),
+      );
     }
   }
 

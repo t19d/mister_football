@@ -296,6 +296,146 @@ class _Configuracion extends State<Configuracion> {
         ],
       );*/
     } else {
+      return Container(
+        padding: EdgeInsets.all(8.0),
+        child: Column(
+          children: <Widget>[
+            Container(
+              width: MediaQuery.of(context).size.width * .9,
+              padding: EdgeInsets.only(top: 10, bottom: 10),
+              margin: EdgeInsets.only(top: 10, bottom: 10),
+              decoration: BoxDecoration(
+                color: MisterFootball.primario,
+                border: Border.all(),
+                borderRadius: BorderRadius.all(Radius.circular(5)),
+              ),
+              child: Text(
+                "Escudo",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: MediaQuery.of(context).size.width * .05,
+                  color: Colors.white70,
+                ),
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                IconButton(
+                  icon: Icon(
+                    Icons.settings,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {},
+                ),
+                (!isEscudoEditado)
+                    ? ConversorImagen.devolverEscudoImageFromBase64String(equipo['escudo'], context)
+                    : ConversorImagen.devolverEscudoImageFromBase64String(imgString, context),
+                IconButton(
+                  icon: Icon(
+                    Icons.mode_edit,
+                    color: MisterFootball.complementarioDark,
+                  ),
+                  onPressed: () async {
+                    _elegirOpcionFotoDialogo(equipo['escudo'], context);
+                  },
+                ),
+              ],
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width * .9,
+              padding: EdgeInsets.only(top: 10, bottom: 10),
+              margin: EdgeInsets.only(top: 10, bottom: 10),
+              decoration: BoxDecoration(
+                color: MisterFootball.primario,
+                border: Border.all(),
+                borderRadius: BorderRadius.all(Radius.circular(5)),
+              ),
+              child: Text(
+                "Nombre del equipo",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: MediaQuery.of(context).size.width * .05,
+                  color: Colors.white70,
+                ),
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                IconButton(
+                  icon: Icon(
+                    Icons.settings,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {},
+                ),
+                Text(
+                  (!isNombreEquipoEditado)
+                      ? (equipo['nombre_equipo'].length == 0) ? "-" : equipo['nombre_equipo']
+                      : (nombreEquipo.length == 0) ? "-" : nombreEquipo,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: MediaQuery.of(context).size.width * .04,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                IconButton(
+                  icon: Icon(
+                    Icons.mode_edit,
+                    color: MisterFootball.complementarioDark,
+                  ),
+                  onPressed: () async {
+                    _cambiarNombreEquipo(context, nombreEquipo);
+                  },
+                ),
+              ],
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 10),
+              child: RaisedButton(
+                child: Text("Aceptar"),
+                onPressed: (!isEscudoEditado && !isNombreEquipoEditado)
+                    ? null
+                    : () {
+                  //Escudo editado y nombre NO editado
+                  if (isEscudoEditado && !isNombreEquipoEditado) {
+                    equipoEditado = {
+                      "nombre_equipo": "",
+                      "escudo": "$imgString",
+                      "modo_oscuro": false,
+                      "alineacion_favorita": equipo["alineacion_favorita"]
+                    };
+                  } else {
+                    //Nombre editado y escudo NO editado
+                    if (!isEscudoEditado && isNombreEquipoEditado) {
+                      equipoEditado = {
+                        "nombre_equipo": "$nombreEquipo",
+                        "escudo": "",
+                        "modo_oscuro": false,
+                        "alineacion_favorita": equipo["alineacion_favorita"]
+                      };
+                    } else {
+                      equipoEditado = {
+                        "nombre_equipo": "$nombreEquipo",
+                        "escudo": "$imgString",
+                        "modo_oscuro": false,
+                        "alineacion_favorita": equipo["alineacion_favorita"]
+                      };
+                    }
+                  }
+                  //boxPerfil.putAt(0, equipoEditado);
+                  boxPerfil.add(equipoEditado);
+                  setState(() {
+                    isEscudoEditado = false;
+                    isNombreEquipoEditado = false;
+                  });
+                },
+              ),
+            ),
+          ],
+        ),
+      );
       return Table(
         defaultVerticalAlignment: TableCellVerticalAlignment.middle,
         children: [

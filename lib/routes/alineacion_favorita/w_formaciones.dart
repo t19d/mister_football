@@ -225,8 +225,12 @@ class _Formacion extends State<Formacion> {
 
                 //Actualizar alineación
                 equipo["alineacion_favorita"][0] = posicionesOcupadas;
+                if (boxPerfil.get(0) != null) {
+                  boxPerfil.putAt(0, equipo);
+                } else {
+                  boxPerfil.put(0, equipo);
+                }
 
-                await boxPerfil.putAt(0, equipo);
                 setState(() {});
                 Navigator.pop(context, jugadorBox);
               },

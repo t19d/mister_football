@@ -8,6 +8,7 @@ import 'package:mister_football/clases/jugador.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:hive/hive.dart';
 import 'package:mister_football/main.dart';
+import 'package:mister_football/routes/gestion_jugadores/v_gestion_jugadores.dart';
 
 class GestionJugadoresEdicion extends StatefulWidget {
   final Jugador jugador;
@@ -78,7 +79,7 @@ class _GestionJugadoresEdicion extends State<GestionJugadoresEdicion> {
       //DBHelper.save(j);
 
       //Almacenar al jugador en la Box de 'jugadores'
-      if (Hive.isBoxOpen('jugadores')) {
+      /*if (Hive.isBoxOpen('jugadores')) {
         boxJugadores.putAt(widget.posicion, j);
         //print("Jugador ${j.nombre}");
       } else {
@@ -86,7 +87,16 @@ class _GestionJugadoresEdicion extends State<GestionJugadoresEdicion> {
         boxJugadores.putAt(widget.posicion, j);
         //print("Jugador ${j.nombre}");
       }
-      Navigator.pop(context);
+      Navigator.pop(context);*/
+      //Abrir box
+      await Hive.openBox('jugadores');
+      boxJugadores = Hive.box('jugadores');
+      //Almacenar al jugador en la Box de 'jugadores'
+      boxJugadores.putAt(widget.posicion, j);
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => GestionJugadores()),
+      );
     }
   }
 

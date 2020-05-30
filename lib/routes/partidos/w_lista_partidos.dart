@@ -149,7 +149,7 @@ class _ListaPartidos extends State<ListaPartidos> {
                                   //Escudo Rival
                                   Icon(
                                     Icons.verified_user,
-                                    color: Colors.blueAccent,
+                                    color: MisterFootball.primario,
                                     size: MediaQuery.of(context).size.width / 6,
                                   ),
                                 ],
@@ -194,7 +194,7 @@ class _ListaPartidos extends State<ListaPartidos> {
                                   //Escudo Rival
                                   Icon(
                                     Icons.verified_user,
-                                    color: Colors.blueAccent,
+                                    color: MisterFootball.primario,
                                     size: MediaQuery.of(context).size.width / 6,
                                   ),
                                   //Rival
@@ -293,7 +293,7 @@ class _ListaPartidos extends State<ListaPartidos> {
                                   //Escudo Rival
                                   Icon(
                                     Icons.verified_user,
-                                    color: Colors.blueAccent,
+                                    color: MisterFootball.primario,
                                     size: MediaQuery.of(context).size.width / 6,
                                   ),
                                 ],
@@ -333,7 +333,7 @@ class _ListaPartidos extends State<ListaPartidos> {
                                   //Escudo Rival
                                   Icon(
                                     Icons.verified_user,
-                                    color: Colors.blueAccent,
+                                    color: MisterFootball.primario,
                                     size: MediaQuery.of(context).size.width / 6,
                                   ),
                                   //Rival

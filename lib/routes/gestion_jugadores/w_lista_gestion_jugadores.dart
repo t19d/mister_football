@@ -304,44 +304,20 @@ class _ListaGestionJugadores extends State<ListaGestionJugadores> {
   Widget build(BuildContext context) {
     //refreshList();
     return Scaffold(
-      body: SafeArea(
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Expanded(
-              /*child: FutureBuilder(
-                future: jugadores,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return cartasJugadores(snapshot.data);
-                  }
-
-                  if (null == snapshot.data || snapshot.data.length == 0) {
-                    return Text("No hay jugadores guardados.");
-                  }
-
-                  return CircularProgressIndicator();
-                },
-              ),*/
-              child: FutureBuilder(
-                future: Hive.openBox('jugadores'),
-                builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    if (snapshot.hasError) {
-                      print(snapshot.error.toString());
-                      return Text(snapshot.error.toString());
-                    } else {
-                      //return cartasJugadores(snapshot.data);
-                      return cartasJugadores();
-                    }
-                  } else {
-                    return LinearProgressIndicator();
-                  }
-                },
-              ),
-            ),
-          ],
+      body: SafeArea(child: FutureBuilder(
+          future: Hive.openBox('jugadores'),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.hasError) {
+                print(snapshot.error.toString());
+                return Text(snapshot.error.toString());
+              } else {
+                return cartasJugadores();
+              }
+            } else {
+              return LinearProgressIndicator();
+            }
+          },
         ),
       ),
     );

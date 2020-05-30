@@ -148,7 +148,7 @@ class _ListaPartidos extends State<ListaPartidos> {
                                   ),
                                   //Escudo Rival
                                   Icon(
-                                    Icons.verified_user,
+                                    Icons.security,
                                     color: MisterFootball.primario,
                                     size: MediaQuery.of(context).size.width / 6,
                                   ),
@@ -193,7 +193,7 @@ class _ListaPartidos extends State<ListaPartidos> {
                                 children: [
                                   //Escudo Rival
                                   Icon(
-                                    Icons.verified_user,
+                                    Icons.security,
                                     color: MisterFootball.primario,
                                     size: MediaQuery.of(context).size.width / 6,
                                   ),
@@ -292,7 +292,7 @@ class _ListaPartidos extends State<ListaPartidos> {
                                   ),
                                   //Escudo Rival
                                   Icon(
-                                    Icons.verified_user,
+                                    Icons.security,
                                     color: MisterFootball.primario,
                                     size: MediaQuery.of(context).size.width / 6,
                                   ),
@@ -332,7 +332,7 @@ class _ListaPartidos extends State<ListaPartidos> {
                                 children: [
                                   //Escudo Rival
                                   Icon(
-                                    Icons.verified_user,
+                                    Icons.security,
                                     color: MisterFootball.primario,
                                     size: MediaQuery.of(context).size.width / 6,
                                   ),

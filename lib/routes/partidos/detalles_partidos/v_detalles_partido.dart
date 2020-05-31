@@ -7,6 +7,7 @@ import 'package:mister_football/routes/partidos/detalles_partidos/subrutas/detal
 import 'package:mister_football/routes/partidos/detalles_partidos/subrutas/sv_detalles_partido_convocatoria.dart';
 import 'package:mister_football/routes/partidos/detalles_partidos/subrutas/sv_detalles_partido_postpartido.dart';
 import 'package:mister_football/routes/partidos/detalles_partidos/subrutas/sv_detalles_partido_prepartido.dart';
+import 'package:mister_football/routes/partidos/v_partidos.dart';
 
 class DetallesPartido extends StatefulWidget {
   final int posicion;
@@ -79,7 +80,10 @@ class _DetallesPartido extends State<DetallesPartido> {
                       eventosActuales.listaEventos.remove("${partido.fecha}/${partido.hora}");
                       boxPartidos.deleteAt(widget.posicion);
                       boxEventos.putAt(0, eventosActuales);
-                      Navigator.pop(context);
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => Partidos()),
+                      );
                     },
                   ),
                 ],

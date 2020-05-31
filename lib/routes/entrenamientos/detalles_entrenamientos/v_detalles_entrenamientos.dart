@@ -6,6 +6,7 @@ import 'package:mister_football/clases/entrenamiento.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:mister_football/clases/eventos.dart';
 import 'package:mister_football/clases/jugador.dart';
+import 'package:mister_football/routes/entrenamientos/v_entrenamientos.dart';
 
 class DetallesEnternamiento extends StatefulWidget {
   final int posicion;
@@ -75,7 +76,10 @@ class _DetallesEnternamiento extends State<DetallesEnternamiento> {
                         eventosActuales.listaEventos.remove("${entrenamiento.fecha}/${entrenamiento.hora}");
                         boxEntrenamientos.deleteAt(widget.posicion);
                         boxEventos.putAt(0, eventosActuales);
-                        Navigator.pop(context);
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) => Entrenamientos()),
+                        );
                       },
                     ),
                   ],

@@ -77,9 +77,30 @@ class _DetallesJugador extends State<DetallesJugador> {
                       tooltip: 'Eliminar jugador',
                       onPressed: () async {
                         //DBHelper.delete(widget.jugador.id);
-                        var boxJugadores = await Hive.openBox('jugadores');
+                        Box boxJugadores = await Hive.openBox('jugadores');
+                        Box boxPerfil = await Hive.openBox('perfil');
                         print(widget.posicion);
                         boxJugadores.deleteAt(widget.posicion);
+
+                        //Borrar de la alineación favorita
+                        Map<String, dynamic> equipo = {
+                          "nombre_equipo": "",
+                          "escudo": "",
+                          "modo_oscuro": false,
+                          "alineacion_favorita": [
+                            {'0': null, '1': null, '2': null, '3': null, '4': null, '5': null, '6': null, '7': null, '8': null, '9': null, '10': null},
+                            "14231"
+                          ]
+                        };
+                        if (boxPerfil.get(0) != null) {
+                          equipo = Map.from(boxPerfil.get(0));
+                        }
+                        for (var j = 0; j < equipo["alineacion_favorita"][0].length; j++) {
+                          print(equipo["alineacion_favorita"][0]["$j"]);
+                          if (equipo["alineacion_favorita"][0]["$j"] == jugador.id) {
+                            equipo["alineacion_favorita"][0]["$j"] = null;
+                          }
+                        }
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(builder: (context) => GestionJugadores()),

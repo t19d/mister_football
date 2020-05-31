@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 import 'package:mister_football/clases/entrenamiento.dart';
 import 'package:mister_football/clases/eventos.dart';
@@ -30,6 +31,11 @@ void main() async {
   ));*/
   //TEST
   WidgetsFlutterBinding.ensureInitialized();
+  //Orientación no girar
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
   //SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
   //Lugar donde se va a almacenar el documento:
   await almacenarBoxes();

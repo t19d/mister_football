@@ -73,7 +73,7 @@ class _Navegador extends State<Navegador> {
         ),
         child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
           Icon(
-            Icons.verified_user,
+            Icons.security,
             color: Colors.white70,
             size: (MediaQuery.of(context).size.width * .25),
           ),
@@ -114,7 +114,31 @@ class _Navegador extends State<Navegador> {
                   return devolverEncabezado();
                 }
               } else {
-                return LinearProgressIndicator();
+                return Container(
+                  padding: EdgeInsets.fromLTRB(
+                    (MediaQuery.of(context).size.width * .05),
+                    (MediaQuery.of(context).size.width * .025),
+                    (MediaQuery.of(context).size.width * .05),
+                    0,
+                  ),
+                  child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
+                    Icon(
+                      Icons.security,
+                      color: Colors.white70,
+                      size: (MediaQuery.of(context).size.width * .25),
+                    ),
+                    Text(
+                      "Equipo",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: (MediaQuery.of(context).size.width * .05),
+                        color: Colors.white70,
+                        height: 3,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ]),
+                );
               }
             },
           ),

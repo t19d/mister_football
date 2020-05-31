@@ -25,8 +25,8 @@ class _CampoJugadores extends State<CampoJugadores> {
 
   //Método que abre las boxes necesarias.
   Future<void> _openBox() async {
-    await Hive.openBox("jugadores");
     await Hive.openBox("perfil");
+    await Hive.openBox("jugadores");
   }
 
   @override
@@ -50,7 +50,11 @@ class _CampoJugadores extends State<CampoJugadores> {
   }
 
   void actualizarFormacionFavorita(String formacionElegida) async {
-    final boxPerfil = Hive.box('perfil');
+    cambiarFormacion(formacionElegida);
+    if (!Hive.isBoxOpen('perfil')) {
+      await Hive.openBox('perfil');
+    }
+    Box boxPerfil = Hive.box('perfil');
     Map<String, dynamic> equipo = {
       "nombre_equipo": "",
       "escudo": "",
@@ -65,7 +69,6 @@ class _CampoJugadores extends State<CampoJugadores> {
       equipo["alineacion_favorita"][1] = formacionElegida;
     }
     boxPerfil.putAt(0, equipo);
-    cambiarFormacion(formacionElegida);
   }
 
   @override
@@ -80,7 +83,7 @@ class _CampoJugadores extends State<CampoJugadores> {
                 print(snapshot.error.toString());
                 return Text(snapshot.error.toString());
               } else {
-                final boxPerfil = Hive.box('perfil');
+                Box boxPerfil = Hive.box('perfil');
                 Map<String, dynamic> equipo = {
                   "nombre_equipo": "",
                   "escudo": "",
@@ -106,12 +109,12 @@ class _CampoJugadores extends State<CampoJugadores> {
                         value: _formacionActual,
                         items: _formacionesDisponibles,
                         onChanged: (val) async {
+                          //cambiarFormacion(val);
                           actualizarFormacionFavorita(val);
-                          cambiarFormacion(val);
-                          setState(() {});
+                          //setState(() {});
                         },
                       ),
-                      Center(child: Formacion(formacion: formacionInicialFavorita),),
+                      Formacion(formacion: formacionInicialFavorita),
                     ],
                   ),
                 );

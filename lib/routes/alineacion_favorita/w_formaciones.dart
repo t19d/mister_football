@@ -53,11 +53,6 @@ Color colorear(String posicion) {
 }
 
 class _Formacion extends State<Formacion> {
-  /*@override
-  void dispose() {
-    Hive.close();
-    super.dispose();
-  }*/
 
   //Posiciones ocupadas por jugadores
   Map<String, String> posicionesOcupadas = {
@@ -123,7 +118,7 @@ class _Formacion extends State<Formacion> {
         }
       },
     );*/
-    final boxPerfil = Hive.box('perfil');
+    Box boxPerfil = Hive.box('perfil');
     Map<String, dynamic> equipo = {
       "nombre_equipo": "",
       "escudo": "",
@@ -181,25 +176,13 @@ class _Formacion extends State<Formacion> {
   //DIÁLOGO CON LOS JUGADORES DEL EQUIPO
 
   Widget cartasJugadores(String posicionAlineacion) {
-    final boxPerfil = Hive.box('perfil');
-    Map<String, dynamic> equipo = {
-      "nombre_equipo": "",
-      "escudo": "",
-      "modo_oscuro": false,
-      "alineacion_favorita": [
-        {'0': null, '1': null, '2': null, '3': null, '4': null, '5': null, '6': null, '7': null, '8': null, '9': null, '10': null},
-        "14231"
-      ]
-    };
-    if (boxPerfil.get(0) != null) {
-      equipo = Map.from(boxPerfil.get(0));
-    }
-    final boxJugadoresEquipo = Hive.box('jugadores');
+    Box boxJugadoresEquipo = Hive.box('jugadores');
 
     if (boxJugadoresEquipo.length > 0) {
       return ListView(
         children: List.generate(boxJugadoresEquipo.length, (iJugador) {
-          Jugador jugadorBox = boxJugadoresEquipo.get(iJugador);
+          Jugador jugadorBox = boxJugadoresEquipo.getAt(iJugador);
+          print(jugadorBox);
           return Card(
             child: new InkWell(
               splashColor: Colors.lightGreen,
@@ -223,6 +206,22 @@ class _Formacion extends State<Formacion> {
                 posicionesOcupadas['${posicionAlineacion}'] = jugadorBox.id;
                 refreshPosicionesOcupadas(posicionesOcupadas);
 
+                if (!Hive.isBoxOpen('perfil')) {
+                  await Hive.openBox('perfil');
+                }
+                Box boxPerfil = Hive.box('perfil');
+                Map<String, dynamic> equipo = {
+                  "nombre_equipo": "",
+                  "escudo": "",
+                  "modo_oscuro": false,
+                  "alineacion_favorita": [
+                    {'0': null, '1': null, '2': null, '3': null, '4': null, '5': null, '6': null, '7': null, '8': null, '9': null, '10': null},
+                    "14231"
+                  ]
+                };
+                if (boxPerfil.get(0) != null) {
+                  equipo = Map.from(boxPerfil.get(0));
+                }
                 //Actualizar alineación
                 equipo["alineacion_favorita"][0] = posicionesOcupadas;
                 if (boxPerfil.get(0) != null) {
@@ -272,7 +271,7 @@ class _Formacion extends State<Formacion> {
   /* ALINEACIÓN */
   //CONTENIDO DEL ITEM DE CADA FILA CON EL JUGADOR SELECCIONADO
   Widget jugadorElegidoContainer(String idJugador, String posicion) {
-    final boxJugadoresEquipo = Hive.box('jugadores');
+    Box boxJugadoresEquipo = Hive.box('jugadores');
     Jugador j;
     for (var i = 0; i < boxJugadoresEquipo.length; i++) {
       if ('${idJugador}' == boxJugadoresEquipo.getAt(i).id) {
@@ -321,6 +320,13 @@ class _Formacion extends State<Formacion> {
       child: new InkWell(
         splashColor: Colors.red,
         onTap: () async {
+          //Arreglar bug
+          /*
+          La primera vez que se abre, se cierran las BOXES
+           */
+          if (!Hive.isBoxOpen('jugadores')) {
+            await Hive.openBox('jugadores');
+          }
           await showDialog<Jugador>(
             context: context,
             barrierDismissible: true,

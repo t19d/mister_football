@@ -53,8 +53,11 @@ Color colorear(String posicion) {
 }
 
 class _Formacion extends State<Formacion> {
-//Posiciones ocupadas por jugadores
-  /*List<dynamic> posicionesOcupadas = [];*/
+  /*@override
+  void dispose() {
+    Hive.close();
+    super.dispose();
+  }*/
 
   //Posiciones ocupadas por jugadores
   Map<String, String> posicionesOcupadas = {
@@ -71,15 +74,10 @@ class _Formacion extends State<Formacion> {
     '10': null
   };
 
-  Future<void> _openBox() async {
+  //Método que abre las boxes necesarias.
+  /*Future<void> _openBox() async {
     await Hive.openBox("jugadores");
     await Hive.openBox("perfil");
-  }
-
-/*refreshList() {
-    setState(() {
-      //jugadores = DBHelper.getJugadoresPorPosiciones();
-    });
   }*/
 
   void refreshPosicionesOcupadas(Map<String, dynamic> posOcup) {
@@ -90,10 +88,8 @@ class _Formacion extends State<Formacion> {
 
   @override
   Widget build(BuildContext context) {
-    //refreshList();
-    /*return dibujoFormacion();*/
-    return FutureBuilder(
-      future: Hive.openBox('perfil'),
+    /*return FutureBuilder(
+      future: _openBox(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError) {
@@ -123,14 +119,27 @@ class _Formacion extends State<Formacion> {
             return dibujoFormacion();
           }
         } else {
-          return Container(
-            height: MediaQuery.of(context).size.height * .5,
-            width: MediaQuery.of(context).size.width * .9,
-            child: LinearProgressIndicator(),
-          );
+          return dibujoFormacion();
         }
       },
-    );
+    );*/
+    final boxPerfil = Hive.box('perfil');
+    Map<String, dynamic> equipo = {
+      "nombre_equipo": "",
+      "escudo": "",
+      "modo_oscuro": false,
+      "alineacion_favorita": [
+        {'0': null, '1': null, '2': null, '3': null, '4': null, '5': null, '6': null, '7': null, '8': null, '9': null, '10': null},
+        "14231"
+      ]
+    };
+    if (boxPerfil.get(0) != null) {
+      equipo = Map.from(boxPerfil.get(0));
+    }
+    if (equipo['alineacion_favorita'] != null) {
+      posicionesOcupadas = Map<String, String>.from(equipo['alineacion_favorita'][0]);
+    }
+    return dibujoFormacion();
   }
 
   Widget dibujoFormacion() {
@@ -168,8 +177,8 @@ class _Formacion extends State<Formacion> {
     return dibujo;
   }
 
-  /* CONVOCATORIA */
-  //DIÁLOGO CON LOS JUGADORES CONVOCADOS
+  /*  */
+  //DIÁLOGO CON LOS JUGADORES DEL EQUIPO
 
   Widget cartasJugadores(String posicionAlineacion) {
     final boxPerfil = Hive.box('perfil');
@@ -213,15 +222,6 @@ class _Formacion extends State<Formacion> {
 
                 posicionesOcupadas['${posicionAlineacion}'] = jugadorBox.id;
                 refreshPosicionesOcupadas(posicionesOcupadas);
-                //Guardar partido
-                //Map<String, String> alineacionActualizada = equipo["alineacion_favorita"][0];
-                /*Map<String, String> alineacionActualizada = {};
-                if (equipo["alineacion_favorita"] != null) {
-                  alineacionActualizada = await equipo["alineacion_favorita"];
-                  print(alineacionActualizada);
-                } else {
-                  alineacionActualizada['0'] = [widget.formacion, posicionAlineacion];
-                }*/
 
                 //Actualizar alineación
                 equipo["alineacion_favorita"][0] = posicionesOcupadas;
@@ -317,19 +317,18 @@ class _Formacion extends State<Formacion> {
   @numAlineacion = Posición del jugador respecto al número que ocupa.
    */
   Widget jugadorFormacion(String posicion, int numAlineacion) {
-    Jugador jugadorElegido;
     return Card(
       child: new InkWell(
         splashColor: Colors.red,
         onTap: () async {
-          jugadorElegido = await showDialog<Jugador>(
+          await showDialog<Jugador>(
             context: context,
             barrierDismissible: true,
             builder: (BuildContext context) => Dialog(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12.0),
               ),
-              child: FutureBuilder(
+              /*child: FutureBuilder(
                 future: _openBox(),
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
@@ -351,12 +350,13 @@ class _Formacion extends State<Formacion> {
                     );
                   }
                 },
-              ),
+              ),*/
+              child: cartasJugadores('${numAlineacion}'),
             ),
           );
         },
-        child: FutureBuilder(
-          future: Hive.openBox('jugadores'),
+        /*child: FutureBuilder(
+          future: _openBox(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               if (snapshot.hasError) {
@@ -371,13 +371,26 @@ class _Formacion extends State<Formacion> {
               }
             } else {
               return Container(
-                height: MediaQuery.of(context).size.height * .05,
-                width: MediaQuery.of(context).size.width * .0225,
-                child: LinearProgressIndicator(),
+                width: MediaQuery.of(context).size.width / 6,
+                //width: MediaQuery.of(context).size.width * .1,
+                decoration: BoxDecoration(border: Border.all(width: .5)),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    //ConversorImagen.imageFromBase64String("", context),
+                    Container(
+                      height: MediaQuery.of(context).size.width / 6,
+                      alignment: FractionalOffset.center,
+                      child: CircularProgressIndicator(),
+                    ),
+                    Text(posicion),
+                  ],
+                ),
               );
             }
           },
-        ),
+        ),*/
+        child: jugadorElegidoContainer(posicionesOcupadas["$numAlineacion"], posicion),
       ),
     );
   }

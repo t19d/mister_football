@@ -23,6 +23,18 @@ class _CampoJugadores extends State<CampoJugadores> {
     super.initState();
   }
 
+  //Método que abre las boxes necesarias.
+  Future<void> _openBox() async {
+    await Hive.openBox("jugadores");
+    await Hive.openBox("perfil");
+  }
+
+  @override
+  void dispose() {
+    Hive.close();
+    super.dispose();
+  }
+
   List<DropdownMenuItem<String>> getDropDownMenuItems() {
     List<DropdownMenuItem<String>> items = new List();
     for (String f in _formaciones) {
@@ -36,8 +48,8 @@ class _CampoJugadores extends State<CampoJugadores> {
       _formacionActual = formacionElegida;
     });
   }
+
   void actualizarFormacionFavorita(String formacionElegida) async {
-    cambiarFormacion(formacionElegida);
     final boxPerfil = Hive.box('perfil');
     Map<String, dynamic> equipo = {
       "nombre_equipo": "",
@@ -53,6 +65,7 @@ class _CampoJugadores extends State<CampoJugadores> {
       equipo["alineacion_favorita"][1] = formacionElegida;
     }
     boxPerfil.putAt(0, equipo);
+    cambiarFormacion(formacionElegida);
   }
 
   @override
@@ -60,7 +73,7 @@ class _CampoJugadores extends State<CampoJugadores> {
     return Scaffold(
       body: SafeArea(
         child: FutureBuilder(
-          future: Hive.openBox('perfil'),
+          future: _openBox(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               if (snapshot.hasError) {
@@ -98,17 +111,23 @@ class _CampoJugadores extends State<CampoJugadores> {
                           setState(() {});
                         },
                       ),
-                      Formacion(formacion: formacionInicialFavorita),
+                      Center(child: Formacion(formacion: formacionInicialFavorita),),
                     ],
                   ),
                 );
               }
             } else {
-              return Container(
-                height: MediaQuery.of(context).size.height,
-                width: MediaQuery.of(context).size.width,
-                child: LinearProgressIndicator(),
-              );
+              /*return Column(
+                children: <Widget>[
+                  DropdownButton(
+                    value: _formacionActual,
+                    items: _formacionesDisponibles,
+                    onChanged: (value) {},
+                  ),
+                  Formacion(formacion: "14231"),
+                ],
+              );*/
+              return Center(child: CircularProgressIndicator());
             }
           },
         ),

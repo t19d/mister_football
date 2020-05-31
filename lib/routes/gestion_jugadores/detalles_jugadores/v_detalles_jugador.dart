@@ -4,6 +4,7 @@ import 'package:mister_football/clases/conversor_imagen.dart';
 import 'package:mister_football/clases/jugador.dart';
 import 'package:mister_football/main.dart';
 import 'package:mister_football/routes/gestion_jugadores/gestion_jugadores_edicion_creacion/v_gestion_jugadores_edicion.dart';
+import 'package:mister_football/routes/gestion_jugadores/v_gestion_jugadores.dart';
 
 class DetallesJugador extends StatefulWidget {
   final int posicion;
@@ -79,7 +80,10 @@ class _DetallesJugador extends State<DetallesJugador> {
                         var boxJugadores = await Hive.openBox('jugadores');
                         print(widget.posicion);
                         boxJugadores.deleteAt(widget.posicion);
-                        Navigator.pop(context);
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) => GestionJugadores()),
+                        );
                       },
                     ),
                   ],

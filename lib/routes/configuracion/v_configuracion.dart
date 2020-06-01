@@ -49,11 +49,9 @@ class _Configuracion extends State<Configuracion> {
         "14231"
       ]
     };
+    Map<String, dynamic> equipoEditado = equipo;
     if (boxPerfil.get(0) != null) {
       equipo = Map.from(boxPerfil.get(0));
-    }
-    Map<String, dynamic> equipoEditado = equipo;
-    if (boxPerfil.length > 0) {
       return Container(
         padding: EdgeInsets.only(top: 10, left: 20, right: 20),
         child: Column(

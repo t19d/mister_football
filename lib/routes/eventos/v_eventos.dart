@@ -22,6 +22,7 @@ class _Eventos extends State<VentanaEventos> {
 
   @override
   Widget build(BuildContext context) {
+    Map listaEventosAEnviar = {};
     return SafeArea(
       child: Scaffold(
         key: _drawerKey,
@@ -40,28 +41,25 @@ class _Eventos extends State<VentanaEventos> {
             'Eventos',
           ),
         ),
-        body: SingleChildScrollView(
-          child: FutureBuilder(
-            future: Hive.openBox('eventos'),
-            builder: (BuildContext context, AsyncSnapshot snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                if (snapshot.hasError) {
-                  print(snapshot.error.toString());
-                  return Text(snapshot.error.toString());
-                } else {
-                  var boxEventos = Hive.box('eventos');
-                  Map listaEventosAEnviar = {};
-                  if (boxEventos.get(0) != null) {
-                    Eventos eventosActuales = boxEventos.get(0);
-                    listaEventosAEnviar = eventosActuales.listaEventos;
-                  }
-                  return EventosCalendario(listaEventos: listaEventosAEnviar);
-                }
+        body: FutureBuilder(
+          future: Hive.openBox('eventos'),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.hasError) {
+                print(snapshot.error.toString());
+                return Text(snapshot.error.toString());
               } else {
-                return CircularProgressIndicator();
+                var boxEventos = Hive.box('eventos');
+                if (boxEventos.get(0) != null) {
+                  Eventos eventosActuales = boxEventos.get(0);
+                  listaEventosAEnviar = eventosActuales.listaEventos;
+                }
+                return EventosCalendario(listaEventos: listaEventosAEnviar);
               }
-            },
-          ),
+            } else {
+              return Center(child: CircularProgressIndicator());
+            }
+          },
         ),
       ),
     );

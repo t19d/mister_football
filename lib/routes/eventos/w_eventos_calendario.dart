@@ -233,7 +233,7 @@ class _EventosCalendario extends State<EventosCalendario> with TickerProviderSta
                   MediaQuery.of(context).size.width * .05,
                 ),
                 decoration: BoxDecoration(
-                  border: Border.all(width: 1),
+                  border: Border.all(width: 1, color: MisterFootball.primarioDark2.withOpacity(.3)),
                   borderRadius: BorderRadius.circular(12.0),
                   gradient: (event[1].length == 1)
                       ? LinearGradient(

@@ -37,8 +37,6 @@ class _Navegador extends State<Navegador> {
     Map<String, dynamic> equipo = {};
     if (boxPerfil.get(0) != null) {
       equipo = Map.from(boxPerfil.get(0));
-    }
-    if (boxPerfil.length > 0) {
       return Container(
         padding: EdgeInsets.fromLTRB(
           (MediaQuery.of(context).size.width * .05),
@@ -48,11 +46,13 @@ class _Navegador extends State<Navegador> {
         ),
         child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
           //Cambiar por el escudo del equipo (si el usuario quiere)
-          (equipo['escudo'].length == 0)
-              ? ConversorImagen.devolverEscudoNavegadorImageFromBase64String("", context)
-              : ConversorImagen.devolverEscudoNavegadorImageFromBase64String(equipo['escudo'], context),
+          (equipo['escudo'] != null)
+              ? ((equipo['escudo'].length == 0)
+                  ? ConversorImagen.devolverEscudoNavegadorImageFromBase64String("", context)
+                  : ConversorImagen.devolverEscudoNavegadorImageFromBase64String(equipo['escudo'], context))
+              : ConversorImagen.devolverEscudoNavegadorImageFromBase64String("", context),
           Text(
-            (equipo['nombre_equipo'].length == 0) ? "Equipo" : equipo['nombre_equipo'],
+            (equipo['nombre_equipo'] != null) ? ((equipo['nombre_equipo'].length == 0) ? "Equipo" : equipo['nombre_equipo']) : "Equipo",
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: (MediaQuery.of(context).size.width * .05),
@@ -72,13 +72,9 @@ class _Navegador extends State<Navegador> {
           0,
         ),
         child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
-          Icon(
-            Icons.security,
-            color: Colors.white70,
-            size: MediaQuery.of(context).size.width / 6,
-          ),
+          ConversorImagen.devolverEscudoNavegadorImageFromBase64String("", context),
           Text(
-            (equipo['nombre_equipo'].length == 0) ? "Equipo" : equipo['nombre_equipo'],
+            "Equipo",
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: (MediaQuery.of(context).size.width * .05),
@@ -129,11 +125,7 @@ class _Navegador extends State<Navegador> {
                       0,
                     ),
                     child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: <Widget>[
-                      Icon(
-                        Icons.security,
-                        color: Colors.white70,
-                        size: MediaQuery.of(context).size.width / 6,
-                      ),
+                      ConversorImagen.devolverEscudoNavegadorImageFromBase64String("", context),
                       Text(
                         "Equipo",
                         textAlign: TextAlign.center,

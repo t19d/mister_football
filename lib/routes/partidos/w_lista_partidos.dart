@@ -50,7 +50,7 @@ class _ListaPartidos extends State<ListaPartidos> {
     //Ordenar por fecha
     partidosOrdenados.sort((a, b) => (a[1]).compareTo(b[1]));
     print(partidosOrdenados);
-    Map<String, dynamic> perfil = {"nombre_equipo": "Mi equipo", "escudo": ""};
+    Map<String, dynamic> perfil = {"nombre_equipo": "", "escudo": ""};
     if (boxPerfil.get(0) != null) {
       perfil = Map.from(boxPerfil.get(0));
     }
@@ -131,7 +131,7 @@ class _ListaPartidos extends State<ListaPartidos> {
                                   ConversorImagen.devolverEscudoImageFromBase64String(perfil['escudo'], context),
                                   //Nosotros
                                   Text(
-                                    perfil['nombre_equipo'],
+                                    (perfil['nombre_equipo'].length == 0) ? "Mi equipo" : perfil['nombre_equipo'],
                                     textAlign: TextAlign.center,
                                     style: estiloEquipos,
                                   ),
@@ -210,7 +210,7 @@ class _ListaPartidos extends State<ListaPartidos> {
                                   ),
                                   //Nosotros
                                   Text(
-                                    perfil['nombre_equipo'],
+                                    (perfil['nombre_equipo'].length == 0) ? "Mi equipo" : perfil['nombre_equipo'],
                                     textAlign: TextAlign.center,
                                     style: estiloEquipos,
                                   ),
@@ -260,7 +260,7 @@ class _ListaPartidos extends State<ListaPartidos> {
                                   ConversorImagen.devolverEscudoImageFromBase64String(perfil['escudo'], context),
                                   //Nosotros
                                   Text(
-                                    perfil['nombre_equipo'],
+                                    (perfil['nombre_equipo'].length == 0) ? "Mi equipo" : perfil['nombre_equipo'],
                                     textAlign: TextAlign.center,
                                     style: estiloEquipos,
                                   ),
@@ -364,7 +364,7 @@ class _ListaPartidos extends State<ListaPartidos> {
                                   ),
                                   //Nosotros
                                   Text(
-                                    perfil['nombre_equipo'],
+                                    (perfil['nombre_equipo'].length == 0) ? "Mi equipo" : perfil['nombre_equipo'],
                                     textAlign: TextAlign.center,
                                     style: estiloEquipos,
                                   ),

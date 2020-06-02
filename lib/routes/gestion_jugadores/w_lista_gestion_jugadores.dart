@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:mister_football/animaciones/animacion_detalles.dart';
 import 'package:mister_football/clases/conversor_imagen.dart';
 import 'package:mister_football/clases/jugador.dart';
 import 'package:mister_football/routes/gestion_jugadores/detalles_jugadores/v_detalles_jugador.dart';
@@ -229,8 +230,13 @@ class _ListaGestionJugadores extends State<ListaGestionJugadores> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
+                  /*MaterialPageRoute(
                     builder: (context) => DetallesJugador(
+                      posicion: jugadoresOrdenados[iJugador][0],
+                    ),
+                  ),*/
+                  AnimacionDetalles(
+                    widget: DetallesJugador(
                       posicion: jugadoresOrdenados[iJugador][0],
                     ),
                   ),
@@ -304,7 +310,8 @@ class _ListaGestionJugadores extends State<ListaGestionJugadores> {
   Widget build(BuildContext context) {
     //refreshList();
     return Scaffold(
-      body: SafeArea(child: FutureBuilder(
+      body: SafeArea(
+        child: FutureBuilder(
           future: Hive.openBox('jugadores'),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
@@ -315,7 +322,7 @@ class _ListaGestionJugadores extends State<ListaGestionJugadores> {
                 return cartasJugadores();
               }
             } else {
-              return LinearProgressIndicator();
+              return Center(child: CircularProgressIndicator());
             }
           },
         ),

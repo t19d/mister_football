@@ -50,7 +50,6 @@ class _CampoJugadores extends State<CampoJugadores> {
   }
 
   void actualizarFormacionFavorita(String formacionElegida) async {
-    cambiarFormacion(formacionElegida);
     if (!Hive.isBoxOpen('perfil')) {
       await Hive.openBox('perfil');
     }
@@ -67,8 +66,11 @@ class _CampoJugadores extends State<CampoJugadores> {
     if (boxPerfil.get(0) != null) {
       equipo = Map.from(boxPerfil.get(0));
       equipo["alineacion_favorita"][1] = formacionElegida;
+      boxPerfil.putAt(0, equipo);
+    } else {
+      boxPerfil.add(equipo);
     }
-    boxPerfil.putAt(0, equipo);
+    cambiarFormacion(formacionElegida);
   }
 
   @override
@@ -83,6 +85,7 @@ class _CampoJugadores extends State<CampoJugadores> {
                 print(snapshot.error.toString());
                 return Text(snapshot.error.toString());
               } else {
+                print(Hive.isBoxOpen('perfil'));
                 Box boxPerfil = Hive.box('perfil');
                 Map<String, dynamic> equipo = {
                   "nombre_equipo": "",

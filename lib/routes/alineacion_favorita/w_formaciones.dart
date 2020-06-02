@@ -221,13 +221,13 @@ class _Formacion extends State<Formacion> {
                 };
                 if (boxPerfil.get(0) != null) {
                   equipo = Map.from(boxPerfil.get(0));
-                }
-                //Actualizar alineación
-                equipo["alineacion_favorita"][0] = posicionesOcupadas;
-                if (boxPerfil.get(0) != null) {
+                  //Actualizar alineación
+                  equipo["alineacion_favorita"][0] = posicionesOcupadas;
                   boxPerfil.putAt(0, equipo);
                 } else {
-                  boxPerfil.put(0, equipo);
+                  //Actualizar alineación
+                  equipo["alineacion_favorita"][0] = posicionesOcupadas;
+                  boxPerfil.add(equipo);
                 }
 
                 setState(() {});

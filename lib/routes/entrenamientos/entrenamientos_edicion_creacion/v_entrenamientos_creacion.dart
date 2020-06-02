@@ -52,9 +52,12 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
       Eventos eventosActualesObjeto = new Eventos(listaEventos: {});
       if (boxEventos.get(0) != null) {
         eventosActualesObjeto = boxEventos.get(0);
+        eventosActualesObjeto.listaEventos["${fecha}/${hora}"] = ["Entrenamiento"];
+        boxEventos.putAt(0, eventosActualesObjeto);
+      } else{
+        eventosActualesObjeto.listaEventos["${fecha}/${hora}"] = ["Entrenamiento"];
+        boxEventos.add(eventosActualesObjeto);
       }
-      eventosActualesObjeto.listaEventos["${fecha}/${hora}"] = ["Entrenamiento"];
-      boxEventos.put(0, eventosActualesObjeto);
       print(eventosActualesObjeto.listaEventos);
       Navigator.pushReplacement(
         context,

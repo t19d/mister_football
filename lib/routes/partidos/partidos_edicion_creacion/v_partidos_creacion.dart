@@ -126,7 +126,6 @@ class _PartidosCreacion extends State<PartidosCreacion> {
             IconButton(
               icon: Icon(
                 Icons.close,
-                size: MediaQuery.of(context).size.width * .09,
                 color: Colors.redAccent,
               ),
               tooltip: 'Cancelar',

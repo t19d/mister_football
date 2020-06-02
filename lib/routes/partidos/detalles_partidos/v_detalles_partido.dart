@@ -62,9 +62,9 @@ class _DetallesPartido extends State<DetallesPartido> {
             partido = boxPartidos.getAt(widget.posicion);
             return Scaffold(
               appBar: AppBar(
-                title: Text(
+                /*title: Text(
                   "Detalles",
-                ),
+                ),*/
                 actions: <Widget>[
                   IconButton(
                     icon: const Icon(

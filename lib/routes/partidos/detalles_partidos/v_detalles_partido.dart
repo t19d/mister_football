@@ -91,9 +91,9 @@ class _DetallesPartido extends State<DetallesPartido> {
                   IconButton(
                     icon: const Icon(
                       Icons.edit,
-                      color: Colors.lightGreen,
+                      color: Colors.white,
                     ),
-                    tooltip: 'Editar jugador',
+                    tooltip: 'Editar partido',
                     onPressed: () {
                       Navigator.push(
                         context,

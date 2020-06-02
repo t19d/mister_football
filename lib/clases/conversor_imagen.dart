@@ -53,6 +53,32 @@ class ConversorImagen {
     }
   }
 
+  static Widget devolverEscudoPartidosImageFromBase64String(String base64String, BuildContext context) {
+    if (base64String.length != 0) {
+      return Padding(
+          padding: EdgeInsets.all(5),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(5.0),
+            child: Image.memory(
+              base64Decode(base64String),
+              height: MediaQuery
+                  .of(context)
+                  .size
+                  .width / 10,
+            ),
+          ));
+    } else {
+      return Icon(
+        Icons.security,
+        color: MisterFootball.primario,
+        size: MediaQuery
+            .of(context)
+            .size
+            .width / 10,
+      );
+    }
+  }
+
   static Widget imageEntrenamientoFromBase64String(String base64String, BuildContext context) {
     if (base64String.length != 0) {
       return Padding(

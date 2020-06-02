@@ -3,10 +3,9 @@ import 'package:hive/hive.dart';
 import 'package:mister_football/clases/eventos.dart';
 import 'package:mister_football/clases/partido.dart';
 import 'package:mister_football/main.dart';
-import 'package:mister_football/routes/partidos/detalles_partidos/subrutas/detalles_partido_alineacion/sv_detalles_partido_alineacion.dart';
-import 'package:mister_football/routes/partidos/detalles_partidos/subrutas/sv_detalles_partido_convocatoria.dart';
-import 'package:mister_football/routes/partidos/detalles_partidos/subrutas/sv_detalles_partido_postpartido.dart';
-import 'package:mister_football/routes/partidos/detalles_partidos/subrutas/sv_detalles_partido_prepartido.dart';
+import 'package:mister_football/routes/partidos/detalles_partidos/subrutas/sv_detalles_partido_equipo.dart';
+import 'package:mister_football/routes/partidos/detalles_partidos/subrutas/sv_detalles_partido_datos.dart';
+import 'package:mister_football/routes/partidos/partidos_edicion_creacion/v_partidos_edicion.dart';
 import 'package:mister_football/routes/partidos/v_partidos.dart';
 
 class DetallesPartido extends StatefulWidget {
@@ -19,7 +18,7 @@ class DetallesPartido extends StatefulWidget {
 }
 
 class _DetallesPartido extends State<DetallesPartido> {
-  Partido partido = null;
+  Partido partido;
 
   @override
   void dispose() {
@@ -37,21 +36,35 @@ class _DetallesPartido extends State<DetallesPartido> {
     });
   }
 
-  @override
+  /*@override
   void initState() {
     super.initState();
     _contenido = [
-      DetallesPartidoPrepartido(posicion: widget.posicion,),
-      DetallesPartidoConvocatoria(posicion: widget.posicion,),
-      DetallesPartidoAlineacion(posicion: widget.posicion,),
-      DetallesPartidoPostpartido(posicion: widget.posicion,),
+      DetallesPartidoPrepartido(
+        partido: partido,
+      ),
+      DetallesPartidoConvocatoria(
+        posicion: widget.posicion,
+      ),
+      DetallesPartidoAlineacion(
+        posicion: widget.posicion,
+      ),
+      DetallesPartidoPostpartido(
+        posicion: widget.posicion,
+      ),
     ];
+  }*/
+
+  Future<void> _openBox() async {
+    await Hive.openBox("partidos");
+    await Hive.openBox("perfil");
+    await Hive.openBox("jugadores");
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: Hive.openBox('partidos'),
+      future: _openBox(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError) {
@@ -60,6 +73,15 @@ class _DetallesPartido extends State<DetallesPartido> {
           } else {
             final boxPartidos = Hive.box('partidos');
             partido = boxPartidos.getAt(widget.posicion);
+            //Cargar el contenido de cada ventana cuando se carga el contenido del partido
+            _contenido = [
+              DetallesPartidoDatos(
+                partido: partido,
+              ),
+              DetallesPartidoEquipo(
+                posicion: widget.posicion,
+              ),
+            ];
             return Scaffold(
               appBar: AppBar(
                 /*title: Text(
@@ -68,18 +90,34 @@ class _DetallesPartido extends State<DetallesPartido> {
                 actions: <Widget>[
                   IconButton(
                     icon: const Icon(
+                      Icons.edit,
+                      color: Colors.lightGreen,
+                    ),
+                    tooltip: 'Editar jugador',
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PartidosEdicion(
+                            posicion: widget.posicion,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                  IconButton(
+                    icon: const Icon(
                       Icons.delete,
                       color: Colors.redAccent,
                     ),
-                    tooltip: 'Eliminar jugador',
+                    tooltip: 'Eliminar partido',
                     onPressed: () async {
-                      var boxPartidos = await Hive.openBox('partidos');
                       var boxEventos = await Hive.openBox('eventos');
-                      Eventos eventosActuales = boxEventos.get(0);
+                      Eventos eventosActuales = boxEventos.getAt(0);
                       //Eliminar evento
                       eventosActuales.listaEventos.remove("${partido.fecha}/${partido.hora}");
-                      boxPartidos.deleteAt(widget.posicion);
                       boxEventos.putAt(0, eventosActuales);
+                      boxPartidos.deleteAt(widget.posicion);
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(builder: (context) => Partidos()),
@@ -93,20 +131,12 @@ class _DetallesPartido extends State<DetallesPartido> {
                 showUnselectedLabels: false,
                 items: const <BottomNavigationBarItem>[
                   BottomNavigationBarItem(
-                    icon: Icon(Icons.featured_play_list),
-                    title: Text('Prepartido'),
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.filter_frames),
-                    title: Text('Convocatoria'),
+                    icon: Icon(Icons.remove_red_eye),
+                    title: Text('Datos'),
                   ),
                   BottomNavigationBarItem(
                     icon: Icon(Icons.people),
-                    title: Text('Alineación'/*\ninicial', textAlign: TextAlign.center,*/),
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.insert_chart),
-                    title: Text('Postpartido'),
+                    title: Text('Equipo'),
                   ),
                 ],
                 currentIndex: _indiceSeleccionado,
@@ -121,7 +151,9 @@ class _DetallesPartido extends State<DetallesPartido> {
             );
           }
         } else {
-          return LinearProgressIndicator();
+          return Center(
+            child: CircularProgressIndicator(),
+          );
         }
       },
     );

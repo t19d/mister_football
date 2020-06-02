@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:hive/hive.dart';
+import 'package:mister_football/animaciones/animacion_detalles.dart';
 import 'package:mister_football/clases/conversor_imagen.dart';
 import 'package:mister_football/clases/partido.dart';
 import 'package:mister_football/main.dart';
@@ -69,11 +70,16 @@ class _ListaPartidos extends State<ListaPartidos> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => DetallesPartido(
+                  AnimacionDetalles(
+                    widget: DetallesPartido(
                       posicion: partidosOrdenados[((partidosOrdenados.length - 1) - iPartido)][0],
                     ),
                   ),
+                  /*MaterialPageRoute(
+                    builder: (context) => DetallesPartido(
+                      posicion: partidosOrdenados[((partidosOrdenados.length - 1) - iPartido)][0],
+                    ),
+                  ),*/
                 );
               },
               child: Container(

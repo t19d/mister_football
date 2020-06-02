@@ -58,7 +58,6 @@ class _ListaPartidos extends State<ListaPartidos> {
     partidosOrdenados.sort((a, b) => (a[2]).compareTo(b[2]));
     //Ordenar por fecha
     partidosOrdenados.sort((a, b) => (a[1]).compareTo(b[1]));
-    print(partidosOrdenados);
     Map<String, dynamic> perfil = {"nombre_equipo": "", "escudo": ""};
     if (boxPerfil.get(0) != null) {
       perfil = Map.from(boxPerfil.get(0));

@@ -26,13 +26,21 @@ class _ListaPartidos extends State<ListaPartidos> {
   //Devuelve el item de la lista de los partidos
   Widget itemPartidos() {
     //Estilo de los textos de los equipos
-    TextStyle estiloEquipos = TextStyle(fontWeight: FontWeight.bold, color: MisterFootball.primarioDark);
-    //Estilo de los textos
-    TextStyle estiloTextos = TextStyle(color: MisterFootball.primarioDark);
-    //Estilo de las fechas
-    TextStyle estiloFechasTextos = TextStyle(
+    TextStyle estiloEquipos = TextStyle(
+      fontWeight: FontWeight.bold,
       color: MisterFootball.primarioDark,
-      fontSize: MediaQuery.of(context).size.width * .025,
+      fontSize: MediaQuery.of(context).size.width * .03,
+    );
+    //Estilo de los textos
+    TextStyle estiloTextos = TextStyle(
+      color: MisterFootball.primarioDark,
+      fontSize: MediaQuery.of(context).size.width * .03,
+    );
+    //Estilo de las fechas y hora
+    TextStyle estiloFechasHoraTextos = TextStyle(
+      color: MisterFootball.primarioDark,
+      fontSize: MediaQuery.of(context).size.width * .03,
+      fontWeight: FontWeight.bold,
     );
     //Estilo de los resultados de los equipos
     TextStyle estiloResultado = TextStyle(
@@ -83,19 +91,11 @@ class _ListaPartidos extends State<ListaPartidos> {
                 );
               },
               child: Container(
-                padding: EdgeInsets.all(10),
+                //padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
                   border: Border.all(color: Colors.black),
-                  color:
-                      /*(partidoBox.golesAFavor.length > partidoBox.golesEnContra.length)
-                      //Victoria
-                      ? Colors.lightGreen.withOpacity(.75)
-                      //Derrota
-                      : (partidoBox.golesAFavor.length < partidoBox.golesEnContra.length)
-                          ? Colors.red.withOpacity(.6)
-                          //Sin jugar
-                          :*/
+                  /*color:
                       (DateTime.now()
                                   .difference(DateTime(
                                     int.parse(partidoBox.fecha.split("-")[0]),
@@ -108,7 +108,7 @@ class _ListaPartidos extends State<ListaPartidos> {
                                   .inSeconds >
                               0)
                           ? Colors.white
-                          : Colors.yellow.withOpacity(.15),
+                          : Colors.yellow.withOpacity(.15),*/
                 ),
                 child: (DateTime.now()
                             .difference(DateTime(
@@ -129,12 +129,12 @@ class _ListaPartidos extends State<ListaPartidos> {
                               TableRow(
                                 decoration: BoxDecoration(
                                   border: Border(
-                                    bottom: BorderSide(color: MisterFootball.complementarioLight),
+                                    bottom: BorderSide(color: MisterFootball.primario),
                                   ),
                                 ),
                                 children: [
                                   //Nuestro Escudo
-                                  ConversorImagen.devolverEscudoImageFromBase64String(perfil['escudo'], context),
+                                  ConversorImagen.devolverEscudoPartidosImageFromBase64String(perfil['escudo'], context),
                                   //Nosotros
                                   Text(
                                     (perfil['nombre_equipo'].length == 0) ? "Mi equipo" : perfil['nombre_equipo'],
@@ -156,7 +156,7 @@ class _ListaPartidos extends State<ListaPartidos> {
                                   Icon(
                                     Icons.security,
                                     color: MisterFootball.primario,
-                                    size: MediaQuery.of(context).size.width / 6,
+                                    size: MediaQuery.of(context).size.width / 10,
                                   ),
                                 ],
                               ),
@@ -201,7 +201,7 @@ class _ListaPartidos extends State<ListaPartidos> {
                                   Icon(
                                     Icons.security,
                                     color: MisterFootball.primario,
-                                    size: MediaQuery.of(context).size.width / 6,
+                                    size: MediaQuery.of(context).size.width / 10,
                                   ),
                                   //Rival
                                   Text(
@@ -221,7 +221,7 @@ class _ListaPartidos extends State<ListaPartidos> {
                                     style: estiloEquipos,
                                   ),
                                   //Nuestro Escudo
-                                  ConversorImagen.devolverEscudoImageFromBase64String(perfil['escudo'], context),
+                                  ConversorImagen.devolverEscudoPartidosImageFromBase64String(perfil['escudo'], context),
                                 ],
                               ),
                               TableRow(
@@ -256,14 +256,9 @@ class _ListaPartidos extends State<ListaPartidos> {
                             defaultVerticalAlignment: TableCellVerticalAlignment.middle,
                             children: [
                               TableRow(
-                                /*decoration: BoxDecoration(
-                                  border: Border(
-                                    bottom: BorderSide(color: MisterFootball.complementarioLight),
-                                  ),
-                                ),*/
                                 children: [
                                   //Nuestro Escudo
-                                  ConversorImagen.devolverEscudoImageFromBase64String(perfil['escudo'], context),
+                                  ConversorImagen.devolverEscudoPartidosImageFromBase64String(perfil['escudo'], context),
                                   //Nosotros
                                   Text(
                                     (perfil['nombre_equipo'].length == 0) ? "Mi equipo" : perfil['nombre_equipo'],
@@ -279,13 +274,13 @@ class _ListaPartidos extends State<ListaPartidos> {
                                         Text(
                                           "${partidoBox.hora}",
                                           textAlign: TextAlign.center,
-                                          style: estiloTextos,
+                                          style: estiloFechasHoraTextos,
                                         ),
                                         //Fecha
                                         Text(
                                           "${partidoBox.fecha.split("-")[2]}-${partidoBox.fecha.split("-")[1]}-${partidoBox.fecha.split("-")[0]}",
                                           textAlign: TextAlign.center,
-                                          style: estiloFechasTextos,
+                                          style: estiloFechasHoraTextos,
                                         ),
                                       ],
                                     ),
@@ -300,29 +295,10 @@ class _ListaPartidos extends State<ListaPartidos> {
                                   Icon(
                                     Icons.security,
                                     color: MisterFootball.primario,
-                                    size: MediaQuery.of(context).size.width / 6,
+                                    size: MediaQuery.of(context).size.width / 10,
                                   ),
                                 ],
                               ),
-                              /*TableRow(
-                                children: [
-                                  Container(),
-                                  //Tipo
-                                  Text(
-                                    "Sin disputar",
-                                    textAlign: TextAlign.center,
-                                    style: estiloTextos,
-                                  ),
-                                  Container(),
-                                  //Tipo
-                                  Text(
-                                    partidoBox.tipoPartido,
-                                    textAlign: TextAlign.center,
-                                    style: estiloTextos,
-                                  ),
-                                  Container(),
-                                ],
-                              ),*/
                             ],
                           )
                         //Sin jugar visitante
@@ -330,17 +306,12 @@ class _ListaPartidos extends State<ListaPartidos> {
                             defaultVerticalAlignment: TableCellVerticalAlignment.middle,
                             children: [
                               TableRow(
-                                /*decoration: BoxDecoration(
-                                  border: Border(
-                                    bottom: BorderSide(color: MisterFootball.complementarioLight),
-                                  ),
-                                ),*/
                                 children: [
                                   //Escudo Rival
                                   Icon(
                                     Icons.security,
                                     color: MisterFootball.primario,
-                                    size: MediaQuery.of(context).size.width / 6,
+                                    size: MediaQuery.of(context).size.width / 10,
                                   ),
                                   //Rival
                                   Text(
@@ -357,13 +328,13 @@ class _ListaPartidos extends State<ListaPartidos> {
                                         Text(
                                           "${partidoBox.hora}",
                                           textAlign: TextAlign.center,
-                                          style: estiloTextos,
+                                          style: estiloFechasHoraTextos,
                                         ),
                                         //Fecha
                                         Text(
                                           "${partidoBox.fecha.split("-")[2]}-${partidoBox.fecha.split("-")[1]}-${partidoBox.fecha.split("-")[0]}",
                                           textAlign: TextAlign.center,
-                                          style: estiloFechasTextos,
+                                          style: estiloFechasHoraTextos,
                                         ),
                                       ],
                                     ),
@@ -375,28 +346,9 @@ class _ListaPartidos extends State<ListaPartidos> {
                                     style: estiloEquipos,
                                   ),
                                   //Nuestro Escudo
-                                  ConversorImagen.devolverEscudoImageFromBase64String(perfil['escudo'], context),
+                                  ConversorImagen.devolverEscudoPartidosImageFromBase64String(perfil['escudo'], context),
                                 ],
                               ),
-                              /*TableRow(
-                                children: [
-                                  Container(),
-                                  //Tipo
-                                  Text(
-                                    "Sin disputar",
-                                    textAlign: TextAlign.center,
-                                    style: estiloTextos,
-                                  ),
-                                  Container(),
-                                  //Tipo
-                                  Text(
-                                    partidoBox.tipoPartido,
-                                    textAlign: TextAlign.center,
-                                    style: estiloTextos,
-                                  ),
-                                  Container(),
-                                ],
-                              ),*/
                             ],
                           ),
               ),
@@ -436,7 +388,9 @@ class _ListaPartidos extends State<ListaPartidos> {
                       return itemPartidos();
                     }
                   } else {
-                    return LinearProgressIndicator();
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
                   }
                 },
               ),

@@ -88,7 +88,19 @@ class _DetallesJugador extends State<DetallesJugador> {
                           "escudo": "",
                           "modo_oscuro": false,
                           "alineacion_favorita": [
-                            {'0': null, '1': null, '2': null, '3': null, '4': null, '5': null, '6': null, '7': null, '8': null, '9': null, '10': null},
+                            {
+                              '0': null,
+                              '1': null,
+                              '2': null,
+                              '3': null,
+                              '4': null,
+                              '5': null,
+                              '6': null,
+                              '7': null,
+                              '8': null,
+                              '9': null,
+                              '10': null
+                            },
                             "14231"
                           ]
                         };
@@ -148,8 +160,10 @@ class _DetallesJugador extends State<DetallesJugador> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: <Widget>[
-                          Text("Nombre:",
-                            style: estiloTexto,),
+                          Text(
+                            "Nombre:",
+                            style: estiloTexto,
+                          ),
                           Container(
                             width: MediaQuery.of(context).size.width * .4,
                             child: Text(
@@ -167,8 +181,10 @@ class _DetallesJugador extends State<DetallesJugador> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: <Widget>[
-                          Text("Primer apellido:",
-                            style: estiloTexto,),
+                          Text(
+                            "Primer apellido:",
+                            style: estiloTexto,
+                          ),
                           Container(
                             width: MediaQuery.of(context).size.width * .4,
                             child: Text(
@@ -186,8 +202,10 @@ class _DetallesJugador extends State<DetallesJugador> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: <Widget>[
-                          Text("Segundo apellido:",
-                            style: estiloTexto,),
+                          Text(
+                            "Segundo apellido:",
+                            style: estiloTexto,
+                          ),
                           Container(
                             width: MediaQuery.of(context).size.width * .4,
                             child: Text(
@@ -205,8 +223,10 @@ class _DetallesJugador extends State<DetallesJugador> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: <Widget>[
-                          Text("Apodo:",
-                            style: estiloTexto,),
+                          Text(
+                            "Apodo:",
+                            style: estiloTexto,
+                          ),
                           Container(
                             width: MediaQuery.of(context).size.width * .4,
                             child: Text(
@@ -224,8 +244,10 @@ class _DetallesJugador extends State<DetallesJugador> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: <Widget>[
-                          Text("Pierna buena:",
-                            style: estiloTexto,),
+                          Text(
+                            "Pierna buena:",
+                            style: estiloTexto,
+                          ),
                           Container(
                             width: MediaQuery.of(context).size.width * .4,
                             child: Text(
@@ -243,8 +265,10 @@ class _DetallesJugador extends State<DetallesJugador> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: <Widget>[
-                          Text("Posición favorita:",
-                            style: estiloTexto,),
+                          Text(
+                            "Posición favorita:",
+                            style: estiloTexto,
+                          ),
                           Container(
                             width: MediaQuery.of(context).size.width * .4,
                             child: Text(
@@ -262,8 +286,10 @@ class _DetallesJugador extends State<DetallesJugador> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: <Widget>[
-                          Text("Anotaciones:",
-                            style: estiloTexto,),
+                          Text(
+                            "Anotaciones:",
+                            style: estiloTexto,
+                          ),
                           Container(
                             width: MediaQuery.of(context).size.width * .4,
                             child: Text(
@@ -277,8 +303,10 @@ class _DetallesJugador extends State<DetallesJugador> {
                       //Text("Anotaciones: " + jugador.anotaciones),
                       divisorGrupos,
                       //Historial y medias
-                      Text("Histórico",
-                        style: estiloTexto,),
+                      /*Text(
+                        "Histórico",
+                        style: estiloTexto,
+                      ),*/
                     ],
                   ),
                 ),
@@ -286,7 +314,203 @@ class _DetallesJugador extends State<DetallesJugador> {
             );
           }
         } else {
-          return LinearProgressIndicator();
+          //return Center(child: CircularProgressIndicator(),);
+          return SafeArea(
+            child: Scaffold(
+              appBar: AppBar(
+                actions: <Widget>[
+                  IconButton(
+                    icon: const Icon(
+                      Icons.edit,
+                      color: Colors.lightGreen,
+                    ),
+                    tooltip: 'Editar jugador',
+                    onPressed: () {},
+                  ),
+                  IconButton(
+                    icon: const Icon(
+                      Icons.delete,
+                      color: Colors.redAccent,
+                    ),
+                    tooltip: 'Eliminar jugador',
+                    onPressed: () {},
+                  ),
+                ],
+              ),
+              body: Container(
+                padding: EdgeInsets.all(MediaQuery.of(context).size.width * .025),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        //Foto
+                        ConversorImagen.imageFromBase64String("", context),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              "",
+                              style: estiloTexto,
+                            ),
+                            //Edad
+                            Text(
+                              "",
+                              style: estiloTexto,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    divisorGrupos,
+                    //Nombre
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: <Widget>[
+                        Text(
+                          "Nombre:",
+                          style: estiloTexto,
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width * .4,
+                          child: Text(
+                            "",
+                            textAlign: TextAlign.right,
+                            style: estiloTexto,
+                          ),
+                        ),
+                      ],
+                    ),
+                    divisorElementos,
+                    //Primer apellido
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: <Widget>[
+                        Text(
+                          "Primer apellido:",
+                          style: estiloTexto,
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width * .4,
+                          child: Text(
+                            "",
+                            textAlign: TextAlign.right,
+                            style: estiloTexto,
+                          ),
+                        ),
+                      ],
+                    ),
+                    divisorElementos,
+                    //Segundo apellido
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: <Widget>[
+                        Text(
+                          "Segundo apellido:",
+                          style: estiloTexto,
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width * .4,
+                          child: Text(
+                            "",
+                            textAlign: TextAlign.right,
+                            style: estiloTexto,
+                          ),
+                        ),
+                      ],
+                    ),
+                    divisorElementos,
+                    //Apodo
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: <Widget>[
+                        Text(
+                          "Apodo:",
+                          style: estiloTexto,
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width * .4,
+                          child: Text(
+                            "",
+                            textAlign: TextAlign.right,
+                            style: estiloTexto,
+                          ),
+                        ),
+                      ],
+                    ),
+                    divisorElementos,
+                    //Pierna buena
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: <Widget>[
+                        Text(
+                          "Pierna buena:",
+                          style: estiloTexto,
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width * .4,
+                          child: Text(
+                            "",
+                            textAlign: TextAlign.right,
+                            style: estiloTexto,
+                          ),
+                        ),
+                      ],
+                    ),
+                    divisorElementos,
+                    //Posición favorita
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: <Widget>[
+                        Text(
+                          "Posición favorita:",
+                          style: estiloTexto,
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width * .4,
+                          child: Text(
+                            "",
+                            textAlign: TextAlign.right,
+                            style: estiloTexto,
+                          ),
+                        ),
+                      ],
+                    ),
+                    divisorElementos,
+                    //Anotaciones
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: <Widget>[
+                        Text(
+                          "Anotaciones:",
+                          style: estiloTexto,
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width * .4,
+                          child: Text(
+                            "",
+                            textAlign: TextAlign.right,
+                            style: estiloTexto,
+                          ),
+                        ),
+                      ],
+                    ),
+                    divisorGrupos,
+                  ],
+                ),
+              ),
+            ),
+          );
         }
       },
     );

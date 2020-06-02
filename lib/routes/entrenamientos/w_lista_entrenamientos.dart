@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:mister_football/animaciones/animacion_detalles.dart';
 import 'package:mister_football/clases/entrenamiento.dart';
 import 'package:mister_football/main.dart';
 import 'package:mister_football/routes/entrenamientos/detalles_entrenamientos/v_detalles_entrenamientos.dart';
@@ -32,11 +33,16 @@ class _ListaEntrenamientos extends State<ListaEntrenamientos> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => DetallesEnternamiento(
+                  AnimacionDetalles(
+                    widget: DetallesEnternamiento(
                       posicion: iEntrenamiento,
                     ),
                   ),
+                  /*MaterialPageRoute(
+                    builder: (context) => DetallesEnternamiento(
+                      posicion: iEntrenamiento,
+                    ),
+                  ),*/
                 );
               },
               child: Container(
@@ -57,7 +63,7 @@ class _ListaEntrenamientos extends State<ListaEntrenamientos> {
                         ),
                         //Fecha
                         Text(
-                          entrenamientoBox.fecha,
+                          "${entrenamientoBox.fecha.split("-")[2]}-${entrenamientoBox.fecha.split("-")[1]}-${entrenamientoBox.fecha.split("-")[0]}",
                           textAlign: TextAlign.center,
                         ),
                       ],

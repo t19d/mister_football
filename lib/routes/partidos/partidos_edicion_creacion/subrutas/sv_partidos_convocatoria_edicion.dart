@@ -4,16 +4,16 @@ import 'package:mister_football/clases/conversor_imagen.dart';
 import 'package:mister_football/clases/jugador.dart';
 import 'package:mister_football/clases/partido.dart';
 
-class DetallesPartidoConvocatoria extends StatefulWidget {
+class PartidoConvocatoriaEdicion extends StatefulWidget {
   final int posicion;
 
-  DetallesPartidoConvocatoria({Key key, @required this.posicion}) : super(key: key);
+  PartidoConvocatoriaEdicion({Key key, @required this.posicion}) : super(key: key);
 
   @override
-  createState() => _DetallesPartidoConvocatoria();
+  createState() => _PartidoConvocatoriaEdicion();
 }
 
-class _DetallesPartidoConvocatoria extends State<DetallesPartidoConvocatoria> {
+class _PartidoConvocatoriaEdicion extends State<PartidoConvocatoriaEdicion> {
   Partido partido = null;
 
   @override

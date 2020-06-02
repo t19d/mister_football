@@ -2,17 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:mister_football/clases/partido.dart';
 import 'package:mister_football/routes/partidos/detalles_partidos/subrutas/detalles_partido_alineacion/w_detalles_partido_alineacion_campo_jugadores.dart';
+import 'package:mister_football/routes/partidos/partidos_edicion_creacion/subrutas/detalles_partido_alineacion/w_partidos_alineacion_campo_jugadores_edicion.dart';
 
-class DetallesPartidoAlineacion extends StatefulWidget {
+class PartidoAlineacionEdicion extends StatefulWidget {
   final int posicion;
 
-  DetallesPartidoAlineacion({Key key, @required this.posicion}) : super(key: key);
+  PartidoAlineacionEdicion({Key key, @required this.posicion}) : super(key: key);
 
   @override
-  createState() => _DetallesPartidoAlineacion();
+  createState() => _PartidoAlineacionEdicion();
 }
 
-class _DetallesPartidoAlineacion extends State<DetallesPartidoAlineacion> {
+class _PartidoAlineacionEdicion extends State<PartidoAlineacionEdicion> {
   Partido partido = null;
 
   @override
@@ -47,7 +48,7 @@ class _DetallesPartidoAlineacion extends State<DetallesPartidoAlineacion> {
     );*/
     return Scaffold(
       body: SafeArea(
-        child: DetallesPartidoAlineacionCampoJugadores(posicion: widget.posicion),
+        child: PartidoAlineacionCampoJugadoresEdicion(posicion: widget.posicion),
       ),
     );
   }

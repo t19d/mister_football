@@ -7,14 +7,14 @@ import 'package:mister_football/clases/jugador.dart';
 import 'package:mister_football/clases/partido.dart';
 import 'package:mister_football/routes/gestion_jugadores/detalles_jugadores/v_detalles_jugador.dart';
 
-class DetallesPartidoAlineacionFormacion extends StatefulWidget {
+class PartidoAlineacionFormacionEdicion extends StatefulWidget {
   final int posicion;
   final String formacion;
 
-  DetallesPartidoAlineacionFormacion({Key key, @required this.formacion, @required this.posicion}) : super(key: key);
+  PartidoAlineacionFormacionEdicion({Key key, @required this.formacion, @required this.posicion}) : super(key: key);
 
   @override
-  createState() => _DetallesPartidoAlineacionFormacion();
+  createState() => _PartidoAlineacionFormacionEdicion();
 }
 
 Color colorear(String posicion) {
@@ -54,7 +54,7 @@ Color colorear(String posicion) {
   return coloreado.withOpacity(.7);
 }
 
-class _DetallesPartidoAlineacionFormacion extends State<DetallesPartidoAlineacionFormacion> {
+class _PartidoAlineacionFormacionEdicion extends State<PartidoAlineacionFormacionEdicion> {
   //Posiciones ocupadas por jugadores
   /*List<dynamic> posicionesOcupadas = [];*/
 

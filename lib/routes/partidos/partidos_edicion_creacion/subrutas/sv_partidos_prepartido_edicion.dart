@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:mister_football/clases/partido.dart';
 
-class DetallesPartidoPrepartido extends StatefulWidget {
+class PartidoPrepartidoEdicion extends StatefulWidget {
   final int posicion;
 
-  DetallesPartidoPrepartido({Key key, @required this.posicion}) : super(key: key);
+  PartidoPrepartidoEdicion({Key key, @required this.posicion}) : super(key: key);
 
   @override
-  createState() => _DetallesPartidoPrepartido();
+  createState() => _PartidoPrepartidoEdicion();
 }
 
-class _DetallesPartidoPrepartido extends State<DetallesPartidoPrepartido> {
+class _PartidoPrepartidoEdicion extends State<PartidoPrepartidoEdicion> {
   Partido partido = null;
 
   @override

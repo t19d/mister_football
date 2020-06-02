@@ -3,16 +3,16 @@ import 'package:hive/hive.dart';
 import 'package:mister_football/clases/jugador.dart';
 import 'package:mister_football/clases/partido.dart';
 
-class DetallesPartidoPostpartido extends StatefulWidget {
+class PartidoPostpartidoEdicion extends StatefulWidget {
   final int posicion;
 
-  DetallesPartidoPostpartido({Key key, @required this.posicion}) : super(key: key);
+  PartidoPostpartidoEdicion({Key key, @required this.posicion}) : super(key: key);
 
   @override
-  createState() => _DetallesPartidoPostpartido();
+  createState() => _PartidoPostpartidoEdicion();
 }
 
-class _DetallesPartidoPostpartido extends State<DetallesPartidoPostpartido> {
+class _PartidoPostpartidoEdicion extends State<PartidoPostpartidoEdicion> {
   Partido partido = null;
 
   //Goles a favor

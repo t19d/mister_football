@@ -6,7 +6,11 @@ import 'package:mister_football/main.dart';
 import 'package:mister_football/routes/partidos/detalles_partidos/subrutas/detalles_partido_alineacion/sv_detalles_partido_alineacion.dart';
 import 'package:mister_football/routes/partidos/detalles_partidos/subrutas/sv_detalles_partido_convocatoria.dart';
 import 'package:mister_football/routes/partidos/detalles_partidos/subrutas/sv_detalles_partido_postpartido.dart';
-import 'package:mister_football/routes/partidos/detalles_partidos/subrutas/sv_detalles_partido_prepartido.dart';
+import 'package:mister_football/routes/partidos/detalles_partidos/subrutas/sv_detalles_partido_datos.dart';
+import 'package:mister_football/routes/partidos/partidos_edicion_creacion/subrutas/detalles_partido_alineacion/sv_partidos_alineacion_edicion.dart';
+import 'package:mister_football/routes/partidos/partidos_edicion_creacion/subrutas/sv_partidos_convocatoria_edicion.dart';
+import 'package:mister_football/routes/partidos/partidos_edicion_creacion/subrutas/sv_partidos_postpartido_edicion.dart';
+import 'package:mister_football/routes/partidos/partidos_edicion_creacion/subrutas/sv_partidos_prepartido_edicion.dart';
 import 'package:mister_football/routes/partidos/v_partidos.dart';
 
 class PartidosEdicion extends StatefulWidget {
@@ -37,7 +41,7 @@ class _PartidosEdicion extends State<PartidosEdicion> {
     });
   }
 
-  @override
+  /*@override
   void initState() {
     super.initState();
     _contenido = [
@@ -54,7 +58,7 @@ class _PartidosEdicion extends State<PartidosEdicion> {
         posicion: widget.posicion,
       ),
     ];
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -68,6 +72,20 @@ class _PartidosEdicion extends State<PartidosEdicion> {
           } else {
             final boxPartidos = Hive.box('partidos');
             partido = boxPartidos.getAt(widget.posicion);
+            _contenido = [
+              PartidoPrepartidoEdicion(
+                posicion: widget.posicion,
+              ),
+              PartidoConvocatoriaEdicion(
+                posicion: widget.posicion,
+              ),
+              PartidoAlineacionEdicion(
+                posicion: widget.posicion,
+              ),
+              PartidoPostpartidoEdicion(
+                posicion: widget.posicion,
+              ),
+            ];
             return Scaffold(
               appBar: AppBar(
                 title: Text(
@@ -76,18 +94,20 @@ class _PartidosEdicion extends State<PartidosEdicion> {
                 actions: <Widget>[
                   IconButton(
                     icon: const Icon(
-                      Icons.delete,
-                      color: Colors.redAccent,
+                      Icons.check_box,
+                      color: Colors.lightGreen,
                     ),
-                    tooltip: 'Eliminar jugador',
+                    tooltip: 'Aceptar cambios',
                     onPressed: () async {
-                      var boxPartidos = await Hive.openBox('partidos');
+                      print("Editar");
+                      //Comprobar si ha cambiado la fecha y hora, en ese caso cambiar en el box eventos antes de editar el partido.
+                      /*var boxPartidos = await Hive.openBox('partidos');
                       var boxEventos = await Hive.openBox('eventos');
                       Eventos eventosActuales = boxEventos.get(0);
                       //Eliminar evento
                       eventosActuales.listaEventos.remove("${partido.fecha}/${partido.hora}");
                       boxPartidos.deleteAt(widget.posicion);
-                      boxEventos.putAt(0, eventosActuales);
+                      boxEventos.putAt(0, eventosActuales);*/
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(builder: (context) => Partidos()),

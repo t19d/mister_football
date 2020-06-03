@@ -145,9 +145,7 @@ class _DetallesPartido extends State<DetallesPartido> {
                 onTap: _iconoPulsado,
                 backgroundColor: Colors.white,
               ),
-              body: Center(
-                child: _contenido.elementAt(_indiceSeleccionado),
-              ),
+              body: _contenido.elementAt(_indiceSeleccionado),
             );
           }
         } else {

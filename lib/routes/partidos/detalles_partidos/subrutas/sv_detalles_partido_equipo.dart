@@ -3,6 +3,7 @@ import 'package:hive/hive.dart';
 import 'package:mister_football/clases/conversor_imagen.dart';
 import 'package:mister_football/clases/jugador.dart';
 import 'package:mister_football/clases/partido.dart';
+import 'package:mister_football/main.dart';
 import 'package:mister_football/routes/partidos/detalles_partidos/subrutas/detalles_partido_alineacion/w_detalles_partido_alineacion_formaciones.dart';
 
 class DetallesPartidoEquipo extends StatefulWidget {
@@ -25,15 +26,57 @@ class _DetallesPartidoEquipo extends State<DetallesPartidoEquipo> {
       }
     }
     return SingleChildScrollView(
-      child: Column(
-        children: <Widget>[
-          Text(formacionInicialPartido),
-          DetallesPartidoAlineacionFormacion(formacion: formacionInicialPartido, partido: widget.partido),
-          Text("Jugadores convocados"),
-          Container(
-            child: mostrarJugadoresSeleccionados(widget.partido.convocatoria),
-          ),
-        ],
+      child: Container(
+        margin: EdgeInsets.only(
+          bottom: MediaQuery.of(context).size.width * .03,
+          top: MediaQuery.of(context).size.width * .03,
+        ),
+        padding: EdgeInsets.only(
+          left: MediaQuery.of(context).size.width * .03,
+          right: MediaQuery.of(context).size.width * .03,
+        ),
+        child: Column(
+          children: <Widget>[
+            Text(
+              formacionInicialPartido,
+              style: TextStyle(
+                decoration: TextDecoration.underline,
+                //fontWeight: FontWeight.bold
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(
+                bottom: MediaQuery.of(context).size.width * .03,
+                top: MediaQuery.of(context).size.width * .03,
+              ),
+              child: DetallesPartidoAlineacionFormacion(formacion: formacionInicialPartido, partido: widget.partido),
+            ),
+            Container(
+              padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).size.width * .03,
+                top: MediaQuery.of(context).size.width * .03,
+              ),
+              color: MisterFootball.primarioLight2.withOpacity(.05),
+              child: Column(
+                children: <Widget>[
+                  Text(
+                    "Jugadores convocados",
+                    style: TextStyle(
+                      decoration: TextDecoration.underline,
+                      //fontWeight: FontWeight.bold
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(
+                      MediaQuery.of(context).size.width * .03,
+                    ),
+                    child: mostrarJugadoresSeleccionados(widget.partido.convocatoria),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -41,29 +84,41 @@ class _DetallesPartidoEquipo extends State<DetallesPartidoEquipo> {
   /* Jugadores */
   //Mostrar lista de los jugadores seleccionados en la convocatoria
   Widget mostrarJugadoresSeleccionados(List<String> jugadoresConvocados) {
+    bool isJugadoresConvocados = false;
     Box boxJugadoresEquipo = Hive.box('jugadores');
     if (jugadoresConvocados != null) {
       if (jugadoresConvocados.length > 0) {
         Widget widgetJugador = Container(height: 0);
-        return ListView(
-          shrinkWrap: true,
-          children: List.generate(jugadoresConvocados.length, (idJugador) {
-            Jugador jugadorBox;
-            for (var i = 0; i < boxJugadoresEquipo.length; i++) {
-              if ('${jugadoresConvocados[idJugador]}' == boxJugadoresEquipo.getAt(i).id) {
-                jugadorBox = boxJugadoresEquipo.getAt(i);
-                widgetJugador = Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    ConversorImagen.imageFromBase64String("${jugadorBox.nombre_foto}", context),
-                    Text("${jugadorBox.apodo}"),
-                    Text("${jugadorBox.posicionFavorita}"),
-                  ],
-                );
-              }
-            }
-            return widgetJugador;
-          }),
+        return Column(
+          children: <Widget>[
+            ListView(
+              //Eliminar Scroll
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              children: List.generate(jugadoresConvocados.length, (idJugador) {
+                Jugador jugadorBox;
+                for (var i = 0; i < boxJugadoresEquipo.length; i++) {
+                  if ('${jugadoresConvocados[idJugador]}' == boxJugadoresEquipo.getAt(i).id) {
+                    isJugadoresConvocados = true;
+                    jugadorBox = boxJugadoresEquipo.getAt(i);
+                    widgetJugador = Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        ConversorImagen.imageFromBase64String("${jugadorBox.nombre_foto}", context),
+                        Text("${jugadorBox.apodo}"),
+                        Text("${jugadorBox.posicionFavorita}"),
+                      ],
+                    );
+                  }
+                }
+                return widgetJugador;
+              }),
+            ),
+            if (!isJugadoresConvocados)
+              Center(
+                child: Text("No hay ningún jugador añadido."),
+              )
+          ],
         );
       } else {
         return Center(

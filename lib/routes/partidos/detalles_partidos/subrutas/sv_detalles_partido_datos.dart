@@ -17,6 +17,11 @@ class DetallesPartidoDatos extends StatefulWidget {
 class _DetallesPartidoDatos extends State<DetallesPartidoDatos> {
   @override
   Widget build(BuildContext context) {
+    //Estilo de los titulos de los eventos
+    TextStyle tituloEventos = TextStyle(
+      fontWeight: FontWeight.bold,
+      decoration: TextDecoration.underline,
+    );
     final boxPerfil = Hive.box('perfil');
     Map<String, dynamic> perfil = {"nombre_equipo": "", "escudo": ""};
     if (boxPerfil.get(0) != null) {
@@ -27,184 +32,333 @@ class _DetallesPartidoDatos extends State<DetallesPartidoDatos> {
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              (widget.partido.isLocal)
-                  //Partido de local
-                  ? Table(
-                      defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                      children: [
-                        TableRow(
-                          children: [
-                            //Nuestro Escudo
-                            ConversorImagen.devolverEscudoImageFromBase64String(perfil['escudo'], context),
-                            //Nosotros
-                            Text(
-                              (perfil['nombre_equipo'].length == 0) ? "Mi equipo" : perfil['nombre_equipo'],
-                              textAlign: TextAlign.center,
-                            ),
-                            Text(
-                              "${widget.partido.golesAFavor.length}-${widget.partido.golesEnContra.length}",
-                              textAlign: TextAlign.center,
-                            ),
-                            //Rival
-                            Text(
-                              widget.partido.rival,
-                              textAlign: TextAlign.center,
-                            ),
-                            //Escudo Rival
-                            Icon(
-                              Icons.security,
-                              color: MisterFootball.primario,
-                              size: MediaQuery.of(context).size.width / 6,
-                            ),
-                          ],
-                        ),
-                      ],
-                    )
-                  //Partido de visitante
-                  : Table(
-                      defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                      children: [
-                        TableRow(
-                          children: [
-                            //Escudo Rival
-                            Icon(
-                              Icons.security,
-                              color: MisterFootball.primario,
-                              size: MediaQuery.of(context).size.width / 6,
-                            ),
-                            //Rival
-                            Text(
-                              widget.partido.rival,
-                              textAlign: TextAlign.center,
-                            ),
-                            Text(
-                              "${widget.partido.golesAFavor.length}-${widget.partido.golesEnContra.length}",
-                              textAlign: TextAlign.center,
-                            ),
-                            //Nosotros
-                            Text(
-                              (perfil['nombre_equipo'].length == 0) ? "Mi equipo" : perfil['nombre_equipo'],
-                              textAlign: TextAlign.center,
-                            ),
-                            //Nuestro Escudo
-                            ConversorImagen.devolverEscudoImageFromBase64String(perfil['escudo'], context),
-                          ],
-                        ),
-                      ],
-                    ),
               Container(
+                padding: EdgeInsets.all(MediaQuery.of(context).size.width * .03),
+                decoration: BoxDecoration(
+                  color: MisterFootball.primarioLight2.withOpacity(.25),
+                  border: Border(bottom: BorderSide(width: 1)),
+                ),
+                child: (widget.partido.isLocal)
+                    //Partido de local
+                    ? Table(
+                        defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                        children: [
+                          TableRow(
+                            children: [
+                              //Nuestro Escudo
+                              ConversorImagen.devolverEscudoImageFromBase64String(perfil['escudo'], context),
+                              //Nosotros
+                              Text(
+                                (perfil['nombre_equipo'].length == 0) ? "Mi equipo" : perfil['nombre_equipo'],
+                                textAlign: TextAlign.center,
+                              ),
+                              Text(
+                                "${widget.partido.golesAFavor.length}-${widget.partido.golesEnContra.length}",
+                                textAlign: TextAlign.center,
+                              ),
+                              //Rival
+                              Text(
+                                widget.partido.rival,
+                                textAlign: TextAlign.center,
+                              ),
+                              //Escudo Rival
+                              Icon(
+                                Icons.security,
+                                color: MisterFootball.primario,
+                                size: MediaQuery.of(context).size.width / 6,
+                              ),
+                            ],
+                          ),
+                        ],
+                      )
+                    //Partido de visitante
+                    : Table(
+                        defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                        children: [
+                          TableRow(
+                            children: [
+                              //Escudo Rival
+                              Icon(
+                                Icons.security,
+                                color: MisterFootball.primario,
+                                size: MediaQuery.of(context).size.width / 6,
+                              ),
+                              //Rival
+                              Text(
+                                widget.partido.rival,
+                                textAlign: TextAlign.center,
+                              ),
+                              Text(
+                                "${widget.partido.golesAFavor.length}-${widget.partido.golesEnContra.length}",
+                                textAlign: TextAlign.center,
+                              ),
+                              //Nosotros
+                              Text(
+                                (perfil['nombre_equipo'].length == 0) ? "Mi equipo" : perfil['nombre_equipo'],
+                                textAlign: TextAlign.center,
+                              ),
+                              //Nuestro Escudo
+                              ConversorImagen.devolverEscudoImageFromBase64String(perfil['escudo'], context),
+                            ],
+                          ),
+                        ],
+                      ),
+              ),
+              //Datos prepartido
+              Container(
+                /*margin: EdgeInsets.only(
+                  //bottom: MediaQuery.of(context).size.width * .03,
+                  //top: MediaQuery.of(context).size.width * .03,
+                ),*/
+                padding: EdgeInsets.only(
+                  left: MediaQuery.of(context).size.width * .03,
+                  right: MediaQuery.of(context).size.width * .03,
+                ),
                 child: Table(
+                  border: TableBorder(
+                    verticalInside: BorderSide(
+                      color: MisterFootball.primario,
+                      width: .4,
+                    ),
+                  ),
                   defaultVerticalAlignment: TableCellVerticalAlignment.middle,
                   children: [
                     //Lugar
                     //Si no se ha completa el campo, no rellenar
                     if (widget.partido.lugar.length != 0)
                       TableRow(
+                        decoration: BoxDecoration(
+                          border: Border(
+                            //top: BorderSide(color: MisterFootball.primario, width: .4),
+                            bottom: BorderSide(color: MisterFootball.primario, width: .4),
+                          ),
+                        ),
                         children: [
                           Text(
                             "Lugar",
                             textAlign: TextAlign.center,
                           ),
-                          Text(
-                            "${widget.partido.lugar}",
-                            textAlign: TextAlign.center,
+                          Container(
+                            padding: EdgeInsets.only(
+                              top: MediaQuery.of(context).size.width * .03,
+                              bottom: MediaQuery.of(context).size.width * .03,
+                            ),
+                            child: Text(
+                              "${widget.partido.lugar}",
+                              textAlign: TextAlign.center,
+                            ),
                           ),
                         ],
                       ),
                     //Tipo
                     TableRow(
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(color: MisterFootball.primario, width: .4),
+                        ),
+                      ),
                       children: [
                         Text(
                           "Tipo",
                           textAlign: TextAlign.center,
                         ),
-                        Text(
-                          "${widget.partido.tipoPartido}",
-                          textAlign: TextAlign.center,
+                        Container(
+                          padding: EdgeInsets.only(
+                            top: MediaQuery.of(context).size.width * .03,
+                            bottom: MediaQuery.of(context).size.width * .03,
+                          ),
+                          child: Text(
+                            "${widget.partido.tipoPartido}",
+                            textAlign: TextAlign.center,
+                          ),
                         ),
                       ],
                     ),
                     //Fecha
                     TableRow(
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(color: MisterFootball.primario, width: .4),
+                        ),
+                      ),
                       children: [
                         Text(
                           "Fecha",
                           textAlign: TextAlign.center,
                         ),
-                        Text(
-                          "${widget.partido.fecha}",
-                          textAlign: TextAlign.center,
+                        Container(
+                          padding: EdgeInsets.only(
+                            top: MediaQuery.of(context).size.width * .03,
+                            bottom: MediaQuery.of(context).size.width * .03,
+                          ),
+                          child: Text(
+                            "${widget.partido.fecha}",
+                            textAlign: TextAlign.center,
+                          ),
                         ),
                       ],
                     ),
                     //Hora
                     TableRow(
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(color: MisterFootball.primario, width: .4),
+                        ),
+                      ),
                       children: [
                         Text(
                           "Hora",
                           textAlign: TextAlign.center,
                         ),
-                        Text(
-                          "${widget.partido.hora}",
-                          textAlign: TextAlign.center,
+                        Container(
+                          padding: EdgeInsets.only(
+                            top: MediaQuery.of(context).size.width * .03,
+                            bottom: MediaQuery.of(context).size.width * .03,
+                          ),
+                          child: Text(
+                            "${widget.partido.hora}",
+                            textAlign: TextAlign.center,
+                          ),
                         ),
                       ],
                     ),
                   ],
                 ),
               ),
-              Column(
-                children: <Widget>[
-                  Container(
-                    color: Colors.grey.withOpacity(.15),
-                    child: Column(
-                      children: <Widget>[
-                        Text("Goles a favor"),
-                        mostrarListaGolesAFavor(widget.partido),
-                      ],
-                    ),
+              //Datos eventos
+              Container(
+                decoration: BoxDecoration(
+                  color: MisterFootball.primarioLight2.withOpacity(.05),
+                  border: Border(
+                    top: BorderSide(width: .4),
+                    bottom: BorderSide(width: .4),
                   ),
-                  //Goles en Contra
-                  Container(
-                    color: Colors.grey.withOpacity(.15),
-                    child: Column(
-                      children: <Widget>[
-                        Text("Goles en contra"),
-                        mostrarListaGolesEnContra(widget.partido),
-                      ],
+                ),
+                margin: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).size.width * .03,
+                  top: MediaQuery.of(context).size.width * .03,
+                ),
+                padding: EdgeInsets.only(
+                  left: MediaQuery.of(context).size.width * .03,
+                  right: MediaQuery.of(context).size.width * .03,
+                ),
+                child: Column(
+                  children: <Widget>[
+                    Text(
+                      "Goles a favor",
+                      style: tituloEventos,
                     ),
+                    mostrarListaGolesAFavor(widget.partido),
+                  ],
+                ),
+              ),
+              //Goles en Contra
+              Container(
+                decoration: BoxDecoration(
+                  color: MisterFootball.primarioLight2.withOpacity(.05),
+                  border: Border(
+                    top: BorderSide(width: .4),
+                    bottom: BorderSide(width: .4),
                   ),
-                  //Tarjetas
-                  Container(
-                    color: Colors.grey.withOpacity(.15),
-                    child: Column(
-                      children: <Widget>[
-                        Text("Tarjetas"),
-                        mostrarListaTarjetas(widget.partido),
-                      ],
+                ),
+                margin: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).size.width * .03,
+                  top: MediaQuery.of(context).size.width * .03,
+                ),
+                padding: EdgeInsets.only(
+                  left: MediaQuery.of(context).size.width * .03,
+                  right: MediaQuery.of(context).size.width * .03,
+                ),
+                child: Column(
+                  children: <Widget>[
+                    Text(
+                      "Goles en contra",
+                      style: tituloEventos,
                     ),
+                    mostrarListaGolesEnContra(widget.partido),
+                  ],
+                ),
+              ),
+              //Tarjetas
+              Container(
+                decoration: BoxDecoration(
+                  color: MisterFootball.primarioLight2.withOpacity(.05),
+                  border: Border(
+                    top: BorderSide(width: .4),
+                    bottom: BorderSide(width: .4),
                   ),
-                  //Cambios
-                  Container(
-                    color: Colors.grey.withOpacity(.15),
-                    child: Column(
-                      children: <Widget>[
-                        Text("Cambios"),
-                        mostrarListaCambios(widget.partido),
-                      ],
+                ),
+                margin: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).size.width * .03,
+                  top: MediaQuery.of(context).size.width * .03,
+                ),
+                padding: EdgeInsets.only(
+                  left: MediaQuery.of(context).size.width * .03,
+                  right: MediaQuery.of(context).size.width * .03,
+                ),
+                child: Column(
+                  children: <Widget>[
+                    Text(
+                      "Tarjetas",
+                      style: tituloEventos,
                     ),
+                    mostrarListaTarjetas(widget.partido),
+                  ],
+                ),
+              ),
+              //Cambios
+              Container(
+                decoration: BoxDecoration(
+                  color: MisterFootball.primarioLight2.withOpacity(.05),
+                  border: Border(
+                    top: BorderSide(width: .4),
+                    bottom: BorderSide(width: .4),
                   ),
-                  //Lesiones
-                  Container(
-                    color: Colors.grey.withOpacity(.15),
-                    child: Column(
-                      children: <Widget>[
-                        Text("Lesiones"),
-                        mostrarListaLesion(widget.partido),
-                      ],
+                ),
+                margin: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).size.width * .03,
+                  top: MediaQuery.of(context).size.width * .03,
+                ),
+                padding: EdgeInsets.only(
+                  left: MediaQuery.of(context).size.width * .03,
+                  right: MediaQuery.of(context).size.width * .03,
+                ),
+                child: Column(
+                  children: <Widget>[
+                    Text(
+                      "Cambios",
+                      style: tituloEventos,
                     ),
+                    mostrarListaCambios(widget.partido),
+                  ],
+                ),
+              ),
+              //Lesiones
+              Container(
+                decoration: BoxDecoration(
+                  color: MisterFootball.primarioLight2.withOpacity(.05),
+                  border: Border(
+                    top: BorderSide(width: .4),
+                    bottom: BorderSide(width: .4),
                   ),
-                ],
+                ),
+                margin: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).size.width * .03,
+                  top: MediaQuery.of(context).size.width * .03,
+                ),
+                padding: EdgeInsets.only(
+                  left: MediaQuery.of(context).size.width * .03,
+                  right: MediaQuery.of(context).size.width * .03,
+                ),
+                child: Column(
+                  children: <Widget>[
+                    Text(
+                      "Lesiones",
+                      style: tituloEventos,
+                    ),
+                    mostrarListaLesion(widget.partido),
+                  ],
+                ),
               ),
             ],
           ),
@@ -236,7 +390,19 @@ class _DetallesPartidoDatos extends State<DetallesPartidoDatos> {
             }
           }
           return Container(
-            color: avisoJugador,
+            padding: EdgeInsets.only(
+              top: MediaQuery.of(context).size.width * .03,
+              bottom: MediaQuery.of(context).size.width * .03,
+            ),
+            decoration: BoxDecoration(
+              color: avisoJugador,
+              border: Border(
+                bottom: BorderSide(
+                  color: ((partidoActual.golesAFavor.length - 1) != iFila) ? MisterFootball.primario : Colors.transparent,
+                  width: .4,
+                ),
+              ),
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
@@ -246,7 +412,7 @@ class _DetallesPartidoDatos extends State<DetallesPartidoDatos> {
                     Icons.warning,
                     color: Colors.red,
                   ),
-                Text("${jugadorFila.apodo}"),
+                (jugadorFila != null) ? Text("${jugadorFila.apodo}") : Text("Jugador eliminado"),
               ],
             ),
           );
@@ -268,9 +434,23 @@ class _DetallesPartidoDatos extends State<DetallesPartidoDatos> {
         physics: NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         children: List.generate(partidoActual.golesEnContra.length, (iFila) {
-          return Text(
-            "${partidoActual.golesEnContra[iFila]}'",
-            textAlign: TextAlign.center,
+          return Container(
+            padding: EdgeInsets.only(
+              top: MediaQuery.of(context).size.width * .03,
+              bottom: MediaQuery.of(context).size.width * .03,
+            ),
+            decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(
+                  color: ((partidoActual.golesEnContra.length - 1) != iFila) ? MisterFootball.primario : Colors.transparent,
+                  width: .4,
+                ),
+              ),
+            ),
+            child: Text(
+              "${partidoActual.golesEnContra[iFila]}'",
+              textAlign: TextAlign.center,
+            ),
           );
         }),
       );
@@ -305,7 +485,19 @@ class _DetallesPartidoDatos extends State<DetallesPartidoDatos> {
             }
           }
           return Container(
-            color: avisoJugador,
+            padding: EdgeInsets.only(
+              top: MediaQuery.of(context).size.width * .03,
+              bottom: MediaQuery.of(context).size.width * .03,
+            ),
+            decoration: BoxDecoration(
+              color: avisoJugador,
+              border: Border(
+                bottom: BorderSide(
+                  color: ((partidoActual.tarjetas.length - 1) != iFila) ? MisterFootball.primario : Colors.transparent,
+                  width: .4,
+                ),
+              ),
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
@@ -330,7 +522,7 @@ class _DetallesPartidoDatos extends State<DetallesPartidoDatos> {
                   ],
                 ),
                 //Jugador
-                Text("${jugadorFila.apodo}"),
+                (jugadorFila != null) ? Text("${jugadorFila.apodo}") : Text("Jugador eliminado"),
               ],
             ),
           );
@@ -371,20 +563,36 @@ class _DetallesPartidoDatos extends State<DetallesPartidoDatos> {
 
           //Comprobar si está convocado
           bool _isConvocadoJugadorEntra = false;
-          for (var j = 0; j < partidoActual.convocatoria.length; j++) {
-            if (partidoActual.convocatoria[j] == jugadorFilaEntra.id) {
-              _isConvocadoJugadorEntra = true;
+          if (jugadorFilaEntra != null) {
+            for (var j = 0; j < partidoActual.convocatoria.length; j++) {
+              if (partidoActual.convocatoria[j] == jugadorFilaEntra.id) {
+                _isConvocadoJugadorEntra = true;
+              }
             }
           }
-          for (var j = 0; j < partidoActual.convocatoria.length; j++) {
-            if (partidoActual.convocatoria[j] == jugadorFilaSale.id) {
-              if (_isConvocadoJugadorEntra) {
-                avisoJugador = Colors.transparent;
+          if (jugadorFilaSale != null) {
+            for (var j = 0; j < partidoActual.convocatoria.length; j++) {
+              if (partidoActual.convocatoria[j] == jugadorFilaSale.id) {
+                if (_isConvocadoJugadorEntra) {
+                  avisoJugador = Colors.transparent;
+                }
               }
             }
           }
           return Container(
-            color: avisoJugador,
+            padding: EdgeInsets.only(
+              top: MediaQuery.of(context).size.width * .03,
+              bottom: MediaQuery.of(context).size.width * .03,
+            ),
+            decoration: BoxDecoration(
+              color: avisoJugador,
+              border: Border(
+                bottom: BorderSide(
+                  color: ((partidoActual.cambios.length - 1) != iFila) ? MisterFootball.primario : Colors.transparent,
+                  width: .4,
+                ),
+              ),
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
@@ -404,7 +612,7 @@ class _DetallesPartidoDatos extends State<DetallesPartidoDatos> {
                           Icons.arrow_downward,
                           color: Colors.red,
                         ),
-                        Text("${jugadorFilaSale.apodo}"),
+                        (jugadorFilaSale != null) ? Text("${jugadorFilaSale.apodo}") : Text("Jugador eliminado"),
                       ],
                     ),
                     //Jugador entra
@@ -414,7 +622,7 @@ class _DetallesPartidoDatos extends State<DetallesPartidoDatos> {
                           Icons.arrow_upward,
                           color: Colors.green,
                         ),
-                        Text("${jugadorFilaEntra.apodo}"),
+                        (jugadorFilaEntra != null) ? Text("${jugadorFilaEntra.apodo}") : Text("Jugador eliminado"),
                       ],
                     ),
                   ],
@@ -452,7 +660,19 @@ class _DetallesPartidoDatos extends State<DetallesPartidoDatos> {
             }
           }
           return Container(
-            color: avisoJugador,
+            padding: EdgeInsets.only(
+              top: MediaQuery.of(context).size.width * .03,
+              bottom: MediaQuery.of(context).size.width * .03,
+            ),
+            decoration: BoxDecoration(
+              color: avisoJugador,
+              border: Border(
+                bottom: BorderSide(
+                  color: ((partidoActual.lesiones.length - 1) != iFila) ? MisterFootball.primario : Colors.transparent,
+                  width: .4,
+                ),
+              ),
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
@@ -468,7 +688,7 @@ class _DetallesPartidoDatos extends State<DetallesPartidoDatos> {
                       Icons.healing,
                       color: Colors.red,
                     ),
-                    Text("${jugadorFila.apodo}"),
+                    (jugadorFila != null) ? Text("${jugadorFila.apodo}") : Text("Jugador eliminado"),
                   ],
                 ),
               ],

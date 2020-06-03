@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:mister_football/clases/jugador.dart';
 import 'package:mister_football/clases/partido.dart';
+import 'package:mister_football/main.dart';
 
 class PartidoPostpartidoEdicion extends StatefulWidget {
   final int posicion;
@@ -459,6 +460,8 @@ class _PartidoPostpartidoEdicion extends State<PartidoPostpartidoEdicion> {
     Box boxJugadoresEquipo = Hive.box('jugadores');
     if (partidoActual.golesAFavor.length > 0) {
       return ListView(
+        //Eliminar Scroll
+        physics: NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         children: List.generate(partidoActual.golesAFavor.length, (iFila) {
           Jugador jugadorFila;
@@ -474,21 +477,29 @@ class _PartidoPostpartidoEdicion extends State<PartidoPostpartidoEdicion> {
             }
           }
           return Container(
-            color: avisoJugador,
+            padding: EdgeInsets.only(
+              top: MediaQuery.of(context).size.width * .03,
+              bottom: MediaQuery.of(context).size.width * .03,
+            ),
+            decoration: BoxDecoration(
+              color: avisoJugador,
+              border: Border(
+                bottom: BorderSide(
+                  color: ((partidoActual.golesAFavor.length - 1) != iFila) ? MisterFootball.primario : Colors.transparent,
+                  width: .4,
+                ),
+              ),
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 Text("${partidoActual.golesAFavor[iFila][0]}'"),
-                (avisoJugador == Colors.transparent)
-                    ? Container(
-                        width: 0,
-                        height: 0,
-                      )
-                    : Icon(
-                        Icons.warning,
-                        color: Colors.red,
-                      ),
-                Text("${jugadorFila.apodo}"),
+                if (avisoJugador == Colors.redAccent.withOpacity(.5))
+                  Icon(
+                    Icons.warning,
+                    color: Colors.red,
+                  ),
+                (jugadorFila != null) ? Text("${jugadorFila.apodo}") : Text("Jugador eliminado"),
                 IconButton(
                     icon: Icon(
                       Icons.close,
@@ -519,8 +530,6 @@ class _PartidoPostpartidoEdicion extends State<PartidoPostpartidoEdicion> {
                       Box boxPartidosEditarConvocatoria = await Hive.openBox('partidos');
                       boxPartidosEditarConvocatoria.putAt(widget.posicion, p);
                       setState(() {});
-                      //}
-                      //}
                     }),
               ],
             ),
@@ -649,13 +658,30 @@ class _PartidoPostpartidoEdicion extends State<PartidoPostpartidoEdicion> {
   Widget mostrarListaGolesEnContra(Partido partidoActual) {
     if (partidoActual.golesEnContra.length > 0) {
       return ListView(
+        //Eliminar Scroll
+        physics: NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         children: List.generate(partidoActual.golesEnContra.length, (iFila) {
           return Container(
+            padding: EdgeInsets.only(
+              top: MediaQuery.of(context).size.width * .03,
+              bottom: MediaQuery.of(context).size.width * .03,
+            ),
+            decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(
+                  color: ((partidoActual.golesEnContra.length - 1) != iFila) ? MisterFootball.primario : Colors.transparent,
+                  width: .4,
+                ),
+              ),
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                Text("${partidoActual.golesEnContra[iFila]}'"),
+                Text(
+                  "${partidoActual.golesEnContra[iFila]}'",
+                  textAlign: TextAlign.center,
+                ),
                 IconButton(
                     icon: Icon(
                       Icons.close,
@@ -697,7 +723,7 @@ class _PartidoPostpartidoEdicion extends State<PartidoPostpartidoEdicion> {
     }
   }
 
-  //Mostrar formulario de añadir un nuevo gol
+  //Mostrar formulario de añadir un nuevo gol en contra
   Widget anhadirGolEnContra(Partido partidoActual) {
     //Datos formulario
     final formKey = new GlobalKey<FormState>();
@@ -771,6 +797,8 @@ class _PartidoPostpartidoEdicion extends State<PartidoPostpartidoEdicion> {
     Box boxJugadoresEquipo = Hive.box('jugadores');
     if (partidoActual.tarjetas.length > 0) {
       return ListView(
+        //Eliminar Scroll
+        physics: NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         children: List.generate(partidoActual.tarjetas.length, (iFila) {
           Jugador jugadorFila;
@@ -787,21 +815,29 @@ class _PartidoPostpartidoEdicion extends State<PartidoPostpartidoEdicion> {
             }
           }
           return Container(
-            color: avisoJugador,
+            padding: EdgeInsets.only(
+              top: MediaQuery.of(context).size.width * .03,
+              bottom: MediaQuery.of(context).size.width * .03,
+            ),
+            decoration: BoxDecoration(
+              color: avisoJugador,
+              border: Border(
+                bottom: BorderSide(
+                  color: ((partidoActual.tarjetas.length - 1) != iFila) ? MisterFootball.primario : Colors.transparent,
+                  width: .4,
+                ),
+              ),
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 //Minuto
                 Text("${partidoActual.tarjetas[iFila][0]}'"),
-                (avisoJugador == Colors.transparent)
-                    ? Container(
-                        width: 0,
-                        height: 0,
-                      )
-                    : Icon(
-                        Icons.warning,
-                        color: Colors.red,
-                      ),
+                if (avisoJugador == Colors.redAccent.withOpacity(.5))
+                  Icon(
+                    Icons.warning,
+                    color: Colors.red,
+                  ),
                 //Color
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -809,7 +845,6 @@ class _PartidoPostpartidoEdicion extends State<PartidoPostpartidoEdicion> {
                     Icon(
                       Icons.sim_card_alert,
                       color: ("${partidoActual.tarjetas[iFila][1]}" == "Roja") ? Colors.red : Colors.yellowAccent,
-                      //size: MediaQuery.of(context).size.width * .4,
                     ),
                     Text(
                       "${partidoActual.tarjetas[iFila][1]}",
@@ -817,7 +852,7 @@ class _PartidoPostpartidoEdicion extends State<PartidoPostpartidoEdicion> {
                   ],
                 ),
                 //Jugador
-                Text("${jugadorFila.apodo}"),
+                (jugadorFila != null) ? Text("${jugadorFila.apodo}") : Text("Jugador eliminado"),
                 IconButton(
                     icon: Icon(
                       Icons.close,
@@ -846,8 +881,6 @@ class _PartidoPostpartidoEdicion extends State<PartidoPostpartidoEdicion> {
                       Box boxPartidosEditarConvocatoria = await Hive.openBox('partidos');
                       boxPartidosEditarConvocatoria.putAt(widget.posicion, p);
                       setState(() {});
-                      //}
-                      //}
                     }),
               ],
             ),
@@ -1044,6 +1077,8 @@ class _PartidoPostpartidoEdicion extends State<PartidoPostpartidoEdicion> {
     Box boxJugadoresEquipo = Hive.box('jugadores');
     if (partidoActual.cambios.length > 0) {
       return ListView(
+        //Eliminar Scroll
+        physics: NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         children: List.generate(partidoActual.cambios.length, (iFila) {
           Jugador jugadorFilaEntra; //[1]
@@ -1064,53 +1099,68 @@ class _PartidoPostpartidoEdicion extends State<PartidoPostpartidoEdicion> {
 
           //Comprobar si está convocado
           bool _isConvocadoJugadorEntra = false;
-          for (var j = 0; j < partidoActual.convocatoria.length; j++) {
-            if (partidoActual.convocatoria[j] == jugadorFilaEntra.id) {
-              _isConvocadoJugadorEntra = true;
-            }
-          }
-          for (var j = 0; j < partidoActual.convocatoria.length; j++) {
-            if (partidoActual.convocatoria[j] == jugadorFilaSale.id) {
-              if (_isConvocadoJugadorEntra) {
-                avisoJugador = Colors.transparent;
+          if (jugadorFilaEntra != null) {
+            for (var j = 0; j < partidoActual.convocatoria.length; j++) {
+              if (partidoActual.convocatoria[j] == jugadorFilaEntra.id) {
+                _isConvocadoJugadorEntra = true;
               }
             }
           }
-
+          if (jugadorFilaSale != null) {
+            for (var j = 0; j < partidoActual.convocatoria.length; j++) {
+              if (partidoActual.convocatoria[j] == jugadorFilaSale.id) {
+                if (_isConvocadoJugadorEntra) {
+                  avisoJugador = Colors.transparent;
+                }
+              }
+            }
+          }
           return Container(
-            color: avisoJugador,
+            padding: EdgeInsets.only(
+              top: MediaQuery.of(context).size.width * .03,
+              bottom: MediaQuery.of(context).size.width * .03,
+            ),
+            decoration: BoxDecoration(
+              color: avisoJugador,
+              border: Border(
+                bottom: BorderSide(
+                  color: ((partidoActual.cambios.length - 1) != iFila) ? MisterFootball.primario : Colors.transparent,
+                  width: .4,
+                ),
+              ),
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 //Minuto
                 Text("${partidoActual.cambios[iFila][0]}'"),
-                (avisoJugador == Colors.transparent)
-                    ? Container(
-                        width: 0,
-                        height: 0,
-                      )
-                    : Icon(
-                        Icons.warning,
-                        color: Colors.red,
-                      ),
-                //Jugador entra
-                Row(
+                if (avisoJugador == Colors.redAccent.withOpacity(.5))
+                  Icon(
+                    Icons.warning,
+                    color: Colors.red,
+                  ),
+                Column(
                   children: <Widget>[
-                    Icon(
-                      Icons.arrow_upward,
-                      color: Colors.green,
+                    //Jugador sale
+                    Row(
+                      children: <Widget>[
+                        Icon(
+                          Icons.arrow_downward,
+                          color: Colors.red,
+                        ),
+                        (jugadorFilaSale != null) ? Text("${jugadorFilaSale.apodo}") : Text("Jugador eliminado"),
+                      ],
                     ),
-                    Text("${jugadorFilaEntra.apodo}"),
-                  ],
-                ),
-                //Jugador sale
-                Row(
-                  children: <Widget>[
-                    Icon(
-                      Icons.arrow_downward,
-                      color: Colors.red,
+                    //Jugador entra
+                    Row(
+                      children: <Widget>[
+                        Icon(
+                          Icons.arrow_upward,
+                          color: Colors.green,
+                        ),
+                        (jugadorFilaEntra != null) ? Text("${jugadorFilaEntra.apodo}") : Text("Jugador eliminado"),
+                      ],
                     ),
-                    Text("${jugadorFilaSale.apodo}"),
                   ],
                 ),
                 IconButton(
@@ -1320,27 +1370,35 @@ class _PartidoPostpartidoEdicion extends State<PartidoPostpartidoEdicion> {
             }
           }
           return Container(
-            color: avisoJugador,
+            padding: EdgeInsets.only(
+              top: MediaQuery.of(context).size.width * .03,
+              bottom: MediaQuery.of(context).size.width * .03,
+            ),
+            decoration: BoxDecoration(
+              color: avisoJugador,
+              border: Border(
+                bottom: BorderSide(
+                  color: ((partidoActual.lesiones.length - 1) != iFila) ? MisterFootball.primario : Colors.transparent,
+                  width: .4,
+                ),
+              ),
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 Text("${partidoActual.lesiones[iFila][0]}'"),
-                (avisoJugador == Colors.transparent)
-                    ? Container(
-                        width: 0,
-                        height: 0,
-                      )
-                    : Icon(
-                        Icons.warning,
-                        color: Colors.red,
-                      ),
+                if (avisoJugador == Colors.redAccent.withOpacity(.5))
+                  Icon(
+                    Icons.warning,
+                    color: Colors.red,
+                  ),
                 Row(
                   children: <Widget>[
                     Icon(
                       Icons.healing,
                       color: Colors.red,
                     ),
-                    Text("${jugadorFila.apodo}"),
+                    (jugadorFila != null) ? Text("${jugadorFila.apodo}") : Text("Jugador eliminado"),
                   ],
                 ),
                 IconButton(

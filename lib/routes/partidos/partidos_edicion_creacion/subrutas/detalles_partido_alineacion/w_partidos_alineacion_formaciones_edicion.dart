@@ -243,28 +243,32 @@ class _PartidoAlineacionFormacionEdicion extends State<PartidoAlineacionFormacio
                 setState(() {});
                 Navigator.pop(context, jugadorBox);
               },
-              child: Container(
-                color: colorear(jugadorBox.posicionFavorita),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    ConversorImagen.imageFromBase64String(jugadorBox.nombre_foto, context),
-                    Column(
-                      children: <Widget>[
-                        Text(
-                          jugadorBox.apodo,
-                          textAlign: TextAlign.center,
-                        ),
-                        Text(
-                          jugadorBox.posicionFavorita,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 10),
-                        ),
-                      ],
+              child: (jugadorBox != null)
+                  ? Container(
+                      color: colorear(jugadorBox.posicionFavorita),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          ConversorImagen.imageFromBase64String(jugadorBox.nombre_foto, context),
+                          Column(
+                            children: <Widget>[
+                              Text(
+                                jugadorBox.apodo,
+                                textAlign: TextAlign.center,
+                              ),
+                              Text(
+                                jugadorBox.posicionFavorita,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(fontSize: 10),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    )
+                  : Container(
+                      height: 0,
                     ),
-                  ],
-                ),
-              ),
             ),
           );
         }),

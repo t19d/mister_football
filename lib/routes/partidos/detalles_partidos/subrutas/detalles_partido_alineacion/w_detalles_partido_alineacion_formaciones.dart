@@ -1,17 +1,14 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:mister_football/clases/conversor_imagen.dart';
 import 'package:mister_football/clases/jugador.dart';
 import 'package:mister_football/clases/partido.dart';
-import 'package:mister_football/routes/gestion_jugadores/detalles_jugadores/v_detalles_jugador.dart';
 
 class DetallesPartidoAlineacionFormacion extends StatefulWidget {
-  final int posicion;
   final String formacion;
+  final Partido partido;
 
-  DetallesPartidoAlineacionFormacion({Key key, @required this.formacion, @required this.posicion}) : super(key: key);
+  DetallesPartidoAlineacionFormacion({Key key, @required this.formacion, @required this.partido}) : super(key: key);
 
   @override
   createState() => _DetallesPartidoAlineacionFormacion();
@@ -87,51 +84,27 @@ class _DetallesPartidoAlineacionFormacion extends State<DetallesPartidoAlineacio
 
   @override
   Widget build(BuildContext context) {
-    //refreshList();
-    /*return dibujoFormacion();*/
-    return FutureBuilder(
-      future: Hive.openBox('partidos'),
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          if (snapshot.hasError) {
-            print(snapshot.error.toString());
-            return Text(snapshot.error.toString());
-          } else {
-            final boxPartidos = Hive.box('partidos');
-            //final boxJugadoresEquipo = Hive.box('jugadores');
-            //Añadir lista de los jugadores convocados al partido.
-            Partido partidoActual = boxPartidos.getAt(widget.posicion);
-            if (partidoActual.alineacion != null) {
-              if (partidoActual.alineacion['0'][0] != null) {
-                posicionesOcupadas = Map<String, String>.from(partidoActual.alineacion['0'][1]);
-                //Comprobar si los jugadores alineados están convocados.
-                for (var keyPosicion in posicionesOcupadas.keys) {
-                  print('$keyPosicion was written by ${posicionesOcupadas[keyPosicion]}');
-                  if (posicionesOcupadas[keyPosicion] != null) {
-                    bool _isConvocado = false;
-                    for (int i = 0; i < partidoActual.convocatoria.length; i++) {
-                      if (posicionesOcupadas[keyPosicion] == partidoActual.convocatoria[i]) {
-                        _isConvocado = true;
-                      }
-                    }
-                    if (!_isConvocado) {
-                      posicionesOcupadas[keyPosicion] = null;
-                    }
-                  }
-                }
+    if (widget.partido.alineacion != null) {
+      if (widget.partido.alineacion['0'][0] != null) {
+        posicionesOcupadas = Map<String, String>.from(widget.partido.alineacion['0'][1]);
+        //Comprobar si los jugadores alineados están convocados.
+        for (var keyPosicion in posicionesOcupadas.keys) {
+          print('$keyPosicion was written by ${posicionesOcupadas[keyPosicion]}');
+          if (posicionesOcupadas[keyPosicion] != null) {
+            bool _isConvocado = false;
+            for (int i = 0; i < widget.partido.convocatoria.length; i++) {
+              if (posicionesOcupadas[keyPosicion] == widget.partido.convocatoria[i]) {
+                _isConvocado = true;
               }
             }
-            return dibujoFormacion();
+            if (!_isConvocado) {
+              posicionesOcupadas[keyPosicion] = null;
+            }
           }
-        } else {
-          return Container(
-            height: MediaQuery.of(context).size.height * .5,
-            width: MediaQuery.of(context).size.width * .9,
-            child: LinearProgressIndicator(),
-          );
         }
-      },
-    );
+      }
+    }
+    return dibujoFormacion();
   }
 
   Widget dibujoFormacion() {
@@ -169,126 +142,11 @@ class _DetallesPartidoAlineacionFormacion extends State<DetallesPartidoAlineacio
     return dibujo;
   }
 
-  /* CONVOCATORIA */
-  //DIÁLOGO CON LOS JUGADORES CONVOCADOS
-
-  Widget cartasJugadores(String posicionAlineacion) {
-    final boxPartidos = Hive.box('partidos');
-    final boxJugadoresEquipo = Hive.box('jugadores');
-    //Añadir lista de los jugadores convocados al partido.
-    Partido partidoActual = boxPartidos.getAt(widget.posicion);
-    List<String> jugadoresConvocados = [];
-    //Si la lista es null
-    if (partidoActual.convocatoria != null) {
-      jugadoresConvocados = partidoActual.convocatoria;
-    }
-    if (jugadoresConvocados.length > 0) {
-      return ListView(
-        children: List.generate(jugadoresConvocados.length, (idJugador) {
-          Jugador jugadorBox;
-          for (var i = 0; i < boxJugadoresEquipo.length; i++) {
-            if ('${jugadoresConvocados[idJugador]}' == boxJugadoresEquipo.getAt(i).id) {
-              jugadorBox = boxJugadoresEquipo.getAt(i);
-            }
-          }
-          return Card(
-            child: new InkWell(
-              splashColor: Colors.lightGreen,
-              onTap: () async {
-                //Guardar y actualizar
-                //Actualizar contenido
-                for (var keyPosicion in posicionesOcupadas.keys) {
-                  print('$keyPosicion was written by ${posicionesOcupadas[keyPosicion]}');
-                  if (posicionesOcupadas[keyPosicion] != null) {
-                    bool _isRepetido = false;
-                    for (int i = 0; i < partidoActual.convocatoria.length; i++) {
-                      if (posicionesOcupadas[keyPosicion] == jugadorBox.id) {
-                        _isRepetido = true;
-                      }
-                    }
-                    if (_isRepetido) {
-                      posicionesOcupadas[keyPosicion] = null;
-                    }
-                  }
-                }
-
-                posicionesOcupadas['${posicionAlineacion}'] = jugadorBox.id;
-                refreshPosicionesOcupadas(posicionesOcupadas);
-                //Guardar partido
-                Map<String, List> alineacionActualizada = {};
-                if (partidoActual.alineacion != null) {
-                  alineacionActualizada = await partidoActual.alineacion;
-                  alineacionActualizada['0'][1] = posicionesOcupadas;
-                  print(alineacionActualizada['0'][1]);
-                } else {
-                  alineacionActualizada['0'] = [widget.formacion, posicionAlineacion];
-                }
-                Partido p = Partido(
-                    fecha: partidoActual.fecha,
-                    hora: partidoActual.hora,
-                    lugar: partidoActual.lugar,
-                    rival: partidoActual.rival,
-                    tipoPartido: partidoActual.tipoPartido,
-                    convocatoria: partidoActual.convocatoria,
-                    alineacion: alineacionActualizada,
-                    golesAFavor: partidoActual.golesAFavor,
-                    golesEnContra: partidoActual.golesEnContra,
-                    lesiones: partidoActual.lesiones,
-                    tarjetas: partidoActual.tarjetas,
-                    cambios: partidoActual.cambios,
-                    observaciones: partidoActual.observaciones,
-                    isLocal: partidoActual.isLocal);
-                Box boxPartidosEditarAlineacion = await Hive.openBox('partidos');
-                await boxPartidosEditarAlineacion.putAt(widget.posicion, p);
-                setState(() {});
-                Navigator.pop(context, jugadorBox);
-              },
-              child: Container(
-                color: colorear(jugadorBox.posicionFavorita),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    ConversorImagen.imageFromBase64String(jugadorBox.nombre_foto, context),
-                    Column(
-                      children: <Widget>[
-                        Text(
-                          jugadorBox.apodo,
-                          textAlign: TextAlign.center,
-                        ),
-                        Text(
-                          jugadorBox.posicionFavorita,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 10),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          );
-        }),
-      );
-    } else {
-      return Center(
-        child: Text("No hay ningún jugador convocado."),
-      );
-    }
-  }
-
   /*  */
 
   /* ALINEACIÓN */
   //CONTENIDO DEL ITEM DE CADA FILA CON EL JUGADOR SELECCIONADO
   Widget jugadorElegidoContainer(String idJugador, String posicion) {
-    /*final boxPartidos = Hive.box('partidos');
-    //Añadir lista de los jugadores convocados al partido.
-    Partido partidoActual = boxPartidos.getAt(widget.posicion);
-    List<Jugador> jugadoresConvocados = [];
-    //Si la lista es null
-    if(partidoActual.convocatoria != null){
-      jugadoresConvocados = partidoActual.convocatoria;
-    }*/
     final boxJugadoresEquipo = Hive.box('jugadores');
     Jugador j;
     for (var i = 0; i < boxJugadoresEquipo.length; i++) {
@@ -297,160 +155,37 @@ class _DetallesPartidoAlineacionFormacion extends State<DetallesPartidoAlineacio
       }
     }
     if (j != null && j is Jugador) {
-      return Container(
-        width: MediaQuery.of(context).size.width / 6,
-        decoration: BoxDecoration(
-          color: colorear(posicion),
-          border: Border.all(width: .5),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            ConversorImagen.imageFromBase64String(j.nombre_foto, context),
-            Text(j.apodo),
-          ],
+      return Card(
+        child: Container(
+          width: MediaQuery.of(context).size.width / 6,
+          decoration: BoxDecoration(
+            color: colorear(posicion),
+            border: Border.all(width: .5),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              ConversorImagen.imageFromBase64String(j.nombre_foto, context),
+              Text(j.apodo),
+            ],
+          ),
         ),
       );
     } else {
-      return Container(
-        width: MediaQuery.of(context).size.width / 6,
-        //width: MediaQuery.of(context).size.width * .1,
-        decoration: BoxDecoration(border: Border.all(width: .5)),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            ConversorImagen.imageFromBase64String("", context),
-            Text(posicion),
-          ],
+      return Card(
+        child: Container(
+          width: MediaQuery.of(context).size.width / 6,
+          decoration: BoxDecoration(border: Border.all(width: .5)),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              ConversorImagen.imageFromBase64String("", context),
+              Text(posicion),
+            ],
+          ),
         ),
       );
     }
-  }
-
-  //ITEM DE CADA FILA CON EL JUGADOR SELECCIONADO
-  /*
-  @posicion = Posición del jugador, se utiliza para el color y el nombre del
-    jugador (no elegido).
-  @numAlineacion = Posición del jugador respecto al número que ocupa.
-   */
-  Widget jugadorFormacion(String posicion, int numAlineacion) {
-    Jugador jugadorElegido = null;
-    /*return FutureBuilder(
-      future: Hive.openBox('partidos'),
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          if (snapshot.hasError) {
-            print(snapshot.error.toString());
-            return Text(snapshot.error.toString());
-          } else {
-            return Card(
-              child: new InkWell(
-                splashColor: Colors.lightGreen,
-                onTap: () async {
-                  jugadorElegido = await showDialog<Jugador>(
-                    context: context,
-                    barrierDismissible: true,
-                    builder: (BuildContext context) => Dialog(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                      child: FutureBuilder(
-                        future: Hive.openBox('partidos'),
-                        builder: (BuildContext context, AsyncSnapshot snapshot) {
-                          if (snapshot.connectionState == ConnectionState.done) {
-                            if (snapshot.hasError) {
-                              print(snapshot.error.toString());
-                              return Text(snapshot.error.toString());
-                            } else {
-                              return cartasJugadores('${numAlineacion}');
-                            }
-                          } else {
-                            return Container(
-                              height: MediaQuery.of(context).size.height * .5,
-                              width: MediaQuery.of(context).size.width * .9,
-                              child: LinearProgressIndicator(),
-                            );
-                          }
-                        },
-                      ),
-                    ),
-                  );
-                },
-                child: jugadorElegidoContainer(posicionesOcupadas["$numAlineacion"], posicion),
-              ),
-            );
-          }
-        } else {
-          return Container(
-            height: MediaQuery.of(context).size.height * .5,
-            width: MediaQuery.of(context).size.width * .9,
-            child: LinearProgressIndicator(),
-          );
-        }
-      },
-    );*/
-    return Card(
-      child: new InkWell(
-        splashColor: Colors.lightGreen,
-        onTap: () async {
-          jugadorElegido = await showDialog<Jugador>(
-            context: context,
-            barrierDismissible: true,
-            builder: (BuildContext context) => Dialog(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12.0),
-              ),
-              child: FutureBuilder(
-                future: Hive.openBox('partidos'),
-                builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    if (snapshot.hasError) {
-                      print(snapshot.error.toString());
-                      return Container(
-                        height: MediaQuery.of(context).size.height * .015,
-                        width: MediaQuery.of(context).size.width * .015,
-                        child: Text(snapshot.error.toString()),
-                      );
-                    } else {
-                      return cartasJugadores('${numAlineacion}');
-                    }
-                  } else {
-                    return Container(
-                      height: MediaQuery.of(context).size.height * .015,
-                      width: MediaQuery.of(context).size.width * .015,
-                      child: LinearProgressIndicator(),
-                    );
-                  }
-                },
-              ),
-            ),
-          );
-        },
-        child: FutureBuilder(
-          future: Hive.openBox('jugadores'),
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              if (snapshot.hasError) {
-                print(snapshot.error.toString());
-                return Container(
-                  height: MediaQuery.of(context).size.height * .5,
-                  width: MediaQuery.of(context).size.width * .9,
-                  child: Text(snapshot.error.toString()),
-                );
-              } else {
-                return jugadorElegidoContainer(posicionesOcupadas["$numAlineacion"], posicion);
-              }
-            } else {
-              return Container(
-                height: MediaQuery.of(context).size.height * .05,
-                width: MediaQuery.of(context).size.width * .0225,
-                child: LinearProgressIndicator(),
-              );
-            }
-          },
-        ),
-      ),
-    );
   }
 
 /*  */
@@ -467,41 +202,41 @@ class _DetallesPartidoAlineacionFormacion extends State<DetallesPartidoAlineacio
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            jugadorFormacion("del", 10),
+            jugadorElegidoContainer(posicionesOcupadas["10"], "del"),
           ],
         ),
         //Medios 2
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            jugadorFormacion("med", 9),
-            jugadorFormacion("med", 8),
-            jugadorFormacion("med", 7),
+            jugadorElegidoContainer(posicionesOcupadas["9"], "med"),
+            jugadorElegidoContainer(posicionesOcupadas["8"], "med"),
+            jugadorElegidoContainer(posicionesOcupadas["7"], "med"),
           ],
         ),
         //Medios
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            jugadorFormacion("med", 6),
-            jugadorFormacion("med", 5),
+            jugadorElegidoContainer(posicionesOcupadas["6"], "med"),
+            jugadorElegidoContainer(posicionesOcupadas["5"], "med"),
           ],
         ),
         //Defensas
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            jugadorFormacion("def", 4),
-            jugadorFormacion("def", 3),
-            jugadorFormacion("def", 2),
-            jugadorFormacion("def", 1),
+            jugadorElegidoContainer(posicionesOcupadas["4"], "def"),
+            jugadorElegidoContainer(posicionesOcupadas["3"], "def"),
+            jugadorElegidoContainer(posicionesOcupadas["2"], "def"),
+            jugadorElegidoContainer(posicionesOcupadas["1"], "def"),
           ],
         ),
         //Portero
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            jugadorFormacion("por", 0),
+            jugadorElegidoContainer(posicionesOcupadas["0"], "por"),
           ],
         ),
       ],
@@ -515,35 +250,35 @@ class _DetallesPartidoAlineacionFormacion extends State<DetallesPartidoAlineacio
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            jugadorFormacion("del", 10),
-            jugadorFormacion("del", 9),
+            jugadorElegidoContainer(posicionesOcupadas["10"], "del"),
+            jugadorElegidoContainer(posicionesOcupadas["9"], "del"),
           ],
         ),
         //Medios
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            jugadorFormacion("med", 8),
-            jugadorFormacion("med", 7),
-            jugadorFormacion("med", 6),
-            jugadorFormacion("med", 5),
+            jugadorElegidoContainer(posicionesOcupadas["8"], "med"),
+            jugadorElegidoContainer(posicionesOcupadas["7"], "med"),
+            jugadorElegidoContainer(posicionesOcupadas["6"], "med"),
+            jugadorElegidoContainer(posicionesOcupadas["5"], "med"),
           ],
         ),
         //Defensas
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            jugadorFormacion("def", 4),
-            jugadorFormacion("def", 3),
-            jugadorFormacion("def", 2),
-            jugadorFormacion("def", 1),
+            jugadorElegidoContainer(posicionesOcupadas["4"], "def"),
+            jugadorElegidoContainer(posicionesOcupadas["3"], "def"),
+            jugadorElegidoContainer(posicionesOcupadas["2"], "def"),
+            jugadorElegidoContainer(posicionesOcupadas["1"], "def"),
           ],
         ),
         //Portero
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            jugadorFormacion("por", 0),
+            jugadorElegidoContainer(posicionesOcupadas["0"], "por"),
           ],
         ),
       ],
@@ -557,35 +292,35 @@ class _DetallesPartidoAlineacionFormacion extends State<DetallesPartidoAlineacio
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            jugadorFormacion("del", 10),
-            jugadorFormacion("del", 9),
-            jugadorFormacion("del", 8),
+            jugadorElegidoContainer(posicionesOcupadas["10"], "del"),
+            jugadorElegidoContainer(posicionesOcupadas["9"], "del"),
+            jugadorElegidoContainer(posicionesOcupadas["8"], "del"),
           ],
         ),
         //Medios
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            jugadorFormacion("med", 7),
-            jugadorFormacion("med", 6),
-            jugadorFormacion("med", 5),
+            jugadorElegidoContainer(posicionesOcupadas["7"], "med"),
+            jugadorElegidoContainer(posicionesOcupadas["6"], "med"),
+            jugadorElegidoContainer(posicionesOcupadas["5"], "med"),
           ],
         ),
         //Defensas
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            jugadorFormacion("def", 4),
-            jugadorFormacion("def", 3),
-            jugadorFormacion("def", 2),
-            jugadorFormacion("def", 1),
+            jugadorElegidoContainer(posicionesOcupadas["4"], "def"),
+            jugadorElegidoContainer(posicionesOcupadas["3"], "def"),
+            jugadorElegidoContainer(posicionesOcupadas["2"], "def"),
+            jugadorElegidoContainer(posicionesOcupadas["1"], "def"),
           ],
         ),
         //Portero
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            jugadorFormacion("por", 0),
+            jugadorElegidoContainer(posicionesOcupadas["0"], "por"),
           ],
         ),
       ],
@@ -599,35 +334,35 @@ class _DetallesPartidoAlineacionFormacion extends State<DetallesPartidoAlineacio
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            jugadorFormacion("del", 10),
+            jugadorElegidoContainer(posicionesOcupadas["10"], "del"),
           ],
         ),
         //Medios
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            jugadorFormacion("med", 9),
-            jugadorFormacion("med", 8),
-            jugadorFormacion("med", 7),
-            jugadorFormacion("med", 6),
-            jugadorFormacion("med", 5),
+            jugadorElegidoContainer(posicionesOcupadas["9"], "med"),
+            jugadorElegidoContainer(posicionesOcupadas["8"], "med"),
+            jugadorElegidoContainer(posicionesOcupadas["7"], "med"),
+            jugadorElegidoContainer(posicionesOcupadas["6"], "med"),
+            jugadorElegidoContainer(posicionesOcupadas["5"], "med"),
           ],
         ),
         //Defensas
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            jugadorFormacion("def", 4),
-            jugadorFormacion("def", 3),
-            jugadorFormacion("def", 2),
-            jugadorFormacion("def", 1),
+            jugadorElegidoContainer(posicionesOcupadas["4"], "def"),
+            jugadorElegidoContainer(posicionesOcupadas["3"], "def"),
+            jugadorElegidoContainer(posicionesOcupadas["2"], "def"),
+            jugadorElegidoContainer(posicionesOcupadas["1"], "def"),
           ],
         ),
         //Portero
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            jugadorFormacion("por", 0),
+            jugadorElegidoContainer(posicionesOcupadas["0"], "por"),
           ],
         ),
       ],
@@ -641,35 +376,35 @@ class _DetallesPartidoAlineacionFormacion extends State<DetallesPartidoAlineacio
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            jugadorFormacion("del", 10),
-            jugadorFormacion("del", 9),
+            jugadorElegidoContainer(posicionesOcupadas["10"], "del"),
+            jugadorElegidoContainer(posicionesOcupadas["9"], "del"),
           ],
         ),
         //Medios
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            jugadorFormacion("med", 8),
-            jugadorFormacion("med", 7),
-            jugadorFormacion("med", 6),
+            jugadorElegidoContainer(posicionesOcupadas["8"], "med"),
+            jugadorElegidoContainer(posicionesOcupadas["7"], "med"),
+            jugadorElegidoContainer(posicionesOcupadas["6"], "med"),
           ],
         ),
         //Defensas
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            jugadorFormacion("def", 5),
-            jugadorFormacion("def", 4),
-            jugadorFormacion("def", 3),
-            jugadorFormacion("def", 2),
-            jugadorFormacion("def", 1),
+            jugadorElegidoContainer(posicionesOcupadas["5"], "def"),
+            jugadorElegidoContainer(posicionesOcupadas["4"], "def"),
+            jugadorElegidoContainer(posicionesOcupadas["3"], "def"),
+            jugadorElegidoContainer(posicionesOcupadas["2"], "def"),
+            jugadorElegidoContainer(posicionesOcupadas["1"], "def"),
           ],
         ),
         //Portero
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            jugadorFormacion("por", 0),
+            jugadorElegidoContainer(posicionesOcupadas["0"], "por"),
           ],
         ),
       ],
@@ -683,35 +418,35 @@ class _DetallesPartidoAlineacionFormacion extends State<DetallesPartidoAlineacio
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            jugadorFormacion("del", 10),
-            jugadorFormacion("del", 9),
-            jugadorFormacion("del", 8),
+            jugadorElegidoContainer(posicionesOcupadas["10"], "del"),
+            jugadorElegidoContainer(posicionesOcupadas["9"], "del"),
+            jugadorElegidoContainer(posicionesOcupadas["8"], "del"),
           ],
         ),
         //Medios
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            jugadorFormacion("med", 7),
-            jugadorFormacion("med", 6),
+            jugadorElegidoContainer(posicionesOcupadas["7"], "med"),
+            jugadorElegidoContainer(posicionesOcupadas["6"], "med"),
           ],
         ),
         //Defensas
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            jugadorFormacion("def", 5),
-            jugadorFormacion("def", 4),
-            jugadorFormacion("def", 3),
-            jugadorFormacion("def", 2),
-            jugadorFormacion("def", 1),
+            jugadorElegidoContainer(posicionesOcupadas["5"], "def"),
+            jugadorElegidoContainer(posicionesOcupadas["4"], "def"),
+            jugadorElegidoContainer(posicionesOcupadas["3"], "def"),
+            jugadorElegidoContainer(posicionesOcupadas["2"], "def"),
+            jugadorElegidoContainer(posicionesOcupadas["1"], "def"),
           ],
         ),
         //Portero
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            jugadorFormacion("por", 0),
+            jugadorElegidoContainer(posicionesOcupadas["0"], "por"),
           ],
         ),
       ],
@@ -725,41 +460,41 @@ class _DetallesPartidoAlineacionFormacion extends State<DetallesPartidoAlineacio
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            jugadorFormacion("del", 10),
-            jugadorFormacion("del", 9),
+            jugadorElegidoContainer(posicionesOcupadas["10"], "del"),
+            jugadorElegidoContainer(posicionesOcupadas["9"], "del"),
           ],
         ),
         //Medios 2
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            jugadorFormacion("med", 8),
-            jugadorFormacion("med", 7),
-            jugadorFormacion("med", 6),
+            jugadorElegidoContainer(posicionesOcupadas["8"], "med"),
+            jugadorElegidoContainer(posicionesOcupadas["7"], "med"),
+            jugadorElegidoContainer(posicionesOcupadas["6"], "med"),
           ],
         ),
         //Medios
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            jugadorFormacion("med", 5),
-            jugadorFormacion("med", 4),
+            jugadorElegidoContainer(posicionesOcupadas["5"], "med"),
+            jugadorElegidoContainer(posicionesOcupadas["4"], "med"),
           ],
         ),
         //Defensas
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            jugadorFormacion("def", 3),
-            jugadorFormacion("def", 2),
-            jugadorFormacion("def", 1),
+            jugadorElegidoContainer(posicionesOcupadas["3"], "def"),
+            jugadorElegidoContainer(posicionesOcupadas["2"], "def"),
+            jugadorElegidoContainer(posicionesOcupadas["1"], "def"),
           ],
         ),
         //Portero
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            jugadorFormacion("por", 0),
+            jugadorElegidoContainer(posicionesOcupadas["0"], "por"),
           ],
         ),
       ],
@@ -773,35 +508,35 @@ class _DetallesPartidoAlineacionFormacion extends State<DetallesPartidoAlineacio
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            jugadorFormacion("del", 10),
-            jugadorFormacion("del", 9),
+            jugadorElegidoContainer(posicionesOcupadas["10"], "del"),
+            jugadorElegidoContainer(posicionesOcupadas["9"], "del"),
           ],
         ),
         //Medios
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            jugadorFormacion("med", 8),
-            jugadorFormacion("med", 7),
-            jugadorFormacion("med", 6),
-            jugadorFormacion("med", 5),
-            jugadorFormacion("med", 4),
+            jugadorElegidoContainer(posicionesOcupadas["8"], "med"),
+            jugadorElegidoContainer(posicionesOcupadas["7"], "med"),
+            jugadorElegidoContainer(posicionesOcupadas["6"], "med"),
+            jugadorElegidoContainer(posicionesOcupadas["5"], "med"),
+            jugadorElegidoContainer(posicionesOcupadas["4"], "med"),
           ],
         ),
         //Defensas
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            jugadorFormacion("def", 3),
-            jugadorFormacion("def", 2),
-            jugadorFormacion("def", 1),
+            jugadorElegidoContainer(posicionesOcupadas["3"], "def"),
+            jugadorElegidoContainer(posicionesOcupadas["2"], "def"),
+            jugadorElegidoContainer(posicionesOcupadas["1"], "def"),
           ],
         ),
         //Portero
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            jugadorFormacion("por", 0),
+            jugadorElegidoContainer(posicionesOcupadas["0"], "por"),
           ],
         ),
       ],
@@ -815,35 +550,35 @@ class _DetallesPartidoAlineacionFormacion extends State<DetallesPartidoAlineacio
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            jugadorFormacion("del", 10),
-            jugadorFormacion("del", 9),
-            jugadorFormacion("del", 8),
-            jugadorFormacion("del", 7),
+            jugadorElegidoContainer(posicionesOcupadas["10"], "del"),
+            jugadorElegidoContainer(posicionesOcupadas["9"], "del"),
+            jugadorElegidoContainer(posicionesOcupadas["8"], "del"),
+            jugadorElegidoContainer(posicionesOcupadas["7"], "del"),
           ],
         ),
         //Medios
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            jugadorFormacion("med", 6),
-            jugadorFormacion("med", 5),
-            jugadorFormacion("med", 4),
+            jugadorElegidoContainer(posicionesOcupadas["6"], "med"),
+            jugadorElegidoContainer(posicionesOcupadas["5"], "med"),
+            jugadorElegidoContainer(posicionesOcupadas["4"], "med"),
           ],
         ),
         //Defensas
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            jugadorFormacion("def", 3),
-            jugadorFormacion("def", 2),
-            jugadorFormacion("def", 1),
+            jugadorElegidoContainer(posicionesOcupadas["3"], "def"),
+            jugadorElegidoContainer(posicionesOcupadas["2"], "def"),
+            jugadorElegidoContainer(posicionesOcupadas["1"], "def"),
           ],
         ),
         //Portero
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            jugadorFormacion("por", 0),
+            jugadorElegidoContainer(posicionesOcupadas["0"], "por"),
           ],
         ),
       ],

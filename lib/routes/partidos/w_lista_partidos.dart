@@ -192,7 +192,7 @@ class _ListaPartidos extends State<ListaPartidos> {
                               TableRow(
                                 decoration: BoxDecoration(
                                   border: Border(
-                                    bottom: BorderSide(color: MisterFootball.complementarioLight),
+                                    bottom: BorderSide(color: MisterFootball.primario),
                                   ),
                                 ),
                                 children: [

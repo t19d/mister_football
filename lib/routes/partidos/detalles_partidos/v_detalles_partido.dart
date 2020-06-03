@@ -79,7 +79,7 @@ class _DetallesPartido extends State<DetallesPartido> {
                 partido: partido,
               ),
               DetallesPartidoEquipo(
-                posicion: widget.posicion,
+                partido: partido,
               ),
             ];
             return Scaffold(

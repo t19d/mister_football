@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:mister_football/clases/partido.dart';
-import 'package:mister_football/routes/partidos/detalles_partidos/subrutas/detalles_partido_alineacion/w_detalles_partido_alineacion_campo_jugadores.dart';
 import 'package:mister_football/routes/partidos/partidos_edicion_creacion/subrutas/detalles_partido_alineacion/w_partidos_alineacion_campo_jugadores_edicion.dart';
 
 class PartidoAlineacionEdicion extends StatefulWidget {

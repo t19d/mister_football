@@ -95,23 +95,12 @@ class MisterFootball extends StatelessWidget {
   static Color analogo1Light = const Color(0xFFD5FDE3);
   static Color analogo1Light2 = const Color(0xFFFFFFFF);
 
-  /*static Color analogo2 = const Color(0xFF021bbd);
-  static Color analogo2Light = const Color(0xFF3728c7);
-
-  static Color triadico1Dark = const Color(0xFF2900b4);
-  static Color triadico1 = const Color(0xFF4702bd);
-  static Color triadico1Light = const Color(0xFF560dc3);
-
-  static Color triadico2Dark = const Color(0xFF96036f);
-  static Color triadico2 = const Color(0xFFbd0278);
-  static Color triadico2Light = const Color(0xFFd3007e);*/
-
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: GestionJugadores(),
+      home: Partidos(),
       /*theme: ThemeData(
         // Define the default brightness and colors.
         primaryColor: primario,

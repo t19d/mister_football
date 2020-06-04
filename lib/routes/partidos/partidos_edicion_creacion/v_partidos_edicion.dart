@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:mister_football/clases/eventos.dart';
 import 'package:mister_football/clases/partido.dart';
 import 'package:mister_football/main.dart';
-import 'package:mister_football/routes/partidos/detalles_partidos/subrutas/detalles_partido_alineacion/sv_detalles_partido_alineacion.dart';
-import 'package:mister_football/routes/partidos/detalles_partidos/subrutas/sv_detalles_partido_convocatoria.dart';
-import 'package:mister_football/routes/partidos/detalles_partidos/subrutas/sv_detalles_partido_postpartido.dart';
-import 'package:mister_football/routes/partidos/detalles_partidos/subrutas/sv_detalles_partido_datos.dart';
 import 'package:mister_football/routes/partidos/partidos_edicion_creacion/subrutas/detalles_partido_alineacion/sv_partidos_alineacion_edicion.dart';
 import 'package:mister_football/routes/partidos/partidos_edicion_creacion/subrutas/sv_partidos_convocatoria_edicion.dart';
 import 'package:mister_football/routes/partidos/partidos_edicion_creacion/subrutas/sv_partidos_postpartido_edicion.dart';
@@ -15,16 +10,15 @@ import 'package:mister_football/routes/partidos/v_partidos.dart';
 
 class PartidosEdicion extends StatefulWidget {
   final int posicion;
+  Partido partido;
 
-  PartidosEdicion({Key key, @required this.posicion}) : super(key: key);
+  PartidosEdicion({Key key, @required this.posicion, @required this.partido}) : super(key: key);
 
   @override
   createState() => _PartidosEdicion();
 }
 
 class _PartidosEdicion extends State<PartidosEdicion> {
-  Partido partido = null;
-
   @override
   void dispose() {
     Hive.close();
@@ -41,61 +35,40 @@ class _PartidosEdicion extends State<PartidosEdicion> {
     });
   }
 
-  /*@override
-  void initState() {
-    super.initState();
-    _contenido = [
-      DetallesPartidoPrepartido(
-        posicion: widget.posicion,
-      ),
-      DetallesPartidoConvocatoria(
-        posicion: widget.posicion,
-      ),
-      DetallesPartidoAlineacion(
-        posicion: widget.posicion,
-      ),
-      DetallesPartidoPostpartido(
-        posicion: widget.posicion,
-      ),
-    ];
-  }*/
+  Future<void> _openBox() async {
+    await Hive.openBox("partidos");
+    //await Hive.openBox("perfil");
+    await Hive.openBox("jugadores");
+  }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: Hive.openBox('partidos'),
+      future: _openBox(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError) {
             print(snapshot.error.toString());
             return Text(snapshot.error.toString());
           } else {
-            final boxPartidos = Hive.box('partidos');
-            partido = boxPartidos.getAt(widget.posicion);
             _contenido = [
-              PartidoPrepartidoEdicion(
-                posicion: widget.posicion,
+              PartidoDatosEdicion(
+                partido: widget.partido,
               ),
               PartidoConvocatoriaEdicion(
-                posicion: widget.posicion,
-              ),
-              PartidoAlineacionEdicion(
-                posicion: widget.posicion,
-              ),
-              PartidoPostpartidoEdicion(
                 posicion: widget.posicion,
               ),
             ];
             return Scaffold(
               appBar: AppBar(
                 title: Text(
-                  "Detalles",
+                  "Edición",
                 ),
                 actions: <Widget>[
                   IconButton(
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.check_box,
-                      color: Colors.lightGreen,
+                      color: Colors.white,
                     ),
                     tooltip: 'Aceptar cambios',
                     onPressed: () async {
@@ -121,20 +94,12 @@ class _PartidosEdicion extends State<PartidosEdicion> {
                 showUnselectedLabels: false,
                 items: const <BottomNavigationBarItem>[
                   BottomNavigationBarItem(
-                    icon: Icon(Icons.featured_play_list),
-                    title: Text('Prepartido'),
+                    icon: Icon(Icons.insert_chart),
+                    title: Text('Datos'),
                   ),
                   BottomNavigationBarItem(
                     icon: Icon(Icons.filter_frames),
-                    title: Text('Convocatoria'),
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.people),
-                    title: Text('Alineación' /*\ninicial', textAlign: TextAlign.center,*/),
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.insert_chart),
-                    title: Text('Postpartido'),
+                    title: Text('Equipo'),
                   ),
                 ],
                 currentIndex: _indiceSeleccionado,
@@ -143,9 +108,7 @@ class _PartidosEdicion extends State<PartidosEdicion> {
                 onTap: _iconoPulsado,
                 backgroundColor: Colors.white,
               ),
-              body: Center(
-                child: _contenido.elementAt(_indiceSeleccionado),
-              ),
+              body: _contenido.elementAt(_indiceSeleccionado),
             );
           }
         } else {

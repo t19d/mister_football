@@ -106,9 +106,9 @@ class _DetallesPartido extends State<DetallesPartido> {
                     },
                   ),
                   IconButton(
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.delete,
-                      color: Colors.redAccent,
+                      color: MisterFootball.complementarioDelComplementarioLight,
                     ),
                     tooltip: 'Eliminar partido',
                     onPressed: () async {

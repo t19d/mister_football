@@ -100,6 +100,7 @@ class _DetallesPartido extends State<DetallesPartido> {
                         MaterialPageRoute(
                           builder: (context) => PartidosEdicion(
                             posicion: widget.posicion,
+                            partido: partido,
                           ),
                         ),
                       );

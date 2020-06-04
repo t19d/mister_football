@@ -131,7 +131,7 @@ class _DetallesPartido extends State<DetallesPartido> {
                 showUnselectedLabels: false,
                 items: const <BottomNavigationBarItem>[
                   BottomNavigationBarItem(
-                    icon: Icon(Icons.remove_red_eye),
+                    icon: Icon(Icons.insert_chart),
                     title: Text('Datos'),
                   ),
                   BottomNavigationBarItem(

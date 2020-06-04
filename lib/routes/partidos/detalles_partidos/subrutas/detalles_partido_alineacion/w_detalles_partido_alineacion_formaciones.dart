@@ -53,9 +53,6 @@ Color colorear(String posicion) {
 
 class _DetallesPartidoAlineacionFormacion extends State<DetallesPartidoAlineacionFormacion> {
   //Posiciones ocupadas por jugadores
-  /*List<dynamic> posicionesOcupadas = [];*/
-
-  //Posiciones ocupadas por jugadores
   Map<String, String> posicionesOcupadas = {
     '0': null,
     '1': null,
@@ -70,20 +67,9 @@ class _DetallesPartidoAlineacionFormacion extends State<DetallesPartidoAlineacio
     '10': null
   };
 
-/*refreshList() {
-    setState(() {
-      //jugadores = DBHelper.getJugadoresPorPosiciones();
-    });
-  }*/
-
-  void refreshPosicionesOcupadas(Map<String, dynamic> posOcup) {
-    setState(() {
-      posicionesOcupadas = posOcup;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
+    //Cargar alineación guardada
     if (widget.partido.alineacion != null) {
       if (widget.partido.alineacion['0'][0] != null) {
         posicionesOcupadas = Map<String, String>.from(widget.partido.alineacion['0'][1]);

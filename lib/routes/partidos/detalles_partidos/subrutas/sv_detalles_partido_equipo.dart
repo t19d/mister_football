@@ -28,12 +28,7 @@ class _DetallesPartidoEquipo extends State<DetallesPartidoEquipo> {
     return SingleChildScrollView(
       child: Container(
         margin: EdgeInsets.only(
-          bottom: MediaQuery.of(context).size.width * .03,
           top: MediaQuery.of(context).size.width * .03,
-        ),
-        padding: EdgeInsets.only(
-          left: MediaQuery.of(context).size.width * .03,
-          right: MediaQuery.of(context).size.width * .03,
         ),
         child: Column(
           children: <Widget>[
@@ -53,10 +48,16 @@ class _DetallesPartidoEquipo extends State<DetallesPartidoEquipo> {
             ),
             Container(
               padding: EdgeInsets.only(
-                bottom: MediaQuery.of(context).size.width * .03,
                 top: MediaQuery.of(context).size.width * .03,
+                bottom: MediaQuery.of(context).size.width * .03,
               ),
-              color: MisterFootball.primarioLight2.withOpacity(.05),
+              decoration: BoxDecoration(
+                color: MisterFootball.primarioLight2.withOpacity(.05),
+                border: Border(
+                  top: BorderSide(width: .4),
+                  bottom: BorderSide(width: .4),
+                ),
+              ),
               child: Column(
                 children: <Widget>[
                   Text(
@@ -67,8 +68,10 @@ class _DetallesPartidoEquipo extends State<DetallesPartidoEquipo> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.all(
-                      MediaQuery.of(context).size.width * .03,
+                    padding: EdgeInsets.only(
+                      top: MediaQuery.of(context).size.width * .03,
+                      left: MediaQuery.of(context).size.width * .03,
+                      right: MediaQuery.of(context).size.width * .03,
                     ),
                     child: mostrarJugadoresSeleccionados(widget.partido.convocatoria),
                   ),
@@ -99,16 +102,30 @@ class _DetallesPartidoEquipo extends State<DetallesPartidoEquipo> {
                 Jugador jugadorBox;
                 for (var i = 0; i < boxJugadoresEquipo.length; i++) {
                   if ('${jugadoresConvocados[idJugador]}' == boxJugadoresEquipo.getAt(i).id) {
-                    isJugadoresConvocados = true;
                     jugadorBox = boxJugadoresEquipo.getAt(i);
-                    widgetJugador = Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: <Widget>[
-                        ConversorImagen.imageFromBase64String("${jugadorBox.nombre_foto}", context),
-                        Text("${jugadorBox.apodo}"),
-                        Text("${jugadorBox.posicionFavorita}"),
-                      ],
+                    widgetJugador = Container(
+                      margin: EdgeInsets.only(
+                        bottom: (idJugador != (jugadoresConvocados.length - 1)) ? MediaQuery.of(context).size.width * .03 : 0,
+                        //op: MediaQuery.of(context).size.width * .03,
+                      ),
+                      decoration: BoxDecoration(
+                        border: Border(
+                          top: BorderSide(width: (idJugador == 0) ? .4 : 0),
+                          bottom: BorderSide(width: .4),
+                          left: BorderSide(width: .4),
+                          right: BorderSide(width: .4),
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          ConversorImagen.imageFromBase64String("${jugadorBox.nombre_foto}", context),
+                          Text("${jugadorBox.apodo}"),
+                          Text("${jugadorBox.posicionFavorita}"),
+                        ],
+                      ),
                     );
+                    isJugadoresConvocados = true;
                   }
                 }
                 return widgetJugador;

@@ -3,9 +3,9 @@ import 'package:hive/hive.dart';
 import 'package:mister_football/clases/partido.dart';
 import 'package:mister_football/main.dart';
 import 'package:mister_football/routes/partidos/partidos_edicion_creacion/subrutas/detalles_partido_alineacion/sv_partidos_alineacion_edicion.dart';
-import 'package:mister_football/routes/partidos/partidos_edicion_creacion/subrutas/sv_partidos_convocatoria_edicion.dart';
+import 'package:mister_football/routes/partidos/partidos_edicion_creacion/subrutas/sv_partidos_equipo_edicion.dart';
 import 'package:mister_football/routes/partidos/partidos_edicion_creacion/subrutas/sv_partidos_postpartido_edicion.dart';
-import 'package:mister_football/routes/partidos/partidos_edicion_creacion/subrutas/sv_partidos_prepartido_edicion.dart';
+import 'package:mister_football/routes/partidos/partidos_edicion_creacion/subrutas/sv_partidos_datos_edicion.dart';
 import 'package:mister_football/routes/partidos/v_partidos.dart';
 
 class PartidosEdicion extends StatefulWidget {
@@ -55,8 +55,8 @@ class _PartidosEdicion extends State<PartidosEdicion> {
               PartidoDatosEdicion(
                 partido: widget.partido,
               ),
-              PartidoConvocatoriaEdicion(
-                posicion: widget.posicion,
+              PartidoEquipoEdicion(
+                partido: widget.partido,
               ),
             ];
             return Scaffold(

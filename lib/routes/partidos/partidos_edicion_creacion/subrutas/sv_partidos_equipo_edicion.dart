@@ -3,118 +3,121 @@ import 'package:hive/hive.dart';
 import 'package:mister_football/clases/conversor_imagen.dart';
 import 'package:mister_football/clases/jugador.dart';
 import 'package:mister_football/clases/partido.dart';
+import 'package:mister_football/main.dart';
+import 'package:mister_football/routes/partidos/partidos_edicion_creacion/subrutas/detalles_partido_alineacion/w_partidos_alineacion_formaciones_edicion.dart';
 
-class PartidoConvocatoriaEdicion extends StatefulWidget {
-  final int posicion;
+class PartidoEquipoEdicion extends StatefulWidget {
+  final Partido partido;
 
-  PartidoConvocatoriaEdicion({Key key, @required this.posicion}) : super(key: key);
+  PartidoEquipoEdicion({Key key, @required this.partido}) : super(key: key);
 
   @override
-  createState() => _PartidoConvocatoriaEdicion();
+  createState() => _PartidoEquipoEdicion();
 }
 
-class _PartidoConvocatoriaEdicion extends State<PartidoConvocatoriaEdicion> {
-  Partido partido = null;
-
-  @override
+class _PartidoEquipoEdicion extends State<PartidoEquipoEdicion> {
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: Hive.openBox('partidos'),
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          if (snapshot.hasError) {
-            print(snapshot.error.toString());
-            return Text(snapshot.error.toString());
-          } else {
-            final boxEntrenamientos = Hive.box('partidos');
-            partido = boxEntrenamientos.getAt(widget.posicion);
-            return Scaffold(
-              body: SafeArea(
-                //Jugadores
-                child: Container(
-                  child: Column(
-                    children: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Text("Jugadores"),
-                          IconButton(
-                            icon: Icon(
-                              Icons.edit,
-                              color: Colors.lightBlueAccent,
-                            ),
-                            tooltip: 'Editar jugadores',
-                            onPressed: () async {
-                              await showDialog<List<dynamic>>(
-                                context: context,
-                                barrierDismissible: true,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(content: StatefulBuilder(
-                                    builder: (BuildContext context, StateSetter setState) {
-                                      return FutureBuilder(
-                                        future: Hive.openBox('jugadores'),
-                                        builder: (BuildContext context, AsyncSnapshot snapshot) {
-                                          if (snapshot.connectionState == ConnectionState.done) {
-                                            if (snapshot.hasError) {
-                                              print(snapshot.error.toString());
-                                              return Container(
-                                                width: MediaQuery
-                                                    .of(context)
-                                                    .size
-                                                    .width / 1,
-                                                height: MediaQuery
-                                                    .of(context)
-                                                    .size
-                                                    .height / 1,
-                                                child: Text(snapshot.error.toString()),
-                                              );
-                                            } else {
-                                              return listaSeleccionarJugadores(partido, setState);
-                                            }
-                                          } else {
-                                            return LinearProgressIndicator();
-                                          }
-                                        },
-                                      );
-                                    },
-                                  ));
-                                },
-                              );
-                              setState(() {});
-                            },
-                          ),
-                        ],
-                      ),
-                      Container(
-                        child: FutureBuilder(
-                          future: Hive.openBox('jugadores'),
-                          builder: (BuildContext context, AsyncSnapshot snapshot) {
-                            if (snapshot.connectionState == ConnectionState.done) {
-                              if (snapshot.hasError) {
-                                print(snapshot.error.toString());
-                                return Text(snapshot.error.toString());
-                              } else {
-                                return mostrarJugadoresSeleccionados(partido.convocatoria);
-                              }
-                            } else {
-                              return LinearProgressIndicator();
-                            }
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
+    //Seleccionar formación inicial
+    String formacionInicialPartido = "14231";
+    if (widget.partido.alineacion != null) {
+      if (widget.partido.alineacion['0'][0] != null) {
+        formacionInicialPartido = widget.partido.alineacion['0'][0];
+      }
+    }
+    return SingleChildScrollView(
+      child: Container(
+        margin: EdgeInsets.only(
+          top: MediaQuery.of(context).size.width * .03,
+        ),
+        child: Column(
+          children: <Widget>[
+            Text(
+              formacionInicialPartido,
+              style: TextStyle(
+                decoration: TextDecoration.underline,
+                //fontWeight: FontWeight.bold
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(
+                bottom: MediaQuery.of(context).size.width * .03,
+                top: MediaQuery.of(context).size.width * .03,
+              ),
+              child: PartidoAlineacionFormacionEdicion(formacion: formacionInicialPartido, partido: widget.partido),
+            ),
+            Container(
+              padding: EdgeInsets.only(
+                top: MediaQuery.of(context).size.width * .03,
+                bottom: MediaQuery.of(context).size.width * .03,
+              ),
+              decoration: BoxDecoration(
+                color: MisterFootball.primarioLight2.withOpacity(.05),
+                border: Border(
+                  top: BorderSide(width: .4),
+                  bottom: BorderSide(width: .4),
                 ),
               ),
-            );
-          }
-        } else {
-          return LinearProgressIndicator();
-        }
-      },
+              child: Column(
+                children: <Widget>[
+                  Text(
+                    "Jugadores convocados",
+                    style: TextStyle(
+                      decoration: TextDecoration.underline,
+                      //fontWeight: FontWeight.bold
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(
+                      top: MediaQuery.of(context).size.width * .03,
+                      left: MediaQuery.of(context).size.width * .03,
+                      right: MediaQuery.of(context).size.width * .03,
+                    ),
+                    child: mostrarJugadoresSeleccionados(widget.partido.convocatoria),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
-
+  /*@override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text("Jugadores"),
+            IconButton(
+              icon: Icon(
+                Icons.edit,
+                color: Colors.lightBlueAccent,
+              ),
+              tooltip: 'Editar jugadores',
+              onPressed: () async {
+                await showDialog<List<dynamic>>(
+                  context: context,
+                  barrierDismissible: true,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      content: listaSeleccionarJugadores(widget.partido, setState),
+                    );
+                  },
+                );
+                setState(() {});
+              },
+            ),
+          ],
+        ),
+        Container(
+          child: mostrarJugadoresSeleccionados(widget.partido.convocatoria),
+        ),
+      ],
+    );
+  }
+*/
   /* Jugadores */
   //Mostrar lista de los jugadores seleccionados en la convocatoria
   Widget mostrarJugadoresSeleccionados(List<String> jugadoresConvocados) {
@@ -137,9 +140,7 @@ class _PartidoConvocatoriaEdicion extends State<PartidoConvocatoriaEdicion> {
               }
             });*/
             for (var i = 0; i < boxJugadoresEquipo.length; i++) {
-              if ('${jugadoresConvocados[idJugador]}' == boxJugadoresEquipo
-                  .getAt(i)
-                  .id) {
+              if ('${jugadoresConvocados[idJugador]}' == boxJugadoresEquipo.getAt(i).id) {
                 jugadorBox = boxJugadoresEquipo.getAt(i);
                 widgetJugador = Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -180,14 +181,8 @@ class _PartidoConvocatoriaEdicion extends State<PartidoConvocatoriaEdicion> {
     final boxJugadores = Hive.box('jugadores');
     if (boxJugadores.length > 0) {
       return Container(
-        width: MediaQuery
-            .of(context)
-            .size
-            .width / 1,
-        height: MediaQuery
-            .of(context)
-            .size
-            .height / 1,
+        width: MediaQuery.of(context).size.width / 1,
+        height: MediaQuery.of(context).size.height / 1,
         child: Column(
           children: <Widget>[
             Row(
@@ -281,7 +276,7 @@ class _PartidoConvocatoriaEdicion extends State<PartidoConvocatoriaEdicion> {
                             observaciones: partidoActual.observaciones,
                             isLocal: partidoActual.isLocal);
                         boxPartidosEditarConvocatoria = await Hive.openBox('partidos');
-                        boxPartidosEditarConvocatoria.putAt(widget.posicion, p);
+                        //boxPartidosEditarConvocatoria.putAt(widget.posicion, p);
                         setState(() {});
                         print(postListaJugadoresConvocatoria.length);
                       },
@@ -328,14 +323,8 @@ class _PartidoConvocatoriaEdicion extends State<PartidoConvocatoriaEdicion> {
       );
     } else {
       return Container(
-        width: MediaQuery
-            .of(context)
-            .size
-            .width / 1,
-        height: MediaQuery
-            .of(context)
-            .size
-            .height / 1,
+        width: MediaQuery.of(context).size.width / 1,
+        height: MediaQuery.of(context).size.height / 1,
         child: Text("Ningún jugador creado."),
       );
     }

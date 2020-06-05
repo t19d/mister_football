@@ -8,10 +8,10 @@ import 'package:mister_football/clases/partido.dart';
 import 'package:mister_football/routes/gestion_jugadores/detalles_jugadores/v_detalles_jugador.dart';
 
 class PartidoAlineacionFormacionEdicion extends StatefulWidget {
-  final int posicion;
   final String formacion;
+  final Partido partido;
 
-  PartidoAlineacionFormacionEdicion({Key key, @required this.formacion, @required this.posicion}) : super(key: key);
+  PartidoAlineacionFormacionEdicion({Key key, @required this.formacion, @required this.partido}) : super(key: key);
 
   @override
   createState() => _PartidoAlineacionFormacionEdicion();
@@ -87,51 +87,27 @@ class _PartidoAlineacionFormacionEdicion extends State<PartidoAlineacionFormacio
 
   @override
   Widget build(BuildContext context) {
-    //refreshList();
-    /*return dibujoFormacion();*/
-    return FutureBuilder(
-      future: Hive.openBox('partidos'),
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          if (snapshot.hasError) {
-            print(snapshot.error.toString());
-            return Text(snapshot.error.toString());
-          } else {
-            final boxPartidos = Hive.box('partidos');
-            //final boxJugadoresEquipo = Hive.box('jugadores');
-            //Añadir lista de los jugadores convocados al partido.
-            Partido partidoActual = boxPartidos.getAt(widget.posicion);
-            if (partidoActual.alineacion != null) {
-              if (partidoActual.alineacion['0'][0] != null) {
-                posicionesOcupadas = Map<String, String>.from(partidoActual.alineacion['0'][1]);
-                //Comprobar si los jugadores alineados están convocados.
-                for (var keyPosicion in posicionesOcupadas.keys) {
-                  print('$keyPosicion was written by ${posicionesOcupadas[keyPosicion]}');
-                  if (posicionesOcupadas[keyPosicion] != null) {
-                    bool _isConvocado = false;
-                    for (int i = 0; i < partidoActual.convocatoria.length; i++) {
-                      if (posicionesOcupadas[keyPosicion] == partidoActual.convocatoria[i]) {
-                        _isConvocado = true;
-                      }
-                    }
-                    if (!_isConvocado) {
-                      posicionesOcupadas[keyPosicion] = null;
-                    }
-                  }
-                }
+    if (widget.partido.alineacion != null) {
+      if (widget.partido.alineacion['0'][0] != null) {
+        posicionesOcupadas = Map<String, String>.from(widget.partido.alineacion['0'][1]);
+        //Comprobar si los jugadores alineados están convocados.
+        for (var keyPosicion in posicionesOcupadas.keys) {
+          print('$keyPosicion was written by ${posicionesOcupadas[keyPosicion]}');
+          if (posicionesOcupadas[keyPosicion] != null) {
+            bool _isConvocado = false;
+            for (int i = 0; i < widget.partido.convocatoria.length; i++) {
+              if (posicionesOcupadas[keyPosicion] == widget.partido.convocatoria[i]) {
+                _isConvocado = true;
               }
             }
-            return dibujoFormacion();
+            if (!_isConvocado) {
+              posicionesOcupadas[keyPosicion] = null;
+            }
           }
-        } else {
-          return Container(
-            height: MediaQuery.of(context).size.height * .5,
-            width: MediaQuery.of(context).size.width * .9,
-            child: LinearProgressIndicator(),
-          );
         }
-      },
-    );
+      }
+    }
+    return dibujoFormacion();
   }
 
   Widget dibujoFormacion() {
@@ -173,14 +149,11 @@ class _PartidoAlineacionFormacionEdicion extends State<PartidoAlineacionFormacio
   //DIÁLOGO CON LOS JUGADORES CONVOCADOS
 
   Widget cartasJugadores(String posicionAlineacion) {
-    final boxPartidos = Hive.box('partidos');
     final boxJugadoresEquipo = Hive.box('jugadores');
-    //Añadir lista de los jugadores convocados al partido.
-    Partido partidoActual = boxPartidos.getAt(widget.posicion);
     List<String> jugadoresConvocados = [];
     //Si la lista es null
-    if (partidoActual.convocatoria != null) {
-      jugadoresConvocados = partidoActual.convocatoria;
+    if (widget.partido.convocatoria != null) {
+      jugadoresConvocados = widget.partido.convocatoria;
     }
     if (jugadoresConvocados.length > 0) {
       return ListView(
@@ -201,7 +174,7 @@ class _PartidoAlineacionFormacionEdicion extends State<PartidoAlineacionFormacio
                   print('$keyPosicion was written by ${posicionesOcupadas[keyPosicion]}');
                   if (posicionesOcupadas[keyPosicion] != null) {
                     bool _isRepetido = false;
-                    for (int i = 0; i < partidoActual.convocatoria.length; i++) {
+                    for (int i = 0; i < widget.partido.convocatoria.length; i++) {
                       if (posicionesOcupadas[keyPosicion] == jugadorBox.id) {
                         _isRepetido = true;
                       }
@@ -216,30 +189,30 @@ class _PartidoAlineacionFormacionEdicion extends State<PartidoAlineacionFormacio
                 refreshPosicionesOcupadas(posicionesOcupadas);
                 //Guardar partido
                 Map<String, List> alineacionActualizada = {};
-                if (partidoActual.alineacion != null) {
-                  alineacionActualizada = await partidoActual.alineacion;
+                if (widget.partido.alineacion != null) {
+                  alineacionActualizada = await widget.partido.alineacion;
                   alineacionActualizada['0'][1] = posicionesOcupadas;
                   print(alineacionActualizada['0'][1]);
                 } else {
                   alineacionActualizada['0'] = [widget.formacion, posicionAlineacion];
                 }
                 Partido p = Partido(
-                    fecha: partidoActual.fecha,
-                    hora: partidoActual.hora,
-                    lugar: partidoActual.lugar,
-                    rival: partidoActual.rival,
-                    tipoPartido: partidoActual.tipoPartido,
-                    convocatoria: partidoActual.convocatoria,
+                    fecha: widget.partido.fecha,
+                    hora: widget.partido.hora,
+                    lugar: widget.partido.lugar,
+                    rival: widget.partido.rival,
+                    tipoPartido: widget.partido.tipoPartido,
+                    convocatoria: widget.partido.convocatoria,
                     alineacion: alineacionActualizada,
-                    golesAFavor: partidoActual.golesAFavor,
-                    golesEnContra: partidoActual.golesEnContra,
-                    lesiones: partidoActual.lesiones,
-                    tarjetas: partidoActual.tarjetas,
-                    cambios: partidoActual.cambios,
-                    observaciones: partidoActual.observaciones,
-                    isLocal: partidoActual.isLocal);
+                    golesAFavor: widget.partido.golesAFavor,
+                    golesEnContra: widget.partido.golesEnContra,
+                    lesiones: widget.partido.lesiones,
+                    tarjetas: widget.partido.tarjetas,
+                    cambios: widget.partido.cambios,
+                    observaciones: widget.partido.observaciones,
+                    isLocal: widget.partido.isLocal);
                 Box boxPartidosEditarAlineacion = await Hive.openBox('partidos');
-                await boxPartidosEditarAlineacion.putAt(widget.posicion, p);
+                //await boxPartidosEditarAlineacion.putAt(widget.posicion, p);
                 setState(() {});
                 Navigator.pop(context, jugadorBox);
               },

@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:mister_football/clases/partido.dart';
-import 'package:mister_football/routes/partidos/detalles_partidos/subrutas/detalles_partido_alineacion/w_detalles_partido_alineacion_formaciones.dart';
 import 'package:mister_football/routes/partidos/partidos_edicion_creacion/subrutas/detalles_partido_alineacion/w_partidos_alineacion_formaciones_edicion.dart';
 
 class PartidoAlineacionCampoJugadoresEdicion extends StatefulWidget {
-  final int posicion;
+  final Partido partido;
 
-  //String formacionPartido;
-
-  PartidoAlineacionCampoJugadoresEdicion({Key key, @required this.posicion /*, @required this.formacionPartido*/
-      })
-      : super(key: key);
+  PartidoAlineacionCampoJugadoresEdicion({Key key, @required this.partido}) : super(key: key);
 
   @override
   createState() => _PartidoAlineacionCampoJugadoresEdicion();
@@ -49,7 +44,7 @@ class _PartidoAlineacionCampoJugadoresEdicion extends State<PartidoAlineacionCam
     cambiarFormacion(formacionElegida);
     final boxPartidos = Hive.box('partidos');
     //Añadir lista de los jugadores convocados al partido.
-    Partido partidoActual = boxPartidos.getAt(widget.posicion);
+    Partido partidoActual = widget.partido;
     Map<String, List> alineacionActualizada = {};
     if (partidoActual.alineacion != null) {
       alineacionActualizada = await partidoActual.alineacion;
@@ -71,7 +66,7 @@ class _PartidoAlineacionCampoJugadoresEdicion extends State<PartidoAlineacionCam
         observaciones: partidoActual.observaciones,
         isLocal: partidoActual.isLocal);
     Box boxPartidosEditarAlineacion = await Hive.openBox('partidos');
-    boxPartidosEditarAlineacion.putAt(widget.posicion, p);
+    //boxPartidosEditarAlineacion.putAt(widget.posicion, p);
   }
 
   @override
@@ -87,7 +82,7 @@ class _PartidoAlineacionCampoJugadoresEdicion extends State<PartidoAlineacionCam
                 return Text(snapshot.error.toString());
               } else {
                 final boxPartidos = Hive.box('partidos');
-                Partido partido = boxPartidos.getAt(widget.posicion);
+                Partido partido = widget.partido;
                 //Seleccionar formación inicial
                 String formacionInicialPartido = "14231";
                 if (partido.alineacion != null) {
@@ -117,7 +112,7 @@ class _PartidoAlineacionCampoJugadoresEdicion extends State<PartidoAlineacionCam
                           setState(() {});
                         },
                       ),
-                      PartidoAlineacionFormacionEdicion(posicion: widget.posicion, formacion: formacionInicialPartido),
+                      PartidoAlineacionFormacionEdicion(partido: widget.partido, formacion: formacionInicialPartido),
                     ],
                   ),
                 );

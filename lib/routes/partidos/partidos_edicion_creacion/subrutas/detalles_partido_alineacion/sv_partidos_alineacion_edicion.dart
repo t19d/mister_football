@@ -3,9 +3,9 @@ import 'package:mister_football/clases/partido.dart';
 import 'package:mister_football/routes/partidos/partidos_edicion_creacion/subrutas/detalles_partido_alineacion/w_partidos_alineacion_campo_jugadores_edicion.dart';
 
 class PartidoAlineacionEdicion extends StatefulWidget {
-  final int posicion;
+  final Partido partido;
 
-  PartidoAlineacionEdicion({Key key, @required this.posicion}) : super(key: key);
+  PartidoAlineacionEdicion({Key key, @required this.partido}) : super(key: key);
 
   @override
   createState() => _PartidoAlineacionEdicion();
@@ -46,7 +46,7 @@ class _PartidoAlineacionEdicion extends State<PartidoAlineacionEdicion> {
     );*/
     return Scaffold(
       body: SafeArea(
-        child: PartidoAlineacionCampoJugadoresEdicion(posicion: widget.posicion),
+        child: PartidoAlineacionCampoJugadoresEdicion(partido: widget.partido),
       ),
     );
   }

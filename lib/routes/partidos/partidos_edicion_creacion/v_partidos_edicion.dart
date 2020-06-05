@@ -83,6 +83,8 @@ class _PartidosEdicion extends State<PartidosEdicion> {
                       eventosActuales.listaEventos.remove("${partido.fecha}/${partido.hora}");
                       boxPartidos.deleteAt(widget.posicion);
                       boxEventos.putAt(0, eventosActuales);*/
+                      Box boxPartidosEditarAlineacion = Hive.box('partidos');
+                      boxPartidosEditarAlineacion.putAt(widget.posicion, PartidosEdicion.partidoEditado);
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(builder: (context) => Partidos()),

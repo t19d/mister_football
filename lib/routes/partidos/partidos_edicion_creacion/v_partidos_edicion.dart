@@ -10,7 +10,8 @@ import 'package:mister_football/routes/partidos/v_partidos.dart';
 
 class PartidosEdicion extends StatefulWidget {
   final int posicion;
-  Partido partido;
+  final Partido partido;
+  static Partido partidoEditado;
 
   PartidosEdicion({Key key, @required this.posicion, @required this.partido}) : super(key: key);
 
@@ -51,6 +52,7 @@ class _PartidosEdicion extends State<PartidosEdicion> {
             print(snapshot.error.toString());
             return Text(snapshot.error.toString());
           } else {
+            PartidosEdicion.partidoEditado = widget.partido;
             _contenido = [
               PartidoDatosEdicion(
                 partido: widget.partido,

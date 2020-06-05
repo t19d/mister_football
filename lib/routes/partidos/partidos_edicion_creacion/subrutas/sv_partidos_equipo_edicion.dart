@@ -16,6 +16,59 @@ class PartidoEquipoEdicion extends StatefulWidget {
 }
 
 class _PartidoEquipoEdicion extends State<PartidoEquipoEdicion> {
+  String _formacionActual;
+  List<DropdownMenuItem<String>> _formacionesDisponibles;
+  List _formaciones = ["14231", "1442", "1433", "1451", "1532", "1523", "13232", "1352", "1334"];
+
+  @override
+  void initState() {
+    _formacionesDisponibles = getDropDownMenuItems();
+    /*Antiguo
+      _formacionActual = _formacionesDisponibles[0].value;
+    */
+    super.initState();
+  }
+
+  List<DropdownMenuItem<String>> getDropDownMenuItems() {
+    List<DropdownMenuItem<String>> items = new List();
+    for (String f in _formaciones) {
+      items.add(new DropdownMenuItem(value: f, child: new Text(f)));
+    }
+    return items;
+  }
+
+  void cambiarFormacion(String formacionElegida) async {
+    _formacionActual = formacionElegida;
+  }
+
+  void actualizarFormacionPartido(String formacionElegida) async {
+    cambiarFormacion(formacionElegida);
+    //Añadir lista de los jugadores convocados al partido.
+    Partido partidoActual = widget.partido;
+    Map<String, List> alineacionActualizada = {};
+    if (partidoActual.alineacion != null) {
+      alineacionActualizada = await partidoActual.alineacion;
+    }
+    alineacionActualizada['0'][0] = formacionElegida;
+    Partido p = Partido(
+        fecha: partidoActual.fecha,
+        hora: partidoActual.hora,
+        lugar: partidoActual.lugar,
+        rival: partidoActual.rival,
+        tipoPartido: partidoActual.tipoPartido,
+        convocatoria: partidoActual.convocatoria,
+        alineacion: alineacionActualizada,
+        golesAFavor: partidoActual.golesAFavor,
+        golesEnContra: partidoActual.golesEnContra,
+        lesiones: partidoActual.lesiones,
+        tarjetas: partidoActual.tarjetas,
+        cambios: partidoActual.cambios,
+        observaciones: partidoActual.observaciones,
+        isLocal: partidoActual.isLocal);
+    Box boxPartidosEditarAlineacion = await Hive.openBox('partidos');
+    //boxPartidosEditarAlineacion.putAt(widget.posicion, p);
+  }
+
   Widget build(BuildContext context) {
     //Seleccionar formación inicial
     String formacionInicialPartido = "14231";
@@ -24,6 +77,9 @@ class _PartidoEquipoEdicion extends State<PartidoEquipoEdicion> {
         formacionInicialPartido = widget.partido.alineacion['0'][0];
       }
     }
+    int _posicionFormacionInicial = _formaciones.indexOf(formacionInicialPartido);
+    _formacionActual = _formacionesDisponibles[_posicionFormacionInicial].value;
+
     return SingleChildScrollView(
       child: Container(
         margin: EdgeInsets.only(
@@ -31,12 +87,14 @@ class _PartidoEquipoEdicion extends State<PartidoEquipoEdicion> {
         ),
         child: Column(
           children: <Widget>[
-            Text(
-              formacionInicialPartido,
-              style: TextStyle(
-                decoration: TextDecoration.underline,
-                //fontWeight: FontWeight.bold
-              ),
+            DropdownButton(
+              value: _formacionActual,
+              items: _formacionesDisponibles,
+              onChanged: (val) async {
+                actualizarFormacionPartido(val);
+                cambiarFormacion(val);
+                setState(() {});
+              },
             ),
             Container(
               margin: EdgeInsets.only(
@@ -46,9 +104,8 @@ class _PartidoEquipoEdicion extends State<PartidoEquipoEdicion> {
               child: PartidoAlineacionFormacionEdicion(formacion: formacionInicialPartido, partido: widget.partido),
             ),
             Container(
-              padding: EdgeInsets.only(
-                top: MediaQuery.of(context).size.width * .03,
-                bottom: MediaQuery.of(context).size.width * .03,
+              padding: EdgeInsets.all(
+                MediaQuery.of(context).size.width * .03,
               ),
               decoration: BoxDecoration(
                 color: MisterFootball.primarioLight2.withOpacity(.05),
@@ -59,18 +116,40 @@ class _PartidoEquipoEdicion extends State<PartidoEquipoEdicion> {
               ),
               child: Column(
                 children: <Widget>[
-                  Text(
-                    "Jugadores convocados",
-                    style: TextStyle(
-                      decoration: TextDecoration.underline,
-                      //fontWeight: FontWeight.bold
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        "Jugadores convocados",
+                        style: TextStyle(
+                          decoration: TextDecoration.underline,
+                          //fontWeight: FontWeight.bold
+                        ),
+                      ),
+                      IconButton(
+                        icon: Icon(
+                          Icons.edit,
+                          color: Colors.lightBlueAccent,
+                        ),
+                        tooltip: 'Editar jugadores',
+                        onPressed: () async {
+                          await showDialog<List<dynamic>>(
+                            context: context,
+                            barrierDismissible: true,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                content: listaSeleccionarJugadores(widget.partido, setState),
+                              );
+                            },
+                          );
+                          setState(() {});
+                        },
+                      ),
+                    ],
                   ),
                   Container(
                     padding: EdgeInsets.only(
                       top: MediaQuery.of(context).size.width * .03,
-                      left: MediaQuery.of(context).size.width * .03,
-                      right: MediaQuery.of(context).size.width * .03,
                     ),
                     child: mostrarJugadoresSeleccionados(widget.partido.convocatoria),
                   ),
@@ -82,6 +161,7 @@ class _PartidoEquipoEdicion extends State<PartidoEquipoEdicion> {
       ),
     );
   }
+
   /*@override
   Widget build(BuildContext context) {
     return Column(

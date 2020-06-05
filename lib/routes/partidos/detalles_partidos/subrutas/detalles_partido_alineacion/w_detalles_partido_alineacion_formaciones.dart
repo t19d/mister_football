@@ -75,7 +75,7 @@ class _DetallesPartidoAlineacionFormacion extends State<DetallesPartidoAlineacio
         posicionesOcupadas = Map<String, String>.from(widget.partido.alineacion['0'][1]);
         //Comprobar si los jugadores alineados están convocados.
         for (var keyPosicion in posicionesOcupadas.keys) {
-          print('$keyPosicion was written by ${posicionesOcupadas[keyPosicion]}');
+          //print('$keyPosicion was written by ${posicionesOcupadas[keyPosicion]}');
           if (posicionesOcupadas[keyPosicion] != null) {
             bool _isConvocado = false;
             for (int i = 0; i < widget.partido.convocatoria.length; i++) {

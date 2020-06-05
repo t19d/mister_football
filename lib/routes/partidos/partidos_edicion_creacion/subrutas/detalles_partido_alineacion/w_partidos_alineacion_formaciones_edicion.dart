@@ -5,6 +5,7 @@ import 'package:hive/hive.dart';
 import 'package:mister_football/clases/conversor_imagen.dart';
 import 'package:mister_football/clases/jugador.dart';
 import 'package:mister_football/clases/partido.dart';
+import 'package:mister_football/routes/partidos/partidos_edicion_creacion/v_partidos_edicion.dart';
 
 class PartidoAlineacionFormacionEdicion extends StatefulWidget {
   final String formacion;
@@ -160,7 +161,7 @@ class _PartidoAlineacionFormacionEdicion extends State<PartidoAlineacionFormacio
                 //Guardar y actualizar
                 //Actualizar contenido
                 for (var keyPosicion in posicionesOcupadas.keys) {
-                  print('$keyPosicion was written by ${posicionesOcupadas[keyPosicion]}');
+                  //print('$keyPosicion was written by ${posicionesOcupadas[keyPosicion]}');
                   if (posicionesOcupadas[keyPosicion] != null) {
                     bool _isRepetido = false;
                     for (int i = 0; i < widget.partido.convocatoria.length; i++) {
@@ -200,8 +201,7 @@ class _PartidoAlineacionFormacionEdicion extends State<PartidoAlineacionFormacio
                     cambios: widget.partido.cambios,
                     observaciones: widget.partido.observaciones,
                     isLocal: widget.partido.isLocal);
-                Box boxPartidosEditarAlineacion = await Hive.openBox('partidos');
-                //await boxPartidosEditarAlineacion.putAt(widget.posicion, p);
+                PartidosEdicion.partidoEditado = p;
                 setState(() {});
                 Navigator.pop(context, jugadorBox);
               },

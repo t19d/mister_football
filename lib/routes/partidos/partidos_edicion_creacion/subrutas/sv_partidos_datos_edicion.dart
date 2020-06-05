@@ -3,9 +3,11 @@ import 'package:hive/hive.dart';
 import 'package:mister_football/clases/jugador.dart';
 import 'package:mister_football/clases/partido.dart';
 import 'package:mister_football/main.dart';
+import 'package:mister_football/routes/partidos/partidos_edicion_creacion/v_partidos_edicion.dart';
 
 class PartidoDatosEdicion extends StatefulWidget {
   final Partido partido;
+  static Partido partidoActual;
 
   PartidoDatosEdicion({Key key, @required this.partido}) : super(key: key);
 
@@ -14,6 +16,28 @@ class PartidoDatosEdicion extends StatefulWidget {
 }
 
 class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
+  //Goles a favor
+  String _idJugadorSeleccionadoGolesAFavor = "";
+  String _minutoSeleccionadoGolesAFavor = "";
+
+  //Goles en contra
+  String _minutoSeleccionadoGolesEnContra = "";
+
+  //Tarjetas
+  String _idJugadorSeleccionadoTarjeta = "";
+  String _minutoSeleccionadoTarjeta = "";
+  String _colorSeleccionadoTarjeta = "Amarilla";
+  List<bool> _isSelected = [true, false];
+
+  //Cambios
+  String _idJugadorSaleSeleccionadoCambios = "";
+  String _idJugadorEntraSeleccionadoCambios = "";
+  String _minutoSeleccionadoCambios = "";
+
+  //Lesiones
+  String _idJugadorSeleccionadoLesiones = "";
+  String _minutoSeleccionadoLesiones = "";
+
   @override
   Widget build(BuildContext context) {
     //Estilo de los titulos de los eventos
@@ -308,11 +332,14 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                           context: context,
                           barrierDismissible: true,
                           builder: (BuildContext context) {
-                            return AlertDialog(
-                              content: anhadirGolAFavor(widget.partido, setState),
-                            );
+                            return AlertDialog(content: StatefulBuilder(
+                              builder: (BuildContext context, StateSetter setState) {
+                                return anhadirGolAFavor(widget.partido, setState);
+                              },
+                            ));
                           },
                         );
+                        setState(() {});
                       },
                     ),
                   ],
@@ -409,9 +436,11 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                           context: context,
                           barrierDismissible: true,
                           builder: (BuildContext context) {
-                            return AlertDialog(
-                              content: anhadirTarjetas(widget.partido, setState),
-                            );
+                            return AlertDialog(content: StatefulBuilder(
+                              builder: (BuildContext context, StateSetter setState) {
+                                return anhadirTarjetas(widget.partido, setState);
+                              },
+                            ));
                           },
                         );
                         setState(() {});
@@ -460,9 +489,11 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                           context: context,
                           barrierDismissible: true,
                           builder: (BuildContext context) {
-                            return AlertDialog(
-                              content: anhadirCambios(widget.partido, setState),
-                            );
+                            return AlertDialog(content: StatefulBuilder(
+                              builder: (BuildContext context, StateSetter setState) {
+                                return anhadirCambios(widget.partido, setState);
+                              },
+                            ));
                           },
                         );
                         setState(() {});
@@ -511,9 +542,11 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                           context: context,
                           barrierDismissible: true,
                           builder: (BuildContext context) {
-                            return AlertDialog(
-                              content: anhadirLesion(widget.partido, setState),
-                            );
+                            return AlertDialog(content: StatefulBuilder(
+                              builder: (BuildContext context, StateSetter setState) {
+                                return anhadirLesion(widget.partido, setState);
+                              },
+                            ));
                           },
                         );
                         setState(() {});
@@ -603,8 +636,7 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                           cambios: partidoActual.cambios,
                           observaciones: partidoActual.observaciones,
                           isLocal: partidoActual.isLocal);
-                      Box boxPartidosEditarConvocatoria = await Hive.openBox('partidos');
-                      //boxPartidosEditarConvocatoria.putAt(widget.posicion, p);
+                      PartidosEdicion.partidoEditado = p;
                       setState(() {});
                     }),
               ],
@@ -636,11 +668,11 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
               Text("Nuevo gol a favor"),
               //Minuto
               TextFormField(
-                //initialValue: _minutoSeleccionadoGolesAFavor,
+                initialValue: _minutoSeleccionadoGolesAFavor,
                 keyboardType: TextInputType.number,
                 maxLength: 3,
                 validator: (val) => (val.length == 0 || int.parse(val) < 0 || int.parse(val) > 140) ? 'Escribe el minuto del gol' : null,
-                //onChanged: (val) => _minutoSeleccionadoGolesAFavor = val,
+                onChanged: (val) => _minutoSeleccionadoGolesAFavor = val,
                 decoration: InputDecoration(
                   fillColor: Colors.white,
                   border: OutlineInputBorder(
@@ -663,14 +695,14 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                     if (partidoActual.convocatoria[i] == boxJugadores.getAt(iJugador).id) {
                       jugadorBox = boxJugadores.getAt(iJugador);
                       itemLista = RadioListTile(
-                        //selected: _idJugadorSeleccionadoGolesAFavor == jugadorBox.id,
+                        selected: _idJugadorSeleccionadoGolesAFavor == jugadorBox.id,
                         value: jugadorBox.id,
-                        //groupValue: _idJugadorSeleccionadoGolesAFavor,
+                        groupValue: _idJugadorSeleccionadoGolesAFavor,
                         title: Text(jugadorBox.apodo),
                         subtitle: Text(jugadorBox.apodo),
                         onChanged: (idjugadorSeleccionadoAhora) async {
-                          //setState(() => _idJugadorSeleccionadoGolesAFavor = idjugadorSeleccionadoAhora);
-                          print("Current User ${idjugadorSeleccionadoAhora}");
+                          setState(() => _idJugadorSeleccionadoGolesAFavor = idjugadorSeleccionadoAhora);
+                          //print("Current User ${idjugadorSeleccionadoAhora}");
                         },
                         activeColor: Colors.green,
                       );
@@ -681,41 +713,38 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
               ),
               RaisedButton(
                 child: Text("Aceptar"),
-
-                /*onPressed: (_idJugadorSeleccionadoGolesAFavor == "")
+                onPressed: (_idJugadorSeleccionadoGolesAFavor == "")
                     ? null
                     : () async {
-                  if (formKey.currentState.validate()) {
-                    print("${_minutoSeleccionadoGolesAFavor}': ${_idJugadorSeleccionadoGolesAFavor}");
-                    formKey.currentState.save();
-                    //Actualizar los goles a favor del partido
-                    List golesAFavorActuales = partidoActual.golesAFavor;
-                    golesAFavorActuales.add(["$_minutoSeleccionadoGolesAFavor", "$_idJugadorSeleccionadoGolesAFavor"]);
-                    golesAFavorActuales.sort((a, b) => int.parse(a[0]).compareTo(int.parse(b[0])));
-                    Partido p = Partido(
-                        fecha: partidoActual.fecha,
-                        hora: partidoActual.hora,
-                        lugar: partidoActual.lugar,
-                        rival: partidoActual.rival,
-                        tipoPartido: partidoActual.tipoPartido,
-                        convocatoria: partidoActual.convocatoria,
-                        alineacion: partidoActual.alineacion,
-                        golesAFavor: golesAFavorActuales,
-                        golesEnContra: partidoActual.golesEnContra,
-                        lesiones: partidoActual.lesiones,
-                        tarjetas: partidoActual.tarjetas,
-                        cambios: partidoActual.cambios,
-                        observaciones: partidoActual.observaciones,
-                        isLocal: partidoActual.isLocal);
-                    Box boxPartidosEditarConvocatoria = await Hive.openBox('partidos');
-                    boxPartidosEditarConvocatoria.putAt(widget.posicion, p);
-
-                    //Limpiar campos
-                    _idJugadorSeleccionadoGolesAFavor = "";
-                    _minutoSeleccionadoGolesAFavor = "";
-                    Navigator.pop(context);
-                  }
-                },*/
+                        if (formKey.currentState.validate()) {
+                          //print("${_minutoSeleccionadoGolesAFavor}': ${_idJugadorSeleccionadoGolesAFavor}");
+                          formKey.currentState.save();
+                          //Actualizar los goles a favor del partido
+                          List golesAFavorActuales = partidoActual.golesAFavor;
+                          golesAFavorActuales.add(["$_minutoSeleccionadoGolesAFavor", "$_idJugadorSeleccionadoGolesAFavor"]);
+                          golesAFavorActuales.sort((a, b) => int.parse(a[0]).compareTo(int.parse(b[0])));
+                          Partido p = Partido(
+                              fecha: partidoActual.fecha,
+                              hora: partidoActual.hora,
+                              lugar: partidoActual.lugar,
+                              rival: partidoActual.rival,
+                              tipoPartido: partidoActual.tipoPartido,
+                              convocatoria: partidoActual.convocatoria,
+                              alineacion: partidoActual.alineacion,
+                              golesAFavor: golesAFavorActuales,
+                              golesEnContra: partidoActual.golesEnContra,
+                              lesiones: partidoActual.lesiones,
+                              tarjetas: partidoActual.tarjetas,
+                              cambios: partidoActual.cambios,
+                              observaciones: partidoActual.observaciones,
+                              isLocal: partidoActual.isLocal);
+                          PartidosEdicion.partidoEditado = p;
+                          //Limpiar campos
+                          _idJugadorSeleccionadoGolesAFavor = "";
+                          _minutoSeleccionadoGolesAFavor = "";
+                          Navigator.pop(context);
+                        }
+                      },
               )
             ],
           ),
@@ -784,8 +813,7 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                           cambios: partidoActual.cambios,
                           observaciones: partidoActual.observaciones,
                           isLocal: partidoActual.isLocal);
-                      Box boxPartidosEditarConvocatoria = await Hive.openBox('partidos');
-                      //boxPartidosEditarConvocatoria.putAt(widget.posicion, p);
+                      PartidosEdicion.partidoEditado = p;
                       setState(() {});
                     }),
               ],
@@ -814,11 +842,11 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
             Text("Nuevo gol en contra"),
             //Minuto
             TextFormField(
-              //initialValue: _minutoSeleccionadoGolesEnContra,
+              initialValue: _minutoSeleccionadoGolesEnContra,
               keyboardType: TextInputType.number,
               maxLength: 3,
               validator: (val) => (val.length == 0 || int.parse(val) < 0 || int.parse(val) > 140) ? 'Escribe el minuto del gol' : null,
-              //onChanged: (val) => _minutoSeleccionadoGolesEnContra = val,
+              onChanged: (val) => _minutoSeleccionadoGolesEnContra = val,
               decoration: InputDecoration(
                 fillColor: Colors.white,
                 border: OutlineInputBorder(
@@ -836,7 +864,7 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                   formKey.currentState.save();
                   //Actualizar los goles a favor del partido
                   List golesEnContraActuales = partidoActual.golesEnContra;
-                  //golesEnContraActuales.add("$_minutoSeleccionadoGolesEnContra");
+                  golesEnContraActuales.add("$_minutoSeleccionadoGolesEnContra");
                   golesEnContraActuales.sort((a, b) => int.parse(a).compareTo(int.parse(b)));
                   Partido p = Partido(
                       fecha: partidoActual.fecha,
@@ -853,9 +881,7 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                       cambios: partidoActual.cambios,
                       observaciones: partidoActual.observaciones,
                       isLocal: partidoActual.isLocal);
-                  Box boxPartidosEditarConvocatoria = await Hive.openBox('partidos');
-                  //boxPartidosEditarConvocatoria.putAt(widget.posicion, p);
-
+                  PartidosEdicion.partidoEditado = p;
                   //Limpiar campos
                   //_minutoSeleccionadoGolesEnContra = "";
                   Navigator.pop(context);
@@ -955,8 +981,7 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                           cambios: partidoActual.cambios,
                           observaciones: partidoActual.observaciones,
                           isLocal: partidoActual.isLocal);
-                      Box boxPartidosEditarConvocatoria = await Hive.openBox('partidos');
-                      //boxPartidosEditarConvocatoria.putAt(widget.posicion, p);
+                      PartidosEdicion.partidoEditado = p;
                       setState(() {});
                     }),
               ],
@@ -987,11 +1012,11 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
               Text("Nueva tarjeta"),
               //Minuto
               TextFormField(
-                //initialValue: _minutoSeleccionadoTarjeta,
+                initialValue: _minutoSeleccionadoTarjeta,
                 keyboardType: TextInputType.number,
                 maxLength: 3,
                 validator: (val) => (val.length == 0 || int.parse(val) < 0 || int.parse(val) > 140) ? 'Escribe el minuto de la tarjeta' : null,
-                //onChanged: (val) => _minutoSeleccionadoTarjeta = val,
+                onChanged: (val) => _minutoSeleccionadoTarjeta = val,
                 decoration: InputDecoration(
                   fillColor: Colors.white,
                   border: OutlineInputBorder(
@@ -1011,24 +1036,25 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                     selectedBorderColor: Colors.blueAccent,
                     children: <Widget>[
                       Container(
-                          width: MediaQuery.of(context).size.width * .3,
-                          child: new Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              new Icon(
-                                Icons.sim_card_alert,
-                                color: Colors.yellowAccent,
-                                //size: MediaQuery.of(context).size.width * .4,
-                              ),
-                              new Text(
-                                "AMARILLA",
-                                style: TextStyle(
-                                    //color: Colors.yellowAccent,
-                                    //fontSize: MediaQuery.of(context).size.width * .4,
-                                    ),
-                              )
-                            ],
-                          )),
+                        width: MediaQuery.of(context).size.width * .3,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Icon(
+                              Icons.sim_card_alert,
+                              color: Colors.yellowAccent,
+                              //size: MediaQuery.of(context).size.width * .4,
+                            ),
+                            Text(
+                              "AMARILLA",
+                              style: TextStyle(
+                                  //color: Colors.yellowAccent,
+                                  //fontSize: MediaQuery.of(context).size.width * .4,
+                                  ),
+                            )
+                          ],
+                        ),
+                      ),
                       Container(
                         width: MediaQuery.of(context).size.width * .3,
                         child: Row(
@@ -1051,7 +1077,7 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                       ),
                     ],
                     onPressed: (int index) {
-                      /*setState(() {
+                      setState(() {
                         for (int i = 0; i < _isSelected.length; i++) {
                           if (i == index) {
                             //Roja
@@ -1063,9 +1089,9 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                             _colorSeleccionadoTarjeta = "Amarilla";
                           }
                         }
-                      });*/
+                      });
                     },
-                    //isSelected: _isSelected,
+                    isSelected: _isSelected,
                   ),
                 ],
               ),
@@ -1082,13 +1108,13 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                     if (partidoActual.convocatoria[i] == boxJugadores.getAt(iJugador).id) {
                       jugadorBox = boxJugadores.getAt(iJugador);
                       itemLista = RadioListTile(
-                        //selected: _idJugadorSeleccionadoTarjeta == jugadorBox.id,
+                        selected: _idJugadorSeleccionadoTarjeta == jugadorBox.id,
                         value: jugadorBox.id,
-                        //groupValue: _idJugadorSeleccionadoTarjeta,
+                        groupValue: _idJugadorSeleccionadoTarjeta,
                         title: Text(jugadorBox.apodo),
                         subtitle: Text(jugadorBox.apodo),
                         onChanged: (idjugadorSeleccionadoAhora) async {
-                          //setState(() => _idJugadorSeleccionadoTarjeta = idjugadorSeleccionadoAhora);
+                          setState(() => _idJugadorSeleccionadoTarjeta = idjugadorSeleccionadoAhora);
                           print("Current User ${idjugadorSeleccionadoAhora}");
                         },
                         activeColor: Colors.green,
@@ -1100,40 +1126,39 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
               ),
               RaisedButton(
                 child: Text("Aceptar"),
-                /*onPressed: (_idJugadorSeleccionadoTarjeta == "")
+                onPressed: (_idJugadorSeleccionadoTarjeta == "")
                     ? null
                     : () async {
-                  if (formKey.currentState.validate()) {
-                    print("${_minutoSeleccionadoTarjeta}': ${_idJugadorSeleccionadoTarjeta}");
-                    formKey.currentState.save();
-                    //Actualizar los goles a favor del partido
-                    List tarjetasActuales = partidoActual.tarjetas;
-                    tarjetasActuales.add(["$_minutoSeleccionadoTarjeta", "$_colorSeleccionadoTarjeta", "$_idJugadorSeleccionadoTarjeta"]);
-                    tarjetasActuales.sort((a, b) => int.parse(a[0]).compareTo(int.parse(b[0])));
-                    Partido p = Partido(
-                        fecha: partidoActual.fecha,
-                        hora: partidoActual.hora,
-                        lugar: partidoActual.lugar,
-                        rival: partidoActual.rival,
-                        tipoPartido: partidoActual.tipoPartido,
-                        convocatoria: partidoActual.convocatoria,
-                        alineacion: partidoActual.alineacion,
-                        golesAFavor: partidoActual.golesAFavor,
-                        golesEnContra: partidoActual.golesEnContra,
-                        lesiones: partidoActual.lesiones,
-                        tarjetas: tarjetasActuales,
-                        cambios: partidoActual.cambios,
-                        observaciones: partidoActual.observaciones,
-                        isLocal: partidoActual.isLocal);
-                    Box boxPartidosEditarConvocatoria = await Hive.openBox('partidos');
-                    boxPartidosEditarConvocatoria.putAt(widget.posicion, p);
+                        if (formKey.currentState.validate()) {
+                          print("${_minutoSeleccionadoTarjeta}': ${_idJugadorSeleccionadoTarjeta}");
+                          formKey.currentState.save();
+                          //Actualizar los goles a favor del partido
+                          List tarjetasActuales = partidoActual.tarjetas;
+                          tarjetasActuales.add(["$_minutoSeleccionadoTarjeta", "$_colorSeleccionadoTarjeta", "$_idJugadorSeleccionadoTarjeta"]);
+                          tarjetasActuales.sort((a, b) => int.parse(a[0]).compareTo(int.parse(b[0])));
+                          Partido p = Partido(
+                              fecha: partidoActual.fecha,
+                              hora: partidoActual.hora,
+                              lugar: partidoActual.lugar,
+                              rival: partidoActual.rival,
+                              tipoPartido: partidoActual.tipoPartido,
+                              convocatoria: partidoActual.convocatoria,
+                              alineacion: partidoActual.alineacion,
+                              golesAFavor: partidoActual.golesAFavor,
+                              golesEnContra: partidoActual.golesEnContra,
+                              lesiones: partidoActual.lesiones,
+                              tarjetas: tarjetasActuales,
+                              cambios: partidoActual.cambios,
+                              observaciones: partidoActual.observaciones,
+                              isLocal: partidoActual.isLocal);
+                          PartidosEdicion.partidoEditado = p;
 
-                    //Limpiar campos
-                    _minutoSeleccionadoTarjeta = "";
-                    _idJugadorSeleccionadoTarjeta = "";
-                    Navigator.pop(context);
-                  }
-                },*/
+                          //Limpiar campos
+                          _minutoSeleccionadoTarjeta = "";
+                          _idJugadorSeleccionadoTarjeta = "";
+                          Navigator.pop(context);
+                        }
+                      },
               )
             ],
           ),
@@ -1265,8 +1290,7 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                           cambios: cambiosActuales,
                           observaciones: partidoActual.observaciones,
                           isLocal: partidoActual.isLocal);
-                      Box boxPartidosEditarConvocatoria = await Hive.openBox('partidos');
-                      //boxPartidosEditarConvocatoria.putAt(widget.posicion, p);
+                      PartidosEdicion.partidoEditado = p;
                       setState(() {});
                     }),
               ],
@@ -1298,11 +1322,11 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                 Text("Nuevo cambio"),
                 //Minuto
                 TextFormField(
-                  //initialValue: _minutoSeleccionadoCambios,
+                  initialValue: _minutoSeleccionadoCambios,
                   keyboardType: TextInputType.number,
                   maxLength: 3,
                   validator: (val) => (val.length == 0 || int.parse(val) < 0 || int.parse(val) > 140) ? 'Escribe el minuto del cambio' : null,
-                  //onChanged: (val) => _minutoSeleccionadoCambios = val,
+                  onChanged: (val) => _minutoSeleccionadoCambios = val,
                   decoration: InputDecoration(
                     fillColor: Colors.white,
                     border: OutlineInputBorder(
@@ -1327,14 +1351,14 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                       if (partidoActual.convocatoria[i] == boxJugadores.getAt(iJugador).id) {
                         jugadorBox = boxJugadores.getAt(iJugador);
                         itemLista = RadioListTile(
-                          //selected: _idJugadorEntraSeleccionadoCambios == jugadorBox.id,
+                          selected: _idJugadorEntraSeleccionadoCambios == jugadorBox.id,
                           value: jugadorBox.id,
-                          //groupValue: _idJugadorEntraSeleccionadoCambios,
+                          groupValue: _idJugadorEntraSeleccionadoCambios,
                           title: Text(jugadorBox.apodo),
                           subtitle: Text(jugadorBox.apodo),
                           onChanged: (idjugadorSeleccionadoAhora) async {
-                            //setState(() => _idJugadorEntraSeleccionadoCambios = idjugadorSeleccionadoAhora);
-                            print("Current User ${idjugadorSeleccionadoAhora}");
+                            setState(() => _idJugadorEntraSeleccionadoCambios = idjugadorSeleccionadoAhora);
+                            //print("Current User ${idjugadorSeleccionadoAhora}");
                           },
                           activeColor: Colors.green,
                         );
@@ -1357,13 +1381,13 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                       if (partidoActual.convocatoria[i] == boxJugadores.getAt(iJugador).id) {
                         jugadorBox = boxJugadores.getAt(iJugador);
                         itemLista = RadioListTile(
-                          //selected: _idJugadorSaleSeleccionadoCambios == jugadorBox.id,
+                          selected: _idJugadorSaleSeleccionadoCambios == jugadorBox.id,
                           value: jugadorBox.id,
-                          //groupValue: _idJugadorSaleSeleccionadoCambios,
+                          groupValue: _idJugadorSaleSeleccionadoCambios,
                           title: Text(jugadorBox.apodo),
                           subtitle: Text(jugadorBox.apodo),
                           onChanged: (idjugadorSeleccionadoAhora) async {
-                            //setState(() => _idJugadorSaleSeleccionadoCambios = idjugadorSeleccionadoAhora);
+                            setState(() => _idJugadorSaleSeleccionadoCambios = idjugadorSeleccionadoAhora);
                             print("Current User ${idjugadorSeleccionadoAhora}");
                           },
                           activeColor: Colors.green,
@@ -1375,42 +1399,41 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                 ),
                 RaisedButton(
                   child: Text("Aceptar"),
-                  /*onPressed: (_idJugadorEntraSeleccionadoCambios == "" && _idJugadorSaleSeleccionadoCambios == "")
+                  onPressed: (_idJugadorEntraSeleccionadoCambios == "" && _idJugadorSaleSeleccionadoCambios == "")
                       ? null
                       : () async {
-                    if (formKey.currentState.validate()) {
-                      print("${_minutoSeleccionadoCambios}': ${_idJugadorEntraSeleccionadoCambios} - ${_idJugadorSaleSeleccionadoCambios}");
-                      formKey.currentState.save();
-                      //Actualizar los goles a favor del partido
-                      List cambiosActuales = partidoActual.cambios;
-                      cambiosActuales
-                          .add(["$_minutoSeleccionadoCambios", "$_idJugadorEntraSeleccionadoCambios", "$_idJugadorSaleSeleccionadoCambios"]);
-                      cambiosActuales.sort((a, b) => int.parse(a[0]).compareTo(int.parse(b[0])));
-                      Partido p = Partido(
-                          fecha: partidoActual.fecha,
-                          hora: partidoActual.hora,
-                          lugar: partidoActual.lugar,
-                          rival: partidoActual.rival,
-                          tipoPartido: partidoActual.tipoPartido,
-                          convocatoria: partidoActual.convocatoria,
-                          alineacion: partidoActual.alineacion,
-                          golesAFavor: partidoActual.golesAFavor,
-                          golesEnContra: partidoActual.golesEnContra,
-                          lesiones: partidoActual.lesiones,
-                          tarjetas: partidoActual.tarjetas,
-                          cambios: cambiosActuales,
-                          observaciones: partidoActual.observaciones,
-                          isLocal: partidoActual.isLocal);
-                      Box boxPartidosEditarConvocatoria = await Hive.openBox('partidos');
-                      boxPartidosEditarConvocatoria.putAt(widget.posicion, p);
+                          if (formKey.currentState.validate()) {
+                            print("${_minutoSeleccionadoCambios}': ${_idJugadorEntraSeleccionadoCambios} - ${_idJugadorSaleSeleccionadoCambios}");
+                            formKey.currentState.save();
+                            //Actualizar los goles a favor del partido
+                            List cambiosActuales = partidoActual.cambios;
+                            cambiosActuales
+                                .add(["$_minutoSeleccionadoCambios", "$_idJugadorEntraSeleccionadoCambios", "$_idJugadorSaleSeleccionadoCambios"]);
+                            cambiosActuales.sort((a, b) => int.parse(a[0]).compareTo(int.parse(b[0])));
+                            Partido p = Partido(
+                                fecha: partidoActual.fecha,
+                                hora: partidoActual.hora,
+                                lugar: partidoActual.lugar,
+                                rival: partidoActual.rival,
+                                tipoPartido: partidoActual.tipoPartido,
+                                convocatoria: partidoActual.convocatoria,
+                                alineacion: partidoActual.alineacion,
+                                golesAFavor: partidoActual.golesAFavor,
+                                golesEnContra: partidoActual.golesEnContra,
+                                lesiones: partidoActual.lesiones,
+                                tarjetas: partidoActual.tarjetas,
+                                cambios: cambiosActuales,
+                                observaciones: partidoActual.observaciones,
+                                isLocal: partidoActual.isLocal);
+                            PartidosEdicion.partidoEditado = p;
 
-                      //Limpiar campos
-                      _idJugadorSaleSeleccionadoCambios = "";
-                      _idJugadorSaleSeleccionadoCambios = "";
-                      _minutoSeleccionadoCambios = "";
-                      Navigator.pop(context);
-                    }
-                  },*/
+                            //Limpiar campos
+                            _idJugadorSaleSeleccionadoCambios = "";
+                            _idJugadorSaleSeleccionadoCambios = "";
+                            _minutoSeleccionadoCambios = "";
+                            Navigator.pop(context);
+                          }
+                        },
                 )
               ],
             ),
@@ -1503,8 +1526,7 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                           cambios: partidoActual.cambios,
                           observaciones: partidoActual.observaciones,
                           isLocal: partidoActual.isLocal);
-                      Box boxPartidosEditarConvocatoria = await Hive.openBox('partidos');
-                      //boxPartidosEditarConvocatoria.putAt(widget.posicion, p);
+                      PartidosEdicion.partidoEditado = p;
                       setState(() {});
                     }),
               ],
@@ -1535,11 +1557,11 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
               Text("Nueva lesión"),
               //Minuto
               TextFormField(
-                //initialValue: _minutoSeleccionadoLesiones,
+                initialValue: _minutoSeleccionadoLesiones,
                 keyboardType: TextInputType.number,
                 maxLength: 3,
                 validator: (val) => (val.length == 0 || int.parse(val) < 0 || int.parse(val) > 140) ? 'Escribe el minuto de la lesión' : null,
-                //onChanged: (val) => _minutoSeleccionadoLesiones = val,
+                onChanged: (val) => _minutoSeleccionadoLesiones = val,
                 decoration: InputDecoration(
                   fillColor: Colors.white,
                   border: OutlineInputBorder(
@@ -1562,14 +1584,14 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                     if (partidoActual.convocatoria[i] == boxJugadores.getAt(iJugador).id) {
                       jugadorBox = boxJugadores.getAt(iJugador);
                       itemLista = RadioListTile(
-                        //selected: _idJugadorSeleccionadoLesiones == jugadorBox.id,
+                        selected: _idJugadorSeleccionadoLesiones == jugadorBox.id,
                         value: jugadorBox.id,
-                        //groupValue: _idJugadorSeleccionadoLesiones,
+                        groupValue: _idJugadorSeleccionadoLesiones,
                         title: Text(jugadorBox.apodo),
                         subtitle: Text(jugadorBox.apodo),
                         onChanged: (idjugadorSeleccionadoAhora) async {
-                          //setState(() => _idJugadorSeleccionadoLesiones = idjugadorSeleccionadoAhora);
-                          print("Current User ${idjugadorSeleccionadoAhora}");
+                          setState(() => _idJugadorSeleccionadoLesiones = idjugadorSeleccionadoAhora);
+                          //print("Current User ${idjugadorSeleccionadoAhora}");
                         },
                         activeColor: Colors.green,
                       );
@@ -1580,40 +1602,39 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
               ),
               RaisedButton(
                 child: Text("Aceptar"),
-                /*onPressed: (_idJugadorSeleccionadoLesiones == "")
+                onPressed: (_idJugadorSeleccionadoLesiones == "")
                     ? null
                     : () async {
-                  if (formKey.currentState.validate()) {
-                    print("${_minutoSeleccionadoLesiones}': ${_idJugadorSeleccionadoLesiones}");
-                    formKey.currentState.save();
-                    //Actualizar los goles a favor del partido
-                    List lesionesActuales = partidoActual.lesiones;
-                    lesionesActuales.add(["$_minutoSeleccionadoLesiones", "$_idJugadorSeleccionadoLesiones"]);
-                    lesionesActuales.sort((a, b) => int.parse(a[0]).compareTo(int.parse(b[0])));
-                    Partido p = Partido(
-                        fecha: partidoActual.fecha,
-                        hora: partidoActual.hora,
-                        lugar: partidoActual.lugar,
-                        rival: partidoActual.rival,
-                        tipoPartido: partidoActual.tipoPartido,
-                        convocatoria: partidoActual.convocatoria,
-                        alineacion: partidoActual.alineacion,
-                        golesAFavor: partidoActual.golesAFavor,
-                        golesEnContra: partidoActual.golesEnContra,
-                        lesiones: lesionesActuales,
-                        tarjetas: partidoActual.tarjetas,
-                        cambios: partidoActual.cambios,
-                        observaciones: partidoActual.observaciones,
-                        isLocal: partidoActual.isLocal);
-                    Box boxPartidosEditarConvocatoria = await Hive.openBox('partidos');
-                    boxPartidosEditarConvocatoria.putAt(widget.posicion, p);
+                        if (formKey.currentState.validate()) {
+                          print("${_minutoSeleccionadoLesiones}': ${_idJugadorSeleccionadoLesiones}");
+                          formKey.currentState.save();
+                          //Actualizar los goles a favor del partido
+                          List lesionesActuales = partidoActual.lesiones;
+                          lesionesActuales.add(["$_minutoSeleccionadoLesiones", "$_idJugadorSeleccionadoLesiones"]);
+                          lesionesActuales.sort((a, b) => int.parse(a[0]).compareTo(int.parse(b[0])));
+                          Partido p = Partido(
+                              fecha: partidoActual.fecha,
+                              hora: partidoActual.hora,
+                              lugar: partidoActual.lugar,
+                              rival: partidoActual.rival,
+                              tipoPartido: partidoActual.tipoPartido,
+                              convocatoria: partidoActual.convocatoria,
+                              alineacion: partidoActual.alineacion,
+                              golesAFavor: partidoActual.golesAFavor,
+                              golesEnContra: partidoActual.golesEnContra,
+                              lesiones: lesionesActuales,
+                              tarjetas: partidoActual.tarjetas,
+                              cambios: partidoActual.cambios,
+                              observaciones: partidoActual.observaciones,
+                              isLocal: partidoActual.isLocal);
+                          PartidosEdicion.partidoEditado = p;
 
-                    //Limpiar campos
-                    _idJugadorSeleccionadoLesiones = "";
-                    _minutoSeleccionadoLesiones = "";
-                    Navigator.pop(context);
-                  }
-                },*/
+                          //Limpiar campos
+                          _idJugadorSeleccionadoLesiones = "";
+                          _minutoSeleccionadoLesiones = "";
+                          Navigator.pop(context);
+                        }
+                      },
               )
             ],
           ),

@@ -133,13 +133,15 @@ class _PartidoEquipoEdicion extends State<PartidoEquipoEdicion> {
                         ),
                         tooltip: 'Editar jugadores',
                         onPressed: () async {
-                          await showDialog<List<dynamic>>(
+                          await showDialog(
                             context: context,
                             barrierDismissible: true,
                             builder: (BuildContext context) {
-                              return AlertDialog(
-                                content: listaSeleccionarJugadores(widget.partido, setState),
-                              );
+                              return AlertDialog(content: StatefulBuilder(
+                                builder: (BuildContext context, StateSetter setState) {
+                                  return listaSeleccionarJugadores(widget.partido, setState);
+                                },
+                              ));
                             },
                           );
                           setState(() {});

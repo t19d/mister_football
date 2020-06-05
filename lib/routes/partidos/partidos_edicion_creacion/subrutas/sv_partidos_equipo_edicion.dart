@@ -5,6 +5,7 @@ import 'package:mister_football/clases/jugador.dart';
 import 'package:mister_football/clases/partido.dart';
 import 'package:mister_football/main.dart';
 import 'package:mister_football/routes/partidos/partidos_edicion_creacion/subrutas/detalles_partido_alineacion/w_partidos_alineacion_formaciones_edicion.dart';
+import 'package:mister_football/routes/partidos/partidos_edicion_creacion/v_partidos_edicion.dart';
 
 class PartidoEquipoEdicion extends StatefulWidget {
   final Partido partido;
@@ -44,10 +45,10 @@ class _PartidoEquipoEdicion extends State<PartidoEquipoEdicion> {
   void actualizarFormacionPartido(String formacionElegida) async {
     cambiarFormacion(formacionElegida);
     //Añadir lista de los jugadores convocados al partido.
-    Partido partidoActual = widget.partido;
+    Partido partidoActual = PartidosEdicion.partidoEditado;
     Map<String, List> alineacionActualizada = {};
     if (partidoActual.alineacion != null) {
-      alineacionActualizada = await partidoActual.alineacion;
+      alineacionActualizada = partidoActual.alineacion;
     }
     alineacionActualizada['0'][0] = formacionElegida;
     Partido p = Partido(
@@ -65,8 +66,7 @@ class _PartidoEquipoEdicion extends State<PartidoEquipoEdicion> {
         cambios: partidoActual.cambios,
         observaciones: partidoActual.observaciones,
         isLocal: partidoActual.isLocal);
-    Box boxPartidosEditarAlineacion = await Hive.openBox('partidos');
-    //boxPartidosEditarAlineacion.putAt(widget.posicion, p);
+    PartidosEdicion.partidoEditado = p;
   }
 
   Widget build(BuildContext context) {
@@ -355,10 +355,8 @@ class _PartidoEquipoEdicion extends State<PartidoEquipoEdicion> {
                             cambios: partidoActual.cambios,
                             observaciones: partidoActual.observaciones,
                             isLocal: partidoActual.isLocal);
-                        boxPartidosEditarConvocatoria = await Hive.openBox('partidos');
-                        //boxPartidosEditarConvocatoria.putAt(widget.posicion, p);
+                        PartidosEdicion.partidoEditado = p;
                         setState(() {});
-                        print(postListaJugadoresConvocatoria.length);
                       },
                     ),
                   ],

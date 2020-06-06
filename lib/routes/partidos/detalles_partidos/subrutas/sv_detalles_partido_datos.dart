@@ -190,7 +190,7 @@ class _DetallesPartidoDatos extends State<DetallesPartidoDatos> {
                         bottom: MediaQuery.of(context).size.width * .03,
                       ),
                       child: Text(
-                        "${widget.partido.fecha}",
+                        "${widget.partido.fecha.split("-")[2]}-${widget.partido.fecha.split("-")[1]}-${widget.partido.fecha.split("-")[0]}",
                         textAlign: TextAlign.center,
                       ),
                     ),

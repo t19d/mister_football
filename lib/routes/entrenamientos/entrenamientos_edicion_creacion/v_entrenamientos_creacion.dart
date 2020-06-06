@@ -54,7 +54,7 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
         eventosActualesObjeto = boxEventos.get(0);
         eventosActualesObjeto.listaEventos["${fecha}/${hora}"] = ["Entrenamiento"];
         boxEventos.putAt(0, eventosActualesObjeto);
-      } else{
+      } else {
         eventosActualesObjeto.listaEventos["${fecha}/${hora}"] = ["Entrenamiento"];
         boxEventos.add(eventosActualesObjeto);
       }
@@ -80,7 +80,10 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
   @override
   void initState() {
     super.initState();
-    fecha = "${fechaHoraInicial.year}-${fechaHoraInicial.month}-${fechaHoraInicial.day}";
+    fecha = "${fechaHoraInicial.year}-" +
+        ((fechaHoraInicial.month.toString().length == 1) ? "0${fechaHoraInicial.month}" : "${fechaHoraInicial.month}") +
+        "-" +
+        ((fechaHoraInicial.day.toString().length == 1) ? "0${fechaHoraInicial.day}" : "${fechaHoraInicial.day}");
     hora = ((fechaHoraInicial.hour.toString().length == 1) ? "0${fechaHoraInicial.hour}" : "${fechaHoraInicial.hour}") +
         ":" +
         ((fechaHoraInicial.minute.toString().length == 1) ? "0${fechaHoraInicial.minute}" : "${fechaHoraInicial.minute}");
@@ -117,7 +120,10 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
                             DatePicker.showDatePicker(context, showTitleActions: true, minTime: DateTime(1950, 1, 1), maxTime: DateTime(2200, 12, 31),
                                 onConfirm: (date) {
                               setState(() {
-                                fecha = "${date.year}-${date.month}-${date.day}";
+                                fecha = "${date.year}-" +
+                                    ((date.month.toString().length == 1) ? "0${date.month}" : "${date.month}") +
+                                    "-" +
+                                    ((date.day.toString().length == 1) ? "0${date.day}" : "${date.day}");
                               });
                             },
                                 currentTime: DateTime(
@@ -133,7 +139,7 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
                               Text("Fecha"),
                               Row(
                                 children: <Widget>[
-                                  Text("${fecha}"),
+                                  Text("${fecha.split("-")[2]}-${fecha.split("-")[1]}-${fecha.split("-")[0]}"),
                                   Icon(Icons.calendar_today),
                                 ],
                               ),

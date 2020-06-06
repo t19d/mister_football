@@ -103,7 +103,10 @@ class _PartidosCreacion extends State<PartidosCreacion> {
 
   @override
   void initState() {
-    fecha = "${fechaHoraInicial.year}-${fechaHoraInicial.month}-${fechaHoraInicial.day}";
+    fecha = "${fechaHoraInicial.year}-" +
+        ((fechaHoraInicial.month.toString().length == 1) ? "0${fechaHoraInicial.month}" : "${fechaHoraInicial.month}") +
+        "-" +
+        ((fechaHoraInicial.day.toString().length == 1) ? "0${fechaHoraInicial.day}" : "${fechaHoraInicial.day}");
     hora = ((fechaHoraInicial.hour.toString().length == 1) ? "0${fechaHoraInicial.hour}" : "${fechaHoraInicial.hour}") +
         ":" +
         ((fechaHoraInicial.minute.toString().length == 1) ? "0${fechaHoraInicial.minute}" : "${fechaHoraInicial.minute}");
@@ -171,7 +174,10 @@ class _PartidosCreacion extends State<PartidosCreacion> {
                           DatePicker.showDatePicker(context, showTitleActions: true, minTime: DateTime(1950, 1, 1), maxTime: DateTime(2200, 12, 31),
                               onConfirm: (date) {
                             setState(() {
-                              fecha = "${date.year}-${date.month}-${date.day}";
+                              fecha = "${date.year}-" +
+                                  ((date.month.toString().length == 1) ? "0${date.month}" : "${date.month}") +
+                                  "-" +
+                                  ((date.day.toString().length == 1) ? "0${date.day}" : "${date.day}");
                             });
                           },
                               currentTime: DateTime(

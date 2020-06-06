@@ -113,7 +113,8 @@ class _DetallesPartido extends State<DetallesPartido> {
                     ),
                     tooltip: 'Eliminar partido',
                     onPressed: () async {
-                      var boxEventos = await Hive.openBox('eventos');
+                      Box boxEventos = await Hive.openBox('eventos');
+                      Box boxPartidos = await Hive.openBox('partidos');
                       Eventos eventosActuales = boxEventos.getAt(0);
                       //Eliminar evento
                       eventosActuales.listaEventos.remove("${partido.fecha}/${partido.hora}");

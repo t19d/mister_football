@@ -293,7 +293,7 @@ class _PartidoEquipoEdicion extends State<PartidoEquipoEdicion> {
                     _isSeleccionado = true;
                   }
                 }
-                return Row(
+                /*return Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Row(
@@ -362,6 +362,72 @@ class _PartidoEquipoEdicion extends State<PartidoEquipoEdicion> {
                       },
                     ),
                   ],
+                );
+                */
+                return CheckboxListTile(
+                  title: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      ConversorImagen.imageFromBase64String(jugadorBox.nombre_foto, context),
+                      Text("${jugadorBox.apodo}"), //, style: TextStyle(fontSize: MediaQuery.of(context).size.width * .04)),
+                      //Text("${jugadorBox.posicionFavorita}", style: TextStyle(fontSize: MediaQuery.of(context).size.width * .05),),
+                    ],
+                  ),
+                  value: _isSeleccionado,
+                  onChanged: (bool nuevoEstado) async {
+                    setState(() {
+                      _isSeleccionado = nuevoEstado;
+                    });
+                    Map postAlineacion = partidoActual.alineacion;
+                    if (_isSeleccionado) {
+                      postListaJugadoresConvocatoria.add(jugadorBox.id);
+                      print("Añadido");
+                    } else {
+                      //postListaJugadoresConvocatoria.removeWhere((j) => j == jugadorBox);
+                      for (int i = 0; i < postListaJugadoresConvocatoria.length; i++) {
+                        if (postListaJugadoresConvocatoria[i] == jugadorBox.id) {
+                          postListaJugadoresConvocatoria.removeAt(i);
+                          //Eliminar Jugador de la alineación
+                          /*
+                              Recorrer mapa de alineación y eliminar id coincidente
+                               */
+                          //partidoActual.alineacion['0'][1] //Recorrer este array
+                          postAlineacion.forEach((min, alin) {
+                            print("Minuto $min");
+                            print("Alineacion: $alin");
+                            Map postAlinPartidoActual = alin[1];
+                            alin[1].forEach((posicion, jugadorIDAlineacion) {
+                              if (jugadorIDAlineacion == jugadorBox.id) {
+                                //jugadorIDAlineacion = null;
+                                postAlinPartidoActual['$posicion'] = null;
+                              }
+                            });
+                            print("Alineacion post: $postAlinPartidoActual");
+                            alin[1] = postAlinPartidoActual;
+                            print("Alineacion post: $alin");
+                          });
+                        }
+                      }
+                      print("Eliminado");
+                    }
+                    Partido p = Partido(
+                        fecha: partidoActual.fecha,
+                        hora: partidoActual.hora,
+                        lugar: partidoActual.lugar,
+                        rival: partidoActual.rival,
+                        tipoPartido: partidoActual.tipoPartido,
+                        convocatoria: postListaJugadoresConvocatoria,
+                        alineacion: postAlineacion,
+                        golesAFavor: partidoActual.golesAFavor,
+                        golesEnContra: partidoActual.golesEnContra,
+                        lesiones: partidoActual.lesiones,
+                        tarjetas: partidoActual.tarjetas,
+                        cambios: partidoActual.cambios,
+                        observaciones: partidoActual.observaciones,
+                        isLocal: partidoActual.isLocal);
+                    PartidosEdicion.partidoEditado = p;
+                    setState(() {});
+                  },
                 );
               }),
             ),

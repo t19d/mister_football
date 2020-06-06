@@ -7,7 +7,7 @@ import 'package:mister_football/routes/partidos/partidos_edicion_creacion/v_part
 
 class PartidoDatosEdicion extends StatefulWidget {
   final Partido partido;
-  static Partido partidoActual;
+  //static Partido partidoActual;
 
   PartidoDatosEdicion({Key key, @required this.partido}) : super(key: key);
 
@@ -16,6 +16,15 @@ class PartidoDatosEdicion extends StatefulWidget {
 }
 
 class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
+  //Equipo rival
+  String rivalActualizado = "";
+  //Fecha
+  String fechaActualizada = "";
+  //Hora
+  String horaActualizada = "";
+  //Fecha
+  String lugarActualizado = "";
+
   //Goles a favor
   String _idJugadorSeleccionadoGolesAFavor = "";
   String _minutoSeleccionadoGolesAFavor = "";
@@ -37,6 +46,14 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
   //Lesiones
   String _idJugadorSeleccionadoLesiones = "";
   String _minutoSeleccionadoLesiones = "";
+
+  @override
+  void initState() {
+    super.initState();
+    rivalActualizado = widget.partido.rival;
+    fechaActualizada = widget.partido.fecha;
+    lugarActualizado = widget.partido.lugar;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +99,7 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                       ),
                       width: MediaQuery.of(context).size.width * .6,
                       child: Text(
-                        "${widget.partido.rival}",
+                        "${rivalActualizado}",
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -93,8 +110,17 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                           Icons.mode_edit,
                           color: MisterFootball.primario,
                         ),
-                        onPressed: () {
-                          print("Editar");
+                        onPressed: () async {
+                          await showDialog(
+                            context: context,
+                            barrierDismissible: true,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                content: editarRival(widget.partido),
+                              );
+                            },
+                          );
+                          setState(() {});
                         },
                       ),
                     ),
@@ -118,7 +144,7 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                       ),
                       width: MediaQuery.of(context).size.width * .6,
                       child: Text(
-                        "${widget.partido.fecha}",
+                        "${fechaActualizada.split("-")[2]}-${fechaActualizada.split("-")[1]}-${fechaActualizada.split("-")[0]}",
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -190,7 +216,7 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                       ),
                       width: MediaQuery.of(context).size.width * .6,
                       child: Text(
-                        (widget.partido.lugar.length == 0) ? "-" : "${widget.partido.lugar}",
+                        (lugarActualizado.length == 0) ? "-" : "${lugarActualizado}",
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -201,8 +227,17 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                           Icons.mode_edit,
                           color: MisterFootball.primario,
                         ),
-                        onPressed: () {
-                          print("Editar");
+                        onPressed: () async {
+                          await showDialog(
+                            context: context,
+                            barrierDismissible: true,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                content: editarLugar(widget.partido),
+                              );
+                            },
+                          );
+                          setState(() {});
                         },
                       ),
                     ),
@@ -559,6 +594,130 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  /* Datos prepartido */
+  //Editar Rival
+  Widget editarRival(Partido partidoActual) {
+    //Datos formulario
+    final formKey = new GlobalKey<FormState>();
+    return Form(
+      key: formKey,
+      child: Container(
+        width: MediaQuery.of(context).size.width / 1,
+        height: MediaQuery.of(context).size.height / 1,
+        child: Column(
+          children: <Widget>[
+            Text("Editar rival"),
+            //Rival
+            TextFormField(
+              initialValue: rivalActualizado,
+              textCapitalization: TextCapitalization.sentences,
+              keyboardType: TextInputType.text,
+              validator: (val) => (val.length == 0) ? 'Escribe el nombre del equipo rival' : null,
+              onChanged: (val) => rivalActualizado = val,
+              decoration: InputDecoration(
+                fillColor: Colors.white,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(25.0),
+                  borderSide: BorderSide(),
+                ),
+                labelText: 'Nombre del equipo rival',
+                hintText: 'Nombre del equipo rival',
+              ),
+            ),
+            RaisedButton(
+              child: Text("Aceptar"),
+              onPressed: () {
+                if (formKey.currentState.validate()) {
+                  formKey.currentState.save();
+                  Partido p = Partido(
+                      fecha: partidoActual.fecha,
+                      hora: partidoActual.hora,
+                      lugar: partidoActual.lugar,
+                      rival: rivalActualizado,
+                      tipoPartido: partidoActual.tipoPartido,
+                      convocatoria: partidoActual.convocatoria,
+                      alineacion: partidoActual.alineacion,
+                      golesAFavor: partidoActual.golesAFavor,
+                      golesEnContra: partidoActual.golesEnContra,
+                      lesiones: partidoActual.lesiones,
+                      tarjetas: partidoActual.tarjetas,
+                      cambios: partidoActual.cambios,
+                      observaciones: partidoActual.observaciones,
+                      isLocal: partidoActual.isLocal);
+                  PartidosEdicion.partidoEditado = p;
+                  Navigator.pop(context);
+                }
+              },
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  //Editar Fecha
+  //Editar Hora
+
+  //Editar Lugar
+  Widget editarLugar(Partido partidoActual) {
+    //Datos formulario
+    final formKey = new GlobalKey<FormState>();
+    return Form(
+      key: formKey,
+      child: Container(
+        width: MediaQuery.of(context).size.width / 1,
+        height: MediaQuery.of(context).size.height / 1,
+        child: Column(
+          children: <Widget>[
+            Text("Editar lugar"),
+            //Rival
+            TextFormField(
+              initialValue: lugarActualizado,
+              textCapitalization: TextCapitalization.sentences,
+              keyboardType: TextInputType.text,
+              //validator: (val) => (val.length == 0) ? 'Escribe el lugar del partido' : null,
+              onChanged: (val) => lugarActualizado = val,
+              decoration: InputDecoration(
+                fillColor: Colors.white,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(25.0),
+                  borderSide: BorderSide(),
+                ),
+                labelText: 'Lugar del partido',
+                hintText: 'Lugar del partido',
+              ),
+            ),
+            RaisedButton(
+              child: Text("Aceptar"),
+              onPressed: () {
+                if (formKey.currentState.validate()) {
+                  formKey.currentState.save();
+                  Partido p = Partido(
+                      fecha: partidoActual.fecha,
+                      hora: partidoActual.hora,
+                      lugar: lugarActualizado,
+                      rival: partidoActual.rival,
+                      tipoPartido: partidoActual.tipoPartido,
+                      convocatoria: partidoActual.convocatoria,
+                      alineacion: partidoActual.alineacion,
+                      golesAFavor: partidoActual.golesAFavor,
+                      golesEnContra: partidoActual.golesEnContra,
+                      lesiones: partidoActual.lesiones,
+                      tarjetas: partidoActual.tarjetas,
+                      cambios: partidoActual.cambios,
+                      observaciones: partidoActual.observaciones,
+                      isLocal: partidoActual.isLocal);
+                  PartidosEdicion.partidoEditado = p;
+                  Navigator.pop(context);
+                }
+              },
+            )
+          ],
+        ),
       ),
     );
   }

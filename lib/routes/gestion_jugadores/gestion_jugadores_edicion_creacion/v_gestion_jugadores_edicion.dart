@@ -29,7 +29,7 @@ class _GestionJugadoresEdicion extends State<GestionJugadoresEdicion> {
   String apellido1 = "";
   String apellido2 = "";
   String apodo = ""; //Opcional. En caso de estar vacío, se pone el apellido1
-  String fechaNacimiento = DateTime.now().toLocal().toString().split(' ')[0];
+  String fechaNacimiento = "";
   bool piernaDerechaBuena = true;
   String posicionFavorita = "";
   String anotaciones = "";
@@ -359,7 +359,10 @@ class _GestionJugadoresEdicion extends State<GestionJugadoresEdicion> {
                           DatePicker.showDatePicker(context, showTitleActions: true, minTime: DateTime(1950, 1, 1), maxTime: DateTime.now(),
                               onConfirm: (date) {
                             setState(() {
-                              fechaNacimiento = "${date.year}-${date.month}-${date.day}";
+                              fechaNacimiento = "${date.year}-" +
+                                  ((date.month.toString().length == 1) ? "0${date.month}" : "${date.month}") +
+                                  "-" +
+                                  ((date.day.toString().length == 1) ? "0${date.day}" : "${date.day}");
                             });
                           },
                               currentTime: DateTime(
@@ -381,7 +384,7 @@ class _GestionJugadoresEdicion extends State<GestionJugadoresEdicion> {
                             Row(
                               children: <Widget>[
                                 Text(
-                                  "${fechaNacimiento}",
+                                  "${fechaNacimiento.split("-")[2]}-${fechaNacimiento.split("-")[1]}-${fechaNacimiento.split("-")[0]}",
                                   style: TextStyle(
                                     fontSize: MediaQuery.of(context).size.width / 25,
                                   ),

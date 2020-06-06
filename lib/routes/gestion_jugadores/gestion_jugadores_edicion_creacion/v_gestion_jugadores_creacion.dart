@@ -23,11 +23,12 @@ class _GestionJugadoresCreacion extends State<GestionJugadoresCreacion> {
   Box boxJugadores = null;
 
   //Datos
+  DateTime fechaHoraInicial = DateTime.now();
   String nombre = "";
   String apellido1 = "";
   String apellido2 = "";
   String apodo = ""; //Opcional. En caso de estar vacío, se pone el apellido1
-  String fechaNacimiento = DateTime.now().toLocal().toString().split(' ')[0];
+  String fechaNacimiento = "";
   bool piernaDerechaBuena = true;
   String posicionFavorita = "";
   String anotaciones = "";
@@ -100,9 +101,10 @@ class _GestionJugadoresCreacion extends State<GestionJugadoresCreacion> {
     posicionFavorita = _posicionesDisponibles[0].value;
     _isSelected = [true, false];
     imgString = "";
-    //Iniciar Box de jugadores
-    //abrirBoxJugadores();
-
+    fechaNacimiento = "${fechaHoraInicial.year}-" +
+        ((fechaHoraInicial.month.toString().length == 1) ? "0${fechaHoraInicial.month}" : "${fechaHoraInicial.month}") +
+        "-" +
+        ((fechaHoraInicial.day.toString().length == 1) ? "0${fechaHoraInicial.day}" : "${fechaHoraInicial.day}");
     super.initState();
   }
 
@@ -319,7 +321,10 @@ class _GestionJugadoresCreacion extends State<GestionJugadoresCreacion> {
                           DatePicker.showDatePicker(context, showTitleActions: true, minTime: DateTime(1950, 1, 1), maxTime: DateTime.now(),
                               onConfirm: (date) {
                             setState(() {
-                              fechaNacimiento = "${date.year}-${date.month}-${date.day}";
+                              fechaNacimiento = "${date.year}-" +
+                                  ((date.month.toString().length == 1) ? "0${date.month}" : "${date.month}") +
+                                  "-" +
+                                  ((date.day.toString().length == 1) ? "0${date.day}" : "${date.day}");
                             });
                           },
                               currentTime: DateTime(
@@ -341,7 +346,7 @@ class _GestionJugadoresCreacion extends State<GestionJugadoresCreacion> {
                             Row(
                               children: <Widget>[
                                 Text(
-                                  "${fechaNacimiento}",
+                                  "${fechaNacimiento.split("-")[2]}-${fechaNacimiento.split("-")[1]}-${fechaNacimiento.split("-")[0]}",
                                   style: TextStyle(
                                     fontSize: MediaQuery.of(context).size.width / 25,
                                   ),

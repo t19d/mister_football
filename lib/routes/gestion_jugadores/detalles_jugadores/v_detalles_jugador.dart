@@ -147,7 +147,7 @@ class _DetallesJugador extends State<DetallesJugador> {
                               ),
                               //Edad
                               Text(
-                                "${jugador.calcularEdad()} años (${jugador.fechaNacimiento})",
+                                "${jugador.calcularEdad()} años (${jugador.fechaNacimiento.split("-")[2]}-${jugador.fechaNacimiento.split("-")[1]}-${jugador.fechaNacimiento.split("-")[0]})",
                                 style: estiloTexto,
                               ),
                             ],

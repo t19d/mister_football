@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:mister_football/clases/eventos.dart';
 import 'package:mister_football/clases/partido.dart';
 import 'package:mister_football/main.dart';
-import 'package:mister_football/routes/partidos/partidos_edicion_creacion/subrutas/detalles_partido_alineacion/sv_partidos_alineacion_edicion.dart';
 import 'package:mister_football/routes/partidos/partidos_edicion_creacion/subrutas/sv_partidos_equipo_edicion.dart';
-import 'package:mister_football/routes/partidos/partidos_edicion_creacion/subrutas/sv_partidos_postpartido_edicion.dart';
 import 'package:mister_football/routes/partidos/partidos_edicion_creacion/subrutas/sv_partidos_datos_edicion.dart';
 import 'package:mister_football/routes/partidos/v_partidos.dart';
 
@@ -20,10 +19,18 @@ class PartidosEdicion extends StatefulWidget {
 }
 
 class _PartidosEdicion extends State<PartidosEdicion> {
+  Partido partidoSinEditar;
+
   @override
   void dispose() {
     Hive.close();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    partidoSinEditar = widget.partido;
   }
 
   int _indiceSeleccionado = 0;
@@ -40,6 +47,7 @@ class _PartidosEdicion extends State<PartidosEdicion> {
     await Hive.openBox("partidos");
     //await Hive.openBox("perfil");
     await Hive.openBox("jugadores");
+    await Hive.openBox("eventos");
   }
 
   @override
@@ -83,7 +91,20 @@ class _PartidosEdicion extends State<PartidosEdicion> {
                       eventosActuales.listaEventos.remove("${partido.fecha}/${partido.hora}");
                       boxPartidos.deleteAt(widget.posicion);
                       boxEventos.putAt(0, eventosActuales);*/
+
                       Box boxPartidosEditarAlineacion = Hive.box('partidos');
+                      Box boxEventos = Hive.box('eventos');
+                      Eventos eventosActualesObjeto = boxEventos.get(0);
+                      //Eliminar evento
+                      eventosActualesObjeto.listaEventos.remove("${partidoSinEditar.fecha}/${partidoSinEditar.hora}");
+                      //Crear el nuevo evento
+                      eventosActualesObjeto.listaEventos["${PartidosEdicion.partidoEditado.fecha}/${PartidosEdicion.partidoEditado.hora}"] = [
+                        "Partido",
+                        PartidosEdicion.partidoEditado.rival,
+                        PartidosEdicion.partidoEditado.tipoPartido
+                      ];
+                      boxEventos.putAt(0, eventosActualesObjeto);
+                      print(eventosActualesObjeto.listaEventos);
                       boxPartidosEditarAlineacion.putAt(widget.posicion, PartidosEdicion.partidoEditado);
                       Navigator.pushReplacement(
                         context,

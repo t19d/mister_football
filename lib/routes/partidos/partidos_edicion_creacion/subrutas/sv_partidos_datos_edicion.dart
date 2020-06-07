@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:hive/hive.dart';
 import 'package:mister_football/clases/jugador.dart';
 import 'package:mister_football/clases/partido.dart';
@@ -7,6 +8,7 @@ import 'package:mister_football/routes/partidos/partidos_edicion_creacion/v_part
 
 class PartidoDatosEdicion extends StatefulWidget {
   final Partido partido;
+
   //static Partido partidoActual;
 
   PartidoDatosEdicion({Key key, @required this.partido}) : super(key: key);
@@ -18,12 +20,26 @@ class PartidoDatosEdicion extends StatefulWidget {
 class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
   //Equipo rival
   String rivalActualizado = "";
+
   //Fecha
   String fechaActualizada = "";
+
   //Hora
   String horaActualizada = "";
-  //Fecha
+
+  //Lugar
   String lugarActualizado = "";
+
+  //isLocal
+  bool isLocalActualizado;
+  bool isLocalAlert = true;
+  List<bool> _isSelectedAlert = [true, false];
+
+  //Tipo de partido
+  String tipoPartidoActualizado = "";
+  String tipoPartidoAlert = "";
+  List<DropdownMenuItem<String>> _tipoDePartidoDisponibles;
+  List _tipoDePartido = ["Liga", "Copa", "Amistoso", "Torneo amistoso"];
 
   //Goles a favor
   String _idJugadorSeleccionadoGolesAFavor = "";
@@ -52,7 +68,13 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
     super.initState();
     rivalActualizado = widget.partido.rival;
     fechaActualizada = widget.partido.fecha;
+    horaActualizada = widget.partido.hora;
     lugarActualizado = widget.partido.lugar;
+    isLocalActualizado = widget.partido.isLocal;
+    isLocalAlert = widget.partido.isLocal;
+    tipoPartidoActualizado = widget.partido.tipoPartido;
+    tipoPartidoAlert = widget.partido.tipoPartido;
+    _tipoDePartidoDisponibles = getDropDownMenuItems();
   }
 
   @override
@@ -156,7 +178,37 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                           color: MisterFootball.primario,
                         ),
                         onPressed: () {
-                          print("Editar");
+                          //Seleccionar fecha
+                          DatePicker.showDatePicker(context, showTitleActions: true, minTime: DateTime(1950, 1, 1), maxTime: DateTime(2200, 12, 31),
+                              onConfirm: (date) async {
+                            fechaActualizada = "${date.year}-" +
+                                ((date.month.toString().length == 1) ? "0${date.month}" : "${date.month}") +
+                                "-" +
+                                ((date.day.toString().length == 1) ? "0${date.day}" : "${date.day}");
+                            Partido p = Partido(
+                                fecha: fechaActualizada,
+                                hora: PartidosEdicion.partidoEditado.hora,
+                                lugar: PartidosEdicion.partidoEditado.lugar,
+                                rival: PartidosEdicion.partidoEditado.rival,
+                                tipoPartido: PartidosEdicion.partidoEditado.tipoPartido,
+                                convocatoria: PartidosEdicion.partidoEditado.convocatoria,
+                                alineacion: PartidosEdicion.partidoEditado.alineacion,
+                                golesAFavor: PartidosEdicion.partidoEditado.golesAFavor,
+                                golesEnContra: PartidosEdicion.partidoEditado.golesEnContra,
+                                lesiones: PartidosEdicion.partidoEditado.lesiones,
+                                tarjetas: PartidosEdicion.partidoEditado.tarjetas,
+                                cambios: PartidosEdicion.partidoEditado.cambios,
+                                observaciones: PartidosEdicion.partidoEditado.observaciones,
+                                isLocal: PartidosEdicion.partidoEditado.isLocal);
+                            PartidosEdicion.partidoEditado = p;
+                            setState(() {});
+                          },
+                              currentTime: DateTime(
+                                int.parse(fechaActualizada.split("-")[0]),
+                                int.parse(fechaActualizada.split("-")[1]),
+                                int.parse(fechaActualizada.split("-")[2]),
+                              ),
+                              locale: LocaleType.es);
                         },
                       ),
                     ),
@@ -180,7 +232,7 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                       ),
                       width: MediaQuery.of(context).size.width * .6,
                       child: Text(
-                        "${widget.partido.hora}",
+                        "${horaActualizada}",
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -192,7 +244,37 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                           color: MisterFootball.primario,
                         ),
                         onPressed: () {
-                          print("Editar");
+                          //Seleccionar hora
+                          DatePicker.showTimePicker(context, showTitleActions: true, onConfirm: (time) {
+                            horaActualizada = ((time.hour.toString().length == 1) ? "0${time.hour}" : "${time.hour}") +
+                                ":" +
+                                ((time.minute.toString().length == 1) ? "0${time.minute}" : "${time.minute}");
+                            Partido p = Partido(
+                                fecha: PartidosEdicion.partidoEditado.fecha,
+                                hora: horaActualizada,
+                                lugar: PartidosEdicion.partidoEditado.lugar,
+                                rival: PartidosEdicion.partidoEditado.rival,
+                                tipoPartido: PartidosEdicion.partidoEditado.tipoPartido,
+                                convocatoria: PartidosEdicion.partidoEditado.convocatoria,
+                                alineacion: PartidosEdicion.partidoEditado.alineacion,
+                                golesAFavor: PartidosEdicion.partidoEditado.golesAFavor,
+                                golesEnContra: PartidosEdicion.partidoEditado.golesEnContra,
+                                lesiones: PartidosEdicion.partidoEditado.lesiones,
+                                tarjetas: PartidosEdicion.partidoEditado.tarjetas,
+                                cambios: PartidosEdicion.partidoEditado.cambios,
+                                observaciones: PartidosEdicion.partidoEditado.observaciones,
+                                isLocal: PartidosEdicion.partidoEditado.isLocal);
+                            PartidosEdicion.partidoEditado = p;
+                            setState(() {});
+                          },
+                              currentTime: DateTime(
+                                int.parse(fechaActualizada.split("-")[0]),
+                                int.parse(fechaActualizada.split("-")[1]),
+                                int.parse(fechaActualizada.split("-")[2]),
+                                int.parse(horaActualizada.split(":")[0]),
+                                int.parse(horaActualizada.split(":")[1]),
+                              ),
+                              locale: LocaleType.es);
                         },
                       ),
                     ),
@@ -261,7 +343,7 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                       ),
                       width: MediaQuery.of(context).size.width * .6,
                       child: Text(
-                        (widget.partido.isLocal) ? "Local" : "Visitante",
+                        (isLocalActualizado) ? "Local" : "Visitante",
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -272,8 +354,21 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                           Icons.mode_edit,
                           color: MisterFootball.primario,
                         ),
-                        onPressed: () {
-                          print("Editar");
+                        onPressed: () async {
+                          await showDialog(
+                            context: context,
+                            barrierDismissible: true,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                content: StatefulBuilder(
+                                  builder: (BuildContext context, StateSetter setState) {
+                                    return editarLocal(setState);
+                                  },
+                                ),
+                              );
+                            },
+                          );
+                          setState(() {});
                         },
                       ),
                     ),
@@ -297,7 +392,7 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                       ),
                       width: MediaQuery.of(context).size.width * .6,
                       child: Text(
-                        "${widget.partido.tipoPartido}",
+                        tipoPartidoActualizado,
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -308,8 +403,21 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                           Icons.mode_edit,
                           color: MisterFootball.primario,
                         ),
-                        onPressed: () {
-                          print("Editar");
+                        onPressed: () async {
+                          await showDialog(
+                            context: context,
+                            barrierDismissible: true,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                content: StatefulBuilder(
+                                  builder: (BuildContext context, StateSetter setState) {
+                                    return editarTipo(setState);
+                                  },
+                                ),
+                              );
+                            },
+                          );
+                          setState(() {});
                         },
                       ),
                     ),
@@ -634,20 +742,20 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                 if (formKey.currentState.validate()) {
                   formKey.currentState.save();
                   Partido p = Partido(
-                      fecha: partidoActual.fecha,
-                      hora: partidoActual.hora,
-                      lugar: partidoActual.lugar,
+                      fecha: PartidosEdicion.partidoEditado.fecha,
+                      hora: PartidosEdicion.partidoEditado.hora,
+                      lugar: PartidosEdicion.partidoEditado.lugar,
                       rival: rivalActualizado,
-                      tipoPartido: partidoActual.tipoPartido,
-                      convocatoria: partidoActual.convocatoria,
-                      alineacion: partidoActual.alineacion,
-                      golesAFavor: partidoActual.golesAFavor,
-                      golesEnContra: partidoActual.golesEnContra,
-                      lesiones: partidoActual.lesiones,
-                      tarjetas: partidoActual.tarjetas,
-                      cambios: partidoActual.cambios,
-                      observaciones: partidoActual.observaciones,
-                      isLocal: partidoActual.isLocal);
+                      tipoPartido: PartidosEdicion.partidoEditado.tipoPartido,
+                      convocatoria: PartidosEdicion.partidoEditado.convocatoria,
+                      alineacion: PartidosEdicion.partidoEditado.alineacion,
+                      golesAFavor: PartidosEdicion.partidoEditado.golesAFavor,
+                      golesEnContra: PartidosEdicion.partidoEditado.golesEnContra,
+                      lesiones: PartidosEdicion.partidoEditado.lesiones,
+                      tarjetas: PartidosEdicion.partidoEditado.tarjetas,
+                      cambios: PartidosEdicion.partidoEditado.cambios,
+                      observaciones: PartidosEdicion.partidoEditado.observaciones,
+                      isLocal: PartidosEdicion.partidoEditado.isLocal);
                   PartidosEdicion.partidoEditado = p;
                   Navigator.pop(context);
                 }
@@ -658,9 +766,6 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
       ),
     );
   }
-
-  //Editar Fecha
-  //Editar Hora
 
   //Editar Lugar
   Widget editarLugar(Partido partidoActual) {
@@ -697,20 +802,20 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                 if (formKey.currentState.validate()) {
                   formKey.currentState.save();
                   Partido p = Partido(
-                      fecha: partidoActual.fecha,
-                      hora: partidoActual.hora,
+                      fecha: PartidosEdicion.partidoEditado.fecha,
+                      hora: PartidosEdicion.partidoEditado.hora,
                       lugar: lugarActualizado,
-                      rival: partidoActual.rival,
-                      tipoPartido: partidoActual.tipoPartido,
-                      convocatoria: partidoActual.convocatoria,
-                      alineacion: partidoActual.alineacion,
-                      golesAFavor: partidoActual.golesAFavor,
-                      golesEnContra: partidoActual.golesEnContra,
-                      lesiones: partidoActual.lesiones,
-                      tarjetas: partidoActual.tarjetas,
-                      cambios: partidoActual.cambios,
-                      observaciones: partidoActual.observaciones,
-                      isLocal: partidoActual.isLocal);
+                      rival: PartidosEdicion.partidoEditado.rival,
+                      tipoPartido: PartidosEdicion.partidoEditado.tipoPartido,
+                      convocatoria: PartidosEdicion.partidoEditado.convocatoria,
+                      alineacion: PartidosEdicion.partidoEditado.alineacion,
+                      golesAFavor: PartidosEdicion.partidoEditado.golesAFavor,
+                      golesEnContra: PartidosEdicion.partidoEditado.golesEnContra,
+                      lesiones: PartidosEdicion.partidoEditado.lesiones,
+                      tarjetas: PartidosEdicion.partidoEditado.tarjetas,
+                      cambios: PartidosEdicion.partidoEditado.cambios,
+                      observaciones: PartidosEdicion.partidoEditado.observaciones,
+                      isLocal: PartidosEdicion.partidoEditado.isLocal);
                   PartidosEdicion.partidoEditado = p;
                   Navigator.pop(context);
                 }
@@ -721,6 +826,160 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
       ),
     );
   }
+
+  //Editar isLocal
+  Widget editarLocal(StateSetter setState) {
+    return Container(
+      width: MediaQuery.of(context).size.width / 1,
+      height: MediaQuery.of(context).size.height / 1,
+      child: Column(
+        children: <Widget>[
+          Text("Editar Local/Visitante"),
+          //isLocal
+          ToggleButtons(
+            borderColor: Colors.blueAccent.withOpacity(.5),
+            selectedBorderColor: Colors.blueAccent,
+            children: <Widget>[
+              Container(
+                width: MediaQuery.of(context).size.width * .33,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(
+                      Icons.home,
+                    ),
+                    Text(
+                      "LOCAL",
+                    )
+                  ],
+                ),
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width * .33,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(
+                      Icons.directions_bus,
+                    ),
+                    Text(
+                      "VISITANTE",
+                    ),
+                  ],
+                ),
+              ),
+            ],
+            onPressed: (int index) {
+              for (int j = 0; j < _isSelectedAlert.length; j++) {
+                if (j == index) {
+                  //Roja
+                  _isSelectedAlert[j] = true;
+                  isLocalAlert = false;
+                } else {
+                  //Amarilla
+                  _isSelectedAlert[j] = false;
+                  isLocalAlert = true;
+                }
+              }
+              setState(() {});
+            },
+            isSelected: _isSelectedAlert,
+          ),
+          RaisedButton(
+            child: Text("Aceptar"),
+            onPressed: () {
+              isLocalActualizado = isLocalAlert;
+              Partido p = Partido(
+                  fecha: PartidosEdicion.partidoEditado.fecha,
+                  hora: PartidosEdicion.partidoEditado.hora,
+                  lugar: PartidosEdicion.partidoEditado.lugar,
+                  rival: PartidosEdicion.partidoEditado.rival,
+                  tipoPartido: PartidosEdicion.partidoEditado.tipoPartido,
+                  convocatoria: PartidosEdicion.partidoEditado.convocatoria,
+                  alineacion: PartidosEdicion.partidoEditado.alineacion,
+                  golesAFavor: PartidosEdicion.partidoEditado.golesAFavor,
+                  golesEnContra: PartidosEdicion.partidoEditado.golesEnContra,
+                  lesiones: PartidosEdicion.partidoEditado.lesiones,
+                  tarjetas: PartidosEdicion.partidoEditado.tarjetas,
+                  cambios: PartidosEdicion.partidoEditado.cambios,
+                  observaciones: PartidosEdicion.partidoEditado.observaciones,
+                  isLocal: isLocalActualizado);
+              PartidosEdicion.partidoEditado = p;
+              Navigator.pop(context);
+            },
+          )
+        ],
+      ),
+    );
+  }
+
+  //Editar Tipo
+  //Hacer el Spinner de tipo de partido
+  List<DropdownMenuItem<String>> getDropDownMenuItems() {
+    List<DropdownMenuItem<String>> items = List();
+    for (String tp in _tipoDePartido) {
+      items.add(
+        DropdownMenuItem(
+          value: tp,
+          child: Text(tp),
+        ),
+      );
+    }
+    return items;
+  }
+
+  Widget editarTipo(StateSetter setState) {
+    //Datos formulario
+    return Container(
+      width: MediaQuery.of(context).size.width / 1,
+      height: MediaQuery.of(context).size.height / 1,
+      child: Column(
+        children: <Widget>[
+          Text("Editar tipo"),
+          //Rival
+          DropdownButton(
+            elevation: 2,
+            icon: Icon(
+              Icons.keyboard_arrow_down,
+              size: MediaQuery.of(context).size.width * .07,
+            ),
+            value: tipoPartidoAlert,
+            items: _tipoDePartidoDisponibles,
+            onChanged: (tipoPartidoElegido) {
+              setState(() {
+                tipoPartidoAlert = tipoPartidoElegido;
+              });
+            },
+          ),
+          RaisedButton(
+            child: Text("Aceptar"),
+            onPressed: () {
+              tipoPartidoActualizado = tipoPartidoAlert;
+              Partido p = Partido(
+                  fecha: PartidosEdicion.partidoEditado.fecha,
+                  hora: PartidosEdicion.partidoEditado.hora,
+                  lugar: PartidosEdicion.partidoEditado.lugar,
+                  rival: PartidosEdicion.partidoEditado.rival,
+                  tipoPartido: tipoPartidoActualizado,
+                  convocatoria: PartidosEdicion.partidoEditado.convocatoria,
+                  alineacion: PartidosEdicion.partidoEditado.alineacion,
+                  golesAFavor: PartidosEdicion.partidoEditado.golesAFavor,
+                  golesEnContra: PartidosEdicion.partidoEditado.golesEnContra,
+                  lesiones: PartidosEdicion.partidoEditado.lesiones,
+                  tarjetas: PartidosEdicion.partidoEditado.tarjetas,
+                  cambios: PartidosEdicion.partidoEditado.cambios,
+                  observaciones: PartidosEdicion.partidoEditado.observaciones,
+                  isLocal: PartidosEdicion.partidoEditado.isLocal);
+              PartidosEdicion.partidoEditado = p;
+              Navigator.pop(context);
+            },
+          )
+        ],
+      ),
+    );
+  }
+
+  /*               */
 
   /* Goles a Favor */
   //Mostrar lista [Minuto, Jugador]
@@ -781,20 +1040,20 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                       //if (golesAFavorActuales[i][1] == jugadorFila.id) {
                       golesAFavorActuales.removeAt(iFila);
                       Partido p = Partido(
-                          fecha: partidoActual.fecha,
-                          hora: partidoActual.hora,
-                          lugar: partidoActual.lugar,
-                          rival: partidoActual.rival,
-                          tipoPartido: partidoActual.tipoPartido,
-                          convocatoria: partidoActual.convocatoria,
-                          alineacion: partidoActual.alineacion,
+                          fecha: PartidosEdicion.partidoEditado.fecha,
+                          hora: PartidosEdicion.partidoEditado.hora,
+                          lugar: PartidosEdicion.partidoEditado.lugar,
+                          rival: PartidosEdicion.partidoEditado.rival,
+                          tipoPartido: PartidosEdicion.partidoEditado.tipoPartido,
+                          convocatoria: PartidosEdicion.partidoEditado.convocatoria,
+                          alineacion: PartidosEdicion.partidoEditado.alineacion,
                           golesAFavor: golesAFavorActuales,
-                          golesEnContra: partidoActual.golesEnContra,
-                          lesiones: partidoActual.lesiones,
-                          tarjetas: partidoActual.tarjetas,
-                          cambios: partidoActual.cambios,
-                          observaciones: partidoActual.observaciones,
-                          isLocal: partidoActual.isLocal);
+                          golesEnContra: PartidosEdicion.partidoEditado.golesEnContra,
+                          lesiones: PartidosEdicion.partidoEditado.lesiones,
+                          tarjetas: PartidosEdicion.partidoEditado.tarjetas,
+                          cambios: PartidosEdicion.partidoEditado.cambios,
+                          observaciones: PartidosEdicion.partidoEditado.observaciones,
+                          isLocal: PartidosEdicion.partidoEditado.isLocal);
                       PartidosEdicion.partidoEditado = p;
                       setState(() {});
                     }),
@@ -883,20 +1142,20 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                           golesAFavorActuales.add(["$_minutoSeleccionadoGolesAFavor", "$_idJugadorSeleccionadoGolesAFavor"]);
                           golesAFavorActuales.sort((a, b) => int.parse(a[0]).compareTo(int.parse(b[0])));
                           Partido p = Partido(
-                              fecha: partidoActual.fecha,
-                              hora: partidoActual.hora,
-                              lugar: partidoActual.lugar,
-                              rival: partidoActual.rival,
-                              tipoPartido: partidoActual.tipoPartido,
-                              convocatoria: partidoActual.convocatoria,
-                              alineacion: partidoActual.alineacion,
+                              fecha: PartidosEdicion.partidoEditado.fecha,
+                              hora: PartidosEdicion.partidoEditado.hora,
+                              lugar: PartidosEdicion.partidoEditado.lugar,
+                              rival: PartidosEdicion.partidoEditado.rival,
+                              tipoPartido: PartidosEdicion.partidoEditado.tipoPartido,
+                              convocatoria: PartidosEdicion.partidoEditado.convocatoria,
+                              alineacion: PartidosEdicion.partidoEditado.alineacion,
                               golesAFavor: golesAFavorActuales,
-                              golesEnContra: partidoActual.golesEnContra,
-                              lesiones: partidoActual.lesiones,
-                              tarjetas: partidoActual.tarjetas,
-                              cambios: partidoActual.cambios,
-                              observaciones: partidoActual.observaciones,
-                              isLocal: partidoActual.isLocal);
+                              golesEnContra: PartidosEdicion.partidoEditado.golesEnContra,
+                              lesiones: PartidosEdicion.partidoEditado.lesiones,
+                              tarjetas: PartidosEdicion.partidoEditado.tarjetas,
+                              cambios: PartidosEdicion.partidoEditado.cambios,
+                              observaciones: PartidosEdicion.partidoEditado.observaciones,
+                              isLocal: PartidosEdicion.partidoEditado.isLocal);
                           PartidosEdicion.partidoEditado = p;
                           //Limpiar campos
                           _idJugadorSeleccionadoGolesAFavor = "";
@@ -958,20 +1217,20 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                       List golesEnContraActuales = partidoActual.golesEnContra;
                       golesEnContraActuales.removeAt(iFila);
                       Partido p = Partido(
-                          fecha: partidoActual.fecha,
-                          hora: partidoActual.hora,
-                          lugar: partidoActual.lugar,
-                          rival: partidoActual.rival,
-                          tipoPartido: partidoActual.tipoPartido,
-                          convocatoria: partidoActual.convocatoria,
-                          alineacion: partidoActual.alineacion,
-                          golesAFavor: partidoActual.golesAFavor,
+                          fecha: PartidosEdicion.partidoEditado.fecha,
+                          hora: PartidosEdicion.partidoEditado.hora,
+                          lugar: PartidosEdicion.partidoEditado.lugar,
+                          rival: PartidosEdicion.partidoEditado.rival,
+                          tipoPartido: PartidosEdicion.partidoEditado.tipoPartido,
+                          convocatoria: PartidosEdicion.partidoEditado.convocatoria,
+                          alineacion: PartidosEdicion.partidoEditado.alineacion,
+                          golesAFavor: PartidosEdicion.partidoEditado.golesAFavor,
                           golesEnContra: golesEnContraActuales,
-                          lesiones: partidoActual.lesiones,
-                          tarjetas: partidoActual.tarjetas,
-                          cambios: partidoActual.cambios,
-                          observaciones: partidoActual.observaciones,
-                          isLocal: partidoActual.isLocal);
+                          lesiones: PartidosEdicion.partidoEditado.lesiones,
+                          tarjetas: PartidosEdicion.partidoEditado.tarjetas,
+                          cambios: PartidosEdicion.partidoEditado.cambios,
+                          observaciones: PartidosEdicion.partidoEditado.observaciones,
+                          isLocal: PartidosEdicion.partidoEditado.isLocal);
                       PartidosEdicion.partidoEditado = p;
                       setState(() {});
                     }),
@@ -1026,20 +1285,20 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                   golesEnContraActuales.add("$_minutoSeleccionadoGolesEnContra");
                   golesEnContraActuales.sort((a, b) => int.parse(a).compareTo(int.parse(b)));
                   Partido p = Partido(
-                      fecha: partidoActual.fecha,
-                      hora: partidoActual.hora,
-                      lugar: partidoActual.lugar,
-                      rival: partidoActual.rival,
-                      tipoPartido: partidoActual.tipoPartido,
-                      convocatoria: partidoActual.convocatoria,
-                      alineacion: partidoActual.alineacion,
-                      golesAFavor: partidoActual.golesAFavor,
+                      fecha: PartidosEdicion.partidoEditado.fecha,
+                      hora: PartidosEdicion.partidoEditado.hora,
+                      lugar: PartidosEdicion.partidoEditado.lugar,
+                      rival: PartidosEdicion.partidoEditado.rival,
+                      tipoPartido: PartidosEdicion.partidoEditado.tipoPartido,
+                      convocatoria: PartidosEdicion.partidoEditado.convocatoria,
+                      alineacion: PartidosEdicion.partidoEditado.alineacion,
+                      golesAFavor: PartidosEdicion.partidoEditado.golesAFavor,
                       golesEnContra: golesEnContraActuales,
-                      lesiones: partidoActual.lesiones,
-                      tarjetas: partidoActual.tarjetas,
-                      cambios: partidoActual.cambios,
-                      observaciones: partidoActual.observaciones,
-                      isLocal: partidoActual.isLocal);
+                      lesiones: PartidosEdicion.partidoEditado.lesiones,
+                      tarjetas: PartidosEdicion.partidoEditado.tarjetas,
+                      cambios: PartidosEdicion.partidoEditado.cambios,
+                      observaciones: PartidosEdicion.partidoEditado.observaciones,
+                      isLocal: PartidosEdicion.partidoEditado.isLocal);
                   PartidosEdicion.partidoEditado = p;
                   //Limpiar campos
                   //_minutoSeleccionadoGolesEnContra = "";
@@ -1126,20 +1385,20 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                       List tarjetasActuales = partidoActual.tarjetas;
                       tarjetasActuales.removeAt(iFila);
                       Partido p = Partido(
-                          fecha: partidoActual.fecha,
-                          hora: partidoActual.hora,
-                          lugar: partidoActual.lugar,
-                          rival: partidoActual.rival,
-                          tipoPartido: partidoActual.tipoPartido,
-                          convocatoria: partidoActual.convocatoria,
-                          alineacion: partidoActual.alineacion,
-                          golesAFavor: partidoActual.golesAFavor,
-                          golesEnContra: partidoActual.golesEnContra,
-                          lesiones: partidoActual.lesiones,
+                          fecha: PartidosEdicion.partidoEditado.fecha,
+                          hora: PartidosEdicion.partidoEditado.hora,
+                          lugar: PartidosEdicion.partidoEditado.lugar,
+                          rival: PartidosEdicion.partidoEditado.rival,
+                          tipoPartido: PartidosEdicion.partidoEditado.tipoPartido,
+                          convocatoria: PartidosEdicion.partidoEditado.convocatoria,
+                          alineacion: PartidosEdicion.partidoEditado.alineacion,
+                          golesAFavor: PartidosEdicion.partidoEditado.golesAFavor,
+                          golesEnContra: PartidosEdicion.partidoEditado.golesEnContra,
+                          lesiones: PartidosEdicion.partidoEditado.lesiones,
                           tarjetas: tarjetasActuales,
-                          cambios: partidoActual.cambios,
-                          observaciones: partidoActual.observaciones,
-                          isLocal: partidoActual.isLocal);
+                          cambios: PartidosEdicion.partidoEditado.cambios,
+                          observaciones: PartidosEdicion.partidoEditado.observaciones,
+                          isLocal: PartidosEdicion.partidoEditado.isLocal);
                       PartidosEdicion.partidoEditado = p;
                       setState(() {});
                     }),
@@ -1296,20 +1555,20 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                           tarjetasActuales.add(["$_minutoSeleccionadoTarjeta", "$_colorSeleccionadoTarjeta", "$_idJugadorSeleccionadoTarjeta"]);
                           tarjetasActuales.sort((a, b) => int.parse(a[0]).compareTo(int.parse(b[0])));
                           Partido p = Partido(
-                              fecha: partidoActual.fecha,
-                              hora: partidoActual.hora,
-                              lugar: partidoActual.lugar,
-                              rival: partidoActual.rival,
-                              tipoPartido: partidoActual.tipoPartido,
-                              convocatoria: partidoActual.convocatoria,
-                              alineacion: partidoActual.alineacion,
-                              golesAFavor: partidoActual.golesAFavor,
-                              golesEnContra: partidoActual.golesEnContra,
-                              lesiones: partidoActual.lesiones,
+                              fecha: PartidosEdicion.partidoEditado.fecha,
+                              hora: PartidosEdicion.partidoEditado.hora,
+                              lugar: PartidosEdicion.partidoEditado.lugar,
+                              rival: PartidosEdicion.partidoEditado.rival,
+                              tipoPartido: PartidosEdicion.partidoEditado.tipoPartido,
+                              convocatoria: PartidosEdicion.partidoEditado.convocatoria,
+                              alineacion: PartidosEdicion.partidoEditado.alineacion,
+                              golesAFavor: PartidosEdicion.partidoEditado.golesAFavor,
+                              golesEnContra: PartidosEdicion.partidoEditado.golesEnContra,
+                              lesiones: PartidosEdicion.partidoEditado.lesiones,
                               tarjetas: tarjetasActuales,
-                              cambios: partidoActual.cambios,
-                              observaciones: partidoActual.observaciones,
-                              isLocal: partidoActual.isLocal);
+                              cambios: PartidosEdicion.partidoEditado.cambios,
+                              observaciones: PartidosEdicion.partidoEditado.observaciones,
+                              isLocal: PartidosEdicion.partidoEditado.isLocal);
                           PartidosEdicion.partidoEditado = p;
 
                           //Limpiar campos
@@ -1435,20 +1694,20 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                       List cambiosActuales = partidoActual.cambios;
                       cambiosActuales.removeAt(iFila);
                       Partido p = Partido(
-                          fecha: partidoActual.fecha,
-                          hora: partidoActual.hora,
-                          lugar: partidoActual.lugar,
-                          rival: partidoActual.rival,
-                          tipoPartido: partidoActual.tipoPartido,
-                          convocatoria: partidoActual.convocatoria,
-                          alineacion: partidoActual.alineacion,
-                          golesAFavor: partidoActual.golesAFavor,
-                          golesEnContra: partidoActual.golesEnContra,
-                          lesiones: partidoActual.lesiones,
-                          tarjetas: partidoActual.tarjetas,
+                          fecha: PartidosEdicion.partidoEditado.fecha,
+                          hora: PartidosEdicion.partidoEditado.hora,
+                          lugar: PartidosEdicion.partidoEditado.lugar,
+                          rival: PartidosEdicion.partidoEditado.rival,
+                          tipoPartido: PartidosEdicion.partidoEditado.tipoPartido,
+                          convocatoria: PartidosEdicion.partidoEditado.convocatoria,
+                          alineacion: PartidosEdicion.partidoEditado.alineacion,
+                          golesAFavor: PartidosEdicion.partidoEditado.golesAFavor,
+                          golesEnContra: PartidosEdicion.partidoEditado.golesEnContra,
+                          lesiones: PartidosEdicion.partidoEditado.lesiones,
+                          tarjetas: PartidosEdicion.partidoEditado.tarjetas,
                           cambios: cambiosActuales,
-                          observaciones: partidoActual.observaciones,
-                          isLocal: partidoActual.isLocal);
+                          observaciones: PartidosEdicion.partidoEditado.observaciones,
+                          isLocal: PartidosEdicion.partidoEditado.isLocal);
                       PartidosEdicion.partidoEditado = p;
                       setState(() {});
                     }),
@@ -1570,20 +1829,20 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                                 .add(["$_minutoSeleccionadoCambios", "$_idJugadorEntraSeleccionadoCambios", "$_idJugadorSaleSeleccionadoCambios"]);
                             cambiosActuales.sort((a, b) => int.parse(a[0]).compareTo(int.parse(b[0])));
                             Partido p = Partido(
-                                fecha: partidoActual.fecha,
-                                hora: partidoActual.hora,
-                                lugar: partidoActual.lugar,
-                                rival: partidoActual.rival,
-                                tipoPartido: partidoActual.tipoPartido,
-                                convocatoria: partidoActual.convocatoria,
-                                alineacion: partidoActual.alineacion,
-                                golesAFavor: partidoActual.golesAFavor,
-                                golesEnContra: partidoActual.golesEnContra,
-                                lesiones: partidoActual.lesiones,
-                                tarjetas: partidoActual.tarjetas,
+                                fecha: PartidosEdicion.partidoEditado.fecha,
+                                hora: PartidosEdicion.partidoEditado.hora,
+                                lugar: PartidosEdicion.partidoEditado.lugar,
+                                rival: PartidosEdicion.partidoEditado.rival,
+                                tipoPartido: PartidosEdicion.partidoEditado.tipoPartido,
+                                convocatoria: PartidosEdicion.partidoEditado.convocatoria,
+                                alineacion: PartidosEdicion.partidoEditado.alineacion,
+                                golesAFavor: PartidosEdicion.partidoEditado.golesAFavor,
+                                golesEnContra: PartidosEdicion.partidoEditado.golesEnContra,
+                                lesiones: PartidosEdicion.partidoEditado.lesiones,
+                                tarjetas: PartidosEdicion.partidoEditado.tarjetas,
                                 cambios: cambiosActuales,
-                                observaciones: partidoActual.observaciones,
-                                isLocal: partidoActual.isLocal);
+                                observaciones: PartidosEdicion.partidoEditado.observaciones,
+                                isLocal: PartidosEdicion.partidoEditado.isLocal);
                             PartidosEdicion.partidoEditado = p;
 
                             //Limpiar campos
@@ -1671,20 +1930,20 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                       List lesionesActuales = partidoActual.lesiones;
                       lesionesActuales.removeAt(iFila);
                       Partido p = Partido(
-                          fecha: partidoActual.fecha,
-                          hora: partidoActual.hora,
-                          lugar: partidoActual.lugar,
-                          rival: partidoActual.rival,
-                          tipoPartido: partidoActual.tipoPartido,
-                          convocatoria: partidoActual.convocatoria,
-                          alineacion: partidoActual.alineacion,
-                          golesAFavor: partidoActual.golesAFavor,
-                          golesEnContra: partidoActual.golesEnContra,
+                          fecha: PartidosEdicion.partidoEditado.fecha,
+                          hora: PartidosEdicion.partidoEditado.hora,
+                          lugar: PartidosEdicion.partidoEditado.lugar,
+                          rival: PartidosEdicion.partidoEditado.rival,
+                          tipoPartido: PartidosEdicion.partidoEditado.tipoPartido,
+                          convocatoria: PartidosEdicion.partidoEditado.convocatoria,
+                          alineacion: PartidosEdicion.partidoEditado.alineacion,
+                          golesAFavor: PartidosEdicion.partidoEditado.golesAFavor,
+                          golesEnContra: PartidosEdicion.partidoEditado.golesEnContra,
                           lesiones: lesionesActuales,
-                          tarjetas: partidoActual.tarjetas,
-                          cambios: partidoActual.cambios,
-                          observaciones: partidoActual.observaciones,
-                          isLocal: partidoActual.isLocal);
+                          tarjetas: PartidosEdicion.partidoEditado.tarjetas,
+                          cambios: PartidosEdicion.partidoEditado.cambios,
+                          observaciones: PartidosEdicion.partidoEditado.observaciones,
+                          isLocal: PartidosEdicion.partidoEditado.isLocal);
                       PartidosEdicion.partidoEditado = p;
                       setState(() {});
                     }),
@@ -1772,20 +2031,20 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                           lesionesActuales.add(["$_minutoSeleccionadoLesiones", "$_idJugadorSeleccionadoLesiones"]);
                           lesionesActuales.sort((a, b) => int.parse(a[0]).compareTo(int.parse(b[0])));
                           Partido p = Partido(
-                              fecha: partidoActual.fecha,
-                              hora: partidoActual.hora,
-                              lugar: partidoActual.lugar,
-                              rival: partidoActual.rival,
-                              tipoPartido: partidoActual.tipoPartido,
-                              convocatoria: partidoActual.convocatoria,
-                              alineacion: partidoActual.alineacion,
-                              golesAFavor: partidoActual.golesAFavor,
-                              golesEnContra: partidoActual.golesEnContra,
+                              fecha: PartidosEdicion.partidoEditado.fecha,
+                              hora: PartidosEdicion.partidoEditado.hora,
+                              lugar: PartidosEdicion.partidoEditado.lugar,
+                              rival: PartidosEdicion.partidoEditado.rival,
+                              tipoPartido: PartidosEdicion.partidoEditado.tipoPartido,
+                              convocatoria: PartidosEdicion.partidoEditado.convocatoria,
+                              alineacion: PartidosEdicion.partidoEditado.alineacion,
+                              golesAFavor: PartidosEdicion.partidoEditado.golesAFavor,
+                              golesEnContra: PartidosEdicion.partidoEditado.golesEnContra,
                               lesiones: lesionesActuales,
-                              tarjetas: partidoActual.tarjetas,
-                              cambios: partidoActual.cambios,
-                              observaciones: partidoActual.observaciones,
-                              isLocal: partidoActual.isLocal);
+                              tarjetas: PartidosEdicion.partidoEditado.tarjetas,
+                              cambios: PartidosEdicion.partidoEditado.cambios,
+                              observaciones: PartidosEdicion.partidoEditado.observaciones,
+                              isLocal: PartidosEdicion.partidoEditado.isLocal);
                           PartidosEdicion.partidoEditado = p;
 
                           //Limpiar campos

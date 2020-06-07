@@ -357,7 +357,7 @@ class _PartidosCreacion extends State<PartidosCreacion> {
     );
   }
 
-  /* POSICIONES */
+  /* TIPO */
 
   //Hacer el Spinner de tipo de partido
   List<DropdownMenuItem<String>> getDropDownMenuItems() {

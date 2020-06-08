@@ -19,11 +19,20 @@ class _ListaEntrenamientos extends State<ListaEntrenamientos> {
 
   Widget itemEntrenamientos() {
     final boxEntrenamientos = Hive.box('entrenamientos');
+    List entrenamientosOrdenados = [];
+    for (var i = 0; i < boxEntrenamientos.length; i++) {
+      entrenamientosOrdenados.add([i, boxEntrenamientos.getAt(i).fecha, boxEntrenamientos.getAt(i).hora]);
+    }
+    //Ordenar por hora
+    entrenamientosOrdenados.sort((a, b) => (a[2]).compareTo(b[2]));
+    //Ordenar por fecha
+    entrenamientosOrdenados.sort((a, b) => (a[1]).compareTo(b[1]));
     if (boxEntrenamientos.length > 0) {
       return ListView(
         shrinkWrap: true,
         children: List.generate(boxEntrenamientos.length, (iEntrenamiento) {
-          final Entrenamiento entrenamientoBox = boxEntrenamientos.getAt(iEntrenamiento) as Entrenamiento;
+          final Entrenamiento entrenamientoBox = boxEntrenamientos.getAt(entrenamientosOrdenados[((entrenamientosOrdenados.length - 1) - iEntrenamiento)][0]) as
+          Entrenamiento;
           return Card(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15.0),
@@ -35,7 +44,7 @@ class _ListaEntrenamientos extends State<ListaEntrenamientos> {
                   context,
                   AnimacionDetalles(
                     widget: DetallesEnternamiento(
-                      posicion: iEntrenamiento,
+                      posicion: entrenamientosOrdenados[((entrenamientosOrdenados.length - 1) - iEntrenamiento)][0],
                     ),
                   ),
                   /*MaterialPageRoute(

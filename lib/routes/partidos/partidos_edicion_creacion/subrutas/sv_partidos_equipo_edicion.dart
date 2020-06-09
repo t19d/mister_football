@@ -129,7 +129,7 @@ class _PartidoEquipoEdicion extends State<PartidoEquipoEdicion> {
                       IconButton(
                         icon: Icon(
                           Icons.edit,
-                          color: Colors.lightBlueAccent,
+                          color: MisterFootball.primario,
                         ),
                         tooltip: 'Editar jugadores',
                         onPressed: () async {

@@ -90,7 +90,7 @@ class _Configuracion extends State<Configuracion> {
                 IconButton(
                   icon: Icon(
                     Icons.mode_edit,
-                    color: MisterFootball.complementarioDark,
+                    color: MisterFootball.primario,
                   ),
                   onPressed: () async {
                     if (!isEscudoEditado) {
@@ -143,7 +143,7 @@ class _Configuracion extends State<Configuracion> {
                 IconButton(
                   icon: Icon(
                     Icons.mode_edit,
-                    color: MisterFootball.complementarioDark,
+                    color: MisterFootball.primario,
                   ),
                   onPressed: () async {
                     print(isNombreEquipoEditado);
@@ -332,7 +332,7 @@ class _Configuracion extends State<Configuracion> {
                 IconButton(
                   icon: Icon(
                     Icons.mode_edit,
-                    color: MisterFootball.complementarioDark,
+                    color: MisterFootball.primario,
                   ),
                   onPressed: () async {
                     _elegirOpcionFotoDialogo(equipo['escudo'], context);
@@ -381,7 +381,7 @@ class _Configuracion extends State<Configuracion> {
                 IconButton(
                   icon: Icon(
                     Icons.mode_edit,
-                    color: MisterFootball.complementarioDark,
+                    color: MisterFootball.primario,
                   ),
                   onPressed: () async {
                     _cambiarNombreEquipo(context, nombreEquipo);
@@ -591,7 +591,7 @@ class _Configuracion extends State<Configuracion> {
                         IconButton(
                           icon: Icon(
                             Icons.mode_edit,
-                            color: MisterFootball.complementarioDark,
+                            color: MisterFootball.primario,
                           ),
                           onPressed: () {},
                         ),
@@ -636,7 +636,7 @@ class _Configuracion extends State<Configuracion> {
                         IconButton(
                           icon: Icon(
                             Icons.mode_edit,
-                            color: MisterFootball.complementarioDark,
+                            color: MisterFootball.primario,
                           ),
                           onPressed: () {},
                         ),

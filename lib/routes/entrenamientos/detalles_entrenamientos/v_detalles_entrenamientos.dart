@@ -6,6 +6,7 @@ import 'package:mister_football/clases/entrenamiento.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:mister_football/clases/eventos.dart';
 import 'package:mister_football/clases/jugador.dart';
+import 'package:mister_football/main.dart';
 import 'package:mister_football/routes/entrenamientos/v_entrenamientos.dart';
 
 class DetallesEnternamiento extends StatefulWidget {
@@ -19,6 +20,7 @@ class DetallesEnternamiento extends StatefulWidget {
 
 class _DetallesEnternamiento extends State<DetallesEnternamiento> {
   Entrenamiento entrenamiento;
+  String ejerciciosFuture;
 
   @override
   void dispose() {
@@ -26,9 +28,16 @@ class _DetallesEnternamiento extends State<DetallesEnternamiento> {
     super.dispose();
   }
 
+  Future<void> _openBox() async {
+    await Hive.openBox("entrenamientos");
+    await Hive.openBox("jugadores");
+    //Ejercicios del JSON
+    ejerciciosFuture = await cargarEjercicios();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
+    /*return FutureBuilder(
       future: Hive.openBox('entrenamientos'),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
@@ -153,6 +162,100 @@ class _DetallesEnternamiento extends State<DetallesEnternamiento> {
           }
         } else {
           return LinearProgressIndicator();
+        }
+      },
+    );
+    */
+    return FutureBuilder(
+      future: _openBox(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasError) {
+            print(snapshot.error.toString());
+            return Text(snapshot.error.toString());
+          } else {
+            final boxEntrenamientos = Hive.box('entrenamientos');
+            entrenamiento = boxEntrenamientos.getAt(widget.posicion);
+            return SafeArea(
+              child: Scaffold(
+                appBar: AppBar(
+                  title: Text(
+                    "Detalles",
+                  ),
+                  actions: <Widget>[
+                    IconButton(
+                      icon: Icon(
+                        Icons.edit,
+                        color: Colors.white,
+                      ),
+                      tooltip: 'Editar entrenamiento',
+                      onPressed: () {
+                        /*Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => GestionJugadoresEdicion(jugador: jugador, posicion: widget.posicion,),
+                          ),
+                        );*/
+                      },
+                    ),
+                    IconButton(
+                      icon: Icon(
+                        Icons.delete,
+                        color: MisterFootball.complementarioDelComplementarioLight,
+                      ),
+                      tooltip: 'Eliminar entrenamiento',
+                      onPressed: () async {
+                        var boxEntrenamientos = await Hive.openBox('entrenamientos');
+                        print(widget.posicion);
+                        var boxEventos = await Hive.openBox('eventos');
+                        Eventos eventosActuales = boxEventos.get(0);
+                        //Eliminar evento
+                        eventosActuales.listaEventos.remove("${entrenamiento.fecha}/${entrenamiento.hora}");
+                        boxEntrenamientos.deleteAt(widget.posicion);
+                        boxEventos.putAt(0, eventosActuales);
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) => Entrenamientos()),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+                body: SingleChildScrollView(
+                  child: Column(
+                    children: <Widget>[
+                      //Fecha y hora
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          Text(entrenamiento.fecha),
+                          Text(entrenamiento.hora),
+                        ],
+                      ),
+                      //Ejercicios
+                      Column(
+                        children: <Widget>[
+                          Text("Ejercicios"),
+                          mostrarEjerciciosSeleccionados(ejerciciosFuture, entrenamiento.ejercicios),
+                        ],
+                      ),
+                      //Jugadores
+                      Column(
+                        children: <Widget>[
+                          Text("Jugadores"),
+                          mostrarJugadoresSeleccionados(entrenamiento.jugadoresOpiniones),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          }
+        } else {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
         }
       },
     );

@@ -1,13 +1,13 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:mister_football/clases/conversor_imagen.dart';
 import 'package:mister_football/clases/entrenamiento.dart';
 import 'package:hive/hive.dart';
 import 'package:mister_football/clases/eventos.dart';
 import 'package:mister_football/clases/jugador.dart';
-import 'package:mister_football/routes/ejercicios/ejercicio/v_detalles_ejercicio_json.dart';
+import 'package:mister_football/main.dart';
 import 'package:mister_football/routes/entrenamientos/v_entrenamientos.dart';
 
 class EntrenamientosCreacion extends StatefulWidget {
@@ -95,6 +95,8 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
     ejercicios = [];
     listaJugadores = [];
   }
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -445,6 +447,7 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
             return Text(snapshot.error.toString());
           } else {
             return SafeArea(
+              key: _scaffoldKey,
               child: Scaffold(
                 appBar: AppBar(
                   title: Text(
@@ -541,7 +544,7 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
                                           IconButton(
                                             icon: Icon(
                                               Icons.edit,
-                                              color: Colors.lightBlueAccent,
+                                              color: MisterFootball.primario,
                                             ),
                                             tooltip: 'Editar ejercicios',
                                             onPressed: () async {
@@ -583,7 +586,7 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
                                           IconButton(
                                             icon: Icon(
                                               Icons.edit,
-                                              color: Colors.lightBlueAccent,
+                                              color: MisterFootball.primario,
                                             ),
                                             tooltip: 'Editar jugadores',
                                             onPressed: () async {
@@ -612,31 +615,15 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
                               ],
                             ),
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              RaisedButton(
-                                shape: new RoundedRectangleBorder(
-                                  borderRadius: new BorderRadius.circular(10.0),
-                                ),
-                                color: Colors.red,
-                                child: Text("Cancelar"),
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                              ),
-                              separadorFormulario(),
-                              RaisedButton(
-                                shape: new RoundedRectangleBorder(
-                                  borderRadius: new BorderRadius.circular(10.0),
-                                ),
-                                color: Colors.lightGreen,
-                                child: Text("Crear"),
-                                onPressed: () async {
-                                  validar();
-                                },
-                              ),
-                            ],
+                          RaisedButton(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            color: Colors.lightGreen,
+                            child: Text("Crear"),
+                            onPressed: () async {
+                              validar();
+                            },
                           ),
                         ],
                       ),
@@ -669,12 +656,52 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
   Widget mostrarEjerciciosSeleccionados(String ejerciciosString, List<String> ejercicios) {
     List<dynamic> listaEjerciciosJSON = jsonDecode(ejerciciosString);
     if (ejercicios.length > 0) {
-      return ListView(
-        shrinkWrap: true,
-        children: List.generate(ejercicios.length, (iEjercicio) {
-          return Text("${iEjercicio + 1}-${listaEjerciciosJSON[int.parse(ejercicios[iEjercicio]) - 1]['titulo']}");
-        }),
+      return Container(
+        height: (ejercicios.length * 40).toDouble(),
+        child: ReorderableListView(
+          //padding: EdgeInsets.symmetric(horizontal: 40),
+          children: List.generate(
+            ejercicios.length,
+            (iEjercicio) {
+              //return Text("${iEjercicio + 1}-${listaEjerciciosJSON[int.parse(ejercicios[iEjercicio]) - 1]['titulo']}");
+              /*return ListTile(
+                key: Key("$iEjercicio"),
+                title: Text("${iEjercicio + 1}-${listaEjerciciosJSON[int.parse(ejercicios[iEjercicio]) - 1]['titulo']}"),
+              );*/
+              return Card(
+                key: Key("$iEjercicio"),
+                child: Text("${iEjercicio + 1}-${listaEjerciciosJSON[int.parse(ejercicios[iEjercicio]) - 1]['titulo']}"),
+              );
+            },
+          ),
+          onReorder: (oldIndex, newIndex) {
+            String old = ejercicios[oldIndex];
+            if (oldIndex > newIndex) {
+              for (int i = oldIndex; i > newIndex; i--) {
+                ejercicios[i] = ejercicios[i - 1];
+              }
+              ejercicios[newIndex] = old;
+            } else {
+              for (int i = oldIndex; i < newIndex - 1; i++) {
+                ejercicios[i] = ejercicios[i + 1];
+              }
+              ejercicios[newIndex - 1] = old;
+            }
+            setState(() {});
+          },
+        ),
       );
+      /*return ListView(
+        //No Scroll
+        physics: NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        children: List.generate(
+          ejercicios.length,
+          (iEjercicio) {
+            return Text("${iEjercicio + 1}-${listaEjerciciosJSON[int.parse(ejercicios[iEjercicio]) - 1]['titulo']}");
+          },
+        ),
+      );*/
     } else {
       return Center(
         child: Text("No hay ningún ejercicio añadido."),
@@ -720,7 +747,7 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
               shrinkWrap: true,
               children: List.generate(listaEjerciciosJSON.length, (iEjercicio) {
                 bool _isSeleccionado = (ejerciciosSeleccionados.contains("${listaEjerciciosJSON[iEjercicio]['id']}")) ? true : false;
-                return Row(
+                /*return Row(
                   children: <Widget>[
                     Expanded(
                       child: Text("-${listaEjerciciosJSON[iEjercicio]['titulo']}"),
@@ -748,6 +775,29 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
                     ),
                   ],
                 );
+              */
+                return CheckboxListTile(
+                  title: Text("-${listaEjerciciosJSON[iEjercicio]['titulo']}"),
+                  value: _isSeleccionado,
+                  onChanged: (bool nuevoEstado) {
+                    setState(() {
+                      _isSeleccionado = nuevoEstado;
+                    });
+                    if (_isSeleccionado) {
+                      print("Añadido");
+                      setState(() {
+                        ejerciciosSeleccionados.add("${listaEjerciciosJSON[iEjercicio]['id']}");
+                      });
+                      print(ejerciciosSeleccionados);
+                    } else {
+                      print("Eliminado");
+                      setState(() {
+                        ejerciciosSeleccionados.removeWhere((id) => id == "${listaEjerciciosJSON[iEjercicio]['id']}");
+                      });
+                      print(ejerciciosSeleccionados);
+                    }
+                  },
+                );
               }),
             ),
             RaisedButton(
@@ -768,6 +818,8 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
     Box boxJugadoresEquipo = Hive.box('jugadores');
     if (jugadoresElegidos.length > 0) {
       return ListView(
+        //No Scroll
+        physics: NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         children: List.generate(jugadoresElegidos.length, (iFila) {
           Jugador jugadorFila;
@@ -808,7 +860,7 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
                     _isSeleccionado = true;
                   }
                 }
-                return Row(
+                /*return Row(
                   children: <Widget>[
                     Expanded(
                       child: Text("-${jugadorBox.nombre}"),
@@ -835,6 +887,36 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
                       },
                     ),
                   ],
+                );
+              */
+                return CheckboxListTile(
+                  title: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      ConversorImagen.imageFromBase64String(jugadorBox.nombre_foto, context),
+                      Text("${jugadorBox.apodo}"), //, style: TextStyle(fontSize: MediaQuery.of(context).size.width * .04)),
+                      //Text("${jugadorBox.posicionFavorita}", style: TextStyle(fontSize: MediaQuery.of(context).size.width * .05),),
+                    ],
+                  ),
+                  value: _isSeleccionado,
+                  onChanged: (bool nuevoEstado) {
+                    setState(() {
+                      _isSeleccionado = nuevoEstado;
+                    });
+                    if (_isSeleccionado) {
+                      print("Añadido");
+                      setState(() {
+                        postListaJugadores.add({"idJugador": "${jugadorBox.id}", "opinion": ""});
+                      });
+                      print(postListaJugadores);
+                    } else {
+                      print("Eliminado");
+                      setState(() {
+                        postListaJugadores.removeWhere((fila) => fila["idJugador"] == jugadorBox.id);
+                      });
+                      print(postListaJugadores);
+                    }
+                  },
                 );
               }),
             ),

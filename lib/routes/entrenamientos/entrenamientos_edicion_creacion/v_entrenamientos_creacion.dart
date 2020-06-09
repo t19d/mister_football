@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -530,59 +531,35 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
                                 ),
                                 separadorFormulario(),
                                 //Ejercicios
-                                Container(
-                                  padding:
-                                      EdgeInsets.fromLTRB((MediaQuery.of(context).size.width * 0.05), 0, 0, MediaQuery.of(context).size.width * 0.05),
-                                  width: MediaQuery.of(context).size.width / 1.20,
-                                  color: Colors.grey.withOpacity(.15),
-                                  child: Column(
-                                    children: <Widget>[
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: <Widget>[
-                                          Text("Ejercicios"),
-                                          IconButton(
-                                            icon: Icon(
-                                              Icons.edit,
-                                              color: MisterFootball.primario,
-                                            ),
-                                            tooltip: 'Editar ejercicios',
-                                            onPressed: () async {
-                                              ejercicios = await showDialog<List<String>>(
-                                                context: context,
-                                                barrierDismissible: true,
-                                                builder: (BuildContext context) {
-                                                  return AlertDialog(
-                                                    content: StatefulBuilder(
-                                                      builder: (BuildContext context, StateSetter setState) {
-                                                        return listaSeleccionarEjercicios(ejerciciosFuture, ejercicios, setState);
-                                                      },
-                                                    ),
-                                                  );
-                                                },
-                                              );
-                                              setState(() {});
-                                            },
-                                          ),
-                                        ],
-                                      ),
-                                      mostrarEjerciciosSeleccionados(ejerciciosFuture, ejercicios),
-                                    ],
-                                  ),
-                                ),
+                                mostrarEjerciciosSeleccionados(ejerciciosFuture, ejercicios),
                                 separadorFormulario(),
                                 //Jugadores
                                 Container(
-                                  padding:
-                                      EdgeInsets.fromLTRB((MediaQuery.of(context).size.width * 0.05), 0, 0, MediaQuery.of(context).size.width * 0.05),
+                                  padding: EdgeInsets.only(
+                                    top: (MediaQuery.of(context).size.width * 0.001),
+                                    bottom: (MediaQuery.of(context).size.width * 0.05),
+                                    left: (MediaQuery.of(context).size.width * 0.05),
+                                    right: (MediaQuery.of(context).size.width * 0.05),
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: MisterFootball.primarioLight2.withOpacity(.05),
+                                    border: Border(
+                                      top: BorderSide(width: .4),
+                                      bottom: BorderSide(width: .4),
+                                      left: BorderSide(width: .4),
+                                      right: BorderSide(width: .4),
+                                    ),
+                                  ),
                                   width: MediaQuery.of(context).size.width / 1.20,
-                                  color: Colors.grey.withOpacity(.15),
                                   child: Column(
                                     children: <Widget>[
                                       Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: <Widget>[
-                                          Text("Jugadores"),
+                                          Text(
+                                            "Jugadores",
+                                            style: TextStyle(decoration: TextDecoration.underline),
+                                          ),
                                           IconButton(
                                             icon: Icon(
                                               Icons.edit,
@@ -657,8 +634,56 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
     List<dynamic> listaEjerciciosJSON = jsonDecode(ejerciciosString);
     if (ejercicios.length > 0) {
       return Container(
-        height: (ejercicios.length * 40).toDouble(),
+        padding: EdgeInsets.only(
+          top: (MediaQuery.of(context).size.width * 0.001),
+          bottom: (MediaQuery.of(context).size.width * 0.05),
+          left: (MediaQuery.of(context).size.width * 0.05),
+          right: (MediaQuery.of(context).size.width * 0.05),
+        ),
+        decoration: BoxDecoration(
+          color: MisterFootball.primarioLight2.withOpacity(.05),
+          border: Border(
+            top: BorderSide(width: .4),
+            bottom: BorderSide(width: .4),
+            left: BorderSide(width: .4),
+            right: BorderSide(width: .4),
+          ),
+        ),
+        width: MediaQuery.of(context).size.width / 1.20,
+        height: (ejercicios.length * 180).toDouble(),
         child: ReorderableListView(
+          header: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text(
+                "Ejercicios",
+                style: TextStyle(decoration: TextDecoration.underline),
+              ),
+              IconButton(
+                icon: Icon(
+                  Icons.edit,
+                  color: MisterFootball.primario,
+                ),
+                tooltip: 'Editar ejercicios',
+                onPressed: () async {
+                  ejercicios = await showDialog<List<String>>(
+                    context: context,
+                    barrierDismissible: true,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        content: StatefulBuilder(
+                          builder: (BuildContext context, StateSetter setState) {
+                            return listaSeleccionarEjercicios(ejerciciosFuture, ejercicios, setState);
+                          },
+                        ),
+                      );
+                    },
+                  );
+                  setState(() {});
+                },
+              ),
+            ],
+          ),
           //padding: EdgeInsets.symmetric(horizontal: 40),
           children: List.generate(
             ejercicios.length,
@@ -668,9 +693,37 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
                 key: Key("$iEjercicio"),
                 title: Text("${iEjercicio + 1}-${listaEjerciciosJSON[int.parse(ejercicios[iEjercicio]) - 1]['titulo']}"),
               );*/
-              return Card(
+              return Container(
+                decoration: BoxDecoration(
+                  border: Border(
+                    top: BorderSide(width: .4),
+                    bottom: BorderSide(width: .4),
+                    left: BorderSide(width: .4),
+                    right: BorderSide(width: .4),
+                  ),
+                ),
+                margin: EdgeInsets.only(
+                  top: (iEjercicio != 0) ? 2.5 : 0,
+                  bottom: (iEjercicio != (ejercicios.length - 1)) ? 2.5 : 0,
+                  right: 0,
+                  left: 0,
+                ),
                 key: Key("$iEjercicio"),
-                child: Text("${iEjercicio + 1}-${listaEjerciciosJSON[int.parse(ejercicios[iEjercicio]) - 1]['titulo']}"),
+                child: Row(
+                  children: <Widget>[
+                    Container(
+                      width: (MediaQuery.of(context).size.width * .63),
+                      padding: EdgeInsets.all((MediaQuery.of(context).size.width * 0.025)),
+                      child: Text(
+                        "${listaEjerciciosJSON[int.parse(ejercicios[iEjercicio]) - 1]['titulo']}",
+                      ),
+                    ),
+                    Icon(
+                      Icons.unfold_more,
+                      color: MisterFootball.semiprimario,
+                    ),
+                  ],
+                ),
               );
             },
           ),
@@ -703,8 +756,62 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
         ),
       );*/
     } else {
-      return Center(
-        child: Text("No hay ningún ejercicio añadido."),
+      return Container(
+        padding: EdgeInsets.only(
+          top: (MediaQuery.of(context).size.width * 0.001),
+          bottom: (MediaQuery.of(context).size.width * 0.05),
+          left: (MediaQuery.of(context).size.width * 0.05),
+          right: (MediaQuery.of(context).size.width * 0.05),
+        ),
+        decoration: BoxDecoration(
+          color: MisterFootball.primarioLight2.withOpacity(.05),
+          border: Border(
+            top: BorderSide(width: .4),
+            bottom: BorderSide(width: .4),
+            left: BorderSide(width: .4),
+            right: BorderSide(width: .4),
+          ),
+        ),
+        width: MediaQuery.of(context).size.width / 1.20,
+        child: Column(
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text(
+                  "Ejercicios",
+                  style: TextStyle(decoration: TextDecoration.underline),
+                ),
+                IconButton(
+                  icon: Icon(
+                    Icons.edit,
+                    color: MisterFootball.primario,
+                  ),
+                  tooltip: 'Editar ejercicios',
+                  onPressed: () async {
+                    ejercicios = await showDialog<List<String>>(
+                      context: context,
+                      barrierDismissible: true,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          content: StatefulBuilder(
+                            builder: (BuildContext context, StateSetter setState) {
+                              return listaSeleccionarEjercicios(ejerciciosFuture, ejercicios, setState);
+                            },
+                          ),
+                        );
+                      },
+                    );
+                    setState(() {});
+                  },
+                ),
+              ],
+            ),
+            Center(
+              child: Text("No hay ningún ejercicio añadido."),
+            )
+          ],
+        ),
       );
     }
   }

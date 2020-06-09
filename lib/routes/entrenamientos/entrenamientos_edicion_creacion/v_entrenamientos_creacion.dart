@@ -19,7 +19,9 @@ class EntrenamientosCreacion extends StatefulWidget {
 
 class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
   //Box jugadores
-  Box boxEntrenamientos = null;
+  Box boxEntrenamientos;
+
+  String ejerciciosFuture;
 
   //Datos
   DateTime fechaHoraInicial = DateTime.now();
@@ -69,6 +71,9 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
   Future<void> _openBox() async {
     await Hive.openBox("entrenamientos");
     await Hive.openBox("eventos");
+    await Hive.openBox("jugadores");
+    //Ejercicios del JSON
+    ejerciciosFuture = await cargarEjercicios();
   }
 
   @override
@@ -93,7 +98,7 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    /*return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           title: Text(
@@ -429,6 +434,224 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
           ),
         ),
       ),
+    );
+    */
+    return FutureBuilder(
+      future: _openBox(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasError) {
+            print(snapshot.error.toString());
+            return Text(snapshot.error.toString());
+          } else {
+            return SafeArea(
+              child: Scaffold(
+                appBar: AppBar(
+                  title: Text(
+                    'Nuevo entrenamiento',
+                  ),
+                ),
+                body: SingleChildScrollView(
+                  child: Form(
+                    key: formKey,
+                    child: SingleChildScrollView(
+                      padding: EdgeInsets.all(8.0),
+                      child: Column(
+                        children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.only(left: 20, right: 20, top: 5, bottom: 8),
+                            child: Column(
+                              children: <Widget>[
+                                //Fecha
+                                RaisedButton(
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                                  elevation: 4.0,
+                                  onPressed: () {
+                                    //Seleccionar fecha
+                                    DatePicker.showDatePicker(context,
+                                        showTitleActions: true, minTime: DateTime(1950, 1, 1), maxTime: DateTime(2200, 12, 31), onConfirm: (date) {
+                                      setState(() {
+                                        fecha = "${date.year}-" +
+                                            ((date.month.toString().length == 1) ? "0${date.month}" : "${date.month}") +
+                                            "-" +
+                                            ((date.day.toString().length == 1) ? "0${date.day}" : "${date.day}");
+                                      });
+                                    },
+                                        currentTime: DateTime(
+                                          int.parse(fecha.split("-")[0]),
+                                          int.parse(fecha.split("-")[1]),
+                                          int.parse(fecha.split("-")[2]),
+                                        ),
+                                        locale: LocaleType.es);
+                                  },
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      Text("Fecha"),
+                                      Row(
+                                        children: <Widget>[
+                                          Text("${fecha.split("-")[2]}-${fecha.split("-")[1]}-${fecha.split("-")[0]}"),
+                                          Icon(Icons.calendar_today),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                separadorFormulario(),
+                                //Hora
+                                RaisedButton(
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                                  elevation: 4.0,
+                                  onPressed: () {
+                                    //Seleccionar hora
+                                    DatePicker.showTimePicker(context, showTitleActions: true, onConfirm: (time) {
+                                      setState(() {
+                                        hora = ((time.hour.toString().length == 1) ? "0${time.hour}" : "${time.hour}") +
+                                            ":" +
+                                            ((time.minute.toString().length == 1) ? "0${time.minute}" : "${time.minute}");
+                                      });
+                                    }, currentTime: DateTime.now(), locale: LocaleType.es);
+                                  },
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      Text("Hora"),
+                                      Row(
+                                        children: <Widget>[
+                                          Text("${hora}"),
+                                          Icon(Icons.watch_later),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                separadorFormulario(),
+                                //Ejercicios
+                                Container(
+                                  padding:
+                                      EdgeInsets.fromLTRB((MediaQuery.of(context).size.width * 0.05), 0, 0, MediaQuery.of(context).size.width * 0.05),
+                                  width: MediaQuery.of(context).size.width / 1.20,
+                                  color: Colors.grey.withOpacity(.15),
+                                  child: Column(
+                                    children: <Widget>[
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: <Widget>[
+                                          Text("Ejercicios"),
+                                          IconButton(
+                                            icon: Icon(
+                                              Icons.edit,
+                                              color: Colors.lightBlueAccent,
+                                            ),
+                                            tooltip: 'Editar ejercicios',
+                                            onPressed: () async {
+                                              ejercicios = await showDialog<List<String>>(
+                                                context: context,
+                                                barrierDismissible: true,
+                                                builder: (BuildContext context) {
+                                                  return AlertDialog(
+                                                    content: StatefulBuilder(
+                                                      builder: (BuildContext context, StateSetter setState) {
+                                                        return listaSeleccionarEjercicios(ejerciciosFuture, ejercicios, setState);
+                                                      },
+                                                    ),
+                                                  );
+                                                },
+                                              );
+                                              setState(() {});
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                      mostrarEjerciciosSeleccionados(ejerciciosFuture, ejercicios),
+                                    ],
+                                  ),
+                                ),
+                                separadorFormulario(),
+                                //Jugadores
+                                Container(
+                                  padding:
+                                      EdgeInsets.fromLTRB((MediaQuery.of(context).size.width * 0.05), 0, 0, MediaQuery.of(context).size.width * 0.05),
+                                  width: MediaQuery.of(context).size.width / 1.20,
+                                  color: Colors.grey.withOpacity(.15),
+                                  child: Column(
+                                    children: <Widget>[
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: <Widget>[
+                                          Text("Jugadores"),
+                                          IconButton(
+                                            icon: Icon(
+                                              Icons.edit,
+                                              color: Colors.lightBlueAccent,
+                                            ),
+                                            tooltip: 'Editar jugadores',
+                                            onPressed: () async {
+                                              listaJugadores = await showDialog<List<dynamic>>(
+                                                context: context,
+                                                barrierDismissible: true,
+                                                builder: (BuildContext context) {
+                                                  return AlertDialog(
+                                                    content: StatefulBuilder(
+                                                      builder: (BuildContext context, StateSetter setState) {
+                                                        return listaSeleccionarJugadores(listaJugadores, setState);
+                                                      },
+                                                    ),
+                                                  );
+                                                },
+                                              );
+                                              setState(() {});
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                      mostrarJugadoresSeleccionados(listaJugadores),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              RaisedButton(
+                                shape: new RoundedRectangleBorder(
+                                  borderRadius: new BorderRadius.circular(10.0),
+                                ),
+                                color: Colors.red,
+                                child: Text("Cancelar"),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                              separadorFormulario(),
+                              RaisedButton(
+                                shape: new RoundedRectangleBorder(
+                                  borderRadius: new BorderRadius.circular(10.0),
+                                ),
+                                color: Colors.lightGreen,
+                                child: Text("Crear"),
+                                onPressed: () async {
+                                  validar();
+                                },
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            );
+          }
+        } else {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      },
     );
   }
 

@@ -49,12 +49,12 @@ class _DetallesJugador extends State<DetallesJugador> {
             return SafeArea(
               child: Scaffold(
                 appBar: AppBar(
-                  title: Text(jugador.apodo),
+                  //title: Text(jugador.apodo),
                   actions: <Widget>[
                     IconButton(
-                      icon: const Icon(
+                      icon: Icon(
                         Icons.edit,
-                        color: Colors.lightGreen,
+                        color: Colors.white,
                       ),
                       tooltip: 'Editar jugador',
                       onPressed: () {
@@ -70,9 +70,9 @@ class _DetallesJugador extends State<DetallesJugador> {
                       },
                     ),
                     IconButton(
-                      icon: const Icon(
+                      icon: Icon(
                         Icons.delete,
-                        color: Colors.redAccent,
+                        color: MisterFootball.complementarioDelComplementarioLight,
                       ),
                       tooltip: 'Eliminar jugador',
                       onPressed: () async {
@@ -121,395 +121,495 @@ class _DetallesJugador extends State<DetallesJugador> {
                     ),
                   ],
                 ),
-                body: Container(
-                  padding: EdgeInsets.all(MediaQuery.of(context).size.width * .025),
+                body: SingleChildScrollView(
                   child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      //Apodo
-                      /*Text(jugador.apodo, style: TextStyle(fontSize: MediaQuery.of(context).size.width * .05),),*/
-                      //Foto  | Nombre  | Apellido1 | Apellido2
-                      //Foto  | Edad
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          //Foto
-                          ConversorImagen.imageFromBase64String(jugador.nombre_foto, context),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              //Nombre  | Apellido1 | Apellido2
-                              Text(
-                                "${jugador.nombre} ${jugador.apellido1} ${jugador.apellido2}",
+                      Container(
+                        padding: EdgeInsets.all(MediaQuery.of(context).size.width * .03),
+                        decoration: BoxDecoration(
+                          color: MisterFootball.primarioLight2.withOpacity(.25),
+                          border: Border(bottom: BorderSide(width: 1)),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: <Widget>[
+                            //Foto
+                            ConversorImagen.imageFromBase64String(jugador.nombre_foto, context),
+                            Container(
+                              padding: EdgeInsets.only(
+                                bottom: 5,
+                                left: 10,
+                              ),
+                              child: Text(
+                                "${jugador.apodo}",
                                 style: estiloTexto,
                               ),
-                              //Edad
-                              Text(
-                                "${jugador.calcularEdad()} años (${jugador.fechaNacimiento.split("-")[2]}-${jugador.fechaNacimiento.split("-")[1]}-${jugador.fechaNacimiento.split("-")[0]})",
-                                style: estiloTexto,
+                            ),
+                          ],
+                        ),
+                      ),
+                      //Datos prepartido
+                      Container(
+                        padding: EdgeInsets.only(
+                          left: MediaQuery.of(context).size.width * .03,
+                          right: MediaQuery.of(context).size.width * .03,
+                        ),
+                        child: Table(
+                          border: TableBorder(
+                            verticalInside: BorderSide(
+                              color: MisterFootball.primario,
+                              width: .4,
+                            ),
+                          ),
+                          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                          children: [
+                            //Nombre
+                            TableRow(
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  bottom: BorderSide(color: MisterFootball.primario, width: .4),
+                                ),
                               ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      divisorGrupos,
-                      //Nombre
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: <Widget>[
-                          Text(
-                            "Nombre:",
-                            style: estiloTexto,
-                          ),
-                          Container(
-                            width: MediaQuery.of(context).size.width * .4,
-                            child: Text(
-                              jugador.nombre,
-                              textAlign: TextAlign.right,
-                              style: estiloTexto,
+                              children: [
+                                Text(
+                                  "Nombre",
+                                  textAlign: TextAlign.center,
+                                ),
+                                Container(
+                                  padding: EdgeInsets.only(
+                                    top: MediaQuery.of(context).size.width * .03,
+                                    bottom: MediaQuery.of(context).size.width * .03,
+                                  ),
+                                  child: Text(
+                                    jugador.nombre,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                        ],
-                      ),
-                      //Text("Nombre: " + jugador.nombre),
-                      divisorElementos,
-                      //Primer apellido
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: <Widget>[
-                          Text(
-                            "Primer apellido:",
-                            style: estiloTexto,
-                          ),
-                          Container(
-                            width: MediaQuery.of(context).size.width * .4,
-                            child: Text(
-                              jugador.apellido1,
-                              textAlign: TextAlign.right,
-                              style: estiloTexto,
+                            //Primer apellido
+                            TableRow(
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  bottom: BorderSide(color: MisterFootball.primario, width: .4),
+                                ),
+                              ),
+                              children: [
+                                Text(
+                                  "Primer apellido",
+                                  textAlign: TextAlign.center,
+                                ),
+                                Container(
+                                  padding: EdgeInsets.only(
+                                    top: MediaQuery.of(context).size.width * .03,
+                                    bottom: MediaQuery.of(context).size.width * .03,
+                                  ),
+                                  child: Text(
+                                    jugador.apellido1,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                        ],
-                      ),
-                      //Text("Primer apellido: " + jugador.apellido1),
-                      divisorElementos,
-                      //Segundo apellido
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: <Widget>[
-                          Text(
-                            "Segundo apellido:",
-                            style: estiloTexto,
-                          ),
-                          Container(
-                            width: MediaQuery.of(context).size.width * .4,
-                            child: Text(
-                              jugador.apellido2,
-                              textAlign: TextAlign.right,
-                              style: estiloTexto,
+                            //Segundo apellido
+                            TableRow(
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  bottom: BorderSide(color: MisterFootball.primario, width: .4),
+                                ),
+                              ),
+                              children: [
+                                Text(
+                                  "Segundo apellido",
+                                  textAlign: TextAlign.center,
+                                ),
+                                Container(
+                                  padding: EdgeInsets.only(
+                                    top: MediaQuery.of(context).size.width * .03,
+                                    bottom: MediaQuery.of(context).size.width * .03,
+                                  ),
+                                  child: Text(
+                                    (jugador.apellido2.length == 0) ? "-" : jugador.apellido2,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                        ],
-                      ),
-                      //Text("Segundo apellido: " + jugador.apellido2),
-                      divisorElementos,
-                      //Apodo
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: <Widget>[
-                          Text(
-                            "Apodo:",
-                            style: estiloTexto,
-                          ),
-                          Container(
-                            width: MediaQuery.of(context).size.width * .4,
-                            child: Text(
-                              jugador.apodo,
-                              textAlign: TextAlign.right,
-                              style: estiloTexto,
+                            //Apodo
+                            TableRow(
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  bottom: BorderSide(color: MisterFootball.primario, width: .4),
+                                ),
+                              ),
+                              children: [
+                                Text(
+                                  "Apodo",
+                                  textAlign: TextAlign.center,
+                                ),
+                                Container(
+                                  padding: EdgeInsets.only(
+                                    top: MediaQuery.of(context).size.width * .03,
+                                    bottom: MediaQuery.of(context).size.width * .03,
+                                  ),
+                                  child: Text(
+                                    jugador.apodo,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                        ],
-                      ),
-                      //Text("Apodo: " + jugador.apodo),
-                      divisorElementos,
-                      //Pierna buena
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: <Widget>[
-                          Text(
-                            "Pierna buena:",
-                            style: estiloTexto,
-                          ),
-                          Container(
-                            width: MediaQuery.of(context).size.width * .4,
-                            child: Text(
-                              jugador.piernaBuena,
-                              textAlign: TextAlign.right,
-                              style: estiloTexto,
+                            //Fecha de nacimiento (Edad)
+                            TableRow(
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  bottom: BorderSide(color: MisterFootball.primario, width: .4),
+                                ),
+                              ),
+                              children: [
+                                Text(
+                                  "Fecha de nacimiento\n(Edad)",
+                                  textAlign: TextAlign.center,
+                                ),
+                                Container(
+                                  padding: EdgeInsets.only(
+                                    top: MediaQuery.of(context).size.width * .03,
+                                    bottom: MediaQuery.of(context).size.width * .03,
+                                  ),
+                                  child: Text(
+                                    "${jugador.fechaNacimiento.split("-")[2]}-${jugador.fechaNacimiento.split("-")[1]}-"
+                                    "${jugador.fechaNacimiento.split("-")[0]}\n(${jugador.calcularEdad()} años)",
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                        ],
-                      ),
-                      //Text("Pierna buena: " + jugador.piernaBuena),
-                      divisorElementos,
-                      //Posición favorita
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: <Widget>[
-                          Text(
-                            "Posición favorita:",
-                            style: estiloTexto,
-                          ),
-                          Container(
-                            width: MediaQuery.of(context).size.width * .4,
-                            child: Text(
-                              jugador.posicionFavorita,
-                              textAlign: TextAlign.right,
-                              style: estiloTexto,
+                            //Pierna buena
+                            TableRow(
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  bottom: BorderSide(color: MisterFootball.primario, width: .4),
+                                ),
+                              ),
+                              children: [
+                                Text(
+                                  "Pierna buena",
+                                  textAlign: TextAlign.center,
+                                ),
+                                Container(
+                                  padding: EdgeInsets.only(
+                                    top: MediaQuery.of(context).size.width * .03,
+                                    bottom: MediaQuery.of(context).size.width * .03,
+                                  ),
+                                  child: Text(
+                                    jugador.piernaBuena,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                        ],
-                      ),
-                      //Text("Posición favorita: " + jugador.posicionFavorita),
-                      divisorElementos,
-                      //Anotaciones
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: <Widget>[
-                          Text(
-                            "Anotaciones:",
-                            style: estiloTexto,
-                          ),
-                          Container(
-                            width: MediaQuery.of(context).size.width * .4,
-                            child: Text(
-                              jugador.anotaciones,
-                              textAlign: TextAlign.right,
-                              style: estiloTexto,
+                            //Posición favorita
+                            TableRow(
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  bottom: BorderSide(color: MisterFootball.primario, width: .4),
+                                ),
+                              ),
+                              children: [
+                                Text(
+                                  "Posición favorita",
+                                  textAlign: TextAlign.center,
+                                ),
+                                Container(
+                                  padding: EdgeInsets.only(
+                                    top: MediaQuery.of(context).size.width * .03,
+                                    bottom: MediaQuery.of(context).size.width * .03,
+                                  ),
+                                  child: Text(
+                                    jugador.posicionFavorita,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                        ],
+                            //Anotaciones
+                            TableRow(
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  bottom: BorderSide(color: MisterFootball.primario, width: .4),
+                                ),
+                              ),
+                              children: [
+                                Text(
+                                  "Anotaciones",
+                                  textAlign: TextAlign.center,
+                                ),
+                                Container(
+                                  padding: EdgeInsets.only(
+                                    top: MediaQuery.of(context).size.width * .03,
+                                    bottom: MediaQuery.of(context).size.width * .03,
+                                  ),
+                                  child: Text(
+                                    (jugador.anotaciones.length == 0) ? "-" : jugador.anotaciones,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
-                      //Text("Anotaciones: " + jugador.anotaciones),
-                      divisorGrupos,
-                      //Historial y medias
-                      /*Text(
-                        "Histórico",
-                        style: estiloTexto,
+                      //Histórico y estadísticas
+                      /*Container(
+                        decoration: BoxDecoration(
+                          color: MisterFootball.primarioLight2.withOpacity(.05),
+                          border: Border(
+                            top: BorderSide(width: .4),
+                            bottom: BorderSide(width: .4),
+                          ),
+                        ),
+                        margin: EdgeInsets.only(
+                          bottom: MediaQuery.of(context).size.width * .03,
+                          top: MediaQuery.of(context).size.width * .03,
+                        ),
+                        padding: EdgeInsets.only(
+                          left: MediaQuery.of(context).size.width * .03,
+                          right: MediaQuery.of(context).size.width * .03,
+                        ),
+                        child: Column(
+                          children: <Widget>[
+                            Text(
+                              "Goles a favor",
+                              style: tituloEventos,
+                            ),
+                            mostrarListaGolesAFavor(widget.partido),
+                          ],
+                        ),
                       ),*/
                     ],
                   ),
+                  /*child: Container(
+                    padding: EdgeInsets.all(MediaQuery
+                        .of(context)
+                        .size
+                        .width * .025),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        //Apodo
+                        /*Text(jugador.apodo, style: TextStyle(fontSize: MediaQuery.of(context).size.width * .05),),*/
+                        //Foto  | Nombre  | Apellido1 | Apellido2
+                        //Foto  | Edad
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            //Foto
+                            ConversorImagen.imageFromBase64String(jugador.nombre_foto, context),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                //Nombre  | Apellido1 | Apellido2
+                                Text(
+                                  "${jugador.nombre} ${jugador.apellido1} ${jugador.apellido2}",
+                                  style: estiloTexto,
+                                ),
+                                //Edad
+                                Text(
+                                  "${jugador.calcularEdad()} años (${jugador.fechaNacimiento.split("-")[2]}-${jugador.fechaNacimiento.split(
+                                      "-")[1]}-${jugador.fechaNacimiento.split("-")[0]})",
+                                  style: estiloTexto,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        divisorGrupos,
+                        //Nombre
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: <Widget>[
+                            Text(
+                              "Nombre:",
+                              style: estiloTexto,
+                            ),
+                            Container(
+                              width: MediaQuery
+                                  .of(context)
+                                  .size
+                                  .width * .4,
+                              child: Text(
+                                jugador.nombre,
+                                textAlign: TextAlign.right,
+                                style: estiloTexto,
+                              ),
+                            ),
+                          ],
+                        ),
+                        //Text("Nombre: " + jugador.nombre),
+                        divisorElementos,
+                        //Primer apellido
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: <Widget>[
+                            Text(
+                              "Primer apellido:",
+                              style: estiloTexto,
+                            ),
+                            Container(
+                              width: MediaQuery
+                                  .of(context)
+                                  .size
+                                  .width * .4,
+                              child: Text(
+                                jugador.apellido1,
+                                textAlign: TextAlign.right,
+                                style: estiloTexto,
+                              ),
+                            ),
+                          ],
+                        ),
+                        //Text("Primer apellido: " + jugador.apellido1),
+                        divisorElementos,
+                        //Segundo apellido
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: <Widget>[
+                            Text(
+                              "Segundo apellido:",
+                              style: estiloTexto,
+                            ),
+                            Container(
+                              width: MediaQuery
+                                  .of(context)
+                                  .size
+                                  .width * .4,
+                              child: Text(
+                                jugador.apellido2,
+                                textAlign: TextAlign.right,
+                                style: estiloTexto,
+                              ),
+                            ),
+                          ],
+                        ),
+                        //Text("Segundo apellido: " + jugador.apellido2),
+                        divisorElementos,
+                        //Apodo
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: <Widget>[
+                            Text(
+                              "Apodo:",
+                              style: estiloTexto,
+                            ),
+                            Container(
+                              width: MediaQuery
+                                  .of(context)
+                                  .size
+                                  .width * .4,
+                              child: Text(
+                                jugador.apodo,
+                                textAlign: TextAlign.right,
+                                style: estiloTexto,
+                              ),
+                            ),
+                          ],
+                        ),
+                        //Text("Apodo: " + jugador.apodo),
+                        divisorElementos,
+                        //Pierna buena
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: <Widget>[
+                            Text(
+                              "Pierna buena:",
+                              style: estiloTexto,
+                            ),
+                            Container(
+                              width: MediaQuery
+                                  .of(context)
+                                  .size
+                                  .width * .4,
+                              child: Text(
+                                jugador.piernaBuena,
+                                textAlign: TextAlign.right,
+                                style: estiloTexto,
+                              ),
+                            ),
+                          ],
+                        ),
+                        //Text("Pierna buena: " + jugador.piernaBuena),
+                        divisorElementos,
+                        //Posición favorita
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: <Widget>[
+                            Text(
+                              "Posición favorita:",
+                              style: estiloTexto,
+                            ),
+                            Container(
+                              width: MediaQuery
+                                  .of(context)
+                                  .size
+                                  .width * .4,
+                              child: Text(
+                                jugador.posicionFavorita,
+                                textAlign: TextAlign.right,
+                                style: estiloTexto,
+                              ),
+                            ),
+                          ],
+                        ),
+                        //Text("Posición favorita: " + jugador.posicionFavorita),
+                        divisorElementos,
+                        //Anotaciones
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: <Widget>[
+                            Text(
+                              "Anotaciones:",
+                              style: estiloTexto,
+                            ),
+                            Container(
+                              width: MediaQuery
+                                  .of(context)
+                                  .size
+                                  .width * .4,
+                              child: Text(
+                                jugador.anotaciones,
+                                textAlign: TextAlign.right,
+                                style: estiloTexto,
+                              ),
+                            ),
+                          ],
+                        ),
+                        //Text("Anotaciones: " + jugador.anotaciones),
+                        divisorGrupos,
+                        //Historial y medias
+                        /*Text(
+                        "Histórico",
+                        style: estiloTexto,
+                      ),*/
+                      ],
+                    ),
+                  ),*/
                 ),
               ),
             );
           }
         } else {
-          //return Center(child: CircularProgressIndicator(),);
-          return SafeArea(
-            child: Scaffold(
-              appBar: AppBar(
-                actions: <Widget>[
-                  IconButton(
-                    icon: const Icon(
-                      Icons.edit,
-                      color: Colors.lightGreen,
-                    ),
-                    tooltip: 'Editar jugador',
-                    onPressed: () {},
-                  ),
-                  IconButton(
-                    icon: const Icon(
-                      Icons.delete,
-                      color: Colors.redAccent,
-                    ),
-                    tooltip: 'Eliminar jugador',
-                    onPressed: () {},
-                  ),
-                ],
-              ),
-              body: Container(
-                padding: EdgeInsets.all(MediaQuery.of(context).size.width * .025),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        //Foto
-                        ConversorImagen.imageFromBase64String("", context),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              "",
-                              style: estiloTexto,
-                            ),
-                            //Edad
-                            Text(
-                              "",
-                              style: estiloTexto,
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    divisorGrupos,
-                    //Nombre
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: <Widget>[
-                        Text(
-                          "Nombre:",
-                          style: estiloTexto,
-                        ),
-                        Container(
-                          width: MediaQuery.of(context).size.width * .4,
-                          child: Text(
-                            "",
-                            textAlign: TextAlign.right,
-                            style: estiloTexto,
-                          ),
-                        ),
-                      ],
-                    ),
-                    divisorElementos,
-                    //Primer apellido
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: <Widget>[
-                        Text(
-                          "Primer apellido:",
-                          style: estiloTexto,
-                        ),
-                        Container(
-                          width: MediaQuery.of(context).size.width * .4,
-                          child: Text(
-                            "",
-                            textAlign: TextAlign.right,
-                            style: estiloTexto,
-                          ),
-                        ),
-                      ],
-                    ),
-                    divisorElementos,
-                    //Segundo apellido
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: <Widget>[
-                        Text(
-                          "Segundo apellido:",
-                          style: estiloTexto,
-                        ),
-                        Container(
-                          width: MediaQuery.of(context).size.width * .4,
-                          child: Text(
-                            "",
-                            textAlign: TextAlign.right,
-                            style: estiloTexto,
-                          ),
-                        ),
-                      ],
-                    ),
-                    divisorElementos,
-                    //Apodo
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: <Widget>[
-                        Text(
-                          "Apodo:",
-                          style: estiloTexto,
-                        ),
-                        Container(
-                          width: MediaQuery.of(context).size.width * .4,
-                          child: Text(
-                            "",
-                            textAlign: TextAlign.right,
-                            style: estiloTexto,
-                          ),
-                        ),
-                      ],
-                    ),
-                    divisorElementos,
-                    //Pierna buena
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: <Widget>[
-                        Text(
-                          "Pierna buena:",
-                          style: estiloTexto,
-                        ),
-                        Container(
-                          width: MediaQuery.of(context).size.width * .4,
-                          child: Text(
-                            "",
-                            textAlign: TextAlign.right,
-                            style: estiloTexto,
-                          ),
-                        ),
-                      ],
-                    ),
-                    divisorElementos,
-                    //Posición favorita
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: <Widget>[
-                        Text(
-                          "Posición favorita:",
-                          style: estiloTexto,
-                        ),
-                        Container(
-                          width: MediaQuery.of(context).size.width * .4,
-                          child: Text(
-                            "",
-                            textAlign: TextAlign.right,
-                            style: estiloTexto,
-                          ),
-                        ),
-                      ],
-                    ),
-                    divisorElementos,
-                    //Anotaciones
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: <Widget>[
-                        Text(
-                          "Anotaciones:",
-                          style: estiloTexto,
-                        ),
-                        Container(
-                          width: MediaQuery.of(context).size.width * .4,
-                          child: Text(
-                            "",
-                            textAlign: TextAlign.right,
-                            style: estiloTexto,
-                          ),
-                        ),
-                      ],
-                    ),
-                    divisorGrupos,
-                  ],
-                ),
-              ),
-            ),
+          return Center(
+            child: CircularProgressIndicator(),
           );
         }
       },

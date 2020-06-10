@@ -254,43 +254,22 @@ class _ListaGestionJugadores extends State<ListaGestionJugadores> {
                   border: Border.all(),
                   borderRadius: BorderRadius.all(Radius.circular(10.0)),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Container(
-                      width: MediaQuery.of(context).size.width * .5,
-                      /*child: Table(
-                        children: [
-                          TableRow(
-                            children: [
-                              ConversorImagen.imageFromBase64String(jugadorBox.nombre_foto, context),
-                              Text(
-                                jugadorBox.apodo,
-                                overflow: TextOverflow.clip,
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),*/
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          ConversorImagen.imageFromBase64String(jugadorBox.nombre_foto, context),
-                          Text(
-                            jugadorBox.apodo,
-                            overflow: TextOverflow.clip,
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      width: MediaQuery.of(context).size.width * .3,
-                      child: Text(
-                        jugadorBox.posicionFavorita,
-                        textAlign: TextAlign.right,
-                      ),
+                child: Table(
+                  defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                  children: [
+                    TableRow(
+                      children: [
+                        ConversorImagen.imageFromBase64String(jugadorBox.nombre_foto, context),
+                        Text(
+                          jugadorBox.apodo,
+                          overflow: TextOverflow.clip,
+                          textAlign: TextAlign.center,
+                        ),
+                        Text(
+                          jugadorBox.posicionFavorita,
+                          textAlign: TextAlign.right,
+                        ),
+                      ],
                     ),
                   ],
                 ),

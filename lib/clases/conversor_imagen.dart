@@ -13,7 +13,7 @@ class ConversorImagen {
             borderRadius: BorderRadius.circular(5.0),
             child: Image.memory(
               base64Decode(base64String),
-              fit: BoxFit.fill,
+              fit: BoxFit.scaleDown,
               height: MediaQuery.of(context).size.width / 6,
               width: MediaQuery.of(context).size.width / 6,
             ),

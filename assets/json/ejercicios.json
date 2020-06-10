@@ -16,7 +16,7 @@
   },
   {
     "id": 2,
-    "titulo": "Segundo",
+    "titulo": "Segundo con un nombre muy largo para comprobar como queda",
     "tipo": "Táctico",
     "duracion": "25",
     "descripcion": "Segundo ejercicio.",

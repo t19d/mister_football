@@ -608,8 +608,249 @@ class _DetallesJugador extends State<DetallesJugador> {
             );
           }
         } else {
-          return Center(
+          /*return Center(
             child: CircularProgressIndicator(),
+          );*/
+          return SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.all(MediaQuery.of(context).size.width * .03),
+                  decoration: BoxDecoration(
+                    color: MisterFootball.primarioLight2.withOpacity(.25),
+                    border: Border(bottom: BorderSide(width: 1)),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: <Widget>[
+                      //Foto
+                      ConversorImagen.imageFromBase64String("", context),
+                      Container(
+                        padding: EdgeInsets.only(
+                          bottom: 5,
+                          left: 10,
+                        ),
+                        child: Text(
+                          "",
+                          style: estiloTexto,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                //Datos prepartido
+                Container(
+                  padding: EdgeInsets.only(
+                    left: MediaQuery.of(context).size.width * .03,
+                    right: MediaQuery.of(context).size.width * .03,
+                  ),
+                  child: Table(
+                    border: TableBorder(
+                      verticalInside: BorderSide(
+                        color: MisterFootball.primario,
+                        width: .4,
+                      ),
+                    ),
+                    defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                    children: [
+                      //Nombre
+                      TableRow(
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(color: MisterFootball.primario, width: .4),
+                          ),
+                        ),
+                        children: [
+                          Text(
+                            "Nombre",
+                            textAlign: TextAlign.center,
+                          ),
+                          Container(
+                            padding: EdgeInsets.only(
+                              top: MediaQuery.of(context).size.width * .03,
+                              bottom: MediaQuery.of(context).size.width * .03,
+                            ),
+                            child: Text(
+                              "",
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ],
+                      ),
+                      //Primer apellido
+                      TableRow(
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(color: MisterFootball.primario, width: .4),
+                          ),
+                        ),
+                        children: [
+                          Text(
+                            "Primer apellido",
+                            textAlign: TextAlign.center,
+                          ),
+                          Container(
+                            padding: EdgeInsets.only(
+                              top: MediaQuery.of(context).size.width * .03,
+                              bottom: MediaQuery.of(context).size.width * .03,
+                            ),
+                            child: Text(
+                              "",
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ],
+                      ),
+                      //Segundo apellido
+                      TableRow(
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(color: MisterFootball.primario, width: .4),
+                          ),
+                        ),
+                        children: [
+                          Text(
+                            "Segundo apellido",
+                            textAlign: TextAlign.center,
+                          ),
+                          Container(
+                            padding: EdgeInsets.only(
+                              top: MediaQuery.of(context).size.width * .03,
+                              bottom: MediaQuery.of(context).size.width * .03,
+                            ),
+                            child: Text(
+                              "",
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ],
+                      ),
+                      //Apodo
+                      TableRow(
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(color: MisterFootball.primario, width: .4),
+                          ),
+                        ),
+                        children: [
+                          Text(
+                            "Apodo",
+                            textAlign: TextAlign.center,
+                          ),
+                          Container(
+                            padding: EdgeInsets.only(
+                              top: MediaQuery.of(context).size.width * .03,
+                              bottom: MediaQuery.of(context).size.width * .03,
+                            ),
+                            child: Text(
+                              "",
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ],
+                      ),
+                      //Fecha de nacimiento (Edad)
+                      TableRow(
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(color: MisterFootball.primario, width: .4),
+                          ),
+                        ),
+                        children: [
+                          Text(
+                            "Fecha de nacimiento\n(Edad)",
+                            textAlign: TextAlign.center,
+                          ),
+                          Container(
+                            padding: EdgeInsets.only(
+                              top: MediaQuery.of(context).size.width * .03,
+                              bottom: MediaQuery.of(context).size.width * .03,
+                            ),
+                            child: Text(
+                              "",
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ],
+                      ),
+                      //Pierna buena
+                      TableRow(
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(color: MisterFootball.primario, width: .4),
+                          ),
+                        ),
+                        children: [
+                          Text(
+                            "Pierna buena",
+                            textAlign: TextAlign.center,
+                          ),
+                          Container(
+                            padding: EdgeInsets.only(
+                              top: MediaQuery.of(context).size.width * .03,
+                              bottom: MediaQuery.of(context).size.width * .03,
+                            ),
+                            child: Text(
+                              "",
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ],
+                      ),
+                      //Posición favorita
+                      TableRow(
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(color: MisterFootball.primario, width: .4),
+                          ),
+                        ),
+                        children: [
+                          Text(
+                            "Posición favorita",
+                            textAlign: TextAlign.center,
+                          ),
+                          Container(
+                            padding: EdgeInsets.only(
+                              top: MediaQuery.of(context).size.width * .03,
+                              bottom: MediaQuery.of(context).size.width * .03,
+                            ),
+                            child: Text(
+                              "",
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ],
+                      ),
+                      //Anotaciones
+                      TableRow(
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(color: MisterFootball.primario, width: .4),
+                          ),
+                        ),
+                        children: [
+                          Text(
+                            "Anotaciones",
+                            textAlign: TextAlign.center,
+                          ),
+                          Container(
+                            padding: EdgeInsets.only(
+                              top: MediaQuery.of(context).size.width * .03,
+                              bottom: MediaQuery.of(context).size.width * .03,
+                            ),
+                            child: Text(
+                              "",
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           );
         }
       },

@@ -35,6 +35,8 @@ class _ListaEjerciciosJSON extends State<ListaEjerciciosJSON> {
     List<dynamic> ejercicios = jsonDecode(ejerciciosString);
     if (ejercicios.length > 0) {
       return ListView(
+        //No Scroll
+        physics: NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         children: List.generate(
           ejercicios.length,
@@ -51,20 +53,28 @@ class _ListaEjerciciosJSON extends State<ListaEjerciciosJSON> {
                 );
               },
               child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: MisterFootball.primario,
+                    width: .4,
+                  ),
+                ),
                 margin: EdgeInsets.only(
                   top: (iEjercicio != 0) ? 2.5 : 0,
                   bottom: (iEjercicio != (ejercicios.length - 1)) ? 2.5 : 0,
                 ),
                 child: Table(
-                  border: TableBorder.all(
+                  border: TableBorder(
+                    verticalInside: BorderSide(
                       color: MisterFootball.primario,
                       width: .4,
+                    ),
                   ),
                   defaultVerticalAlignment: TableCellVerticalAlignment.middle,
                   children: [
                     TableRow(
                       decoration: BoxDecoration(
-                        /*border: TableBorder(
+                          /*border: TableBorder(
                     top: BorderSide(color: MisterFootball.primario),
                     left: BorderSide(color: MisterFootball.primario),
                     right: BorderSide(color: MisterFootball.primario),
@@ -72,9 +82,9 @@ class _ListaEjerciciosJSON extends State<ListaEjerciciosJSON> {
                         ? BorderSide(color: MisterFootball.primario)
                         : BorderSide(color: colorear(ejercicios[iEjercicio]['tipo']).withOpacity(.4)),
                   ),*/
-                        /*color: colorear(ejercicios[iEjercicio]['tipo']).withOpacity(.4),*/
-                        //color: (iEjercicio.isEven) ? MisterFootball.primario : MisterFootball.semiprimarioLight2.withOpacity(.25),
-                      ),
+                          /*color: colorear(ejercicios[iEjercicio]['tipo']).withOpacity(.4),*/
+                          //color: (iEjercicio.isEven) ? MisterFootball.primario : MisterFootball.semiprimarioLight2.withOpacity(.25),
+                          ),
                       children: [
                         //Título
                         Container(
@@ -250,7 +260,9 @@ class _ListaEjerciciosJSON extends State<ListaEjerciciosJSON> {
                       );
                     }
                   } else {
-                    return Center(child: CircularProgressIndicator(),);
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
                   }
                 },
               ),

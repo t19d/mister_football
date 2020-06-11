@@ -224,27 +224,118 @@ class _DetallesEnternamiento extends State<DetallesEnternamiento> {
                 body: SingleChildScrollView(
                   child: Column(
                     children: <Widget>[
-                      //Fecha y hora
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: <Widget>[
-                          Text(entrenamiento.fecha),
-                          Text(entrenamiento.hora),
-                        ],
+                      //Personas, fecha, hora
+                      Container(
+                        padding: EdgeInsets.all(MediaQuery.of(context).size.width * .03),
+                        decoration: BoxDecoration(
+                          color: MisterFootball.primarioLight2.withOpacity(.25),
+                          border: Border(bottom: BorderSide(width: 1)),
+                        ),
+                        child: Column(
+                          children: <Widget>[
+                            Container(
+                              padding: EdgeInsets.only(
+                                bottom: (MediaQuery.of(context).size.width * .03),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Text(
+                                    "${entrenamiento.jugadoresOpiniones.length}",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Icon(Icons.person),
+                                ],
+                              ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: <Widget>[
+                                //Fecha
+                                Text(
+                                  "${entrenamiento.fecha.split("-")[2]}-${entrenamiento.fecha.split("-")[1]}-${entrenamiento.fecha.split("-")[0]}",
+                                  textAlign: TextAlign.center,
+                                ),
+                                //Hora
+                                Text(
+                                  entrenamiento.hora,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                       //Ejercicios
-                      Column(
-                        children: <Widget>[
-                          Text("Ejercicios"),
-                          mostrarEjerciciosSeleccionados(ejerciciosFuture, entrenamiento.ejercicios),
-                        ],
+                      Container(
+                        margin: EdgeInsets.only(
+                          top: (MediaQuery.of(context).size.width * 0.05),
+                        ),
+                        padding: EdgeInsets.only(
+                          top: (MediaQuery.of(context).size.width * 0.025),
+                          bottom: (MediaQuery.of(context).size.width * 0.05),
+                          left: (MediaQuery.of(context).size.width * 0.05),
+                          right: (MediaQuery.of(context).size.width * 0.05),
+                        ),
+                        decoration: BoxDecoration(
+                          color: MisterFootball.primarioLight2.withOpacity(.05),
+                          border: Border(
+                            top: BorderSide(width: .4),
+                            bottom: BorderSide(width: .4),
+                            left: BorderSide(width: .4),
+                            right: BorderSide(width: .4),
+                          ),
+                        ),
+                        width: MediaQuery.of(context).size.width / 1.20,
+                        //height: (ejercicios.length * 180).toDouble(),
+                        child: Column(
+                          children: <Widget>[
+                            Text(
+                              "Ejercicios",
+                              style: TextStyle(decoration: TextDecoration.underline),
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(
+                                top: (MediaQuery.of(context).size.width * 0.025),
+                              ),
+                              child: mostrarEjerciciosSeleccionados(ejerciciosFuture, entrenamiento.ejercicios),
+                            ),
+                          ],
+                        ),
                       ),
                       //Jugadores
-                      Column(
-                        children: <Widget>[
-                          Text("Jugadores"),
-                          mostrarJugadoresSeleccionados(entrenamiento.jugadoresOpiniones),
-                        ],
+                      Container(
+                        margin: EdgeInsets.only(
+                          top: (MediaQuery.of(context).size.width * 0.05),
+                        ),
+                        padding: EdgeInsets.only(
+                          top: (MediaQuery.of(context).size.width * 0.025),
+                          bottom: (MediaQuery.of(context).size.width * 0.05),
+                          left: (MediaQuery.of(context).size.width * 0.05),
+                          right: (MediaQuery.of(context).size.width * 0.05),
+                        ),
+                        decoration: BoxDecoration(
+                          color: MisterFootball.primarioLight2.withOpacity(.05),
+                          border: Border(
+                            top: BorderSide(width: .4),
+                            bottom: BorderSide(width: .4),
+                            left: BorderSide(width: .4),
+                            right: BorderSide(width: .4),
+                          ),
+                        ),
+                        width: MediaQuery.of(context).size.width / 1.20,
+                        //height: (ejercicios.length * 180).toDouble(),
+                        child: Column(
+                          children: <Widget>[
+                            Text(
+                              "Jugadores",
+                              style: TextStyle(decoration: TextDecoration.underline),
+                            ),
+                            mostrarJugadoresSeleccionados(entrenamiento.jugadoresOpiniones),
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -274,7 +365,36 @@ class _DetallesEnternamiento extends State<DetallesEnternamiento> {
       return ListView(
         shrinkWrap: true,
         children: List.generate(ejercicios.length, (iEjercicio) {
-          return Text("${iEjercicio + 1}-${listaEjerciciosJSON[int.parse(ejercicios[iEjercicio]) - 1]['titulo']}");
+          return Container(
+            decoration: BoxDecoration(
+              border: Border(
+                top: BorderSide(width: .4),
+                bottom: BorderSide(width: .4),
+                left: BorderSide(width: .4),
+                right: BorderSide(width: .4),
+              ),
+            ),
+            margin: EdgeInsets.only(
+              top: (iEjercicio != 0) ? 2.5 : 0,
+              bottom: (iEjercicio != (ejercicios.length - 1)) ? 2.5 : 0,
+              right: 0,
+              left: 0,
+            ),
+            child: Row(
+              children: <Widget>[
+                Container(
+                  width: (MediaQuery.of(context).size.width * .63),
+                  padding: EdgeInsets.all((MediaQuery.of(context).size.width * 0.025)),
+                  child: Text(
+                    "${listaEjerciciosJSON[int.parse(ejercicios[iEjercicio]) - 1]['titulo']}",
+                  ),
+                ),
+                Text(
+                  "${iEjercicio + 1}º",
+                ),
+              ],
+            ),
+          );
         }),
       );
     } else {

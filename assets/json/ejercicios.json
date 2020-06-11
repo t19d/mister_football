@@ -16,12 +16,24 @@
   },
   {
     "id": 2,
-    "titulo": "Segundo con un nombre muy largo para comprobar como queda",
+    "titulo": "Segundo con un nombre muy largo para comprobar como queda.",
     "tipo": "Táctico",
     "duracion": "25",
     "descripcion": "Segundo ejercicio.",
     "dificultad": "Media",
     "intensidad": "Alta",
+    "elementos": [],
+    "dimension_campo": "",
+    "imagen": ""
+  },
+  {
+    "id": 3,
+    "titulo": "Tercero",
+    "tipo": "Mental",
+    "duracion": "5",
+    "descripcion": "Tercer ejercicio.",
+    "dificultad": "Difícil",
+    "intensidad": "Baja",
     "elementos": [],
     "dimension_campo": "",
     "imagen": ""

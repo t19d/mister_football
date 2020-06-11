@@ -179,9 +179,7 @@ class _DetallesEnternamiento extends State<DetallesEnternamiento> {
             return SafeArea(
               child: Scaffold(
                 appBar: AppBar(
-                  title: Text(
-                    "Detalles",
-                  ),
+                  /*title: Text("Detalles"),*/
                   actions: <Widget>[
                     IconButton(
                       icon: Icon(

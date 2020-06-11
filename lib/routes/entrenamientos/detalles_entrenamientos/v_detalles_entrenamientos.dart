@@ -7,6 +7,7 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:mister_football/clases/eventos.dart';
 import 'package:mister_football/clases/jugador.dart';
 import 'package:mister_football/main.dart';
+import 'package:mister_football/routes/entrenamientos/entrenamientos_edicion_creacion/v_entrenamientos_edicion.dart';
 import 'package:mister_football/routes/entrenamientos/v_entrenamientos.dart';
 
 class DetallesEnternamiento extends StatefulWidget {
@@ -188,12 +189,12 @@ class _DetallesEnternamiento extends State<DetallesEnternamiento> {
                       ),
                       tooltip: 'Editar entrenamiento',
                       onPressed: () {
-                        /*Navigator.push(
+                        Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => GestionJugadoresEdicion(jugador: jugador, posicion: widget.posicion,),
+                            builder: (context) => EntrenamientosEdicion(entrenamiento: entrenamiento, posicion: widget.posicion,),
                           ),
-                        );*/
+                        );
                       },
                     ),
                     IconButton(

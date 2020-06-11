@@ -118,7 +118,7 @@ class _ListaEntrenamientos extends State<ListaEntrenamientos> {
                       return itemEntrenamientos();
                     }
                   } else {
-                    return LinearProgressIndicator();
+                    return Center(child: CircularProgressIndicator(),);
                   }
                 },
               ),

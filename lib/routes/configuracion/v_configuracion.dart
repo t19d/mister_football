@@ -856,9 +856,11 @@ class _Configuracion extends State<Configuracion> {
         aspectRatioPresets: Platform.isAndroid
             ? [
                 CropAspectRatioPreset.square,
+                CropAspectRatioPreset.original,
               ]
             : [
                 CropAspectRatioPreset.square,
+                CropAspectRatioPreset.original,
               ],
         androidUiSettings: AndroidUiSettings(
             toolbarTitle: 'Recortar imagen',

@@ -568,7 +568,7 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
                                             onPressed: () async {
                                               ejercicios = await showDialog<List<String>>(
                                                 context: context,
-                                                barrierDismissible: true,
+                                                barrierDismissible: false,
                                                 builder: (BuildContext context) {
                                                   return AlertDialog(
                                                     content: StatefulBuilder(
@@ -625,7 +625,7 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
                                             onPressed: () async {
                                               listaJugadores = await showDialog<List<dynamic>>(
                                                 context: context,
-                                                barrierDismissible: true,
+                                                barrierDismissible: false,
                                                 builder: (BuildContext context) {
                                                   return AlertDialog(
                                                     content: StatefulBuilder(
@@ -1004,14 +1004,17 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
                 );
               */
                 return CheckboxListTile(
-                  title: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: <Widget>[
-                      ConversorImagen.imageFromBase64String(jugadorBox.nombre_foto, context),
-                      Text("${jugadorBox.apodo}"), //, style: TextStyle(fontSize: MediaQuery.of(context).size.width * .04)),
-                      //Text("${jugadorBox.posicionFavorita}", style: TextStyle(fontSize: MediaQuery.of(context).size.width * .05),),
-                    ],
-                  ),
+                  title: Table(
+                    defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                    children: [
+                    TableRow(
+                      children: <Widget>[
+                        ConversorImagen.imageFromBase64String(jugadorBox.nombre_foto, context),
+                        Text("${jugadorBox.apodo}"), //, style: TextStyle(fontSize: MediaQuery.of(context).size.width * .04)),
+                        //Text("${jugadorBox.posicionFavorita}", style: TextStyle(fontSize: MediaQuery.of(context).size.width * .05),),
+                      ],
+                    ),
+                  ],),
                   value: _isSeleccionado,
                   onChanged: (bool nuevoEstado) {
                     setState(() {

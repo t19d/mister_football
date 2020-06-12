@@ -151,6 +151,10 @@ class _PartidoEquipoEdicion extends State<PartidoEquipoEdicion> {
                   ],
                 ),
                 RaisedButton(
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.primario)),
+                  color: Colors.white70,
+                  disabledColor: MisterFootball.primarioLight2,
+                  disabledTextColor: Colors.white70,
                   child: Text(
                     "Añadir cambio\nde alineación",
                     textAlign: TextAlign.center,
@@ -375,6 +379,10 @@ class _PartidoEquipoEdicion extends State<PartidoEquipoEdicion> {
               },
             ),
             RaisedButton(
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.primario)),
+              color: Colors.white70,
+              disabledColor: MisterFootball.primarioLight2,
+              disabledTextColor: Colors.white70,
               child: Text("Aceptar"),
               onPressed: () {
                 if (formKey.currentState.validate()) {

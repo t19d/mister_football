@@ -3,6 +3,7 @@ import 'package:hive/hive.dart';
 import 'package:mister_football/animaciones/animacion_detalles.dart';
 import 'package:mister_football/clases/conversor_imagen.dart';
 import 'package:mister_football/clases/jugador.dart';
+import 'package:mister_football/main.dart';
 import 'package:mister_football/routes/gestion_jugadores/detalles_jugadores/v_detalles_jugador.dart';
 
 class ListaGestionJugadores extends StatefulWidget {
@@ -251,8 +252,8 @@ class _ListaGestionJugadores extends State<ListaGestionJugadores> {
                 ),
                 //decoration: colorear(jugadorBox.posicionFavorita),
                 decoration: BoxDecoration(
-                  border: Border.all(),
-                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                  borderRadius: BorderRadius.circular(5),
+                  border: Border.all(color: MisterFootball.primario),
                 ),
                 child: Table(
                   defaultVerticalAlignment: TableCellVerticalAlignment.middle,

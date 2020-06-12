@@ -44,7 +44,7 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
               color: Color(0xFF3E3E3E),
             ),
             child: IconButton(
-              icon: const Icon(
+              icon: Icon(
                 Icons.menu,
                 color: Colors.white,
               ),

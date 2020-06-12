@@ -23,7 +23,7 @@ class _Partidos extends State<Partidos> {
         ),
         appBar: AppBar(
           leading: IconButton(
-            icon: const Icon(Icons.menu),
+            icon: Icon(Icons.menu),
             tooltip: 'Menú',
             onPressed: () {
               _drawerKey.currentState.openDrawer();
@@ -40,7 +40,8 @@ class _Partidos extends State<Partidos> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => PartidosCreacion()),
+                    builder: (context) => PartidosCreacion(),
+                  ),
                 );
               },
             ),

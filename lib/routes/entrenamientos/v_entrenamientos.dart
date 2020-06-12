@@ -23,7 +23,7 @@ class _Entrenamientos extends State<Entrenamientos> {
         ),
         appBar: AppBar(
           leading: IconButton(
-            icon: const Icon(Icons.menu),
+            icon: Icon(Icons.menu),
             tooltip: 'Menú',
             onPressed: () {
               _drawerKey.currentState.openDrawer();
@@ -35,7 +35,7 @@ class _Entrenamientos extends State<Entrenamientos> {
           actions: <Widget>[
             IconButton(
               icon: Icon(
-                Icons.add_circle,
+                Icons.add_box,
                 color: Colors.white,
               ),
               tooltip: 'Crear entrenamiento',

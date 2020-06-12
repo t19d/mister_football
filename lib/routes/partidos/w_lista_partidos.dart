@@ -72,7 +72,7 @@ class _ListaPartidos extends State<ListaPartidos> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(5.0),
             ),
-            child: new InkWell(
+            child: InkWell(
               splashColor: MisterFootball.complementario,
               onTap: () {
                 Navigator.push(
@@ -93,7 +93,7 @@ class _ListaPartidos extends State<ListaPartidos> {
                 //padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
-                  border: Border.all(color: Colors.black),
+                  border: Border.all(color: MisterFootball.primario),
                   /*color:
                       (DateTime.now()
                                   .difference(DateTime(

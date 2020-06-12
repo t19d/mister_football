@@ -29,7 +29,7 @@ class _Alineacion extends State<Alineacion> {
         ),
         appBar: AppBar(
           leading: IconButton(
-            icon: const Icon(Icons.menu),
+            icon: Icon(Icons.menu),
             tooltip: 'Menú',
             onPressed: () {
               _drawerKey.currentState.openDrawer();

@@ -35,7 +35,7 @@ class _ListaEntrenamientos extends State<ListaEntrenamientos> {
           Entrenamiento;
           return Card(
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15.0),
+              borderRadius: BorderRadius.circular(5.0),
             ),
             child: new InkWell(
               splashColor: MisterFootball.complementario,
@@ -57,7 +57,10 @@ class _ListaEntrenamientos extends State<ListaEntrenamientos> {
               child: Container(
                 //padding: const EdgeInsets.only(top: 5.0, bottom: 6.0),
                 padding: EdgeInsets.all(6),
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  border: Border.all(color: MisterFootball.primario),
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[

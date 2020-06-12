@@ -125,7 +125,10 @@ class _GestionJugadoresCreacion extends State<GestionJugadoresCreacion> {
               children: <Widget>[
                 ConversorImagen.imageFromBase64String(imgString, context),
                 RaisedButton(
-                  color: Colors.lightBlueAccent,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.primario)),
+                  color: Colors.white70,
+                  disabledColor: MisterFootball.primarioLight2,
+                  disabledTextColor: Colors.white70,
                   child: (imgString == "") ? Text("Añadir foto") : Text("Editar foto"),
                   onPressed: () {
                     _elegirOpcionFotoDialogo(context);
@@ -314,8 +317,10 @@ class _GestionJugadoresCreacion extends State<GestionJugadoresCreacion> {
                       separadorFormulario(),
                       //Fecha de nacimiento
                       RaisedButton(
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-                        elevation: 4.0,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.primario)),
+                        color: Colors.white70,
+                        disabledColor: MisterFootball.primarioLight2,
+                        disabledTextColor: Colors.white70,
                         onPressed: () {
                           //Seleccionar fecha
                           DatePicker.showDatePicker(context, showTitleActions: true, minTime: DateTime(1950, 1, 1), maxTime: DateTime.now(),
@@ -365,10 +370,10 @@ class _GestionJugadoresCreacion extends State<GestionJugadoresCreacion> {
                   ),
                 ),
                 RaisedButton(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5.0),
-                  ),
-                  color: Colors.lightGreenAccent,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.primario)),
+                  color: Colors.white70,
+                  disabledColor: MisterFootball.primarioLight2,
+                  disabledTextColor: Colors.white70,
                   child: Text("CREAR"),
                   onPressed: () async {
                     validar();

@@ -22,7 +22,7 @@ class _Ejercicios extends State<Ejercicios> {
         ),
         appBar: AppBar(
           leading: IconButton(
-            icon: const Icon(Icons.menu),
+            icon: Icon(Icons.menu),
             tooltip: 'Menú',
             onPressed: () {
               _drawerKey.currentState.openDrawer();

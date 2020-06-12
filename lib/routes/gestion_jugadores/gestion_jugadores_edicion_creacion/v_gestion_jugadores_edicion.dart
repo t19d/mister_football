@@ -162,7 +162,10 @@ class _GestionJugadoresEdicion extends State<GestionJugadoresEdicion> {
               children: <Widget>[
                 ConversorImagen.imageFromBase64String(imgString, context),
                 RaisedButton(
-                  color: Colors.lightGreen,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.primario)),
+                  color: Colors.white70,
+                  disabledColor: MisterFootball.primarioLight2,
+                  disabledTextColor: Colors.white70,
                   child: Text("Añadir imagen"),
                   onPressed: () {
                     _elegirOpcionFotoDialogo(context);
@@ -352,8 +355,10 @@ class _GestionJugadoresEdicion extends State<GestionJugadoresEdicion> {
                       separadorFormulario(),
                       //Fecha de nacimiento
                       RaisedButton(
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-                        elevation: 4.0,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.primario)),
+                        color: Colors.white70,
+                        disabledColor: MisterFootball.primarioLight2,
+                        disabledTextColor: Colors.white70,
                         onPressed: () {
                           //Seleccionar fecha
                           DatePicker.showDatePicker(context, showTitleActions: true, minTime: DateTime(1950, 1, 1), maxTime: DateTime.now(),
@@ -402,30 +407,15 @@ class _GestionJugadoresEdicion extends State<GestionJugadoresEdicion> {
                     ],
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    RaisedButton(
-                      shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30.0),
-                      ),
-                      color: Colors.red,
-                      child: Text("Cancelar"),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                    RaisedButton(
-                      shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30.0),
-                      ),
-                      color: Colors.lightBlueAccent,
-                      child: Text("Editar jugador"),
-                      onPressed: () async {
-                        validar();
-                      },
-                    ),
-                  ],
+                RaisedButton(
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.primario)),
+                  color: Colors.white70,
+                  disabledColor: MisterFootball.primarioLight2,
+                  disabledTextColor: Colors.white70,
+                  child: Text("Editar"),
+                  onPressed: () async {
+                    validar();
+                  },
                 ),
               ],
             ),

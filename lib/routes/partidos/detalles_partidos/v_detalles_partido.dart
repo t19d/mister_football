@@ -89,7 +89,7 @@ class _DetallesPartido extends State<DetallesPartido> {
                 ),*/
                 actions: <Widget>[
                   IconButton(
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.edit,
                       color: Colors.white,
                     ),

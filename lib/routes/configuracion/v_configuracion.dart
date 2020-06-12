@@ -155,6 +155,10 @@ class _Configuracion extends State<Configuracion> {
             Container(
               margin: EdgeInsets.only(top: 10),
               child: RaisedButton(
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.primario)),
+                color: Colors.white70,
+                disabledColor: MisterFootball.primarioLight2,
+                disabledTextColor: Colors.white70,
                 child: Text("Aceptar"),
                 onPressed: (!isEscudoEditado && !isNombreEquipoEditado)
                     ? null
@@ -392,6 +396,10 @@ class _Configuracion extends State<Configuracion> {
             Container(
               margin: EdgeInsets.only(top: 10),
               child: RaisedButton(
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.primario)),
+                color: Colors.white70,
+                disabledColor: MisterFootball.primarioLight2,
+                disabledTextColor: Colors.white70,
                 child: Text("Aceptar"),
                 onPressed: (!isEscudoEditado && !isNombreEquipoEditado)
                     ? null
@@ -534,7 +542,7 @@ class _Configuracion extends State<Configuracion> {
         ),
         appBar: AppBar(
           leading: IconButton(
-            icon: const Icon(Icons.menu),
+            icon: Icon(Icons.menu),
             tooltip: 'Menú',
             onPressed: () async {
               _drawerKey.currentState.openDrawer();
@@ -645,6 +653,10 @@ class _Configuracion extends State<Configuracion> {
                     Container(
                       margin: EdgeInsets.only(top: 10),
                       child: RaisedButton(
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.primario)),
+                        color: Colors.white70,
+                        disabledColor: MisterFootball.primarioLight2,
+                        disabledTextColor: Colors.white70,
                         child: Text("Aceptar"),
                         onPressed: () {},
                       ),
@@ -712,6 +724,10 @@ class _Configuracion extends State<Configuracion> {
                     ),
                   ),
                   RaisedButton(
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.primario)),
+                    color: Colors.white70,
+                    disabledColor: MisterFootball.primarioLight2,
+                    disabledTextColor: Colors.white70,
                     child: Text("Aceptar"),
                     onPressed: () {
                       if (formKey.currentState.validate()) {

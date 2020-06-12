@@ -196,23 +196,6 @@ class _Navegador extends State<Navegador> {
             },
           ),*/
           divisor,
-          //Item Ejercicios
-          ListTile(
-            title: Text(
-              "Ejercicios",
-              style: estiloEnlaces,
-            ),
-            leading: Icon(
-              Icons.fitness_center,
-              color: Colors.white70,
-            ),
-            onTap: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => Ejercicios()),
-              );
-            },
-          ),
           //Item Entrenamientos
           ListTile(
             title: Text(
@@ -227,6 +210,23 @@ class _Navegador extends State<Navegador> {
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(builder: (context) => Entrenamientos()),
+              );
+            },
+          ),
+          //Item Ejercicios
+          ListTile(
+            title: Text(
+              "Ejercicios",
+              style: estiloEnlaces,
+            ),
+            leading: Icon(
+              Icons.fitness_center,
+              color: Colors.white70,
+            ),
+            onTap: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => Ejercicios()),
               );
             },
           ),

@@ -469,8 +469,10 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
                               children: <Widget>[
                                 //Fecha
                                 RaisedButton(
-                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-                                  elevation: 4.0,
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.primario)),
+                                  color: Colors.white70,
+                                  disabledColor: MisterFootball.primarioLight2,
+                                  disabledTextColor: Colors.white70,
                                   onPressed: () {
                                     //Seleccionar fecha
                                     DatePicker.showDatePicker(context,
@@ -505,8 +507,10 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
                                 separadorFormulario(),
                                 //Hora
                                 RaisedButton(
-                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-                                  elevation: 4.0,
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.primario)),
+                                  color: Colors.white70,
+                                  disabledColor: MisterFootball.primarioLight2,
+                                  disabledTextColor: Colors.white70,
                                   onPressed: () {
                                     //Seleccionar hora
                                     DatePicker.showTimePicker(context, showTitleActions: true, onConfirm: (time) {
@@ -649,10 +653,10 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
                             ),
                           ),
                           RaisedButton(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            color: Colors.lightGreen,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.primario)),
+                            color: Colors.white70,
+                            disabledColor: MisterFootball.primarioLight2,
+                            disabledTextColor: Colors.white70,
                             child: Text("Crear"),
                             onPressed: () async {
                               validar();
@@ -915,6 +919,10 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
               }),
             ),
             RaisedButton(
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.primario)),
+              color: Colors.white70,
+              disabledColor: MisterFootball.primarioLight2,
+              disabledTextColor: Colors.white70,
               child: Text("Aceptar"),
               onPressed: () {
                 Navigator.pop(context, ejerciciosSeleccionados);
@@ -1038,6 +1046,10 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
               }),
             ),
             RaisedButton(
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.primario)),
+              color: Colors.white70,
+              disabledColor: MisterFootball.primarioLight2,
+              disabledTextColor: Colors.white70,
               child: Text("Aceptar"),
               onPressed: () {
                 Navigator.pop(context, postListaJugadores);

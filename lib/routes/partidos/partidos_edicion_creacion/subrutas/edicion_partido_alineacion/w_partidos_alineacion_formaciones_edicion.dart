@@ -10,8 +10,9 @@ import 'package:mister_football/routes/partidos/partidos_edicion_creacion/v_part
 class PartidoAlineacionFormacionEdicion extends StatefulWidget {
   final String formacion;
   final Partido partido;
+  final String minuto;
 
-  PartidoAlineacionFormacionEdicion({Key key, @required this.formacion, @required this.partido}) : super(key: key);
+  PartidoAlineacionFormacionEdicion({Key key, @required this.formacion, @required this.partido, @required this.minuto}) : super(key: key);
 
   @override
   createState() => _PartidoAlineacionFormacionEdicion();
@@ -70,7 +71,6 @@ class _PartidoAlineacionFormacionEdicion extends State<PartidoAlineacionFormacio
     '10': null
   };
 
-
   void refreshPosicionesOcupadas(Map<String, dynamic> posOcup) {
     setState(() {
       posicionesOcupadas = posOcup;
@@ -80,8 +80,8 @@ class _PartidoAlineacionFormacionEdicion extends State<PartidoAlineacionFormacio
   @override
   Widget build(BuildContext context) {
     if (widget.partido.alineacion != null) {
-      if (widget.partido.alineacion['0'][0] != null) {
-        posicionesOcupadas = Map<String, String>.from(widget.partido.alineacion['0'][1]);
+      if (widget.partido.alineacion['${widget.minuto}'][0] != null) {
+        posicionesOcupadas = Map<String, String>.from(widget.partido.alineacion['${widget.minuto}'][1]);
         //Comprobar si los jugadores alineados están convocados.
         for (var keyPosicion in posicionesOcupadas.keys) {
           //('$keyPosicion was written by ${posicionesOcupadas[keyPosicion]}');
@@ -181,10 +181,10 @@ class _PartidoAlineacionFormacionEdicion extends State<PartidoAlineacionFormacio
                 Map<String, List> alineacionActualizada = {};
                 if (widget.partido.alineacion != null) {
                   alineacionActualizada = await widget.partido.alineacion;
-                  alineacionActualizada['0'][1] = posicionesOcupadas;
-                  print(alineacionActualizada['0'][1]);
+                  alineacionActualizada['${widget.minuto}'][1] = posicionesOcupadas;
+                  print(alineacionActualizada['${widget.minuto}'][1]);
                 } else {
-                  alineacionActualizada['0'] = [widget.formacion, posicionAlineacion];
+                  alineacionActualizada['${widget.minuto}'] = [widget.formacion, posicionAlineacion];
                 }
                 Partido p = Partido(
                     fecha: widget.partido.fecha,
@@ -273,7 +273,10 @@ class _PartidoAlineacionFormacionEdicion extends State<PartidoAlineacionFormacio
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             ConversorImagen.imageFromBase64String(j.nombre_foto, context),
-            Text(j.apodo),
+            Text(
+              j.apodo,
+              textAlign: TextAlign.center,
+            ),
           ],
         ),
       );
@@ -286,7 +289,10 @@ class _PartidoAlineacionFormacionEdicion extends State<PartidoAlineacionFormacio
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             ConversorImagen.imageFromBase64String("", context),
-            Text(posicion),
+            Text(
+              posicion,
+              textAlign: TextAlign.center,
+            ),
           ],
         ),
       );

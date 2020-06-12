@@ -101,7 +101,7 @@ class MisterFootball extends StatelessWidget {
     // TODO: implement build
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Entrenamientos(),
+      home: Partidos(),
       /*theme: ThemeData(
         // Define the default brightness and colors.
         primaryColor: primario,

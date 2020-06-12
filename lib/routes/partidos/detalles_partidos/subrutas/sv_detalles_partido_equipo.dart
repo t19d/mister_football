@@ -16,15 +16,60 @@ class DetallesPartidoEquipo extends StatefulWidget {
 }
 
 class _DetallesPartidoEquipo extends State<DetallesPartidoEquipo> {
+  String formacionInicialPartido;
+  String _minutoActual;
+  List<DropdownMenuItem<String>> _minutosDisponibles;
+
+  @override
+  void initState() {
+    super.initState();
+    _minutoActual = "0";
+    formacionInicialPartido = "14231";
+  }
+
+  void cambiarMinutoFormacion(String minutoElegido) async {
+    _minutoActual = minutoElegido;
+  }
+
+  void actualizarMinutoFormacionPartido(String minutoElegido) async {
+    cambiarMinutoFormacion(minutoElegido);
+    formacionInicialPartido = widget.partido.alineacion['$minutoElegido'][0];
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     //Seleccionar formación inicial
-    String formacionInicialPartido = "14231";
+    print('$_minutoActual');
     if (widget.partido.alineacion != null) {
-      if (widget.partido.alineacion['0'][0] != null) {
-        formacionInicialPartido = widget.partido.alineacion['0'][0];
+      if ('$_minutoActual'.length < 1) {
+        if (widget.partido.alineacion['0'][0] != null) {
+          formacionInicialPartido = widget.partido.alineacion['0'][0];
+        }
+      } else {
+        if (widget.partido.alineacion['$_minutoActual'][0] != null) {
+          formacionInicialPartido = widget.partido.alineacion['$_minutoActual'][0];
+        }
       }
     }
+
+    //Añadir minutos con alineaciones guardadas
+    if (widget.partido.alineacion != null) {
+      List<DropdownMenuItem<String>> items = new List();
+      for (String f in widget.partido.alineacion.keys) {
+        items.add(
+          new DropdownMenuItem(
+            value: f,
+            child: new Text(
+              f,
+              textAlign: TextAlign.center,
+            ),
+          ),
+        );
+      }
+      _minutosDisponibles = items;
+    }
+
     return SingleChildScrollView(
       child: Container(
         margin: EdgeInsets.only(
@@ -32,11 +77,45 @@ class _DetallesPartidoEquipo extends State<DetallesPartidoEquipo> {
         ),
         child: Column(
           children: <Widget>[
-            Text(
-              formacionInicialPartido,
-              style: TextStyle(
-                decoration: TextDecoration.underline,
-                //fontWeight: FontWeight.bold
+            Container(
+              width: MediaQuery.of(context).size.width * .8,
+              child: Table(
+                defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                children: [
+                  TableRow(
+                    children: [
+                      Text(
+                        "Minuto:",
+                        textAlign: TextAlign.center,
+                      ),
+                      Text(
+                        "Formación:",
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                  TableRow(
+                    children: [
+                      DropdownButton(
+                        value: _minutoActual,
+                        items: _minutosDisponibles,
+                        onChanged: (val) async {
+                          actualizarMinutoFormacionPartido(val);
+                          //cambiarMinutoFormacion(val);
+                          setState(() {});
+                        },
+                      ),
+                      Text(
+                        formacionInicialPartido,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          decoration: TextDecoration.underline,
+                          //fontWeight: FontWeight.bold
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
             Container(
@@ -44,7 +123,11 @@ class _DetallesPartidoEquipo extends State<DetallesPartidoEquipo> {
                 bottom: MediaQuery.of(context).size.width * .03,
                 top: MediaQuery.of(context).size.width * .03,
               ),
-              child: DetallesPartidoAlineacionFormacion(formacion: formacionInicialPartido, partido: widget.partido),
+              child: DetallesPartidoAlineacionFormacion(
+                formacion: formacionInicialPartido,
+                partido: widget.partido,
+                minuto: _minutoActual,
+              ),
             ),
             Container(
               padding: EdgeInsets.only(

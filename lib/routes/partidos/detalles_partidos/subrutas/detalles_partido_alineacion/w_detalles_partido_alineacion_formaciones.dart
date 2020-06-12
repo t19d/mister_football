@@ -7,8 +7,9 @@ import 'package:mister_football/clases/partido.dart';
 class DetallesPartidoAlineacionFormacion extends StatefulWidget {
   final String formacion;
   final Partido partido;
+  final String minuto;
 
-  DetallesPartidoAlineacionFormacion({Key key, @required this.formacion, @required this.partido}) : super(key: key);
+  DetallesPartidoAlineacionFormacion({Key key, @required this.formacion, @required this.partido, @required this.minuto}) : super(key: key);
 
   @override
   createState() => _DetallesPartidoAlineacionFormacion();
@@ -71,8 +72,8 @@ class _DetallesPartidoAlineacionFormacion extends State<DetallesPartidoAlineacio
   Widget build(BuildContext context) {
     //Cargar alineación guardada
     if (widget.partido.alineacion != null) {
-      if (widget.partido.alineacion['0'][0] != null) {
-        posicionesOcupadas = Map<String, String>.from(widget.partido.alineacion['0'][1]);
+      if (widget.partido.alineacion['${widget.minuto}'][0] != null) {
+        posicionesOcupadas = Map<String, String>.from(widget.partido.alineacion['${widget.minuto}'][1]);
         //Comprobar si los jugadores alineados están convocados.
         for (var keyPosicion in posicionesOcupadas.keys) {
           //print('$keyPosicion was written by ${posicionesOcupadas[keyPosicion]}');

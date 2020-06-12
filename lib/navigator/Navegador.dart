@@ -24,11 +24,11 @@ class Navegador extends StatefulWidget {
 
 class _Navegador extends State<Navegador> {
   //Estilo de los enlaces
-  TextStyle estiloEnlaces = new TextStyle(color: Colors.white);
+  TextStyle estiloEnlaces = TextStyle(color: Colors.white);
 
   //Divisores
-  Divider divisor = new Divider(
-    color: MisterFootball.analogo1Light,
+  Divider divisor = Divider(
+    color: Colors.white70,
   );
 
   //Devuelve encabezado del navigator
@@ -56,7 +56,7 @@ class _Navegador extends State<Navegador> {
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: (MediaQuery.of(context).size.width * .05),
-              color: Colors.white70,
+              color: Colors.white,
               height: 3,
               fontWeight: FontWeight.bold,
             ),
@@ -78,7 +78,7 @@ class _Navegador extends State<Navegador> {
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: (MediaQuery.of(context).size.width * .05),
-              color: Colors.white70,
+              color: Colors.white,
               height: 3,
               fontWeight: FontWeight.bold,
             ),
@@ -91,7 +91,6 @@ class _Navegador extends State<Navegador> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      //color: MisterFootball.primario,
       decoration: BoxDecoration(
         gradient:
             LinearGradient(begin: Alignment.topRight, end: Alignment.bottomLeft, colors: [MisterFootball.primario, MisterFootball.primarioDark]),

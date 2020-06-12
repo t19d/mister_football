@@ -72,7 +72,7 @@ class _PartidosEdicion extends State<PartidosEdicion> {
             return Scaffold(
               appBar: AppBar(
                 title: Text(
-                  "Edición",
+                  "Editando...",
                 ),
                 actions: <Widget>[
                   IconButton(
@@ -82,16 +82,6 @@ class _PartidosEdicion extends State<PartidosEdicion> {
                     ),
                     tooltip: 'Aceptar cambios',
                     onPressed: () async {
-                      print("Editar");
-                      //Comprobar si ha cambiado la fecha y hora, en ese caso cambiar en el box eventos antes de editar el partido.
-                      /*var boxPartidos = await Hive.openBox('partidos');
-                      var boxEventos = await Hive.openBox('eventos');
-                      Eventos eventosActuales = boxEventos.get(0);
-                      //Eliminar evento
-                      eventosActuales.listaEventos.remove("${partido.fecha}/${partido.hora}");
-                      boxPartidos.deleteAt(widget.posicion);
-                      boxEventos.putAt(0, eventosActuales);*/
-
                       Box boxPartidosEditarAlineacion = Hive.box('partidos');
                       Box boxEventos = Hive.box('eventos');
                       Eventos eventosActualesObjeto = boxEventos.get(0);

@@ -125,7 +125,7 @@ class _PartidosCreacion extends State<PartidosCreacion> {
           title: Text(
             'Nuevo partido',
           ),
-          actions: <Widget>[
+          /*actions: <Widget>[
             IconButton(
               icon: Icon(
                 Icons.close,
@@ -136,7 +136,7 @@ class _PartidosCreacion extends State<PartidosCreacion> {
                 Navigator.pop(context);
               },
             ),
-          ],
+          ],*/
         ),
         body: Form(
           key: formKey,

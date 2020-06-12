@@ -151,8 +151,20 @@ class _GestionJugadoresEdicion extends State<GestionJugadoresEdicion> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            "Editando ${widget.jugador.nombre}",
+            "Editando...",
           ),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.check_box,
+                color: Colors.white,
+              ),
+              tooltip: 'Aceptar cambios',
+              onPressed: () async {
+                validar();
+              },
+            ),
+          ],
         ),
         body: Form(
           key: formKey,
@@ -406,16 +418,6 @@ class _GestionJugadoresEdicion extends State<GestionJugadoresEdicion> {
                       separadorFormulario(),
                     ],
                   ),
-                ),
-                RaisedButton(
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.primario)),
-                  color: Colors.white70,
-                  disabledColor: MisterFootball.primarioLight2,
-                  disabledTextColor: Colors.white70,
-                  child: Text("Editar"),
-                  onPressed: () async {
-                    validar();
-                  },
                 ),
               ],
             ),

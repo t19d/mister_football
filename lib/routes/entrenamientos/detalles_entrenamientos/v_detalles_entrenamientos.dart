@@ -411,6 +411,8 @@ class _DetallesEnternamiento extends State<DetallesEnternamiento> {
     Box boxJugadoresEquipo = Hive.box('jugadores');
     if (jugadoresElegidos.length > 0) {
       return ListView(
+        //No Scroll
+        physics: NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         children: List.generate(jugadoresElegidos.length, (iFila) {
           Jugador jugadorFila;
@@ -419,7 +421,7 @@ class _DetallesEnternamiento extends State<DetallesEnternamiento> {
               jugadorFila = boxJugadoresEquipo.getAt(i);
             }
           }
-          return Text("-${jugadorFila.nombre}");
+          return Text("-${jugadorFila.apodo}");
         }),
       );
     } else {
@@ -428,20 +430,4 @@ class _DetallesEnternamiento extends State<DetallesEnternamiento> {
       );
     }
   }
-/*mostrarJugadoresSeleccionados(List<dynamic> jugadoresElegidos) {
-    if (jugadoresElegidos.length > 0) {
-      return ListView(
-        shrinkWrap: true,
-        children: List.generate(jugadoresElegidos.length, (iJugador) {
-          final Jugador jugadorBox = jugadoresElegidos[iJugador] as Jugador;
-          return Text("-${jugadorBox.nombre}");
-        }),
-      );
-    } else {
-      return Center(
-        child: Text("No hay ningún jugador añadido."),
-      );
-    }
-  }*/
-/*  */
 }

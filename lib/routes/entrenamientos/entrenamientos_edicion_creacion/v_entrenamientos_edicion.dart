@@ -105,8 +105,20 @@ class _EntrenamientosEdicion extends State<EntrenamientosEdicion> {
               child: Scaffold(
                 appBar: AppBar(
                   title: Text(
-                    'Editar entrenamiento',
+                    "Editando...",
                   ),
+                  actions: <Widget>[
+                    IconButton(
+                      icon: Icon(
+                        Icons.check_box,
+                        color: Colors.white,
+                      ),
+                      tooltip: 'Aceptar cambios',
+                      onPressed: () async {
+                        validar();
+                      },
+                    ),
+                  ],
                 ),
                 body: SingleChildScrollView(
                   child: Form(
@@ -310,16 +322,6 @@ class _EntrenamientosEdicion extends State<EntrenamientosEdicion> {
                                 ),
                               ],
                             ),
-                          ),
-                          RaisedButton(
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.primario)),
-                            color: Colors.white70,
-                            disabledColor: MisterFootball.primarioLight2,
-                            disabledTextColor: Colors.white70,
-                            child: Text("Editar"),
-                            onPressed: () async {
-                              validar();
-                            },
                           ),
                         ],
                       ),

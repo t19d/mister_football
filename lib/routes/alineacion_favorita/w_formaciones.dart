@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:mister_football/clases/conversor_imagen.dart';
 import 'package:mister_football/clases/jugador.dart';
+import 'package:mister_football/routes/alineacion_favorita/v_alineacion.dart';
+import 'package:mister_football/routes/alineacion_favorita/w_campo_jugadores.dart';
 import 'package:mister_football/routes/gestion_jugadores/detalles_jugadores/v_detalles_jugador.dart';
 
 class Formacion extends StatefulWidget {
@@ -53,7 +55,6 @@ Color colorear(String posicion) {
 }
 
 class _Formacion extends State<Formacion> {
-
   //Posiciones ocupadas por jugadores
   Map<String, String> posicionesOcupadas = {
     '0': null,
@@ -69,12 +70,6 @@ class _Formacion extends State<Formacion> {
     '10': null
   };
 
-  //Método que abre las boxes necesarias.
-  /*Future<void> _openBox() async {
-    await Hive.openBox("jugadores");
-    await Hive.openBox("perfil");
-  }*/
-
   void refreshPosicionesOcupadas(Map<String, dynamic> posOcup) {
     setState(() {
       posicionesOcupadas = posOcup;
@@ -83,54 +78,7 @@ class _Formacion extends State<Formacion> {
 
   @override
   Widget build(BuildContext context) {
-    /*return FutureBuilder(
-      future: _openBox(),
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          if (snapshot.hasError) {
-            print(snapshot.error.toString());
-            return Container(
-              height: MediaQuery.of(context).size.height * .5,
-              width: MediaQuery.of(context).size.width * .9,
-              child: Text(snapshot.error.toString()),
-            );
-          } else {
-            final boxPerfil = Hive.box('perfil');
-            Map<String, dynamic> equipo = {
-              "nombre_equipo": "",
-              "escudo": "",
-              "modo_oscuro": false,
-              "alineacion_favorita": [
-                {'0': null, '1': null, '2': null, '3': null, '4': null, '5': null, '6': null, '7': null, '8': null, '9': null, '10': null},
-                "14231"
-              ]
-            };
-            if (boxPerfil.get(0) != null) {
-              equipo = Map.from(boxPerfil.get(0));
-            }
-            if (equipo['alineacion_favorita'] != null) {
-              posicionesOcupadas = Map<String, String>.from(equipo['alineacion_favorita'][0]);
-            }
-            return dibujoFormacion();
-          }
-        } else {
-          return dibujoFormacion();
-        }
-      },
-    );*/
-    Box boxPerfil = Hive.box('perfil');
-    Map<String, dynamic> equipo = {
-      "nombre_equipo": "",
-      "escudo": "",
-      "modo_oscuro": false,
-      "alineacion_favorita": [
-        {'0': null, '1': null, '2': null, '3': null, '4': null, '5': null, '6': null, '7': null, '8': null, '9': null, '10': null},
-        "14231"
-      ]
-    };
-    if (boxPerfil.get(0) != null) {
-      equipo = Map.from(boxPerfil.get(0));
-    }
+    Map<String, dynamic> equipo = Alineacion.equipoEditado;
     if (equipo['alineacion_favorita'] != null) {
       posicionesOcupadas = Map<String, String>.from(equipo['alineacion_favorita'][0]);
     }
@@ -206,29 +154,10 @@ class _Formacion extends State<Formacion> {
                 posicionesOcupadas['${posicionAlineacion}'] = jugadorBox.id;
                 refreshPosicionesOcupadas(posicionesOcupadas);
 
-                if (!Hive.isBoxOpen('perfil')) {
-                  await Hive.openBox('perfil');
-                }
-                Box boxPerfil = Hive.box('perfil');
-                Map<String, dynamic> equipo = {
-                  "nombre_equipo": "",
-                  "escudo": "",
-                  "modo_oscuro": false,
-                  "alineacion_favorita": [
-                    {'0': null, '1': null, '2': null, '3': null, '4': null, '5': null, '6': null, '7': null, '8': null, '9': null, '10': null},
-                    "14231"
-                  ]
-                };
-                if (boxPerfil.get(0) != null) {
-                  equipo = Map.from(boxPerfil.get(0));
-                  //Actualizar alineación
-                  equipo["alineacion_favorita"][0] = posicionesOcupadas;
-                  boxPerfil.putAt(0, equipo);
-                } else {
-                  //Actualizar alineación
-                  equipo["alineacion_favorita"][0] = posicionesOcupadas;
-                  boxPerfil.add(equipo);
-                }
+                Map<String, dynamic> equipo = Alineacion.equipoEditado;
+                equipo["alineacion_favorita"][0] = posicionesOcupadas;
+
+                Alineacion.equipoEditado = equipo;
 
                 setState(() {});
                 Navigator.pop(context, jugadorBox);

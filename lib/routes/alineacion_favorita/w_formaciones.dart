@@ -130,7 +130,6 @@ class _Formacion extends State<Formacion> {
       return ListView(
         children: List.generate(boxJugadoresEquipo.length, (iJugador) {
           Jugador jugadorBox = boxJugadoresEquipo.getAt(iJugador);
-          print(jugadorBox);
           return Card(
             child: new InkWell(
               splashColor: Colors.lightGreen,

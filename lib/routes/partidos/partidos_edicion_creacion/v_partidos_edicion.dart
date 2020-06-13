@@ -62,12 +62,8 @@ class _PartidosEdicion extends State<PartidosEdicion> {
           } else {
             PartidosEdicion.partidoEditado = widget.partido;
             _contenido = [
-              PartidoDatosEdicion(
-                partido: widget.partido,
-              ),
-              PartidoEquipoEdicion(
-                partido: widget.partido,
-              ),
+              PartidoDatosEdicion(),
+              PartidoEquipoEdicion(),
             ];
             return Scaffold(
               appBar: AppBar(

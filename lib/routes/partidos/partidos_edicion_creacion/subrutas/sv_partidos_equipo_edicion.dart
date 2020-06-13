@@ -8,9 +8,7 @@ import 'package:mister_football/routes/partidos/partidos_edicion_creacion/subrut
 import 'package:mister_football/routes/partidos/partidos_edicion_creacion/v_partidos_edicion.dart';
 
 class PartidoEquipoEdicion extends StatefulWidget {
-  final Partido partido;
-
-  PartidoEquipoEdicion({Key key, @required this.partido}) : super(key: key);
+  PartidoEquipoEdicion({Key key}) : super(key: key);
 
   @override
   createState() => _PartidoEquipoEdicion();
@@ -101,14 +99,14 @@ class _PartidoEquipoEdicion extends State<PartidoEquipoEdicion> {
     //Seleccionar formación inicial
     String formacionInicialPartido = "14231";
     print('$_minutoActual');
-    if (widget.partido.alineacion != null) {
+    if (PartidosEdicion.partidoEditado.alineacion != null) {
       if ('$_minutoActual'.length < 1) {
-        if (widget.partido.alineacion['0'][0] != null) {
-          formacionInicialPartido = widget.partido.alineacion['0'][0];
+        if (PartidosEdicion.partidoEditado.alineacion['0'][0] != null) {
+          formacionInicialPartido = PartidosEdicion.partidoEditado.alineacion['0'][0];
         }
       } else {
-        if (widget.partido.alineacion['$_minutoActual'][0] != null) {
-          formacionInicialPartido = widget.partido.alineacion['$_minutoActual'][0];
+        if (PartidosEdicion.partidoEditado.alineacion['$_minutoActual'][0] != null) {
+          formacionInicialPartido = PartidosEdicion.partidoEditado.alineacion['$_minutoActual'][0];
         }
       }
     }
@@ -116,9 +114,9 @@ class _PartidoEquipoEdicion extends State<PartidoEquipoEdicion> {
     _formacionActual = _formacionesDisponibles[_posicionFormacionInicial].value;
 
     //Añadir minutos con alineaciones guardadas
-    if (widget.partido.alineacion != null) {
+    if (PartidosEdicion.partidoEditado.alineacion != null) {
       List<DropdownMenuItem<String>> items = new List();
-      for (String f in widget.partido.alineacion.keys) {
+      for (String f in PartidosEdicion.partidoEditado.alineacion.keys) {
         items.add(new DropdownMenuItem(value: f, child: new Text(f)));
       }
       _minutosDisponibles = items;
@@ -229,7 +227,6 @@ class _PartidoEquipoEdicion extends State<PartidoEquipoEdicion> {
               ),
               child: PartidoAlineacionFormacionEdicion(
                 formacion: formacionInicialPartido,
-                partido: PartidosEdicion.partidoEditado,
                 minuto: _minutoActual,
               ),
             ),
@@ -269,7 +266,7 @@ class _PartidoEquipoEdicion extends State<PartidoEquipoEdicion> {
                             builder: (BuildContext context) {
                               return AlertDialog(content: StatefulBuilder(
                                 builder: (BuildContext context, StateSetter setState) {
-                                  return listaSeleccionarJugadores(widget.partido, setState);
+                                  return listaSeleccionarJugadores(PartidosEdicion.partidoEditado, setState);
                                 },
                               ));
                             },
@@ -283,7 +280,7 @@ class _PartidoEquipoEdicion extends State<PartidoEquipoEdicion> {
                     padding: EdgeInsets.only(
                       top: MediaQuery.of(context).size.width * .03,
                     ),
-                    child: mostrarJugadoresSeleccionados(widget.partido.convocatoria),
+                    child: mostrarJugadoresSeleccionados(PartidosEdicion.partidoEditado.convocatoria),
                   ),
                 ],
               ),

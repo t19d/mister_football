@@ -7,11 +7,8 @@ import 'package:mister_football/main.dart';
 import 'package:mister_football/routes/partidos/partidos_edicion_creacion/v_partidos_edicion.dart';
 
 class PartidoDatosEdicion extends StatefulWidget {
-  final Partido partido;
 
-  //static Partido partidoActual;
-
-  PartidoDatosEdicion({Key key, @required this.partido}) : super(key: key);
+  PartidoDatosEdicion({Key key}) : super(key: key);
 
   @override
   createState() => _PartidoDatosEdicion();
@@ -66,14 +63,14 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
   @override
   void initState() {
     super.initState();
-    rivalActualizado = widget.partido.rival;
-    fechaActualizada = widget.partido.fecha;
-    horaActualizada = widget.partido.hora;
-    lugarActualizado = widget.partido.lugar;
-    isLocalActualizado = widget.partido.isLocal;
-    isLocalAlert = widget.partido.isLocal;
-    tipoPartidoActualizado = widget.partido.tipoPartido;
-    tipoPartidoAlert = widget.partido.tipoPartido;
+    rivalActualizado = PartidosEdicion.partidoEditado.rival;
+    fechaActualizada = PartidosEdicion.partidoEditado.fecha;
+    horaActualizada = PartidosEdicion.partidoEditado.hora;
+    lugarActualizado = PartidosEdicion.partidoEditado.lugar;
+    isLocalActualizado = PartidosEdicion.partidoEditado.isLocal;
+    isLocalAlert = PartidosEdicion.partidoEditado.isLocal;
+    tipoPartidoActualizado = PartidosEdicion.partidoEditado.tipoPartido;
+    tipoPartidoAlert = PartidosEdicion.partidoEditado.tipoPartido;
     _tipoDePartidoDisponibles = getDropDownMenuItems();
   }
 
@@ -138,7 +135,7 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                             barrierDismissible: true,
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                content: editarRival(widget.partido),
+                                content: editarRival(PartidosEdicion.partidoEditado),
                               );
                             },
                           );
@@ -315,7 +312,7 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                             barrierDismissible: true,
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                content: editarLugar(widget.partido),
+                                content: editarLugar(PartidosEdicion.partidoEditado),
                               );
                             },
                           );
@@ -477,7 +474,7 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                           builder: (BuildContext context) {
                             return AlertDialog(content: StatefulBuilder(
                               builder: (BuildContext context, StateSetter setState) {
-                                return anhadirGolAFavor(widget.partido, setState);
+                                return anhadirGolAFavor(PartidosEdicion.partidoEditado, setState);
                               },
                             ));
                           },
@@ -487,7 +484,7 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                     ),
                   ],
                 ),
-                mostrarListaGolesAFavor(widget.partido),
+                mostrarListaGolesAFavor(PartidosEdicion.partidoEditado),
               ],
             ),
           ),
@@ -529,7 +526,7 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                           barrierDismissible: true,
                           builder: (BuildContext context) {
                             return AlertDialog(
-                              content: anhadirGolEnContra(widget.partido),
+                              content: anhadirGolEnContra(PartidosEdicion.partidoEditado),
                             );
                           },
                         );
@@ -538,7 +535,7 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                     ),
                   ],
                 ),
-                mostrarListaGolesEnContra(widget.partido),
+                mostrarListaGolesEnContra(PartidosEdicion.partidoEditado),
               ],
             ),
           ),
@@ -581,7 +578,7 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                           builder: (BuildContext context) {
                             return AlertDialog(content: StatefulBuilder(
                               builder: (BuildContext context, StateSetter setState) {
-                                return anhadirTarjetas(widget.partido, setState);
+                                return anhadirTarjetas(PartidosEdicion.partidoEditado, setState);
                               },
                             ));
                           },
@@ -591,7 +588,7 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                     ),
                   ],
                 ),
-                mostrarListaTarjetas(widget.partido),
+                mostrarListaTarjetas(PartidosEdicion.partidoEditado),
               ],
             ),
           ),
@@ -634,7 +631,7 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                           builder: (BuildContext context) {
                             return AlertDialog(content: StatefulBuilder(
                               builder: (BuildContext context, StateSetter setState) {
-                                return anhadirCambios(widget.partido, setState);
+                                return anhadirCambios(PartidosEdicion.partidoEditado, setState);
                               },
                             ));
                           },
@@ -644,7 +641,7 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                     ),
                   ],
                 ),
-                mostrarListaCambios(widget.partido),
+                mostrarListaCambios(PartidosEdicion.partidoEditado),
               ],
             ),
           ),
@@ -687,7 +684,7 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                           builder: (BuildContext context) {
                             return AlertDialog(content: StatefulBuilder(
                               builder: (BuildContext context, StateSetter setState) {
-                                return anhadirLesion(widget.partido, setState);
+                                return anhadirLesion(PartidosEdicion.partidoEditado, setState);
                               },
                             ));
                           },
@@ -697,7 +694,7 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                     ),
                   ],
                 ),
-                mostrarListaLesion(widget.partido),
+                mostrarListaLesion(PartidosEdicion.partidoEditado),
               ],
             ),
           ),

@@ -87,7 +87,7 @@ class _DetallesPartidoDatos extends State<DetallesPartidoDatos> {
                             textAlign: TextAlign.center,
                           ),
                           Text(
-                            "${widget.partido.golesAFavor.length}-${widget.partido.golesEnContra.length}",
+                            "${widget.partido.golesEnContra.length}-${widget.partido.golesAFavor.length}",
                             textAlign: TextAlign.center,
                           ),
                           //Nosotros

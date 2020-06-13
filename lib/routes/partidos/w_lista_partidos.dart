@@ -209,7 +209,7 @@ class _ListaPartidos extends State<ListaPartidos> {
                                     style: estiloEquipos,
                                   ),
                                   Text(
-                                    "${partidoBox.golesAFavor.length}-${partidoBox.golesEnContra.length}",
+                                    "${partidoBox.golesEnContra.length}-${partidoBox.golesAFavor.length}",
                                     style: estiloResultado,
                                     textAlign: TextAlign.center,
                                   ),

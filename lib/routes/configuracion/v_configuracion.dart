@@ -674,13 +674,11 @@ class _Configuracion extends State<Configuracion> {
   /* NOMBRE EQUIPO */
   //Diálogo cambiar nombre equipo
   Future<String> _cambiarNombreEquipo(BuildContext context, String strEquipo) {
+    nombreEquipo = strEquipo;
     //Datos formulario
     final formKey = new GlobalKey<FormState>();
     //Estilo
     RoundedRectangleBorder _formaDialogo = RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0), side: BorderSide(color: Colors.black26));
-    BoxDecoration _formaBotones = BoxDecoration(
-        gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [Colors.lightBlue, Colors.lightBlueAccent]),
-        borderRadius: BorderRadius.circular(15.0));
     //Diálogo
     return showDialog(
         barrierDismissible: false,
@@ -691,7 +689,7 @@ class _Configuracion extends State<Configuracion> {
             title: Text(
               "Nombre equipo:",
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: MediaQuery.of(context).size.width * .07, fontWeight: FontWeight.bold),
+              //style: TextStyle(fontSize: MediaQuery.of(context).size.width * .07, fontWeight: FontWeight.bold),
             ),
             content: SingleChildScrollView(
               child: Column(
@@ -743,7 +741,7 @@ class _Configuracion extends State<Configuracion> {
               ),
             ),
           );
-        });
+        },);
   }
 
   /* FOTOS */

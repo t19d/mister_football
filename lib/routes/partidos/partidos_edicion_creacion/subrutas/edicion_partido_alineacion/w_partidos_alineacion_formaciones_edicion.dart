@@ -154,7 +154,7 @@ class _PartidoAlineacionFormacionEdicion extends State<PartidoAlineacionFormacio
             }
           }
           return Card(
-            child: new InkWell(
+            child: InkWell(
               splashColor: Colors.lightGreen,
               onTap: () async {
                 //Guardar y actualizar
@@ -181,7 +181,7 @@ class _PartidoAlineacionFormacionEdicion extends State<PartidoAlineacionFormacio
                 if (PartidosEdicion.partidoEditado.alineacion != null) {
                   alineacionActualizada = await PartidosEdicion.partidoEditado.alineacion;
                   alineacionActualizada['${widget.minuto}'][1] = posicionesOcupadas;
-                  print(alineacionActualizada['${widget.minuto}'][1]);
+                  //print(alineacionActualizada['${widget.minuto}'][1]);
                 } else {
                   alineacionActualizada['${widget.minuto}'] = [widget.formacion, posicionAlineacion];
                 }

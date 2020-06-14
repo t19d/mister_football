@@ -95,6 +95,7 @@ class _DetallesPartido extends State<DetallesPartido> {
                     ),
                     tooltip: 'Editar partido',
                     onPressed: () {
+                      PartidosEdicion.partidoEditado = partido;
                       Navigator.push(
                         context,
                         MaterialPageRoute(

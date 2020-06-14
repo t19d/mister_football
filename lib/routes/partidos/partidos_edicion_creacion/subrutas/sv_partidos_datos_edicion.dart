@@ -118,7 +118,7 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                       ),
                       width: MediaQuery.of(context).size.width * .6,
                       child: Text(
-                        "${rivalActualizado}",
+                        "${PartidosEdicion.partidoEditado.rival}",
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -135,7 +135,7 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                             barrierDismissible: true,
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                content: editarRival(PartidosEdicion.partidoEditado),
+                                content: editarRival(),
                               );
                             },
                           );
@@ -163,7 +163,8 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                       ),
                       width: MediaQuery.of(context).size.width * .6,
                       child: Text(
-                        "${fechaActualizada.split("-")[2]}-${fechaActualizada.split("-")[1]}-${fechaActualizada.split("-")[0]}",
+                        "${PartidosEdicion.partidoEditado.fecha.split("-")[2]}-${PartidosEdicion.partidoEditado.fecha.split("-")[1]}-"
+                            "${PartidosEdicion.partidoEditado.fecha.split("-")[0]}",
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -229,7 +230,7 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                       ),
                       width: MediaQuery.of(context).size.width * .6,
                       child: Text(
-                        "${horaActualizada}",
+                        "${PartidosEdicion.partidoEditado.hora}",
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -295,7 +296,7 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                       ),
                       width: MediaQuery.of(context).size.width * .6,
                       child: Text(
-                        (lugarActualizado.length == 0) ? "-" : "${lugarActualizado}",
+                        (lugarActualizado.length == 0) ? "-" : "${PartidosEdicion.partidoEditado.lugar}",
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -312,7 +313,11 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                             barrierDismissible: true,
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                content: editarLugar(PartidosEdicion.partidoEditado),
+                                content: StatefulBuilder(
+                                  builder: (BuildContext context, StateSetter setState) {
+                                    return editarLugar(/*setState*/);
+                                  },
+                                ),
                               );
                             },
                           );
@@ -705,7 +710,7 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
 
   /* Datos prepartido */
   //Editar Rival
-  Widget editarRival(Partido partidoActual) {
+  Widget editarRival() {
     //Datos formulario
     final formKey = new GlobalKey<FormState>();
     return Form(
@@ -769,7 +774,7 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
   }
 
   //Editar Lugar
-  Widget editarLugar(Partido partidoActual) {
+  Widget editarLugar(/*StateSetter setState*/) {
     //Datos formulario
     final formKey = new GlobalKey<FormState>();
     return Form(
@@ -1348,7 +1353,7 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
           for (var i = 0; i < boxJugadoresEquipo.length; i++) {
             if (partidoActual.tarjetas[iFila][2] == boxJugadoresEquipo.getAt(i).id) {
               jugadorFila = boxJugadoresEquipo.getAt(i);
-              print(jugadorFila.apodo);
+              //print(jugadorFila.apodo);
               for (var j = 0; j < partidoActual.convocatoria.length; j++) {
                 if (partidoActual.convocatoria[j] == boxJugadoresEquipo.getAt(i).id) {
                   avisoJugador = Colors.transparent;
@@ -1554,7 +1559,7 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                         subtitle: Text(jugadorBox.apodo),
                         onChanged: (idjugadorSeleccionadoAhora) async {
                           setState(() => _idJugadorSeleccionadoTarjeta = idjugadorSeleccionadoAhora);
-                          print("Current User ${idjugadorSeleccionadoAhora}");
+                          //print("Current User ${idjugadorSeleccionadoAhora}");
                         },
                         activeColor: Colors.green,
                       );
@@ -1573,7 +1578,7 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                     ? null
                     : () async {
                         if (formKey.currentState.validate()) {
-                          print("${_minutoSeleccionadoTarjeta}': ${_idJugadorSeleccionadoTarjeta}");
+                          //print("${_minutoSeleccionadoTarjeta}': ${_idJugadorSeleccionadoTarjeta}");
                           formKey.currentState.save();
                           //Actualizar los goles a favor del partido
                           List tarjetasActuales = partidoActual.tarjetas;
@@ -1831,7 +1836,7 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                           subtitle: Text(jugadorBox.apodo),
                           onChanged: (idjugadorSeleccionadoAhora) async {
                             setState(() => _idJugadorSaleSeleccionadoCambios = idjugadorSeleccionadoAhora);
-                            print("Current User ${idjugadorSeleccionadoAhora}");
+                            //print("Current User ${idjugadorSeleccionadoAhora}");
                           },
                           activeColor: Colors.green,
                         );
@@ -1850,7 +1855,7 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                       ? null
                       : () async {
                           if (formKey.currentState.validate()) {
-                            print("${_minutoSeleccionadoCambios}': ${_idJugadorEntraSeleccionadoCambios} - ${_idJugadorSaleSeleccionadoCambios}");
+                            //print("${_minutoSeleccionadoCambios}': ${_idJugadorEntraSeleccionadoCambios} - ${_idJugadorSaleSeleccionadoCambios}");
                             formKey.currentState.save();
                             //Actualizar los goles a favor del partido
                             List cambiosActuales = partidoActual.cambios;
@@ -2057,7 +2062,7 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                     ? null
                     : () async {
                         if (formKey.currentState.validate()) {
-                          print("${_minutoSeleccionadoLesiones}': ${_idJugadorSeleccionadoLesiones}");
+                          //print("${_minutoSeleccionadoLesiones}': ${_idJugadorSeleccionadoLesiones}");
                           formKey.currentState.save();
                           //Actualizar los goles a favor del partido
                           List lesionesActuales = partidoActual.lesiones;

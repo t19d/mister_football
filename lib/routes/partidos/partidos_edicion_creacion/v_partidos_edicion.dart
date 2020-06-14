@@ -60,7 +60,7 @@ class _PartidosEdicion extends State<PartidosEdicion> {
             print(snapshot.error.toString());
             return Text(snapshot.error.toString());
           } else {
-            PartidosEdicion.partidoEditado = widget.partido;
+            //PartidosEdicion.partidoEditado = widget.partido;
             _contenido = [
               PartidoDatosEdicion(),
               PartidoEquipoEdicion(),

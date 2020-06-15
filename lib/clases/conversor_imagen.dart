@@ -88,8 +88,6 @@ class ConversorImagen {
             child: Image.memory(
               base64Decode(base64String),
               fit: BoxFit.fill,
-              height: MediaQuery.of(context).size.width / 6,
-              width: MediaQuery.of(context).size.width / 6,
             ),
           ));
     } else {

@@ -94,7 +94,6 @@ class ConversorImagen {
       return Icon(
         Icons.fitness_center,
         color: MisterFootball.primario,
-        size: MediaQuery.of(context).size.width / 6,
       );
     }
   }

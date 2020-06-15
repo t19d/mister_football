@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:mister_football/navigator/Navegador.dart';
 import 'package:mister_football/routes/estadisticas/w_estadisticas_goles.dart';
+import 'package:mister_football/routes/estadisticas/w_estadisticas_resultados.dart';
 
 class Estadisticas extends StatefulWidget {
   Estadisticas({Key key}) : super(key: key);
@@ -33,7 +35,32 @@ class _Estadisticas extends State<Estadisticas> {
           ),
         ),
         body: SingleChildScrollView(
-          child: EstadisticasGoles(),
+          child: FutureBuilder(
+            future: Hive.openBox('partidos'),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                if (snapshot.hasError) {
+                  print(snapshot.error.toString());
+                  return Container(
+                    width: MediaQuery.of(context).size.width * .5,
+                    height: MediaQuery.of(context).size.height * .5,
+                    child: Text(snapshot.error.toString()),
+                  );
+                } else {
+                  return Column(
+                    children: <Widget>[
+                      EstadisticasResultados(),
+                      EstadisticasGoles(),
+                    ],
+                  );
+                }
+              } else {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+            },
+          ),
         ),
       ),
     );

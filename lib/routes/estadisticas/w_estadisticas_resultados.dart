@@ -5,20 +5,40 @@ import 'package:mister_football/main.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:flutter/material.dart';
 
-class EstadisticasGoles extends StatefulWidget {
+class EstadisticasResultados extends StatefulWidget {
   @override
-  createState() => _EstadisticasGoles();
+  createState() => _EstadisticasResultados();
 }
 
-class _EstadisticasGoles extends State<EstadisticasGoles> {
+class _EstadisticasResultados extends State<EstadisticasResultados> {
   @override
   Widget build(BuildContext context) {
-    Map<String, double> dataMap = {"A favor": 0, "En contra": 0};
+    Map<String, double> dataMap = {"Victorias": 0, "Empates": 0, "Derrotas": 0};
     final boxPartidos = Hive.box('partidos');
     for (var i = 0; i < boxPartidos.length; i++) {
       final Partido partidoBox = boxPartidos.getAt(i) as Partido;
-      dataMap["A favor"] += partidoBox.golesAFavor.length;
-      dataMap["En contra"] += partidoBox.golesEnContra.length;
+      // Comprobar si es un partido ya disputado
+      if (DateTime.now()
+              .difference(DateTime(
+                int.parse(partidoBox.fecha.split("-")[0]),
+                int.parse(partidoBox.fecha.split("-")[1]),
+                int.parse(partidoBox.fecha.split("-")[2]),
+                //Suponiendo que los partidos duran aproximadamente 1 hora y media
+                int.parse(partidoBox.hora.split(":")[0]) + 1,
+                int.parse(partidoBox.hora.split(":")[1]) + 30,
+              ))
+              .inSeconds >
+          0) {
+        if (partidoBox.golesAFavor.length > partidoBox.golesEnContra.length) {
+          dataMap["Victorias"]++;
+        } else {
+          if (partidoBox.golesAFavor.length < partidoBox.golesEnContra.length) {
+            dataMap["Derrotas"]++;
+          } else {
+            dataMap["Empates"]++;
+          }
+        }
+      }
     }
 
     return Container(
@@ -35,11 +55,11 @@ class _EstadisticasGoles extends State<EstadisticasGoles> {
               top: 15,
               bottom: 15,
             ),
-            margin:  EdgeInsets.only(
+            margin: EdgeInsets.only(
               bottom: 5,
             ),
             child: Text(
-              "Goles",
+              "Resultados",
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.white,
@@ -60,7 +80,8 @@ class _EstadisticasGoles extends State<EstadisticasGoles> {
               color: Colors.white,
             ),
             colorList: [
-              MisterFootball.primarioLight2,
+              Colors.lightGreen,
+              MisterFootball.semiprimarioLight2,
               MisterFootball.complementarioDelComplementarioLight,
             ],
             showLegends: true,

@@ -5,6 +5,7 @@ import 'package:mister_football/clases/entrenamiento.dart';
 import 'package:mister_football/clases/eventos.dart';
 import 'package:mister_football/clases/jugador.dart';
 import 'package:mister_football/routes/entrenamientos/v_entrenamientos.dart';
+import 'package:mister_football/routes/estadisticas/v_estadisticas.dart';
 import 'package:mister_football/routes/eventos/v_eventos.dart';
 import 'package:mister_football/routes/gestion_jugadores/v_gestion_jugadores.dart';
 import 'package:mister_football/routes/partidos/v_partidos.dart';
@@ -101,7 +102,7 @@ class MisterFootball extends StatelessWidget {
     // TODO: implement build
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Partidos(),
+      home: Estadisticas(),
       /*theme: ThemeData(
         // Define the default brightness and colors.
         primaryColor: primario,

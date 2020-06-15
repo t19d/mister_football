@@ -88,7 +88,7 @@ class _EstadisticasResultados extends State<EstadisticasResultados> {
             legendPosition: LegendPosition.top,
             decimalPlaces: 0,
             showChartValueLabel: true,
-            initialAngle: 3.15,
+            initialAngle: 3.14,
             chartType: ChartType.disc,
           ),
         ],

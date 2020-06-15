@@ -67,7 +67,7 @@ class _EstadisticasGoles extends State<EstadisticasGoles> {
             legendPosition: LegendPosition.top,
             decimalPlaces: 0,
             showChartValueLabel: true,
-            initialAngle: 3.15,
+            initialAngle: 3.14,
             chartType: ChartType.disc,
           ),
         ],

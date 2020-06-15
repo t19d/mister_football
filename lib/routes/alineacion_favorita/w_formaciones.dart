@@ -217,7 +217,10 @@ class _Formacion extends State<Formacion> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             ConversorImagen.imageFromBase64String(j.nombre_foto, context),
-            Text(j.apodo),
+            Text(
+              j.apodo,
+              textAlign: TextAlign.center,
+            ),
           ],
         ),
       );
@@ -230,7 +233,10 @@ class _Formacion extends State<Formacion> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             ConversorImagen.imageFromBase64String("", context),
-            Text(posicion),
+            Text(
+              posicion,
+              textAlign: TextAlign.center,
+            ),
           ],
         ),
       );

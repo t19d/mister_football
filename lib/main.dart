@@ -4,6 +4,7 @@ import 'package:hive/hive.dart';
 import 'package:mister_football/clases/entrenamiento.dart';
 import 'package:mister_football/clases/eventos.dart';
 import 'package:mister_football/clases/jugador.dart';
+import 'package:mister_football/routes/ejercicios/v_ejercicios.dart';
 import 'package:mister_football/routes/entrenamientos/v_entrenamientos.dart';
 import 'package:mister_football/routes/estadisticas/v_estadisticas.dart';
 import 'package:mister_football/routes/eventos/v_eventos.dart';
@@ -102,7 +103,7 @@ class MisterFootball extends StatelessWidget {
     // TODO: implement build
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Estadisticas(),
+      home: Ejercicios(),
       /*theme: ThemeData(
         // Define the default brightness and colors.
         primaryColor: primario,

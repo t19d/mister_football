@@ -52,29 +52,30 @@ class _Configuracion extends State<Configuracion> {
     Map<String, dynamic> equipoEditado = equipo;
     if (boxPerfil.get(0) != null) {
       equipo = Map.from(boxPerfil.get(0));
-      return Container(
-        padding: EdgeInsets.only(top: 10, left: 20, right: 20),
-        child: Column(
-          children: <Widget>[
-            Container(
-              width: MediaQuery.of(context).size.width * .9,
-              padding: EdgeInsets.only(top: 10, bottom: 10),
-              margin: EdgeInsets.only(top: 10, bottom: 10),
-              decoration: BoxDecoration(
-                color: MisterFootball.primario,
-                border: Border.all(),
-                borderRadius: BorderRadius.all(Radius.circular(5)),
-              ),
-              child: Text(
-                "Escudo",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: MediaQuery.of(context).size.width * .05,
-                  color: Colors.white70,
-                ),
+      return Column(
+        children: <Widget>[
+          Container(
+            width: MediaQuery.of(context).size.width,
+            color: MisterFootball.primario,
+            padding: EdgeInsets.only(
+              top: 15,
+              bottom: 15,
+            ),
+            margin: EdgeInsets.only(
+              bottom: 5,
+            ),
+            child: Text(
+              "Escudo",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: MediaQuery.of(context).size.width * .05,
               ),
             ),
-            Row(
+          ),
+          Container(
+            padding: EdgeInsets.only(left: 20, right: 20),
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 IconButton(
@@ -102,25 +103,29 @@ class _Configuracion extends State<Configuracion> {
                 ),
               ],
             ),
-            Container(
-              width: MediaQuery.of(context).size.width * .9,
-              padding: EdgeInsets.only(top: 10, bottom: 10),
-              margin: EdgeInsets.only(top: 10, bottom: 10),
-              decoration: BoxDecoration(
-                color: MisterFootball.primario,
-                border: Border.all(),
-                borderRadius: BorderRadius.all(Radius.circular(5)),
-              ),
-              child: Text(
-                "Nombre del equipo",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: MediaQuery.of(context).size.width * .05,
-                  color: Colors.white70,
-                ),
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            color: MisterFootball.primario,
+            padding: EdgeInsets.only(
+              top: 15,
+              bottom: 15,
+            ),
+            margin: EdgeInsets.only(
+              bottom: 5,
+            ),
+            child: Text(
+              "Nombre del equipo",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: MediaQuery.of(context).size.width * .05,
               ),
             ),
-            Row(
+          ),
+          Container(
+            padding: EdgeInsets.only(left: 20, right: 20),
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 IconButton(
@@ -152,54 +157,54 @@ class _Configuracion extends State<Configuracion> {
                 ),
               ],
             ),
-            Container(
-              margin: EdgeInsets.only(top: 10),
-              child: RaisedButton(
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.primario)),
-                color: Colors.white70,
-                disabledColor: MisterFootball.primarioLight2,
-                disabledTextColor: Colors.white70,
-                child: Text("Aceptar"),
-                onPressed: (!isEscudoEditado && !isNombreEquipoEditado)
-                    ? null
-                    : () {
-                        //Escudo editado y nombre NO editado
-                        if (isEscudoEditado && !isNombreEquipoEditado) {
+          ),
+          Container(
+            margin: EdgeInsets.only(top: 10),
+            child: RaisedButton(
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.primario)),
+              color: Colors.white70,
+              disabledColor: MisterFootball.primarioLight2,
+              disabledTextColor: Colors.white70,
+              child: Text("Aceptar"),
+              onPressed: (!isEscudoEditado && !isNombreEquipoEditado)
+                  ? null
+                  : () {
+                      //Escudo editado y nombre NO editado
+                      if (isEscudoEditado && !isNombreEquipoEditado) {
+                        equipoEditado = {
+                          "nombre_equipo": equipo['nombre_equipo'],
+                          "escudo": "$imgString",
+                          "modo_oscuro": false,
+                          "alineacion_favorita": equipo["alineacion_favorita"]
+                        };
+                      } else {
+                        //Nombre editado y escudo NO editado
+                        if (!isEscudoEditado && isNombreEquipoEditado) {
                           equipoEditado = {
-                            "nombre_equipo": equipo['nombre_equipo'],
-                            "escudo": "$imgString",
+                            "nombre_equipo": "$nombreEquipo",
+                            "escudo": equipo['escudo'],
                             "modo_oscuro": false,
                             "alineacion_favorita": equipo["alineacion_favorita"]
                           };
                         } else {
-                          //Nombre editado y escudo NO editado
-                          if (!isEscudoEditado && isNombreEquipoEditado) {
-                            equipoEditado = {
-                              "nombre_equipo": "$nombreEquipo",
-                              "escudo": equipo['escudo'],
-                              "modo_oscuro": false,
-                              "alineacion_favorita": equipo["alineacion_favorita"]
-                            };
-                          } else {
-                            equipoEditado = {
-                              "nombre_equipo": "$nombreEquipo",
-                              "escudo": "$imgString",
-                              "modo_oscuro": false,
-                              "alineacion_favorita": equipo["alineacion_favorita"]
-                            };
-                          }
+                          equipoEditado = {
+                            "nombre_equipo": "$nombreEquipo",
+                            "escudo": "$imgString",
+                            "modo_oscuro": false,
+                            "alineacion_favorita": equipo["alineacion_favorita"]
+                          };
                         }
-                        //boxPerfil.putAt(0, equipoEditado);
-                        boxPerfil.putAt(0, equipoEditado);
-                        setState(() {
-                          isEscudoEditado = false;
-                          isNombreEquipoEditado = false;
-                        });
-                      },
-              ),
+                      }
+                      //boxPerfil.putAt(0, equipoEditado);
+                      boxPerfil.putAt(0, equipoEditado);
+                      setState(() {
+                        isEscudoEditado = false;
+                        isNombreEquipoEditado = false;
+                      });
+                    },
             ),
-          ],
-        ),
+          ),
+        ],
       );
       /*return Table(
         defaultVerticalAlignment: TableCellVerticalAlignment.middle,
@@ -298,29 +303,30 @@ class _Configuracion extends State<Configuracion> {
         ],
       );*/
     } else {
-      return Container(
-        padding: EdgeInsets.only(top: 10, left: 20, right: 20),
-        child: Column(
-          children: <Widget>[
-            Container(
-              width: MediaQuery.of(context).size.width * .9,
-              padding: EdgeInsets.only(top: 10, bottom: 10),
-              margin: EdgeInsets.only(top: 10, bottom: 10),
-              decoration: BoxDecoration(
-                color: MisterFootball.primario,
-                border: Border.all(),
-                borderRadius: BorderRadius.all(Radius.circular(5)),
-              ),
-              child: Text(
-                "Escudo",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: MediaQuery.of(context).size.width * .05,
-                  color: Colors.white70,
-                ),
+      return Column(
+        children: <Widget>[
+          Container(
+            width: MediaQuery.of(context).size.width,
+            color: MisterFootball.primario,
+            padding: EdgeInsets.only(
+              top: 15,
+              bottom: 15,
+            ),
+            margin: EdgeInsets.only(
+              bottom: 5,
+            ),
+            child: Text(
+              "Escudo",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: MediaQuery.of(context).size.width * .05,
               ),
             ),
-            Row(
+          ),
+          Container(
+            padding: EdgeInsets.only(left: 20, right: 20),
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 IconButton(
@@ -344,25 +350,29 @@ class _Configuracion extends State<Configuracion> {
                 ),
               ],
             ),
-            Container(
-              width: MediaQuery.of(context).size.width * .9,
-              padding: EdgeInsets.only(top: 10, bottom: 10),
-              margin: EdgeInsets.only(top: 10, bottom: 10),
-              decoration: BoxDecoration(
-                color: MisterFootball.primario,
-                border: Border.all(),
-                borderRadius: BorderRadius.all(Radius.circular(5)),
-              ),
-              child: Text(
-                "Nombre del equipo",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: MediaQuery.of(context).size.width * .05,
-                  color: Colors.white70,
-                ),
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            color: MisterFootball.primario,
+            padding: EdgeInsets.only(
+              top: 15,
+              bottom: 15,
+            ),
+            margin: EdgeInsets.only(
+              bottom: 5,
+            ),
+            child: Text(
+              "Nombre del equipo",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: MediaQuery.of(context).size.width * .05,
               ),
             ),
-            Row(
+          ),
+          Container(
+            padding: EdgeInsets.only(left: 20, right: 20),
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 IconButton(
@@ -393,54 +403,54 @@ class _Configuracion extends State<Configuracion> {
                 ),
               ],
             ),
-            Container(
-              margin: EdgeInsets.only(top: 10),
-              child: RaisedButton(
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.primario)),
-                color: Colors.white70,
-                disabledColor: MisterFootball.primarioLight2,
-                disabledTextColor: Colors.white70,
-                child: Text("Aceptar"),
-                onPressed: (!isEscudoEditado && !isNombreEquipoEditado)
-                    ? null
-                    : () {
-                        //Escudo editado y nombre NO editado
-                        if (isEscudoEditado && !isNombreEquipoEditado) {
+          ),
+          Container(
+            margin: EdgeInsets.only(top: 10),
+            child: RaisedButton(
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.primario)),
+              color: Colors.white70,
+              disabledColor: MisterFootball.primarioLight2,
+              disabledTextColor: Colors.white70,
+              child: Text("Aceptar"),
+              onPressed: (!isEscudoEditado && !isNombreEquipoEditado)
+                  ? null
+                  : () {
+                      //Escudo editado y nombre NO editado
+                      if (isEscudoEditado && !isNombreEquipoEditado) {
+                        equipoEditado = {
+                          "nombre_equipo": "",
+                          "escudo": "$imgString",
+                          "modo_oscuro": false,
+                          "alineacion_favorita": equipo["alineacion_favorita"]
+                        };
+                      } else {
+                        //Nombre editado y escudo NO editado
+                        if (!isEscudoEditado && isNombreEquipoEditado) {
                           equipoEditado = {
-                            "nombre_equipo": "",
-                            "escudo": "$imgString",
+                            "nombre_equipo": "$nombreEquipo",
+                            "escudo": "",
                             "modo_oscuro": false,
                             "alineacion_favorita": equipo["alineacion_favorita"]
                           };
                         } else {
-                          //Nombre editado y escudo NO editado
-                          if (!isEscudoEditado && isNombreEquipoEditado) {
-                            equipoEditado = {
-                              "nombre_equipo": "$nombreEquipo",
-                              "escudo": "",
-                              "modo_oscuro": false,
-                              "alineacion_favorita": equipo["alineacion_favorita"]
-                            };
-                          } else {
-                            equipoEditado = {
-                              "nombre_equipo": "$nombreEquipo",
-                              "escudo": "$imgString",
-                              "modo_oscuro": false,
-                              "alineacion_favorita": equipo["alineacion_favorita"]
-                            };
-                          }
+                          equipoEditado = {
+                            "nombre_equipo": "$nombreEquipo",
+                            "escudo": "$imgString",
+                            "modo_oscuro": false,
+                            "alineacion_favorita": equipo["alineacion_favorita"]
+                          };
                         }
-                        //boxPerfil.putAt(0, equipoEditado);
-                        boxPerfil.add(equipoEditado);
-                        setState(() {
-                          isEscudoEditado = false;
-                          isNombreEquipoEditado = false;
-                        });
-                      },
-              ),
+                      }
+                      //boxPerfil.putAt(0, equipoEditado);
+                      boxPerfil.add(equipoEditado);
+                      setState(() {
+                        isEscudoEditado = false;
+                        isNombreEquipoEditado = false;
+                      });
+                    },
             ),
-          ],
-        ),
+          ),
+        ],
       );
       return Table(
         defaultVerticalAlignment: TableCellVerticalAlignment.middle,
@@ -563,29 +573,30 @@ class _Configuracion extends State<Configuracion> {
                 return devolverConfiguracion();
               }
             } else {
-              return Container(
-                padding: EdgeInsets.only(top: 10, left: 20, right: 20),
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                      width: MediaQuery.of(context).size.width * .9,
-                      padding: EdgeInsets.only(top: 10, bottom: 10),
-                      margin: EdgeInsets.only(top: 10, bottom: 10),
-                      decoration: BoxDecoration(
-                        color: MisterFootball.primario,
-                        border: Border.all(),
-                        borderRadius: BorderRadius.all(Radius.circular(5)),
-                      ),
-                      child: Text(
-                        "Escudo",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: MediaQuery.of(context).size.width * .05,
-                          color: Colors.white70,
-                        ),
+              return Column(
+                children: <Widget>[
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    color: MisterFootball.primario,
+                    padding: EdgeInsets.only(
+                      top: 15,
+                      bottom: 15,
+                    ),
+                    margin: EdgeInsets.only(
+                      bottom: 5,
+                    ),
+                    child: Text(
+                      "Escudo",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: MediaQuery.of(context).size.width * .05,
                       ),
                     ),
-                    Row(
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(left: 20, right: 20),
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         IconButton(
@@ -605,25 +616,29 @@ class _Configuracion extends State<Configuracion> {
                         ),
                       ],
                     ),
-                    Container(
-                      width: MediaQuery.of(context).size.width * .9,
-                      padding: EdgeInsets.only(top: 10, bottom: 10),
-                      margin: EdgeInsets.only(top: 10, bottom: 10),
-                      decoration: BoxDecoration(
-                        color: MisterFootball.primario,
-                        border: Border.all(),
-                        borderRadius: BorderRadius.all(Radius.circular(5)),
-                      ),
-                      child: Text(
-                        "Nombre del equipo",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: MediaQuery.of(context).size.width * .05,
-                          color: Colors.white70,
-                        ),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    color: MisterFootball.primario,
+                    padding: EdgeInsets.only(
+                      top: 15,
+                      bottom: 15,
+                    ),
+                    margin: EdgeInsets.only(
+                      bottom: 5,
+                    ),
+                    child: Text(
+                      "Nombre del equipo",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: MediaQuery.of(context).size.width * .05,
                       ),
                     ),
-                    Row(
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(left: 20, right: 20),
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         IconButton(
@@ -650,19 +665,19 @@ class _Configuracion extends State<Configuracion> {
                         ),
                       ],
                     ),
-                    Container(
-                      margin: EdgeInsets.only(top: 10),
-                      child: RaisedButton(
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.primario)),
-                        color: Colors.white70,
-                        disabledColor: MisterFootball.primarioLight2,
-                        disabledTextColor: Colors.white70,
-                        child: Text("Aceptar"),
-                        onPressed: () {},
-                      ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 10),
+                    child: RaisedButton(
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.primario)),
+                      color: Colors.white70,
+                      disabledColor: MisterFootball.primarioLight2,
+                      disabledTextColor: Colors.white70,
+                      child: Text("Aceptar"),
+                      onPressed: () {},
                     ),
-                  ],
-                ),
+                  ),
+                ],
               );
             }
           },
@@ -681,67 +696,68 @@ class _Configuracion extends State<Configuracion> {
     RoundedRectangleBorder _formaDialogo = RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0), side: BorderSide(color: Colors.black26));
     //Diálogo
     return showDialog(
-        barrierDismissible: false,
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            shape: _formaDialogo,
-            title: Text(
-              "Nombre equipo:",
-              textAlign: TextAlign.center,
-              //style: TextStyle(fontSize: MediaQuery.of(context).size.width * .07, fontWeight: FontWeight.bold),
-            ),
-            content: SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.fromLTRB(
-                      0,
-                      (MediaQuery.of(context).size.height * .01),
-                      0,
-                      (MediaQuery.of(context).size.height * .01),
-                    ),
-                    child: Form(
-                      key: formKey,
-                      child: TextFormField(
-                        initialValue: strEquipo,
-                        textCapitalization: TextCapitalization.sentences,
-                        keyboardType: TextInputType.text,
-                        validator: (val) => (val.length == 0) ? 'Escribe el nombre del equipo' : null,
-                        onChanged: (val) => nombreEquipo = val,
-                        decoration: InputDecoration(
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(25.0),
-                            borderSide: BorderSide(),
-                          ),
-                          labelText: 'Nombre del equipo',
-                          hintText: 'Nombre del equipo',
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: _formaDialogo,
+          title: Text(
+            "Nombre equipo:",
+            textAlign: TextAlign.center,
+            //style: TextStyle(fontSize: MediaQuery.of(context).size.width * .07, fontWeight: FontWeight.bold),
+          ),
+          content: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.fromLTRB(
+                    0,
+                    (MediaQuery.of(context).size.height * .01),
+                    0,
+                    (MediaQuery.of(context).size.height * .01),
+                  ),
+                  child: Form(
+                    key: formKey,
+                    child: TextFormField(
+                      initialValue: strEquipo,
+                      textCapitalization: TextCapitalization.sentences,
+                      keyboardType: TextInputType.text,
+                      validator: (val) => (val.length == 0) ? 'Escribe el nombre del equipo' : null,
+                      onChanged: (val) => nombreEquipo = val,
+                      decoration: InputDecoration(
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(25.0),
+                          borderSide: BorderSide(),
                         ),
+                        labelText: 'Nombre del equipo',
+                        hintText: 'Nombre del equipo',
                       ),
                     ),
                   ),
-                  RaisedButton(
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.primario)),
-                    color: Colors.white70,
-                    disabledColor: MisterFootball.primarioLight2,
-                    disabledTextColor: Colors.white70,
-                    child: Text("Aceptar"),
-                    onPressed: () {
-                      if (formKey.currentState.validate()) {
-                        formKey.currentState.save();
-                        setState(() {
-                          isNombreEquipoEditado = true;
-                        });
-                        Navigator.pop(context);
-                      }
-                    },
-                  ),
-                ],
-              ),
+                ),
+                RaisedButton(
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.primario)),
+                  color: Colors.white70,
+                  disabledColor: MisterFootball.primarioLight2,
+                  disabledTextColor: Colors.white70,
+                  child: Text("Aceptar"),
+                  onPressed: () {
+                    if (formKey.currentState.validate()) {
+                      formKey.currentState.save();
+                      setState(() {
+                        isNombreEquipoEditado = true;
+                      });
+                      Navigator.pop(context);
+                    }
+                  },
+                ),
+              ],
             ),
-          );
-        },);
+          ),
+        );
+      },
+    );
   }
 
   /* FOTOS */

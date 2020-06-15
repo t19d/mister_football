@@ -1327,7 +1327,7 @@ class _PartidoDatosEdicion extends State<PartidoDatosEdicion> {
                       isLocal: PartidosEdicion.partidoEditado.isLocal);
                   PartidosEdicion.partidoEditado = p;
                   //Limpiar campos
-                  //_minutoSeleccionadoGolesEnContra = "";
+                  _minutoSeleccionadoGolesEnContra = "";
                   Navigator.pop(context);
                 }
               },

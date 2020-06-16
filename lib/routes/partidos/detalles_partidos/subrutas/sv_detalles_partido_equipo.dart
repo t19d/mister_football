@@ -5,6 +5,7 @@ import 'package:mister_football/clases/jugador.dart';
 import 'package:mister_football/clases/partido.dart';
 import 'package:mister_football/main.dart';
 import 'package:mister_football/routes/partidos/detalles_partidos/subrutas/detalles_partido_alineacion/w_detalles_partido_alineacion_formaciones.dart';
+import 'package:share/share.dart';
 
 class DetallesPartidoEquipo extends StatefulWidget {
   final Partido partido;
@@ -143,12 +144,56 @@ class _DetallesPartidoEquipo extends State<DetallesPartidoEquipo> {
               ),
               child: Column(
                 children: <Widget>[
-                  Text(
-                    "Jugadores convocados",
-                    style: TextStyle(
-                      decoration: TextDecoration.underline,
-                      //fontWeight: FontWeight.bold
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      Text(
+                        "Jugadores convocados",
+                        style: TextStyle(
+                          decoration: TextDecoration.underline,
+                          //fontWeight: FontWeight.bold
+                        ),
+                      ),
+                      IconButton(
+                        icon: Icon(
+                          Icons.share,
+                          color: MisterFootball.primario,
+                        ),
+                        tooltip: 'Compartir convocatoria',
+                        onPressed: () async {
+                          String textoListaConvocatoria = "📢📢 Convocatoria 📢📢"
+                              "\n⚽ Rival: ${widget.partido.rival} ";
+                          if (widget.partido.lugar.length > 0) {
+                            textoListaConvocatoria += "\n🏟️ Lugar: ${widget.partido.lugar} ";
+                          }
+                          textoListaConvocatoria += "\n📆 Fecha: ${widget.partido.fecha.split("-")[2]}-"
+                                  "${widget.partido.fecha.split("-")[1]}-"
+                                  "${widget.partido.fecha.split("-")[0]}" +
+                              "\n🕑 Hora: ${widget.partido.hora}" +
+                              "\n";
+                          Box boxJugadoresEquipo = Hive.box('jugadores');
+                          List jugadoresConvocados = widget.partido.convocatoria;
+                          for (var j = 0; j < jugadoresConvocados.length; j++) {
+                            if (jugadoresConvocados != null) {
+                              if (jugadoresConvocados.length > 0) {
+                                Jugador jugadorBox;
+                                for (var i = 0; i < boxJugadoresEquipo.length; i++) {
+                                  if ('${jugadoresConvocados[j]}' == boxJugadoresEquipo.getAt(i).id) {
+                                    jugadorBox = boxJugadoresEquipo.getAt(i);
+                                    textoListaConvocatoria += "\n✅ ${jugadorBox.nombre} ${jugadorBox.apellido1} ";
+                                    if (jugadorBox.apellido2.length > 0) {
+                                      textoListaConvocatoria += "${jugadorBox.apellido2} ";
+                                    }
+                                    textoListaConvocatoria += "(${jugadorBox.apodo})";
+                                  }
+                                }
+                              }
+                            }
+                          }
+                          await Share.share('$textoListaConvocatoria');
+                        },
+                      ),
+                    ],
                   ),
                   Container(
                     padding: EdgeInsets.only(

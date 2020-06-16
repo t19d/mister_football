@@ -48,6 +48,8 @@ dependencies:
   table_calendar: ^2.2.3
   # Ordenable
   reorderables: ^0.3.2
+  # Compartir
+  share: ^0.6.4+3
   #Arreglar superBUG después de actualización
   dartx: ^0.4.1
 

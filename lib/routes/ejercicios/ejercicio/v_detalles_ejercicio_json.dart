@@ -44,6 +44,7 @@ class _DetallesEjercicioJSON extends State<DetallesEjercicioJSON> {
                       children: <Widget>[
                         //Título
                         Container(
+                          width: MediaQuery.of(context).size.width * .94,
                           padding: EdgeInsets.only(bottom: 12),
                           child: Text(
                             widget.datos['titulo'],
@@ -75,16 +76,19 @@ class _DetallesEjercicioJSON extends State<DetallesEjercicioJSON> {
               ),
               //Imagen
               //Si no tiene, no mostrar
-              if (widget.datos['imagen'].length != 0)
-                Container(
-                  margin: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.width * .03,
-                    bottom: MediaQuery.of(context).size.width * .03,
-                    left: MediaQuery.of(context).size.width * .03,
-                    right: MediaQuery.of(context).size.width * .03,
-                  ),
-                  child: ConversorImagen.imageEntrenamientoFromBase64String(widget.datos['imagen'], context),
-                ),
+              (widget.datos['imagen'].length != 0)
+                  ? Container(
+                      margin: EdgeInsets.only(
+                        top: MediaQuery.of(context).size.width * .03,
+                        bottom: MediaQuery.of(context).size.width * .03,
+                        left: MediaQuery.of(context).size.width * .03,
+                        right: MediaQuery.of(context).size.width * .03,
+                      ),
+                      child: ConversorImagen.imageEntrenamientoFromBase64String(widget.datos['imagen'], context),
+                    )
+                  : Container(
+                      height: MediaQuery.of(context).size.width * .03,
+                    ),
               Container(
                 padding: EdgeInsets.only(
                   left: MediaQuery.of(context).size.width * .03,

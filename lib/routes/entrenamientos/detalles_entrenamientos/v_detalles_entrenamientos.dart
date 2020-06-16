@@ -192,7 +192,10 @@ class _DetallesEnternamiento extends State<DetallesEnternamiento> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => EntrenamientosEdicion(entrenamiento: entrenamiento, posicion: widget.posicion,),
+                            builder: (context) => EntrenamientosEdicion(
+                              entrenamiento: entrenamiento,
+                              posicion: widget.posicion,
+                            ),
                           ),
                         );
                       },
@@ -421,7 +424,8 @@ class _DetallesEnternamiento extends State<DetallesEnternamiento> {
               jugadorFila = boxJugadoresEquipo.getAt(i);
             }
           }
-          return Text("-${jugadorFila.apodo}");
+          //Jugador
+          return (jugadorFila != null) ? Text("-${jugadorFila.apodo}") : Text("-Jugador eliminado");
         }),
       );
     } else {

@@ -241,9 +241,9 @@ class _EntrenamientosEdicion extends State<EntrenamientosEdicion> {
                                             ),
                                             tooltip: 'Editar ejercicios',
                                             onPressed: () async {
-                                              ejercicios = await showDialog<List<String>>(
+                                              await showDialog<List<String>>(
                                                 context: context,
-                                                barrierDismissible: false,
+                                                barrierDismissible: true,
                                                 builder: (BuildContext context) {
                                                   return AlertDialog(
                                                     content: StatefulBuilder(
@@ -298,9 +298,9 @@ class _EntrenamientosEdicion extends State<EntrenamientosEdicion> {
                                             ),
                                             tooltip: 'Editar jugadores',
                                             onPressed: () async {
-                                              listaJugadores = await showDialog<List<dynamic>>(
+                                              await showDialog<List<dynamic>>(
                                                 context: context,
-                                                barrierDismissible: false,
+                                                barrierDismissible: true,
                                                 builder: (BuildContext context) {
                                                   return AlertDialog(
                                                     content: StatefulBuilder(
@@ -513,7 +513,6 @@ class _EntrenamientosEdicion extends State<EntrenamientosEdicion> {
 //Mostrar lista seleccionable de ejercicios JSON
   Widget listaSeleccionarEjercicios(String ejerciciosString, List<String> ejecicios, StateSetter setState) {
     List<String> ejerciciosSeleccionados = ejecicios;
-    print(ejerciciosSeleccionados);
     List<dynamic> listaEjerciciosJSON = jsonDecode(ejerciciosString);
     if (listaEjerciciosJSON.length > 0) {
       return Container(
@@ -563,17 +562,13 @@ class _EntrenamientosEdicion extends State<EntrenamientosEdicion> {
                       _isSeleccionado = nuevoEstado;
                     });
                     if (_isSeleccionado) {
-                      print("Añadido");
                       setState(() {
                         ejerciciosSeleccionados.add("${listaEjerciciosJSON[iEjercicio]['id']}");
                       });
-                      print(ejerciciosSeleccionados);
                     } else {
-                      print("Eliminado");
                       setState(() {
                         ejerciciosSeleccionados.removeWhere((id) => id == "${listaEjerciciosJSON[iEjercicio]['id']}");
                       });
-                      print(ejerciciosSeleccionados);
                     }
                   },
                 );
@@ -586,6 +581,7 @@ class _EntrenamientosEdicion extends State<EntrenamientosEdicion> {
               disabledTextColor: Colors.white70,
               child: Text("Aceptar"),
               onPressed: () {
+                ejercicios = ejerciciosSeleccionados;
                 Navigator.pop(context, ejerciciosSeleccionados);
               },
             )
@@ -611,7 +607,8 @@ class _EntrenamientosEdicion extends State<EntrenamientosEdicion> {
               jugadorFila = boxJugadoresEquipo.getAt(i);
             }
           }
-          return Text("-${jugadorFila.apodo}");
+          //Jugador
+          return (jugadorFila != null) ? Text("-${jugadorFila.apodo}") : Text("-Jugador eliminado");
         }),
       );
     } else {
@@ -714,6 +711,7 @@ class _EntrenamientosEdicion extends State<EntrenamientosEdicion> {
               disabledTextColor: Colors.white70,
               child: Text("Aceptar"),
               onPressed: () {
+                listaJugadores = postListaJugadores;
                 Navigator.pop(context, postListaJugadores);
               },
             )
@@ -721,9 +719,7 @@ class _EntrenamientosEdicion extends State<EntrenamientosEdicion> {
         ),
       );
     } else {
-      return Container(
-        width: MediaQuery.of(context).size.width / 1,
-        height: MediaQuery.of(context).size.height / 1,
+      return Center(
         child: Text("Ningún jugador creado."),
       );
     }

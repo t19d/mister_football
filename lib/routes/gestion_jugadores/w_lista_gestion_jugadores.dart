@@ -168,56 +168,26 @@ class _ListaGestionJugadores extends State<ListaGestionJugadores> {
 
     List jugadoresOrdenados = [];
     for (var i = 0; i < boxJugadores.length; i++) {
-      jugadoresOrdenados.add([i, boxJugadores.getAt(i).apodo, boxJugadores.getAt(i).posicionFavorita]);
+      if (boxJugadores.getAt(i).habilitado) {
+        jugadoresOrdenados.add([i, boxJugadores.getAt(i).apodo, boxJugadores.getAt(i).posicionFavorita]);
+      }
     }
     //Ordenar por apodo
     jugadoresOrdenados.sort((a, b) => (a[1].toString().toLowerCase()).compareTo(b[1].toString().toLowerCase()));
+
+    //Jugadores deshabilitados
+    List jugadoresDeshabilitados = [];
+    for (var i = 0; i < boxJugadores.length; i++) {
+      if (!boxJugadores.getAt(i).habilitado) {
+        jugadoresDeshabilitados.add([i, boxJugadores.getAt(i).apodo, boxJugadores.getAt(i).posicionFavorita]);
+      }
+    }
+    //Ordenar por apodo
+    jugadoresDeshabilitados.sort((a, b) => (a[1].toString().toLowerCase()).compareTo(b[1].toString().toLowerCase()));
+
+    //Añadir jugadores deshabilitados a la lista
+    jugadoresOrdenados.addAll(jugadoresDeshabilitados);
     if (boxJugadores.length > 0) {
-      /*return GridView.count(
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        crossAxisCount: 3,
-        children: List.generate(boxJugadores.length, (iJugador) {
-          final Jugador jugadorBox = boxJugadores.getAt(iJugador) as Jugador;
-          return Card(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(10.0)),
-            ),
-            child: InkWell(
-              splashColor: Colors.lightGreen,
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => DetallesJugador(
-                      posicion: iJugador,
-                    ),
-                  ),
-                );
-              },
-              child: Container(
-                decoration: colorear(jugadorBox.posicionFavorita),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    ConversorImagen.imageFromBase64String(
-                        jugadorBox.nombre_foto, context),
-                    Text(
-                      jugadorBox.apodo,
-                      textAlign: TextAlign.center,
-                    ),
-                    Text(
-                      jugadorBox.posicionFavorita,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 10),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          );
-        }),
-      );*/
       return ListView(
         shrinkWrap: true,
         children: List.generate(boxJugadores.length, (iJugador) {

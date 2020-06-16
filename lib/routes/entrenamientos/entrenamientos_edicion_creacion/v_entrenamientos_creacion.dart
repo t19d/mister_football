@@ -469,7 +469,8 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
                               children: <Widget>[
                                 //Fecha
                                 RaisedButton(
-                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.primario)),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.primario)),
                                   color: Colors.white70,
                                   disabledColor: MisterFootball.primarioLight2,
                                   disabledTextColor: Colors.white70,
@@ -507,7 +508,8 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
                                 separadorFormulario(),
                                 //Hora
                                 RaisedButton(
-                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.primario)),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.primario)),
                                   color: Colors.white70,
                                   disabledColor: MisterFootball.primarioLight2,
                                   disabledTextColor: Colors.white70,
@@ -570,9 +572,9 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
                                             ),
                                             tooltip: 'Editar ejercicios',
                                             onPressed: () async {
-                                              ejercicios = await showDialog<List<String>>(
+                                              await showDialog<List<String>>(
                                                 context: context,
-                                                barrierDismissible: false,
+                                                barrierDismissible: true,
                                                 builder: (BuildContext context) {
                                                   return AlertDialog(
                                                     content: StatefulBuilder(
@@ -627,9 +629,9 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
                                             ),
                                             tooltip: 'Editar jugadores',
                                             onPressed: () async {
-                                              listaJugadores = await showDialog<List<dynamic>>(
+                                              await showDialog<List<dynamic>>(
                                                 context: context,
-                                                barrierDismissible: false,
+                                                barrierDismissible: true,
                                                 builder: (BuildContext context) {
                                                   return AlertDialog(
                                                     content: StatefulBuilder(
@@ -694,51 +696,52 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
     List<dynamic> listaEjerciciosJSON = jsonDecode(ejerciciosString);
     if (ejercicios.length > 0) {
       return ReorderableColumn(
-        scrollController: ScrollController(),
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: List.generate(
-          ejercicios.length,
-              (iEjercicio) {
-            //return Text("${iEjercicio + 1}-${listaEjerciciosJSON[int.parse(ejercicios[iEjercicio]) - 1]['titulo']}");
-            /*return ListTile(
+          scrollController: ScrollController(),
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: List.generate(
+            ejercicios.length,
+            (iEjercicio) {
+              //return Text("${iEjercicio + 1}-${listaEjerciciosJSON[int.parse(ejercicios[iEjercicio]) - 1]['titulo']}");
+              /*return ListTile(
                 key: Key("$iEjercicio"),
                 title: Text("${iEjercicio + 1}-${listaEjerciciosJSON[int.parse(ejercicios[iEjercicio]) - 1]['titulo']}"),
               );*/
-            return Container(
-              decoration: BoxDecoration(
-                border: Border(
-                  top: BorderSide(width: .4),
-                  bottom: BorderSide(width: .4),
-                  left: BorderSide(width: .4),
-                  right: BorderSide(width: .4),
+              return Container(
+                decoration: BoxDecoration(
+                  border: Border(
+                    top: BorderSide(width: .4),
+                    bottom: BorderSide(width: .4),
+                    left: BorderSide(width: .4),
+                    right: BorderSide(width: .4),
+                  ),
                 ),
-              ),
-              margin: EdgeInsets.only(
-                top: (iEjercicio != 0) ? 2.5 : 0,
-                bottom: (iEjercicio != (ejercicios.length - 1)) ? 2.5 : 0,
-                right: 0,
-                left: 0,
-              ),
-              key: Key("$iEjercicio"),
-              child: Row(
-                children: <Widget>[
-                  Container(
-                    width: (MediaQuery.of(context).size.width * .63),
-                    padding: EdgeInsets.all((MediaQuery.of(context).size.width * 0.025)),
-                    child: Text(
-                      "${listaEjerciciosJSON[int.parse(ejercicios[iEjercicio]) - 1]['titulo']}",
+                margin: EdgeInsets.only(
+                  top: (iEjercicio != 0) ? 2.5 : 0,
+                  bottom: (iEjercicio != (ejercicios.length - 1)) ? 2.5 : 0,
+                  right: 0,
+                  left: 0,
+                ),
+                key: Key("$iEjercicio"),
+                child: Row(
+                  children: <Widget>[
+                    Container(
+                      width: (MediaQuery.of(context).size.width * .63),
+                      padding: EdgeInsets.all((MediaQuery.of(context).size.width * 0.025)),
+                      child: Text(
+                        "${listaEjerciciosJSON[int.parse(ejercicios[iEjercicio]) - 1]['titulo']}",
+                      ),
                     ),
-                  ),
-                  Icon(
-                    Icons.unfold_more,
-                    color: MisterFootball.semiprimario,
-                  ),
-                ],
-              ),
-            );
-          },
-        ),
-        onReorder: /*(oldIndex, newIndex) {
+                    Icon(
+                      Icons.unfold_more,
+                      color: MisterFootball.semiprimario,
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+          onReorder:
+              /*(oldIndex, newIndex) {
           String old = ejercicios[oldIndex];
           if (oldIndex > newIndex) {
             for (int i = oldIndex; i > newIndex; i--) {
@@ -753,13 +756,12 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
           }
           setState(() {});
         },*/
-            (int oldIndex, int newIndex) {
-          setState(() {
-            String row = ejercicios.removeAt(oldIndex);
-            ejercicios.insert(newIndex, row);
+              (int oldIndex, int newIndex) {
+            setState(() {
+              String row = ejercicios.removeAt(oldIndex);
+              ejercicios.insert(newIndex, row);
+            });
           });
-        }
-      );
       /*return ReorderableListView(
           //padding: EdgeInsets.symmetric(horizontal: 40),
           children: List.generate(
@@ -925,6 +927,7 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
               disabledTextColor: Colors.white70,
               child: Text("Aceptar"),
               onPressed: () {
+                ejercicios = ejerciciosSeleccionados;
                 Navigator.pop(context, ejerciciosSeleccionados);
               },
             )
@@ -1015,14 +1018,15 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
                   title: Table(
                     defaultVerticalAlignment: TableCellVerticalAlignment.middle,
                     children: [
-                    TableRow(
-                      children: <Widget>[
-                        ConversorImagen.imageFromBase64String(jugadorBox.nombre_foto, context),
-                        Text("${jugadorBox.apodo}"), //, style: TextStyle(fontSize: MediaQuery.of(context).size.width * .04)),
-                        //Text("${jugadorBox.posicionFavorita}", style: TextStyle(fontSize: MediaQuery.of(context).size.width * .05),),
-                      ],
-                    ),
-                  ],),
+                      TableRow(
+                        children: <Widget>[
+                          ConversorImagen.imageFromBase64String(jugadorBox.nombre_foto, context),
+                          Text("${jugadorBox.apodo}"), //, style: TextStyle(fontSize: MediaQuery.of(context).size.width * .04)),
+                          //Text("${jugadorBox.posicionFavorita}", style: TextStyle(fontSize: MediaQuery.of(context).size.width * .05),),
+                        ],
+                      ),
+                    ],
+                  ),
                   value: _isSeleccionado,
                   onChanged: (bool nuevoEstado) {
                     setState(() {
@@ -1052,6 +1056,7 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
               disabledTextColor: Colors.white70,
               child: Text("Aceptar"),
               onPressed: () {
+                listaJugadores = postListaJugadores;
                 Navigator.pop(context, postListaJugadores);
               },
             )
@@ -1059,9 +1064,7 @@ class _EntrenamientosCreacion extends State<EntrenamientosCreacion> {
         ),
       );
     } else {
-      return Container(
-        width: MediaQuery.of(context).size.width / 1,
-        height: MediaQuery.of(context).size.height / 1,
+      return Center(
         child: Text("Ningún jugador creado."),
       );
     }

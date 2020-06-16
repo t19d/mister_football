@@ -75,9 +75,6 @@ class _ListaPartidos extends State<ListaPartidos> {
 
   //Devuelve el item de la lista de los partidos
   Widget itemPartidos() {
-    //Comprobar si ya se muestra un anuncio
-    bool anuncioSeparacion = false;
-
     //Estilo de los textos de los equipos
     TextStyle estiloEquipos = TextStyle(
       fontWeight: FontWeight.bold,
@@ -121,29 +118,30 @@ class _ListaPartidos extends State<ListaPartidos> {
         children: List.generate(boxPartidos.length, (iPartido) {
           //Poner primero los más nuevos
           final Partido partidoBox = boxPartidos.getAt(partidosOrdenados[((partidosOrdenados.length - 1) - iPartido)][0]) as Partido;
-          return Card(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(5.0),
-            ),
-            child: InkWell(
-              splashColor: MisterFootball.complementario,
-              onTap: () {
-                Navigator.push(
-                  context,
-                  AnimacionDetalles(
-                    widget: DetallesPartido(
-                      posicion: partidosOrdenados[((partidosOrdenados.length - 1) - iPartido)][0],
-                    ),
-                  ),
-                );
-              },
-              child: Column(
-                children: <Widget>[
-                  /*AdmobBanner(
-                    adUnitId: sAM.getBannerAdId(),
-                    adSize: AdmobBannerSize.BANNER,
-                  ),*/
-                  Container(
+          return Column(
+            children: <Widget>[
+              /*if ((iPartido % 5 == 0) && (iPartido != (partidosOrdenados.length - 1)) && (iPartido != 0))
+                AdmobBanner(
+                  adUnitId: sAM.getBannerAdId(),
+                  adSize: AdmobBannerSize.BANNER,
+                ),*/
+              Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5.0),
+                ),
+                child: InkWell(
+                  splashColor: MisterFootball.complementario,
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      AnimacionDetalles(
+                        widget: DetallesPartido(
+                          posicion: partidosOrdenados[((partidosOrdenados.length - 1) - iPartido)][0],
+                        ),
+                      ),
+                    );
+                  },
+                  child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
                       border: Border.all(color: MisterFootball.primario),
@@ -390,9 +388,9 @@ class _ListaPartidos extends State<ListaPartidos> {
                                 ],
                               ),
                   ),
-                ],
+                ),
               ),
-            ),
+            ],
           );
         }),
       );

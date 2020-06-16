@@ -26,14 +26,6 @@ class _DetallesJugador extends State<DetallesJugador> {
 
   @override
   Widget build(BuildContext context) {
-    Divider divisorGrupos = Divider(
-      height: MediaQuery.of(context).size.height * .025,
-      color: MisterFootball.complementarioLight,
-    );
-    Divider divisorElementos = Divider(
-      height: MediaQuery.of(context).size.height * .01,
-      color: MisterFootball.primarioLight,
-    );
     TextStyle estiloTexto = TextStyle(fontSize: MediaQuery.of(context).size.width * .05);
 
     return FutureBuilder(
@@ -49,7 +41,7 @@ class _DetallesJugador extends State<DetallesJugador> {
             return SafeArea(
               child: Scaffold(
                 appBar: AppBar(
-                  //title: Text(jugador.apodo),
+                  title: (jugador.habilitado) ? Text("") : Text("DESHABILITADO"),
                   actions: <Widget>[
                     IconButton(
                       icon: Icon(
@@ -69,56 +61,120 @@ class _DetallesJugador extends State<DetallesJugador> {
                         );
                       },
                     ),
-                    IconButton(
-                      icon: Icon(
-                        Icons.delete,
-                        color: MisterFootball.complementarioDelComplementarioLight,
-                      ),
-                      tooltip: 'Eliminar jugador',
-                      onPressed: () async {
-                        //DBHelper.delete(widget.jugador.id);
-                        Box boxJugadores = await Hive.openBox('jugadores');
-                        Box boxPerfil = await Hive.openBox('perfil');
-                        print(widget.posicion);
-                        boxJugadores.deleteAt(widget.posicion);
+                    (jugador.habilitado)
+                        ? IconButton(
+                            icon: Icon(
+                              Icons.visibility_off,
+                              color: MisterFootball.complementarioDelComplementarioLight,
+                            ),
+                            tooltip: 'Deshabilitar jugador',
+                            onPressed: () async {
+                              //Borrar de la alineación favorita
+                              Box boxPerfil = await Hive.openBox('perfil');
+                              Map<String, dynamic> equipo = {
+                                "nombre_equipo": "",
+                                "escudo": "",
+                                "modo_oscuro": false,
+                                "alineacion_favorita": [
+                                  {
+                                    '0': null,
+                                    '1': null,
+                                    '2': null,
+                                    '3': null,
+                                    '4': null,
+                                    '5': null,
+                                    '6': null,
+                                    '7': null,
+                                    '8': null,
+                                    '9': null,
+                                    '10': null
+                                  },
+                                  "14231"
+                                ]
+                              };
+                              if (boxPerfil.get(0) != null) {
+                                equipo = Map.from(boxPerfil.get(0));
+                              }
+                              for (var j = 0; j < equipo["alineacion_favorita"][0].length; j++) {
+                                print(equipo["alineacion_favorita"][0]["$j"]);
+                                if (equipo["alineacion_favorita"][0]["$j"] == jugador.id) {
+                                  equipo["alineacion_favorita"][0]["$j"] = null;
+                                }
+                              }
 
-                        //Borrar de la alineación favorita
-                        Map<String, dynamic> equipo = {
-                          "nombre_equipo": "",
-                          "escudo": "",
-                          "modo_oscuro": false,
-                          "alineacion_favorita": [
-                            {
-                              '0': null,
-                              '1': null,
-                              '2': null,
-                              '3': null,
-                              '4': null,
-                              '5': null,
-                              '6': null,
-                              '7': null,
-                              '8': null,
-                              '9': null,
-                              '10': null
+                              //Deshabilitar jugador
+                              Box boxJugadores = await Hive.openBox('jugadores');
+                              Jugador j = Jugador(
+                                  nombre_foto: jugador.nombre_foto,
+                                  nombre: jugador.nombre,
+                                  apellido1: jugador.apellido1,
+                                  apellido2: jugador.apellido2,
+                                  apodo: jugador.apodo,
+                                  anotaciones: jugador.anotaciones,
+                                  posicionFavorita: jugador.posicionFavorita,
+                                  piernaBuena: jugador.piernaBuena,
+                                  fechaNacimiento: jugador.fechaNacimiento,
+                                  id: jugador.id,
+                                  //Deshabilitar jugador
+                                  habilitado: false);
+                              //Almacenar al jugador en la Box de 'jugadores'
+                              boxJugadores.putAt(widget.posicion, j);
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(builder: (context) => GestionJugadores()),
+                              );
                             },
-                            "14231"
-                          ]
-                        };
-                        if (boxPerfil.get(0) != null) {
-                          equipo = Map.from(boxPerfil.get(0));
-                        }
-                        for (var j = 0; j < equipo["alineacion_favorita"][0].length; j++) {
-                          print(equipo["alineacion_favorita"][0]["$j"]);
-                          if (equipo["alineacion_favorita"][0]["$j"] == jugador.id) {
-                            equipo["alineacion_favorita"][0]["$j"] = null;
-                          }
-                        }
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(builder: (context) => GestionJugadores()),
-                        );
-                      },
-                    ),
+                          )
+                        : IconButton(
+                            icon: Icon(
+                              Icons.delete,
+                              color: MisterFootball.complementarioDelComplementarioLight,
+                            ),
+                            tooltip: 'Eliminar jugador',
+                            onPressed: () async {
+                              //DBHelper.delete(widget.jugador.id);
+                              Box boxJugadores = await Hive.openBox('jugadores');
+                              Box boxPerfil = await Hive.openBox('perfil');
+                              print(widget.posicion);
+                              boxJugadores.deleteAt(widget.posicion);
+
+                              //Borrar de la alineación favorita
+                              Map<String, dynamic> equipo = {
+                                "nombre_equipo": "",
+                                "escudo": "",
+                                "modo_oscuro": false,
+                                "alineacion_favorita": [
+                                  {
+                                    '0': null,
+                                    '1': null,
+                                    '2': null,
+                                    '3': null,
+                                    '4': null,
+                                    '5': null,
+                                    '6': null,
+                                    '7': null,
+                                    '8': null,
+                                    '9': null,
+                                    '10': null
+                                  },
+                                  "14231"
+                                ]
+                              };
+                              if (boxPerfil.get(0) != null) {
+                                equipo = Map.from(boxPerfil.get(0));
+                              }
+                              for (var j = 0; j < equipo["alineacion_favorita"][0].length; j++) {
+                                print(equipo["alineacion_favorita"][0]["$j"]);
+                                if (equipo["alineacion_favorita"][0]["$j"] == jugador.id) {
+                                  equipo["alineacion_favorita"][0]["$j"] = null;
+                                }
+                              }
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(builder: (context) => GestionJugadores()),
+                              );
+                            },
+                          ),
                   ],
                 ),
                 body: SingleChildScrollView(

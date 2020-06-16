@@ -244,17 +244,23 @@ class _ListaGestionJugadores extends State<ListaGestionJugadores> {
                 );
               },
               child: Container(
-                padding: EdgeInsets.fromLTRB(
+                /*padding: EdgeInsets.fromLTRB(
                   MediaQuery.of(context).size.width * .05,
                   MediaQuery.of(context).size.width * .01,
                   MediaQuery.of(context).size.width * .1,
                   MediaQuery.of(context).size.width * .01,
-                ),
+                ),*/
                 //decoration: colorear(jugadorBox.posicionFavorita),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  border: Border.all(color: MisterFootball.primario),
-                ),
+                decoration: (jugadorBox.habilitado)
+                    ? BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        border: Border.all(color: MisterFootball.primario),
+                      )
+                    : BoxDecoration(
+                        color: MisterFootball.complementarioDelComplementarioLight2,
+                        borderRadius: BorderRadius.circular(5),
+                        border: Border.all(color: MisterFootball.primario),
+                      ),
                 child: Table(
                   defaultVerticalAlignment: TableCellVerticalAlignment.middle,
                   children: [
@@ -266,10 +272,15 @@ class _ListaGestionJugadores extends State<ListaGestionJugadores> {
                           overflow: TextOverflow.clip,
                           textAlign: TextAlign.center,
                         ),
-                        Text(
-                          jugadorBox.posicionFavorita,
-                          textAlign: TextAlign.right,
-                        ),
+                        (jugadorBox.habilitado)
+                            ? Text(
+                                jugadorBox.posicionFavorita,
+                                textAlign: TextAlign.center,
+                              )
+                            : Icon(
+                                Icons.visibility_off,
+                                color: MisterFootball.primario,
+                              ),
                       ],
                     ),
                   ],

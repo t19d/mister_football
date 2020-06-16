@@ -31,6 +31,7 @@ class _PartidoEquipoEdicion extends State<PartidoEquipoEdicion> {
     _formacionesDisponibles = getDropDownMenuItemsFormaciones();
     _minutoActual = "0";
     formacionAlert = "14231";
+    _minutoCambioAlineacionAlert = -1;
     //_minutoCambioAlineacionAlert = 1;
     /*Antiguo
       _formacionActual = _formacionesDisponibles[0].value;
@@ -115,10 +116,12 @@ class _PartidoEquipoEdicion extends State<PartidoEquipoEdicion> {
 
     //Añadir minutos con alineaciones guardadas
     if (PartidosEdicion.partidoEditado.alineacion != null) {
-      List<DropdownMenuItem<String>> items = new List();
+      List<DropdownMenuItem<String>> items = List();
       for (String f in PartidosEdicion.partidoEditado.alineacion.keys) {
-        items.add(new DropdownMenuItem(value: f, child: new Text(f)));
+        items.add(DropdownMenuItem(value: f, child: Text((f.length == 1) ? "0$f" : "$f")));
       }
+      items.sort((a, b) => (a.child.toString().substring(a.child.toString().length - 4, a.child.toString().length - 2))
+          .compareTo(b.child.toString().substring(b.child.toString().length - 4, b.child.toString().length - 2)));
       _minutosDisponibles = items;
     }
     //int _posicionFormacionInicial = _formaciones.indexOf(formacionInicialPartido);

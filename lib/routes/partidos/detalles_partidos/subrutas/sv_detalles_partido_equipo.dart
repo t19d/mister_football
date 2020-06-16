@@ -56,18 +56,12 @@ class _DetallesPartidoEquipo extends State<DetallesPartidoEquipo> {
 
     //Añadir minutos con alineaciones guardadas
     if (widget.partido.alineacion != null) {
-      List<DropdownMenuItem<String>> items = new List();
-      for (String f in widget.partido.alineacion.keys) {
-        items.add(
-          new DropdownMenuItem(
-            value: f,
-            child: new Text(
-              f,
-              textAlign: TextAlign.center,
-            ),
-          ),
-        );
-      }
+        List<DropdownMenuItem<String>> items = List();
+        for (String f in widget.partido.alineacion.keys) {
+          items.add(DropdownMenuItem(value: f, child: Text((f.length == 1) ? "0$f" : "$f")));
+        }
+        items.sort((a, b) => (a.child.toString().substring(a.child.toString().length - 4, a.child.toString().length - 2))
+            .compareTo(b.child.toString().substring(b.child.toString().length - 4, b.child.toString().length - 2)));
       _minutosDisponibles = items;
     }
 

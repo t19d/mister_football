@@ -46,7 +46,7 @@
     "titulo": "Formando grupos",
     "tipo": "Mental",
     "duracion": "10-20",
-    "descripcion": "",
+    "descripcion": "Los jugadores se desplazan trotando por la zona delimitada.\nEl entrenador dice un número para que formen grupos con ese número de personas.\nLos últimos o los que queden sin grupo tendrán un castigo (10 flexiones o 20 abdominales).",
 	"n_personas": "10-25",
     "dificultad": "Baja",
     "intensidad": "Media",

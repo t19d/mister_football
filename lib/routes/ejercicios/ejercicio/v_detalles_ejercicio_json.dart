@@ -154,6 +154,31 @@ class _DetallesEjercicioJSON extends State<DetallesEjercicioJSON> {
                             ),
                           ],
                         ),
+                        if ("${widget.datos['n_personas']}" != "-")
+                        //Jugadores necesarios
+                        TableRow(
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(color: MisterFootball.primario, width: .4),
+                            ),
+                          ),
+                          children: [
+                            Text(
+                              "Jugadores necesarios",
+                              textAlign: TextAlign.center,
+                            ),
+                            Container(
+                              padding: EdgeInsets.only(
+                                top: MediaQuery.of(context).size.width * .03,
+                                bottom: MediaQuery.of(context).size.width * .03,
+                              ),
+                              child: Text(
+                                "${widget.datos['n_personas']}",
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ],
+                        ),
                         //Duración
                         TableRow(
                           decoration: BoxDecoration(
@@ -226,64 +251,66 @@ class _DetallesEjercicioJSON extends State<DetallesEjercicioJSON> {
                             ),
                           ],
                         ),
-                        //Dimensión campo
-                        TableRow(
-                          decoration: BoxDecoration(
-                            border: Border(
-                              bottom: BorderSide(color: MisterFootball.primario, width: .4),
-                            ),
-                          ),
-                          children: [
-                            Text(
-                              "Dimensión campo",
-                              textAlign: TextAlign.center,
-                            ),
-                            Container(
-                              padding: EdgeInsets.only(
-                                top: MediaQuery.of(context).size.width * .03,
-                                bottom: MediaQuery.of(context).size.width * .03,
+                        if ("${widget.datos['dimension_campo']}" != "-")
+                          //Dimensión campo
+                          TableRow(
+                            decoration: BoxDecoration(
+                              border: Border(
+                                bottom: BorderSide(color: MisterFootball.primario, width: .4),
                               ),
-                              child: Text(
-                                "${widget.datos['dimension_campo']}",
+                            ),
+                            children: [
+                              Text(
+                                "Dimensión campo",
                                 textAlign: TextAlign.center,
                               ),
-                            ),
-                          ],
-                        ),
-                        //Elementos
-                        TableRow(
-                          decoration: BoxDecoration(
-                            border: Border(
-                              bottom: BorderSide(color: MisterFootball.primario, width: .4),
-                            ),
-                          ),
-                          children: [
-                            Text(
-                              "Elementos",
-                              textAlign: TextAlign.center,
-                            ),
-                            Container(
-                              padding: EdgeInsets.only(
-                                top: MediaQuery.of(context).size.width * .03,
-                                bottom: MediaQuery.of(context).size.width * .03,
-                              ),
-                              child: ListView(
-                                //Eliminar Scroll
-                                physics: NeverScrollableScrollPhysics(),
-                                shrinkWrap: true,
-                                children: List.generate(
-                                  widget.datos['elementos'].length,
-                                  (iFila) {
-                                    return Text(
-                                      "- ${widget.datos['elementos'][iFila]}",
-                                      textAlign: TextAlign.center,
-                                    );
-                                  },
+                              Container(
+                                padding: EdgeInsets.only(
+                                  top: MediaQuery.of(context).size.width * .03,
+                                  bottom: MediaQuery.of(context).size.width * .03,
+                                ),
+                                child: Text(
+                                  "${widget.datos['dimension_campo']}",
+                                  textAlign: TextAlign.center,
                                 ),
                               ),
+                            ],
+                          ),
+                        if (widget.datos['elementos'].length > 0)
+                          //Elementos
+                          TableRow(
+                            decoration: BoxDecoration(
+                              border: Border(
+                                bottom: BorderSide(color: MisterFootball.primario, width: .4),
+                              ),
                             ),
-                          ],
-                        ),
+                            children: [
+                              Text(
+                                "Elementos",
+                                textAlign: TextAlign.center,
+                              ),
+                              Container(
+                                padding: EdgeInsets.only(
+                                  top: MediaQuery.of(context).size.width * .03,
+                                  bottom: MediaQuery.of(context).size.width * .03,
+                                ),
+                                child: ListView(
+                                  //Eliminar Scroll
+                                  physics: NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  children: List.generate(
+                                    widget.datos['elementos'].length,
+                                    (iFila) {
+                                      return Text(
+                                        "- ${widget.datos['elementos'][iFila]}",
+                                        textAlign: TextAlign.center,
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                       ],
                     ),
                     //Descripción

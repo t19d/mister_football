@@ -48,10 +48,23 @@
     "duracion": "10-20",
     "descripcion": "Los jugadores se desplazan trotando por la zona delimitada.\nEl entrenador dice un número para que formen grupos con ese número de personas.\nLos últimos o los que queden sin grupo tendrán un castigo (10 flexiones o 20 abdominales).",
 	"n_personas": "10-25",
-    "dificultad": "Baja",
+    "dificultad": "Fácil",
     "intensidad": "Media",
-    "elementos": [],
+    "elementos": ["Conos x 4"],
     "dimension_campo": "15x15 metros\n(ajustables en función del número de jugadores)",
+    "imagen": ""
+  },
+  {
+    "id": 5,
+    "titulo": "Tanda de penaltis",
+    "tipo": "Técnico",
+    "duracion": "10-20",
+    "descripcion": "Cada jugador tirará un penalti por ronda y cada ronda se terminará en el momento en el que todos los jugadores no eliminados hayan tirado. Se eliminará al jugador si falla el tiro.\nSe requiere 1 portero y se pueden dividir en equipos (en función del número de porteros).",
+	"n_personas": "3-25",
+    "dificultad": "Fácil",
+    "intensidad": "Baja",
+    "elementos": ["Balón x 1"],
+    "dimension_campo": "-",
     "imagen": ""
   }
 ]

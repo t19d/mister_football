@@ -13,7 +13,9 @@ class ServicioAdMob {
 
   String getBannerAdId() {
     if (Platform.isAndroid) {
-      return 'ca-app-pub-8505501288716754/8823369121';
+      return 'ca-app-pub-3940256099942544/6300978111';
+      //REAL IMPLEMENTAR CUANDO SALGA
+      //return 'ca-app-pub-8505501288716754/8823369121';
     }
     /*else if (Platform.isIOS) {
       return 'ca-app-pub-2334510780816542/2993163849';

@@ -362,7 +362,7 @@ class _DetallesEjercicioJSON extends State<DetallesEjercicioJSON> {
                           ),
                           Text(
                             "${widget.datos['descripcion']}",
-                            textAlign: TextAlign.left,
+                            textAlign: TextAlign.justify,
                           ),
                         ],
                       ),

@@ -66,5 +66,18 @@
     "elementos": ["Balón x 1"],
     "dimension_campo": "-",
     "imagen": ""
+  },
+  {
+    "id": 6,
+    "titulo": "Carrera en el aire",
+    "tipo": "Técnico",
+    "duracion": "5-15",
+    "descripcion": "Los jugadores tienen que darse pases en el aire (no puede botar), agarrados de las manos (formando un círculo) y desplazándose hasta la línea de meta. Se dividen en 2 grupos.\nSi el balón cae, se vuelve a empezar desde el principio.",
+	"n_personas": "8-25",
+    "dificultad": "Media",
+    "intensidad": "Media",
+    "elementos": ["Conos x 2"],
+    "dimension_campo": "30x30 metros\n(ajustables en función del número de jugadores y dificultad del recorrido)",
+    "imagen": ""
   }
 ]

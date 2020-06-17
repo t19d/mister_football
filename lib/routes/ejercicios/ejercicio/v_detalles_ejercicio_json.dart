@@ -122,6 +122,8 @@ class _DetallesEjercicioJSON extends State<DetallesEjercicioJSON> {
                               padding: EdgeInsets.only(
                                 top: MediaQuery.of(context).size.width * .03,
                                 bottom: MediaQuery.of(context).size.width * .03,
+                                left: MediaQuery.of(context).size.width * .03,
+                                right: MediaQuery.of(context).size.width * .03,
                               ),
                               child: Text(
                                 "${widget.datos['titulo']}",
@@ -146,6 +148,8 @@ class _DetallesEjercicioJSON extends State<DetallesEjercicioJSON> {
                               padding: EdgeInsets.only(
                                 top: MediaQuery.of(context).size.width * .03,
                                 bottom: MediaQuery.of(context).size.width * .03,
+                                left: MediaQuery.of(context).size.width * .03,
+                                right: MediaQuery.of(context).size.width * .03,
                               ),
                               child: Text(
                                 "${widget.datos['tipo']}",
@@ -155,30 +159,32 @@ class _DetallesEjercicioJSON extends State<DetallesEjercicioJSON> {
                           ],
                         ),
                         if ("${widget.datos['n_personas']}" != "-")
-                        //Jugadores necesarios
-                        TableRow(
-                          decoration: BoxDecoration(
-                            border: Border(
-                              bottom: BorderSide(color: MisterFootball.primario, width: .4),
-                            ),
-                          ),
-                          children: [
-                            Text(
-                              "Jugadores necesarios",
-                              textAlign: TextAlign.center,
-                            ),
-                            Container(
-                              padding: EdgeInsets.only(
-                                top: MediaQuery.of(context).size.width * .03,
-                                bottom: MediaQuery.of(context).size.width * .03,
+                          //Jugadores necesarios
+                          TableRow(
+                            decoration: BoxDecoration(
+                              border: Border(
+                                bottom: BorderSide(color: MisterFootball.primario, width: .4),
                               ),
-                              child: Text(
-                                "${widget.datos['n_personas']}",
+                            ),
+                            children: [
+                              Text(
+                                "Jugadores necesarios",
                                 textAlign: TextAlign.center,
                               ),
-                            ),
-                          ],
-                        ),
+                              Container(
+                                padding: EdgeInsets.only(
+                                  top: MediaQuery.of(context).size.width * .03,
+                                  bottom: MediaQuery.of(context).size.width * .03,
+                                  left: MediaQuery.of(context).size.width * .03,
+                                  right: MediaQuery.of(context).size.width * .03,
+                                ),
+                                child: Text(
+                                  "${widget.datos['n_personas']}",
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ],
+                          ),
                         //Duración
                         TableRow(
                           decoration: BoxDecoration(
@@ -195,6 +201,8 @@ class _DetallesEjercicioJSON extends State<DetallesEjercicioJSON> {
                               padding: EdgeInsets.only(
                                 top: MediaQuery.of(context).size.width * .03,
                                 bottom: MediaQuery.of(context).size.width * .03,
+                                left: MediaQuery.of(context).size.width * .03,
+                                right: MediaQuery.of(context).size.width * .03,
                               ),
                               child: Text(
                                 "${widget.datos['duracion']} min",
@@ -219,6 +227,8 @@ class _DetallesEjercicioJSON extends State<DetallesEjercicioJSON> {
                               padding: EdgeInsets.only(
                                 top: MediaQuery.of(context).size.width * .03,
                                 bottom: MediaQuery.of(context).size.width * .03,
+                                left: MediaQuery.of(context).size.width * .03,
+                                right: MediaQuery.of(context).size.width * .03,
                               ),
                               child: Text(
                                 "${widget.datos['dificultad']}",
@@ -243,6 +253,8 @@ class _DetallesEjercicioJSON extends State<DetallesEjercicioJSON> {
                               padding: EdgeInsets.only(
                                 top: MediaQuery.of(context).size.width * .03,
                                 bottom: MediaQuery.of(context).size.width * .03,
+                                left: MediaQuery.of(context).size.width * .03,
+                                right: MediaQuery.of(context).size.width * .03,
                               ),
                               child: Text(
                                 "${widget.datos['intensidad']}",
@@ -268,6 +280,8 @@ class _DetallesEjercicioJSON extends State<DetallesEjercicioJSON> {
                                 padding: EdgeInsets.only(
                                   top: MediaQuery.of(context).size.width * .03,
                                   bottom: MediaQuery.of(context).size.width * .03,
+                                  left: MediaQuery.of(context).size.width * .03,
+                                  right: MediaQuery.of(context).size.width * .03,
                                 ),
                                 child: Text(
                                   "${widget.datos['dimension_campo']}",
@@ -293,6 +307,8 @@ class _DetallesEjercicioJSON extends State<DetallesEjercicioJSON> {
                                 padding: EdgeInsets.only(
                                   top: MediaQuery.of(context).size.width * .03,
                                   bottom: MediaQuery.of(context).size.width * .03,
+                                  left: MediaQuery.of(context).size.width * .03,
+                                  right: MediaQuery.of(context).size.width * .03,
                                 ),
                                 child: ListView(
                                   //Eliminar Scroll

@@ -30,7 +30,7 @@
   },
   {
     "id": 3,
-    "titulo": "Números en grupo",
+    "titulo": "Contando en grupo",
     "tipo": "Mental",
     "duracion": "5-10",
     "descripcion": "Se forma un círuclo con todos los jugadores.\nEl objetivo es llegar al número más alto posible contando de uno en uno de manera esporádica, sin que dos o más personas repitan número y que no se pisen.\nSe selecciona a uno para que empiece diciendo 'Uno' y se vuelve a empezar si alguien repite número o se pisan.",
@@ -39,6 +39,19 @@
     "intensidad": "Baja",
     "elementos": [],
     "dimension_campo": "-",
+    "imagen": ""
+  },
+  {
+    "id": 4,
+    "titulo": "Formando grupos",
+    "tipo": "Mental",
+    "duracion": "10-20",
+    "descripcion": "",
+	"n_personas": "10-25",
+    "dificultad": "Baja",
+    "intensidad": "Media",
+    "elementos": [],
+    "dimension_campo": "15x15 metros\n(ajustables en función del número de jugadores)",
     "imagen": ""
   }
 ]

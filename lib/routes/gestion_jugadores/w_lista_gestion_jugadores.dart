@@ -345,7 +345,7 @@ class _ListaGestionJugadores extends State<ListaGestionJugadores> {
                           //borderRadius: BorderRadius.circular(5),
                           )
                       : BoxDecoration(
-                          color: MisterFootball.colorPrimario,
+                          color: MisterFootball.colorSemiprimarioLight2,
                           //borderRadius: BorderRadius.circular(5),
                           //border: Border.all(color: MisterFootball.colorPrimario),
                         ),

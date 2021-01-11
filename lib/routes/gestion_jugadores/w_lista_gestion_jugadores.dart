@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:mister_football/animaciones/animacion_detalles.dart';
@@ -166,6 +167,118 @@ class _ListaGestionJugadores extends State<ListaGestionJugadores> {
   Widget cartasJugadores() {
     final boxJugadores = Hive.box('jugadores');
 
+    String acortarPosicion(String posicion) {
+      String respuesta = "";
+      switch (posicion.toLowerCase()) {
+        case "por":
+        case "portero":
+          respuesta = "PT";
+          break;
+        case "def":
+        case "central":
+        case "líbero":
+          respuesta = "DF";
+          break;
+        case "lateral derecho":
+          respuesta = "LD";
+          break;
+        case "lateral izquierdo":
+          respuesta = "LI";
+          break;
+        case "carrilero derecho":
+          respuesta = "CD";
+          break;
+        case "carrilero izquierdo":
+          respuesta = "CI";
+          break;
+        case "med":
+        case "mediocentro defensivo":
+        case "mediocentro central":
+        case "mediocentro ofensivo":
+          respuesta = "MC";
+          break;
+        case "interior derecho":
+          respuesta = "MD";
+          break;
+        case "interior izquierdo":
+          respuesta = "MI";
+          break;
+        case "mediapunta":
+          respuesta = "MP";
+          break;
+        case "del":
+        case "falso 9":
+        case "segundo delantero":
+        case "delantero centro":
+          respuesta = "DL";
+          break;
+        case "extremo derecho":
+          respuesta = "ED";
+          break;
+        case "extremo izquierdo":
+          respuesta = "EI";
+          break;
+      }
+      return respuesta;
+    }
+
+    LinearGradient colorearPosicion(String posicion) {
+      LinearGradient coloreado = LinearGradient(
+        begin: Alignment.topRight,
+        end: Alignment.bottomLeft,
+        colors: [const Color(0xFF000000), const Color(0xFF000000)],
+      );
+      switch (posicion.toLowerCase()) {
+        case "por":
+        case "portero":
+          coloreado = LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            colors: [const Color(0xFFe39520), const Color(0xFFe38520)],
+          );
+          break;
+        case "def":
+        case "central":
+        case "líbero":
+        case "lateral derecho":
+        case "lateral izquierdo":
+        case "carrilero derecho":
+        case "carrilero izquierdo":
+          coloreado = LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            colors: [const Color(0xFF0fa8db), const Color(0xFF0e8fcf)],
+          );
+          break;
+        case "med":
+        case "mediocentro defensivo":
+        case "mediocentro central":
+        case "mediocentro ofensivo":
+        case "interior derecho":
+        case "interior izquierdo":
+        case "mediapunta":
+          coloreado = LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            colors: [const Color(0xFF14cf11), const Color(0xFF22b317)],
+          );
+          break;
+        case "del":
+        case "falso 9":
+        case "segundo delantero":
+        case "delantero centro":
+        case "extremo derecho":
+        case "extremo izquierdo":
+          coloreado = LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            colors: [const Color(0xFFf53625), const Color(0xFFc72412)],
+          );
+          break;
+      }
+      return coloreado;
+    }
+
     List jugadoresOrdenados = [];
     for (var i = 0; i < boxJugadores.length; i++) {
       if (boxJugadores.getAt(i).habilitado) {
@@ -187,73 +300,179 @@ class _ListaGestionJugadores extends State<ListaGestionJugadores> {
 
     //Añadir jugadores deshabilitados a la lista
     jugadoresOrdenados.addAll(jugadoresDeshabilitados);
+
     if (boxJugadores.length > 0) {
       return ListView(
         shrinkWrap: true,
         children: List.generate(boxJugadores.length, (iJugador) {
           final Jugador jugadorBox = boxJugadores.getAt(jugadoresOrdenados[iJugador][0]) as Jugador;
-          return Card(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(10.0)),
+          return Padding(
+            padding: EdgeInsets.only(
+              left: MediaQuery.of(context).size.width * .03,
+              right: MediaQuery.of(context).size.width * .03,
+              bottom: 3,
             ),
-            child: InkWell(
-              splashColor: Colors.lightGreen,
-              onTap: () {
-                Navigator.push(
-                  context,
-                  /*MaterialPageRoute(
+            child: Card(
+              elevation: 2.5,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(0.0)),
+              ),
+              child: InkWell(
+                splashColor: Colors.black12,
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    /*MaterialPageRoute(
                     builder: (context) => DetallesJugador(
                       posicion: jugadoresOrdenados[iJugador][0],
                     ),
                   ),*/
-                  AnimacionDetalles(
-                    widget: DetallesJugador(
-                      posicion: jugadoresOrdenados[iJugador][0],
-                    ),
-                  ),
-                );
-              },
-              child: Container(
-                /*padding: EdgeInsets.fromLTRB(
-                  MediaQuery.of(context).size.width * .05,
-                  MediaQuery.of(context).size.width * .01,
-                  MediaQuery.of(context).size.width * .1,
-                  MediaQuery.of(context).size.width * .01,
-                ),*/
-                //decoration: colorear(jugadorBox.posicionFavorita),
-                decoration: (jugadorBox.habilitado)
-                    ? BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        border: Border.all(color: MisterFootball.primario),
-                      )
-                    : BoxDecoration(
-                        color: MisterFootball.complementarioDelComplementarioLight2,
-                        borderRadius: BorderRadius.circular(5),
-                        border: Border.all(color: MisterFootball.primario),
+                    AnimacionDetalles(
+                      widget: DetallesJugador(
+                        posicion: jugadoresOrdenados[iJugador][0],
                       ),
-                child: Table(
+                    ),
+                  );
+                },
+                child: Container(
+                  padding: EdgeInsets.only(
+                    left: MediaQuery.of(context).size.width * .03,
+                  ),
+                  //decoration: colorear(jugadorBox.posicionFavorita),
+                  decoration: (jugadorBox.habilitado)
+                      ? BoxDecoration(
+                          //border: Border.all(color: MisterFootball.primario),
+                          //borderRadius: BorderRadius.circular(5),
+                          )
+                      : BoxDecoration(
+                          color: MisterFootball.complementarioDelComplementarioLight2,
+                          //borderRadius: BorderRadius.circular(5),
+                          //border: Border.all(color: MisterFootball.primario),
+                        ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Row(
+                        children: <Widget>[
+                          (jugadorBox.habilitado)
+                              ? Container(
+                                  width: 45.0,
+                                  height: 45.0,
+                                  margin: EdgeInsets.only(
+                                    right: MediaQuery.of(context).size.width * .03,
+                                  ),
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(gradient: colorearPosicion(jugadorBox.posicionFavorita)),
+                                  child: Text(
+                                    acortarPosicion(jugadorBox.posicionFavorita),
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 22,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                )
+                              : Container(
+                                  width: 45.0,
+                                  height: 45.0,
+                                  margin: EdgeInsets.only(
+                                    right: MediaQuery.of(context).size.width * .03,
+                                  ),
+                                  alignment: Alignment.center,
+                                  child: Icon(
+                                    Icons.visibility_off,
+                                    color: MisterFootball.primario,
+                                  ),
+                                ),
+                          Container(
+                            width: MediaQuery.of(context).size.width * .30,
+                            child: Text(
+                              jugadorBox.apodo,
+                              overflow: TextOverflow.clip,
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: <Widget>[
+                          Container(
+                            width: MediaQuery.of(context).size.width * .3,
+                            margin: EdgeInsets.only(
+                              right: MediaQuery.of(context).size.width * .03,
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: <Widget>[
+                                Text(
+                                  jugadorBox.nombre,
+                                  style: TextStyle(fontSize: 12),
+                                ),
+                                Text(
+                                  (jugadorBox.apellido2.length > 0)
+                                      ? ("${jugadorBox.apellido1} ${jugadorBox.apellido2}")
+                                      : ("${jugadorBox.apellido1}"),
+                                  style: TextStyle(fontSize: 12),
+                                ),
+                                Text(
+                                  "${jugadorBox.calcularEdad()} años",
+                                  style: TextStyle(fontSize: 12),
+                                ),
+                                Text(
+                                  (jugadorBox.piernaBuena == "Derecha") ? "Diestro" : "Zurdo",
+                                  style: TextStyle(fontSize: 12),
+                                ),
+                              ],
+                            ),
+                          ),
+                          FittedBox(
+                            child: Image.asset('assets/img/icono_persona.png'),
+                            fit: BoxFit.fitHeight,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+
+                  /*Table(
                   defaultVerticalAlignment: TableCellVerticalAlignment.middle,
                   children: [
                     TableRow(
                       children: [
-                        ConversorImagen.imageFromBase64String(jugadorBox.nombre_foto, context),
-                        Text(
-                          jugadorBox.apodo,
-                          overflow: TextOverflow.clip,
-                          textAlign: TextAlign.center,
-                        ),
                         (jugadorBox.habilitado)
-                            ? Text(
-                                jugadorBox.posicionFavorita,
-                                textAlign: TextAlign.center,
+                            ? Container(
+                                padding: EdgeInsets.all(
+                                  MediaQuery.of(context).size.width * .05,
+                                ),
+                                decoration: BoxDecoration(color: colorearPosicion(jugadorBox.posicionFavorita)),
+                                child: Text(
+                                  acortarPosicion(jugadorBox.posicionFavorita),
+                                  textAlign: TextAlign.center,
+                                ),
                               )
                             : Icon(
                                 Icons.visibility_off,
                                 color: MisterFootball.primario,
                               ),
+                        Text(
+                          jugadorBox.apodo,
+                          overflow: TextOverflow.clip,
+                          textAlign: TextAlign.center,
+                        ),
+                        FittedBox(
+                          child: Image.asset('assets/img/icono_persona.png'),
+                          fit: BoxFit.fitHeight,
+                        ),
+                        //ConversorImagen.imageFromBase64String(jugadorBox.nombre_foto, context),
                       ],
                     ),
                   ],
+                ),*/
                 ),
               ),
             ),
@@ -271,6 +490,7 @@ class _ListaGestionJugadores extends State<ListaGestionJugadores> {
   Widget build(BuildContext context) {
     //refreshList();
     return Scaffold(
+      backgroundColor: MisterFootball.colorFondo,
       body: SafeArea(
         child: FutureBuilder(
           future: Hive.openBox('jugadores'),

@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:mister_football/animaciones/animacion_detalles.dart';
-import 'package:mister_football/clases/conversor_imagen.dart';
 import 'package:mister_football/clases/jugador.dart';
 import 'package:mister_football/main.dart';
 import 'package:mister_football/routes/gestion_jugadores/detalles_jugadores/v_detalles_jugador.dart';
@@ -13,6 +12,9 @@ class ListaGestionJugadores extends StatefulWidget {
 }
 
 class _ListaGestionJugadores extends State<ListaGestionJugadores> {
+  String valorOrdenarPor = "Posición";
+  List<String> elementosOrdenarPor = ["Posición", "Edad", "Apodo"];
+
   //Future<List<Jugador>> jugadores;
 
   /*refreshList() {
@@ -310,7 +312,8 @@ class _ListaGestionJugadores extends State<ListaGestionJugadores> {
             padding: EdgeInsets.only(
               left: MediaQuery.of(context).size.width * .03,
               right: MediaQuery.of(context).size.width * .03,
-              bottom: 3,
+              bottom: 2,
+              top: 2,
             ),
             child: Card(
               elevation: 2.5,
@@ -391,10 +394,7 @@ class _ListaGestionJugadores extends State<ListaGestionJugadores> {
                               jugadorBox.apodo,
                               overflow: TextOverflow.clip,
                               textAlign: TextAlign.left,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16
-                              ),
+                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                             ),
                           ),
                         ],
@@ -500,7 +500,75 @@ class _ListaGestionJugadores extends State<ListaGestionJugadores> {
                 print(snapshot.error.toString());
                 return Text(snapshot.error.toString());
               } else {
-                return cartasJugadores();
+                return Column(
+                  children: <Widget>[
+                    Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: MisterFootball.colorSemiprimarioLight2),
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(10),
+                          bottomRight: Radius.circular(10),
+                        ),
+                      ),
+                      padding: EdgeInsets.only(
+                        left: MediaQuery.of(context).size.width * .04,
+                        right: MediaQuery.of(context).size.width * .04,
+                        top: 10,
+                        bottom: 5,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          RaisedButton(
+                            onPressed: () {},
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: <Widget>[
+                                Text("Filtrar"),
+                                Icon(Icons.filter_list),
+                              ],
+                            ),
+                          ),
+                          Row(
+                            children: <Widget>[
+                              DropdownButton<String>(
+                                value: valorOrdenarPor,
+                                icon: Icon(
+                                  Icons.import_export,
+                                ),
+                                underline: Container(
+                                  height: 2,
+                                  color: MisterFootball.colorPrimarioLight2,
+                                ),
+                                onChanged: (String v) {
+                                  setState(() {
+                                    valorOrdenarPor = v;
+                                  });
+                                },
+                                items: elementosOrdenarPor.map<DropdownMenuItem<String>>((String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Container(
+                                      padding: EdgeInsets.only(
+                                        right: MediaQuery.of(context).size.width * .03,
+                                        left: MediaQuery.of(context).size.width * .02,
+                                      ),
+                                      alignment: Alignment.center,
+                                      child: Text(value, textAlign: TextAlign.center,),
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: cartasJugadores(),
+                    )
+                  ],
+                );
               }
             } else {
               return Center(child: CircularProgressIndicator());

@@ -356,8 +356,8 @@ class _ListaGestionJugadores extends State<ListaGestionJugadores> {
                         children: <Widget>[
                           (jugadorBox.habilitado)
                               ? Container(
-                                  width: 45.0,
-                                  height: 45.0,
+                                  width: 40.0,
+                                  height: 40.0,
                                   margin: EdgeInsets.only(
                                     right: MediaQuery.of(context).size.width * .03,
                                   ),
@@ -368,14 +368,14 @@ class _ListaGestionJugadores extends State<ListaGestionJugadores> {
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 22,
+                                      fontSize: 20,
                                       color: Colors.white,
                                     ),
                                   ),
                                 )
                               : Container(
-                                  width: 45.0,
-                                  height: 45.0,
+                                  width: 40.0,
+                                  height: 40.0,
                                   margin: EdgeInsets.only(
                                     right: MediaQuery.of(context).size.width * .03,
                                   ),
@@ -386,7 +386,7 @@ class _ListaGestionJugadores extends State<ListaGestionJugadores> {
                                   ),
                                 ),
                           Container(
-                            width: MediaQuery.of(context).size.width * .30,
+                            width: MediaQuery.of(context).size.width * .32,
                             child: Text(
                               jugadorBox.apodo,
                               overflow: TextOverflow.clip,

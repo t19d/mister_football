@@ -120,11 +120,11 @@ class _ListaPartidos extends State<ListaPartidos> {
           final Partido partidoBox = boxPartidos.getAt(partidosOrdenados[((partidosOrdenados.length - 1) - iPartido)][0]) as Partido;
           return Column(
             children: <Widget>[
-              if ((iPartido % 9 == 0) && (iPartido != 0))
+              /*if ((iPartido % 9 == 0) && (iPartido != 0))
                 AdmobBanner(
                   adUnitId: sAM.getBannerAdId(),
                   adSize: AdmobBannerSize.BANNER,
-                ),
+                ),*/
               Card(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5.0),

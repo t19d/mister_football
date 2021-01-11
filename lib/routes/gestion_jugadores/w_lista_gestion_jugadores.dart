@@ -341,13 +341,13 @@ class _ListaGestionJugadores extends State<ListaGestionJugadores> {
                   //decoration: colorear(jugadorBox.posicionFavorita),
                   decoration: (jugadorBox.habilitado)
                       ? BoxDecoration(
-                          //border: Border.all(color: MisterFootball.primario),
+                          //border: Border.all(color: MisterFootball.colorPrimario),
                           //borderRadius: BorderRadius.circular(5),
                           )
                       : BoxDecoration(
-                          color: MisterFootball.complementarioDelComplementarioLight2,
+                          color: MisterFootball.colorPrimario,
                           //borderRadius: BorderRadius.circular(5),
-                          //border: Border.all(color: MisterFootball.primario),
+                          //border: Border.all(color: MisterFootball.colorPrimario),
                         ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -382,7 +382,7 @@ class _ListaGestionJugadores extends State<ListaGestionJugadores> {
                                   alignment: Alignment.center,
                                   child: Icon(
                                     Icons.visibility_off,
-                                    color: MisterFootball.primario,
+                                    color: MisterFootball.colorPrimario,
                                   ),
                                 ),
                           Container(
@@ -457,7 +457,7 @@ class _ListaGestionJugadores extends State<ListaGestionJugadores> {
                               )
                             : Icon(
                                 Icons.visibility_off,
-                                color: MisterFootball.primario,
+                                color: MisterFootball.colorPrimario,
                               ),
                         Text(
                           jugadorBox.apodo,

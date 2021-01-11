@@ -110,7 +110,7 @@ class _DetallesPartido extends State<DetallesPartido> {
                   IconButton(
                     icon: Icon(
                       Icons.delete,
-                      color: MisterFootball.complementarioDelComplementarioLight,
+                      color: MisterFootball.colorComplementarioDelComplementarioLight,
                     ),
                     tooltip: 'Eliminar partido',
                     onPressed: () async {
@@ -130,7 +130,7 @@ class _DetallesPartido extends State<DetallesPartido> {
                 ],
               ),
               bottomNavigationBar: BottomNavigationBar(
-                selectedIconTheme: IconThemeData(color: MisterFootball.primarioLight),
+                selectedIconTheme: IconThemeData(color: MisterFootball.colorPrimarioLight),
                 showUnselectedLabels: false,
                 items: const <BottomNavigationBarItem>[
                   BottomNavigationBarItem(

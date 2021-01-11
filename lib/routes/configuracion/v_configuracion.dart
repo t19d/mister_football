@@ -56,7 +56,7 @@ class _Configuracion extends State<Configuracion> {
         children: <Widget>[
           Container(
             width: MediaQuery.of(context).size.width,
-            color: MisterFootball.primario,
+            color: MisterFootball.colorPrimario,
             padding: EdgeInsets.only(
               top: 15,
               bottom: 15,
@@ -91,7 +91,7 @@ class _Configuracion extends State<Configuracion> {
                 IconButton(
                   icon: Icon(
                     Icons.mode_edit,
-                    color: MisterFootball.primario,
+                    color: MisterFootball.colorPrimario,
                   ),
                   onPressed: () async {
                     if (!isEscudoEditado) {
@@ -106,7 +106,7 @@ class _Configuracion extends State<Configuracion> {
           ),
           Container(
             width: MediaQuery.of(context).size.width,
-            color: MisterFootball.primario,
+            color: MisterFootball.colorPrimario,
             padding: EdgeInsets.only(
               top: 15,
               bottom: 15,
@@ -148,7 +148,7 @@ class _Configuracion extends State<Configuracion> {
                 IconButton(
                   icon: Icon(
                     Icons.mode_edit,
-                    color: MisterFootball.primario,
+                    color: MisterFootball.colorPrimario,
                   ),
                   onPressed: () async {
                     print(isNombreEquipoEditado);
@@ -161,9 +161,9 @@ class _Configuracion extends State<Configuracion> {
           Container(
             margin: EdgeInsets.only(top: 10),
             child: RaisedButton(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.primario)),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.colorPrimario)),
               color: Colors.white70,
-              disabledColor: MisterFootball.primarioLight2,
+              disabledColor: MisterFootball.colorPrimarioLight2,
               disabledTextColor: Colors.white70,
               child: Text("Aceptar"),
               onPressed: (!isEscudoEditado && !isNombreEquipoEditado)
@@ -307,7 +307,7 @@ class _Configuracion extends State<Configuracion> {
         children: <Widget>[
           Container(
             width: MediaQuery.of(context).size.width,
-            color: MisterFootball.primario,
+            color: MisterFootball.colorPrimario,
             padding: EdgeInsets.only(
               top: 15,
               bottom: 15,
@@ -342,7 +342,7 @@ class _Configuracion extends State<Configuracion> {
                 IconButton(
                   icon: Icon(
                     Icons.mode_edit,
-                    color: MisterFootball.primario,
+                    color: MisterFootball.colorPrimario,
                   ),
                   onPressed: () async {
                     _elegirOpcionFotoDialogo(equipo['escudo'], context);
@@ -353,7 +353,7 @@ class _Configuracion extends State<Configuracion> {
           ),
           Container(
             width: MediaQuery.of(context).size.width,
-            color: MisterFootball.primario,
+            color: MisterFootball.colorPrimario,
             padding: EdgeInsets.only(
               top: 15,
               bottom: 15,
@@ -395,7 +395,7 @@ class _Configuracion extends State<Configuracion> {
                 IconButton(
                   icon: Icon(
                     Icons.mode_edit,
-                    color: MisterFootball.primario,
+                    color: MisterFootball.colorPrimario,
                   ),
                   onPressed: () async {
                     _cambiarNombreEquipo(context, nombreEquipo);
@@ -407,9 +407,9 @@ class _Configuracion extends State<Configuracion> {
           Container(
             margin: EdgeInsets.only(top: 10),
             child: RaisedButton(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.primario)),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.colorPrimario)),
               color: Colors.white70,
-              disabledColor: MisterFootball.primarioLight2,
+              disabledColor: MisterFootball.colorPrimarioLight2,
               disabledTextColor: Colors.white70,
               child: Text("Aceptar"),
               onPressed: (!isEscudoEditado && !isNombreEquipoEditado)
@@ -577,7 +577,7 @@ class _Configuracion extends State<Configuracion> {
                 children: <Widget>[
                   Container(
                     width: MediaQuery.of(context).size.width,
-                    color: MisterFootball.primario,
+                    color: MisterFootball.colorPrimario,
                     padding: EdgeInsets.only(
                       top: 15,
                       bottom: 15,
@@ -610,7 +610,7 @@ class _Configuracion extends State<Configuracion> {
                         IconButton(
                           icon: Icon(
                             Icons.mode_edit,
-                            color: MisterFootball.primario,
+                            color: MisterFootball.colorPrimario,
                           ),
                           onPressed: () {},
                         ),
@@ -619,7 +619,7 @@ class _Configuracion extends State<Configuracion> {
                   ),
                   Container(
                     width: MediaQuery.of(context).size.width,
-                    color: MisterFootball.primario,
+                    color: MisterFootball.colorPrimario,
                     padding: EdgeInsets.only(
                       top: 15,
                       bottom: 15,
@@ -659,7 +659,7 @@ class _Configuracion extends State<Configuracion> {
                         IconButton(
                           icon: Icon(
                             Icons.mode_edit,
-                            color: MisterFootball.primario,
+                            color: MisterFootball.colorPrimario,
                           ),
                           onPressed: () {},
                         ),
@@ -669,9 +669,9 @@ class _Configuracion extends State<Configuracion> {
                   Container(
                     margin: EdgeInsets.only(top: 10),
                     child: RaisedButton(
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.primario)),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.colorPrimario)),
                       color: Colors.white70,
-                      disabledColor: MisterFootball.primarioLight2,
+                      disabledColor: MisterFootball.colorPrimarioLight2,
                       disabledTextColor: Colors.white70,
                       child: Text("Aceptar"),
                       onPressed: () {},
@@ -737,9 +737,9 @@ class _Configuracion extends State<Configuracion> {
                   ),
                 ),
                 RaisedButton(
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.primario)),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.colorPrimario)),
                   color: Colors.white70,
-                  disabledColor: MisterFootball.primarioLight2,
+                  disabledColor: MisterFootball.colorPrimarioLight2,
                   disabledTextColor: Colors.white70,
                   child: Text("Aceptar"),
                   onPressed: () {
@@ -894,7 +894,7 @@ class _Configuracion extends State<Configuracion> {
               ],
         androidUiSettings: AndroidUiSettings(
             toolbarTitle: 'Recortar imagen',
-            toolbarColor: MisterFootball.primario,
+            toolbarColor: MisterFootball.colorPrimario,
             toolbarWidgetColor: Colors.white,
             initAspectRatio: CropAspectRatioPreset.original,
             lockAspectRatio: true),

@@ -203,7 +203,7 @@ class _DetallesEnternamiento extends State<DetallesEnternamiento> {
                     IconButton(
                       icon: Icon(
                         Icons.delete,
-                        color: MisterFootball.complementarioDelComplementarioLight,
+                        color: MisterFootball.colorComplementarioDelComplementarioLight,
                       ),
                       tooltip: 'Eliminar entrenamiento',
                       onPressed: () async {
@@ -230,7 +230,7 @@ class _DetallesEnternamiento extends State<DetallesEnternamiento> {
                       Container(
                         padding: EdgeInsets.all(MediaQuery.of(context).size.width * .03),
                         decoration: BoxDecoration(
-                          color: MisterFootball.primarioLight2.withOpacity(.25),
+                          color: MisterFootball.colorPrimarioLight2.withOpacity(.25),
                           border: Border(bottom: BorderSide(width: 1)),
                         ),
                         child: Column(
@@ -282,7 +282,7 @@ class _DetallesEnternamiento extends State<DetallesEnternamiento> {
                           right: (MediaQuery.of(context).size.width * 0.05),
                         ),
                         decoration: BoxDecoration(
-                          color: MisterFootball.primarioLight2.withOpacity(.05),
+                          color: MisterFootball.colorPrimarioLight2.withOpacity(.05),
                           border: Border(
                             top: BorderSide(width: .4),
                             bottom: BorderSide(width: .4),
@@ -319,7 +319,7 @@ class _DetallesEnternamiento extends State<DetallesEnternamiento> {
                           right: (MediaQuery.of(context).size.width * 0.05),
                         ),
                         decoration: BoxDecoration(
-                          color: MisterFootball.primarioLight2.withOpacity(.05),
+                          color: MisterFootball.colorPrimarioLight2.withOpacity(.05),
                           border: Border(
                             top: BorderSide(width: .4),
                             bottom: BorderSide(width: .4),

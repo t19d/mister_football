@@ -34,7 +34,7 @@ class _DetallesEjercicioJSON extends State<DetallesEjercicioJSON> {
               Container(
                 padding: EdgeInsets.all(MediaQuery.of(context).size.width * .03),
                 decoration: BoxDecoration(
-                  color: MisterFootball.primarioLight2.withOpacity(.25),
+                  color: MisterFootball.colorPrimarioLight2.withOpacity(.25),
                   border: Border(bottom: BorderSide(width: 1)),
                 ),
                 child: Column(
@@ -99,7 +99,7 @@ class _DetallesEjercicioJSON extends State<DetallesEjercicioJSON> {
                     Table(
                       border: TableBorder(
                         verticalInside: BorderSide(
-                          color: MisterFootball.primario,
+                          color: MisterFootball.colorPrimario,
                           width: .4,
                         ),
                       ),
@@ -109,8 +109,8 @@ class _DetallesEjercicioJSON extends State<DetallesEjercicioJSON> {
                         TableRow(
                           decoration: BoxDecoration(
                             border: Border(
-                              top: BorderSide(color: MisterFootball.primario, width: .4),
-                              bottom: BorderSide(color: MisterFootball.primario, width: .4),
+                              top: BorderSide(color: MisterFootball.colorPrimario, width: .4),
+                              bottom: BorderSide(color: MisterFootball.colorPrimario, width: .4),
                             ),
                           ),
                           children: [
@@ -136,7 +136,7 @@ class _DetallesEjercicioJSON extends State<DetallesEjercicioJSON> {
                         TableRow(
                           decoration: BoxDecoration(
                             border: Border(
-                              bottom: BorderSide(color: MisterFootball.primario, width: .4),
+                              bottom: BorderSide(color: MisterFootball.colorPrimario, width: .4),
                             ),
                           ),
                           children: [
@@ -163,7 +163,7 @@ class _DetallesEjercicioJSON extends State<DetallesEjercicioJSON> {
                           TableRow(
                             decoration: BoxDecoration(
                               border: Border(
-                                bottom: BorderSide(color: MisterFootball.primario, width: .4),
+                                bottom: BorderSide(color: MisterFootball.colorPrimario, width: .4),
                               ),
                             ),
                             children: [
@@ -189,7 +189,7 @@ class _DetallesEjercicioJSON extends State<DetallesEjercicioJSON> {
                         TableRow(
                           decoration: BoxDecoration(
                             border: Border(
-                              bottom: BorderSide(color: MisterFootball.primario, width: .4),
+                              bottom: BorderSide(color: MisterFootball.colorPrimario, width: .4),
                             ),
                           ),
                           children: [
@@ -215,7 +215,7 @@ class _DetallesEjercicioJSON extends State<DetallesEjercicioJSON> {
                         TableRow(
                           decoration: BoxDecoration(
                             border: Border(
-                              bottom: BorderSide(color: MisterFootball.primario, width: .4),
+                              bottom: BorderSide(color: MisterFootball.colorPrimario, width: .4),
                             ),
                           ),
                           children: [
@@ -241,7 +241,7 @@ class _DetallesEjercicioJSON extends State<DetallesEjercicioJSON> {
                         TableRow(
                           decoration: BoxDecoration(
                             border: Border(
-                              bottom: BorderSide(color: MisterFootball.primario, width: .4),
+                              bottom: BorderSide(color: MisterFootball.colorPrimario, width: .4),
                             ),
                           ),
                           children: [
@@ -268,7 +268,7 @@ class _DetallesEjercicioJSON extends State<DetallesEjercicioJSON> {
                           TableRow(
                             decoration: BoxDecoration(
                               border: Border(
-                                bottom: BorderSide(color: MisterFootball.primario, width: .4),
+                                bottom: BorderSide(color: MisterFootball.colorPrimario, width: .4),
                               ),
                             ),
                             children: [
@@ -295,7 +295,7 @@ class _DetallesEjercicioJSON extends State<DetallesEjercicioJSON> {
                           TableRow(
                             decoration: BoxDecoration(
                               border: Border(
-                                bottom: BorderSide(color: MisterFootball.primario, width: .4),
+                                bottom: BorderSide(color: MisterFootball.colorPrimario, width: .4),
                               ),
                             ),
                             children: [
@@ -333,7 +333,7 @@ class _DetallesEjercicioJSON extends State<DetallesEjercicioJSON> {
                     Container(
                       width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
-                        color: MisterFootball.primarioLight2.withOpacity(.05),
+                        color: MisterFootball.colorPrimarioLight2.withOpacity(.05),
                         border: Border(
                           top: BorderSide(width: .4),
                           bottom: BorderSide(width: .4),

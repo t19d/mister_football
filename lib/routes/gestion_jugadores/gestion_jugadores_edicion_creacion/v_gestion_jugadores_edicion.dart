@@ -174,9 +174,9 @@ class _GestionJugadoresEdicion extends State<GestionJugadoresEdicion> {
               children: <Widget>[
                 ConversorImagen.imageFromBase64String(imgString, context),
                 RaisedButton(
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.primario)),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.colorPrimario)),
                   color: Colors.white70,
-                  disabledColor: MisterFootball.primarioLight2,
+                  disabledColor: MisterFootball.colorPrimarioLight2,
                   disabledTextColor: Colors.white70,
                   child: Text("Añadir imagen"),
                   onPressed: () {
@@ -367,9 +367,9 @@ class _GestionJugadoresEdicion extends State<GestionJugadoresEdicion> {
                       separadorFormulario(),
                       //Fecha de nacimiento
                       RaisedButton(
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.primario)),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.colorPrimario)),
                         color: Colors.white70,
-                        disabledColor: MisterFootball.primarioLight2,
+                        disabledColor: MisterFootball.colorPrimarioLight2,
                         disabledTextColor: Colors.white70,
                         onPressed: () {
                           //Seleccionar fecha
@@ -609,7 +609,7 @@ class _GestionJugadoresEdicion extends State<GestionJugadoresEdicion> {
               ],
         androidUiSettings: AndroidUiSettings(
             toolbarTitle: 'Recortar imagen',
-            toolbarColor: MisterFootball.primario,
+            toolbarColor: MisterFootball.colorPrimario,
             toolbarWidgetColor: Colors.white,
             initAspectRatio: CropAspectRatioPreset.original,
             lockAspectRatio: true),

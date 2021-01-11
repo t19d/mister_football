@@ -56,19 +56,19 @@ class _ListaEjerciciosJSON extends State<ListaEjerciciosJSON> {
                 decoration: BoxDecoration(
                   border: Border(
                     top: BorderSide(
-                      color: MisterFootball.primario,
+                      color: MisterFootball.colorPrimario,
                       width: (iEjercicio == 0) ? .4 : 0,
                     ),
                     bottom: BorderSide(
-                      color: MisterFootball.primario,
+                      color: MisterFootball.colorPrimario,
                       width: .4,
                     ),
                     left: BorderSide(
-                      color: MisterFootball.primario,
+                      color: MisterFootball.colorPrimario,
                       width: .4,
                     ),
                     right: BorderSide(
-                      color: MisterFootball.primario,
+                      color: MisterFootball.colorPrimario,
                       width: .4,
                     ),
                   ),
@@ -80,7 +80,7 @@ class _ListaEjerciciosJSON extends State<ListaEjerciciosJSON> {
                 child: Table(
                   border: TableBorder(
                     verticalInside: BorderSide(
-                      color: MisterFootball.primario,
+                      color: MisterFootball.colorPrimario,
                       width: .4,
                     ),
                   ),
@@ -96,7 +96,7 @@ class _ListaEjerciciosJSON extends State<ListaEjerciciosJSON> {
                             ejercicios[iEjercicio]['titulo'],
                             textAlign: TextAlign.center,
                             /*style: TextStyle(
-                              color: (iEjercicio.isEven) ? Colors.white : MisterFootball.primario,
+                              color: (iEjercicio.isEven) ? Colors.white : MisterFootball.colorPrimario,
                             ),*/
                           ),
                         ),
@@ -105,7 +105,7 @@ class _ListaEjerciciosJSON extends State<ListaEjerciciosJSON> {
                           ejercicios[iEjercicio]['tipo'],
                           textAlign: TextAlign.center,
                           /*style: TextStyle(
-                            color: (iEjercicio.isEven) ? Colors.white : MisterFootball.primario,
+                            color: (iEjercicio.isEven) ? Colors.white : MisterFootball.colorPrimario,
                           ),*/
                         ),
                         //Duración
@@ -113,7 +113,7 @@ class _ListaEjerciciosJSON extends State<ListaEjerciciosJSON> {
                           "${ejercicios[iEjercicio]['duracion']} min",
                           textAlign: TextAlign.center,
                           /*style: TextStyle(
-                            color: (iEjercicio.isEven) ? Colors.white : MisterFootball.primario,
+                            color: (iEjercicio.isEven) ? Colors.white : MisterFootball.colorPrimario,
                           ),*/
                         ),
                         //Dificultad
@@ -121,7 +121,7 @@ class _ListaEjerciciosJSON extends State<ListaEjerciciosJSON> {
                           ejercicios[iEjercicio]['dificultad'],
                           textAlign: TextAlign.center,
                           /*style: TextStyle(
-                            color: (iEjercicio.isEven) ? Colors.white : MisterFootball.primario,
+                            color: (iEjercicio.isEven) ? Colors.white : MisterFootball.colorPrimario,
                           ),*/
                         ),
                       ],
@@ -211,7 +211,7 @@ class _ListaEjerciciosJSON extends State<ListaEjerciciosJSON> {
                               Container(
                                 padding: EdgeInsets.only(top: 10, bottom: 10),
                                 child: Table(
-                                  border: TableBorder(verticalInside: BorderSide(color: MisterFootball.primario)),
+                                  border: TableBorder(verticalInside: BorderSide(color: MisterFootball.colorPrimario)),
                                   children: [
                                     TableRow(
                                       children: [

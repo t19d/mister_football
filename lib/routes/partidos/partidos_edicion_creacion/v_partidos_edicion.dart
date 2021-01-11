@@ -101,7 +101,7 @@ class _PartidosEdicion extends State<PartidosEdicion> {
                 ],
               ),
               bottomNavigationBar: BottomNavigationBar(
-                selectedIconTheme: IconThemeData(color: MisterFootball.primarioLight),
+                selectedIconTheme: IconThemeData(color: MisterFootball.colorPrimarioLight),
                 showUnselectedLabels: false,
                 items: const <BottomNavigationBarItem>[
                   BottomNavigationBarItem(

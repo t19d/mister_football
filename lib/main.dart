@@ -68,35 +68,35 @@ class MisterFootball extends StatelessWidget {
   static Color triadico2 = const Color(0xFFbd0278);
   static Color triadico2Light = const Color(0xFFd3007e);*/
 
-  static Color primarioDark2 = const Color(0xFF0D1624);
-  static Color primarioDark = const Color(0xFF17202D);
-  static Color primario = const Color(0xFF222831);
-  static Color primarioLight = const Color(0xFF3F4855);
-  static Color primarioLight2 = const Color(0xFF5A6473);
+  static Color colorPrimarioDark2 = const Color(0xFF0D1624);
+  static Color colorPrimarioDark = const Color(0xFF17202D);
+  static Color colorPrimario = const Color(0xFF222831);
+  static Color colorPrimarioLight = const Color(0xFF3F4855);
+  static Color colorPrimarioLight2 = const Color(0xFF5A6473);
 
-  static Color semiprimarioDark2 = const Color(0xFF1C2026);
-  static Color semiprimarioDark = const Color(0xFF141B27);
-  static Color semiprimario = const Color(0xFF393e46);
-  static Color semiprimarioLight = const Color(0xFF545A64);
-  static Color semiprimarioLight2 = const Color(0xFF727881);
+  static Color colorSemiprimarioDark2 = const Color(0xFF1C2026);
+  static Color colorSemiprimarioDark = const Color(0xFF141B27);
+  static Color colorSemiprimario = const Color(0xFF393e46);
+  static Color colorSemiprimarioLight = const Color(0xFF545A64);
+  static Color colorSemiprimarioLight2 = const Color(0xFF727881);
 
-  static Color complementarioDark2 = const Color(0xFF03746F);
-  static Color complementarioDark = const Color(0xFF0B9691);
-  static Color complementario = const Color(0xFF29A19C);
-  static Color complementarioLight = const Color(0xFF48B8B4);
-  static Color complementarioLight2 = const Color(0xFF77D3CF);
+  static Color colorComplementarioDark2 = const Color(0xFF03746F);
+  static Color colorComplementarioDark = const Color(0xFF0B9691);
+  static Color colorComplementario = const Color(0xFF29A19C);
+  static Color colorComplementarioLight = const Color(0xFF48B8B4);
+  static Color colorComplementarioLight2 = const Color(0xFF77D3CF);
 
-  static Color complementarioDelComplementarioDark2 = const Color(0xFF510004);
-  static Color complementarioDelComplementarioDark = const Color(0xFF7B0B11);
-  static Color complementarioDelComplementario = const Color(0xFFa1282d);
-  static Color complementarioDelComplementarioLight = const Color(0xFFC1484E);
-  static Color complementarioDelComplementarioLight2 = const Color(0xFFEA7F84);
+  static Color colorComplementarioDelComplementarioDark2 = const Color(0xFF510004);
+  static Color colorComplementarioDelComplementarioDark = const Color(0xFF7B0B11);
+  static Color colorComplementarioDelComplementario = const Color(0xFFa1282d);
+  static Color colorComplementarioDelComplementarioLight = const Color(0xFFC1484E);
+  static Color colorComplementarioDelComplementarioLight2 = const Color(0xFFEA7F84);
 
-  static Color analogo1Dark2 = const Color(0xFF52DA80);
-  static Color analogo1Dark = const Color(0xFF78EC9F);
-  static Color analogo1 = const Color(0xFFa3f7bf);
-  static Color analogo1Light = const Color(0xFFD5FDE3);
-  static Color analogo1Light2 = const Color(0xFFFFFFFF);
+  static Color colorAnalogo1Dark2 = const Color(0xFF52DA80);
+  static Color colorAnalogo1Dark = const Color(0xFF78EC9F);
+  static Color colorAnalogo1 = const Color(0xFFa3f7bf);
+  static Color colorAnalogo1Light = const Color(0xFFD5FDE3);
+  static Color colorAnalogo1Light2 = const Color(0xFFFFFFFF);
 
   static Color colorFondo = const Color(0xFFDDE0E3);
 
@@ -119,9 +119,9 @@ class MisterFootball extends StatelessWidget {
         ),*/
       ),*/
       theme: ThemeData(
-        primaryColor: primario,
+        primaryColor: colorPrimario,
         brightness: Brightness.light,
-        accentColor: complementario,
+        accentColor: colorComplementario,
         fontFamily: 'Georgia',
       ),
       /*darkTheme: ThemeData(

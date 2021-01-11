@@ -30,7 +30,7 @@ class _EstadisticasGoles extends State<EstadisticasGoles> {
         children: <Widget>[
           Container(
             width: MediaQuery.of(context).size.width,
-            color: MisterFootball.primario,
+            color: MisterFootball.colorPrimario,
             padding: EdgeInsets.only(
               top: 15,
               bottom: 15,
@@ -55,13 +55,13 @@ class _EstadisticasGoles extends State<EstadisticasGoles> {
             showChartValuesInPercentage: false,
             showChartValues: true,
             showChartValuesOutside: false,
-            chartValueBackgroundColor: MisterFootball.primario.withOpacity(.8),
+            chartValueBackgroundColor: MisterFootball.colorPrimario.withOpacity(.8),
             chartValueStyle: defaultChartValueStyle.copyWith(
               color: Colors.white,
             ),
             colorList: [
-              MisterFootball.primarioLight2,
-              MisterFootball.complementarioDelComplementarioLight,
+              MisterFootball.colorPrimarioLight2,
+              MisterFootball.colorComplementarioDelComplementarioLight,
             ],
             showLegends: true,
             legendPosition: LegendPosition.top,

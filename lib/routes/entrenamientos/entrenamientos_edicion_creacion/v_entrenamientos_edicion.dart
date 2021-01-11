@@ -133,9 +133,9 @@ class _EntrenamientosEdicion extends State<EntrenamientosEdicion> {
                               children: <Widget>[
                                 //Fecha
                                 RaisedButton(
-                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.primario)),
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.colorPrimario)),
                                   color: Colors.white70,
-                                  disabledColor: MisterFootball.primarioLight2,
+                                  disabledColor: MisterFootball.colorPrimarioLight2,
                                   disabledTextColor: Colors.white70,
                                   onPressed: () {
                                     //Seleccionar fecha
@@ -171,9 +171,9 @@ class _EntrenamientosEdicion extends State<EntrenamientosEdicion> {
                                 separadorFormulario(),
                                 //Hora
                                 RaisedButton(
-                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.primario)),
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.colorPrimario)),
                                   color: Colors.white70,
-                                  disabledColor: MisterFootball.primarioLight2,
+                                  disabledColor: MisterFootball.colorPrimarioLight2,
                                   disabledTextColor: Colors.white70,
                                   onPressed: () {
                                     //Seleccionar hora
@@ -215,7 +215,7 @@ class _EntrenamientosEdicion extends State<EntrenamientosEdicion> {
                                     right: (MediaQuery.of(context).size.width * 0.05),
                                   ),
                                   decoration: BoxDecoration(
-                                    color: MisterFootball.primarioLight2.withOpacity(.05),
+                                    color: MisterFootball.colorPrimarioLight2.withOpacity(.05),
                                     border: Border(
                                       top: BorderSide(width: .4),
                                       bottom: BorderSide(width: .4),
@@ -237,7 +237,7 @@ class _EntrenamientosEdicion extends State<EntrenamientosEdicion> {
                                           IconButton(
                                             icon: Icon(
                                               Icons.edit,
-                                              color: MisterFootball.primario,
+                                              color: MisterFootball.colorPrimario,
                                             ),
                                             tooltip: 'Editar ejercicios',
                                             onPressed: () async {
@@ -273,7 +273,7 @@ class _EntrenamientosEdicion extends State<EntrenamientosEdicion> {
                                     right: (MediaQuery.of(context).size.width * 0.05),
                                   ),
                                   decoration: BoxDecoration(
-                                    color: MisterFootball.primarioLight2.withOpacity(.05),
+                                    color: MisterFootball.colorPrimarioLight2.withOpacity(.05),
                                     border: Border(
                                       top: BorderSide(width: .4),
                                       bottom: BorderSide(width: .4),
@@ -294,7 +294,7 @@ class _EntrenamientosEdicion extends State<EntrenamientosEdicion> {
                                           IconButton(
                                             icon: Icon(
                                               Icons.edit,
-                                              color: MisterFootball.primario,
+                                              color: MisterFootball.colorPrimario,
                                             ),
                                             tooltip: 'Editar jugadores',
                                             onPressed: () async {
@@ -392,7 +392,7 @@ class _EntrenamientosEdicion extends State<EntrenamientosEdicion> {
                     ),
                     Icon(
                       Icons.unfold_more,
-                      color: MisterFootball.semiprimario,
+                      color: MisterFootball.colorSemiprimario,
                     ),
                   ],
                 ),
@@ -458,7 +458,7 @@ class _EntrenamientosEdicion extends State<EntrenamientosEdicion> {
                     ),
                     Icon(
                       Icons.unfold_more,
-                      color: MisterFootball.semiprimario,
+                      color: MisterFootball.colorSemiprimario,
                     ),
                   ],
                 ),
@@ -575,9 +575,9 @@ class _EntrenamientosEdicion extends State<EntrenamientosEdicion> {
               }),
             ),
             RaisedButton(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.primario)),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.colorPrimario)),
               color: Colors.white70,
-              disabledColor: MisterFootball.primarioLight2,
+              disabledColor: MisterFootball.colorPrimarioLight2,
               disabledTextColor: Colors.white70,
               child: Text("Aceptar"),
               onPressed: () {
@@ -705,9 +705,9 @@ class _EntrenamientosEdicion extends State<EntrenamientosEdicion> {
               }),
             ),
             RaisedButton(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.primario)),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.colorPrimario)),
               color: Colors.white70,
-              disabledColor: MisterFootball.primarioLight2,
+              disabledColor: MisterFootball.colorPrimarioLight2,
               disabledTextColor: Colors.white70,
               child: Text("Aceptar"),
               onPressed: () {

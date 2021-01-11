@@ -105,7 +105,7 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
                       borderRadius: BorderRadius.circular(25.0)),
                   child: InkWell(
                     borderRadius: BorderRadius.circular(25),
-                    splashColor: MisterFootball.complementario,
+                    splashColor: MisterFootball.colorComplementario,
                     child: Container(
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
@@ -113,8 +113,8 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                           colors: [
-                            MisterFootball.complementario,
-                            MisterFootball.complementarioLight
+                            MisterFootball.colorComplementario,
+                            MisterFootball.colorComplementarioLight
                           ],
                         ),
                       ),

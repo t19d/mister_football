@@ -125,9 +125,9 @@ class _GestionJugadoresCreacion extends State<GestionJugadoresCreacion> {
               children: <Widget>[
                 ConversorImagen.imageFromBase64String(imgString, context),
                 RaisedButton(
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.primario)),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.colorPrimario)),
                   color: Colors.white70,
-                  disabledColor: MisterFootball.primarioLight2,
+                  disabledColor: MisterFootball.colorPrimarioLight2,
                   disabledTextColor: Colors.white70,
                   child: (imgString == "") ? Text("Añadir foto") : Text("Editar foto"),
                   onPressed: () {
@@ -317,9 +317,9 @@ class _GestionJugadoresCreacion extends State<GestionJugadoresCreacion> {
                       separadorFormulario(),
                       //Fecha de nacimiento
                       RaisedButton(
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.primario)),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.colorPrimario)),
                         color: Colors.white70,
-                        disabledColor: MisterFootball.primarioLight2,
+                        disabledColor: MisterFootball.colorPrimarioLight2,
                         disabledTextColor: Colors.white70,
                         onPressed: () {
                           //Seleccionar fecha
@@ -370,9 +370,9 @@ class _GestionJugadoresCreacion extends State<GestionJugadoresCreacion> {
                   ),
                 ),
                 RaisedButton(
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.primario)),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.colorPrimario)),
                   color: Colors.white70,
-                  disabledColor: MisterFootball.primarioLight2,
+                  disabledColor: MisterFootball.colorPrimarioLight2,
                   disabledTextColor: Colors.white70,
                   child: Text("CREAR"),
                   onPressed: () async {
@@ -569,7 +569,7 @@ class _GestionJugadoresCreacion extends State<GestionJugadoresCreacion> {
               ],
         androidUiSettings: AndroidUiSettings(
             toolbarTitle: 'Recortar imagen',
-            toolbarColor: MisterFootball.primario,
+            toolbarColor: MisterFootball.colorPrimario,
             toolbarWidgetColor: Colors.white,
             initAspectRatio: CropAspectRatioPreset.original,
             lockAspectRatio: true),

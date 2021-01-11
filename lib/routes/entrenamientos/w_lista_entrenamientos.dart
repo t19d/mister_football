@@ -38,7 +38,7 @@ class _ListaEntrenamientos extends State<ListaEntrenamientos> {
               borderRadius: BorderRadius.circular(5.0),
             ),
             child: new InkWell(
-              splashColor: MisterFootball.complementario,
+              splashColor: MisterFootball.colorComplementario,
               onTap: () {
                 Navigator.push(
                   context,
@@ -59,7 +59,7 @@ class _ListaEntrenamientos extends State<ListaEntrenamientos> {
                 padding: EdgeInsets.all(6),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
-                  border: Border.all(color: MisterFootball.primario),
+                  border: Border.all(color: MisterFootball.colorPrimario),
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,

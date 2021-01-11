@@ -159,7 +159,7 @@ class _ListaEstadoJugadores extends State<ListaEstadoJugadores> {
               borderRadius: BorderRadius.circular(15.0),
             ),
             child: new InkWell(
-              splashColor: MisterFootball.complementario,
+              splashColor: MisterFootball.colorComplementario,
               onTap: () {
                 Navigator.push(
                   context,

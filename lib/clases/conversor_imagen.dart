@@ -21,7 +21,7 @@ class ConversorImagen {
     } else {
       return Icon(
         Icons.person,
-        color: MisterFootball.primario,
+        color: MisterFootball.colorPrimario,
         size: MediaQuery.of(context).size.width / 6,
       );
     }
@@ -44,7 +44,7 @@ class ConversorImagen {
     } else {
       return Icon(
         Icons.security,
-        color: MisterFootball.primario,
+        color: MisterFootball.colorPrimario,
         size: MediaQuery
             .of(context)
             .size
@@ -70,7 +70,7 @@ class ConversorImagen {
     } else {
       return Icon(
         Icons.security,
-        color: MisterFootball.primario,
+        color: MisterFootball.colorPrimario,
         size: MediaQuery
             .of(context)
             .size
@@ -93,7 +93,7 @@ class ConversorImagen {
     } else {
       return Icon(
         Icons.fitness_center,
-        color: MisterFootball.primario,
+        color: MisterFootball.colorPrimario,
       );
     }
   }

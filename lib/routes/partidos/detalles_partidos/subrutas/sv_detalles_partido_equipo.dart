@@ -130,7 +130,7 @@ class _DetallesPartidoEquipo extends State<DetallesPartidoEquipo> {
                 bottom: MediaQuery.of(context).size.width * .03,
               ),
               decoration: BoxDecoration(
-                color: MisterFootball.primarioLight2.withOpacity(.05),
+                color: MisterFootball.colorPrimarioLight2.withOpacity(.05),
                 border: Border(
                   top: BorderSide(width: .4),
                   bottom: BorderSide(width: .4),
@@ -151,7 +151,7 @@ class _DetallesPartidoEquipo extends State<DetallesPartidoEquipo> {
                       IconButton(
                         icon: Icon(
                           Icons.share,
-                          color: MisterFootball.primario,
+                          color: MisterFootball.colorPrimario,
                         ),
                         tooltip: 'Compartir convocatoria',
                         onPressed: () async {

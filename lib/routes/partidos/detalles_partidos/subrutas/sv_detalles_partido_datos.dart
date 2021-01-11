@@ -33,7 +33,7 @@ class _DetallesPartidoDatos extends State<DetallesPartidoDatos> {
           Container(
             padding: EdgeInsets.all(MediaQuery.of(context).size.width * .03),
             decoration: BoxDecoration(
-              color: MisterFootball.primarioLight2.withOpacity(.25),
+              color: MisterFootball.colorPrimarioLight2.withOpacity(.25),
               border: Border(bottom: BorderSide(width: 1)),
             ),
             child: (widget.partido.isLocal)
@@ -62,7 +62,7 @@ class _DetallesPartidoDatos extends State<DetallesPartidoDatos> {
                           //Escudo Rival
                           Icon(
                             Icons.security,
-                            color: MisterFootball.primario,
+                            color: MisterFootball.colorPrimario,
                             size: MediaQuery.of(context).size.width / 6,
                           ),
                         ],
@@ -78,7 +78,7 @@ class _DetallesPartidoDatos extends State<DetallesPartidoDatos> {
                           //Escudo Rival
                           Icon(
                             Icons.security,
-                            color: MisterFootball.primario,
+                            color: MisterFootball.colorPrimario,
                             size: MediaQuery.of(context).size.width / 6,
                           ),
                           //Rival
@@ -115,7 +115,7 @@ class _DetallesPartidoDatos extends State<DetallesPartidoDatos> {
             child: Table(
               border: TableBorder(
                 verticalInside: BorderSide(
-                  color: MisterFootball.primario,
+                  color: MisterFootball.colorPrimario,
                   width: .4,
                 ),
               ),
@@ -127,8 +127,8 @@ class _DetallesPartidoDatos extends State<DetallesPartidoDatos> {
                   TableRow(
                     decoration: BoxDecoration(
                       border: Border(
-                        //top: BorderSide(color: MisterFootball.primario, width: .4),
-                        bottom: BorderSide(color: MisterFootball.primario, width: .4),
+                        //top: BorderSide(color: MisterFootball.colorPrimario, width: .4),
+                        bottom: BorderSide(color: MisterFootball.colorPrimario, width: .4),
                       ),
                     ),
                     children: [
@@ -152,7 +152,7 @@ class _DetallesPartidoDatos extends State<DetallesPartidoDatos> {
                 TableRow(
                   decoration: BoxDecoration(
                     border: Border(
-                      bottom: BorderSide(color: MisterFootball.primario, width: .4),
+                      bottom: BorderSide(color: MisterFootball.colorPrimario, width: .4),
                     ),
                   ),
                   children: [
@@ -176,7 +176,7 @@ class _DetallesPartidoDatos extends State<DetallesPartidoDatos> {
                 TableRow(
                   decoration: BoxDecoration(
                     border: Border(
-                      bottom: BorderSide(color: MisterFootball.primario, width: .4),
+                      bottom: BorderSide(color: MisterFootball.colorPrimario, width: .4),
                     ),
                   ),
                   children: [
@@ -200,7 +200,7 @@ class _DetallesPartidoDatos extends State<DetallesPartidoDatos> {
                 TableRow(
                   decoration: BoxDecoration(
                     border: Border(
-                      bottom: BorderSide(color: MisterFootball.primario, width: .4),
+                      bottom: BorderSide(color: MisterFootball.colorPrimario, width: .4),
                     ),
                   ),
                   children: [
@@ -226,7 +226,7 @@ class _DetallesPartidoDatos extends State<DetallesPartidoDatos> {
           //Datos eventos
           Container(
             decoration: BoxDecoration(
-              color: MisterFootball.primarioLight2.withOpacity(.05),
+              color: MisterFootball.colorPrimarioLight2.withOpacity(.05),
               border: Border(
                 top: BorderSide(width: .4),
                 bottom: BorderSide(width: .4),
@@ -253,7 +253,7 @@ class _DetallesPartidoDatos extends State<DetallesPartidoDatos> {
           //Goles en Contra
           Container(
             decoration: BoxDecoration(
-              color: MisterFootball.primarioLight2.withOpacity(.05),
+              color: MisterFootball.colorPrimarioLight2.withOpacity(.05),
               border: Border(
                 top: BorderSide(width: .4),
                 bottom: BorderSide(width: .4),
@@ -280,7 +280,7 @@ class _DetallesPartidoDatos extends State<DetallesPartidoDatos> {
           //Tarjetas
           Container(
             decoration: BoxDecoration(
-              color: MisterFootball.primarioLight2.withOpacity(.05),
+              color: MisterFootball.colorPrimarioLight2.withOpacity(.05),
               border: Border(
                 top: BorderSide(width: .4),
                 bottom: BorderSide(width: .4),
@@ -307,7 +307,7 @@ class _DetallesPartidoDatos extends State<DetallesPartidoDatos> {
           //Cambios
           Container(
             decoration: BoxDecoration(
-              color: MisterFootball.primarioLight2.withOpacity(.05),
+              color: MisterFootball.colorPrimarioLight2.withOpacity(.05),
               border: Border(
                 top: BorderSide(width: .4),
                 bottom: BorderSide(width: .4),
@@ -334,7 +334,7 @@ class _DetallesPartidoDatos extends State<DetallesPartidoDatos> {
           //Lesiones
           Container(
             decoration: BoxDecoration(
-              color: MisterFootball.primarioLight2.withOpacity(.05),
+              color: MisterFootball.colorPrimarioLight2.withOpacity(.05),
               border: Border(
                 top: BorderSide(width: .4),
                 bottom: BorderSide(width: .4),
@@ -394,7 +394,7 @@ class _DetallesPartidoDatos extends State<DetallesPartidoDatos> {
               color: avisoJugador,
               border: Border(
                 bottom: BorderSide(
-                  color: ((partidoActual.golesAFavor.length - 1) != iFila) ? MisterFootball.primario : Colors.transparent,
+                  color: ((partidoActual.golesAFavor.length - 1) != iFila) ? MisterFootball.colorPrimario : Colors.transparent,
                   width: .4,
                 ),
               ),
@@ -438,7 +438,7 @@ class _DetallesPartidoDatos extends State<DetallesPartidoDatos> {
             decoration: BoxDecoration(
               border: Border(
                 bottom: BorderSide(
-                  color: ((partidoActual.golesEnContra.length - 1) != iFila) ? MisterFootball.primario : Colors.transparent,
+                  color: ((partidoActual.golesEnContra.length - 1) != iFila) ? MisterFootball.colorPrimario : Colors.transparent,
                   width: .4,
                 ),
               ),
@@ -489,7 +489,7 @@ class _DetallesPartidoDatos extends State<DetallesPartidoDatos> {
               color: avisoJugador,
               border: Border(
                 bottom: BorderSide(
-                  color: ((partidoActual.tarjetas.length - 1) != iFila) ? MisterFootball.primario : Colors.transparent,
+                  color: ((partidoActual.tarjetas.length - 1) != iFila) ? MisterFootball.colorPrimario : Colors.transparent,
                   width: .4,
                 ),
               ),
@@ -584,7 +584,7 @@ class _DetallesPartidoDatos extends State<DetallesPartidoDatos> {
               color: avisoJugador,
               border: Border(
                 bottom: BorderSide(
-                  color: ((partidoActual.cambios.length - 1) != iFila) ? MisterFootball.primario : Colors.transparent,
+                  color: ((partidoActual.cambios.length - 1) != iFila) ? MisterFootball.colorPrimario : Colors.transparent,
                   width: .4,
                 ),
               ),
@@ -664,7 +664,7 @@ class _DetallesPartidoDatos extends State<DetallesPartidoDatos> {
               color: avisoJugador,
               border: Border(
                 bottom: BorderSide(
-                  color: ((partidoActual.lesiones.length - 1) != iFila) ? MisterFootball.primario : Colors.transparent,
+                  color: ((partidoActual.lesiones.length - 1) != iFila) ? MisterFootball.colorPrimario : Colors.transparent,
                   width: .4,
                 ),
               ),

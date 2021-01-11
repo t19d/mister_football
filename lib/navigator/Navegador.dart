@@ -93,7 +93,7 @@ class _Navegador extends State<Navegador> {
     return Container(
       decoration: BoxDecoration(
         gradient:
-            LinearGradient(begin: Alignment.topRight, end: Alignment.bottomLeft, colors: [MisterFootball.primario, MisterFootball.primarioDark]),
+            LinearGradient(begin: Alignment.topRight, end: Alignment.bottomLeft, colors: [MisterFootball.colorPrimario, MisterFootball.colorPrimarioDark]),
       ),
       child: ListView(
         children: <Widget>[

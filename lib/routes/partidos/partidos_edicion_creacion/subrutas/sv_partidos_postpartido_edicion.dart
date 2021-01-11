@@ -485,7 +485,7 @@ class _PartidoPostpartidoEdicion extends State<PartidoPostpartidoEdicion> {
               color: avisoJugador,
               border: Border(
                 bottom: BorderSide(
-                  color: ((partidoActual.golesAFavor.length - 1) != iFila) ? MisterFootball.primario : Colors.transparent,
+                  color: ((partidoActual.golesAFavor.length - 1) != iFila) ? MisterFootball.colorPrimario : Colors.transparent,
                   width: .4,
                 ),
               ),
@@ -604,9 +604,9 @@ class _PartidoPostpartidoEdicion extends State<PartidoPostpartidoEdicion> {
                 }),
               ),
               RaisedButton(
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.primario)),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.colorPrimario)),
                 color: Colors.white70,
-                disabledColor: MisterFootball.primarioLight2,
+                disabledColor: MisterFootball.colorPrimarioLight2,
                 disabledTextColor: Colors.white70,
                 child: Text("Aceptar"),
                 onPressed: (_idJugadorSeleccionadoGolesAFavor == "")
@@ -674,7 +674,7 @@ class _PartidoPostpartidoEdicion extends State<PartidoPostpartidoEdicion> {
             decoration: BoxDecoration(
               border: Border(
                 bottom: BorderSide(
-                  color: ((partidoActual.golesEnContra.length - 1) != iFila) ? MisterFootball.primario : Colors.transparent,
+                  color: ((partidoActual.golesEnContra.length - 1) != iFila) ? MisterFootball.colorPrimario : Colors.transparent,
                   width: .4,
                 ),
               ),
@@ -757,9 +757,9 @@ class _PartidoPostpartidoEdicion extends State<PartidoPostpartidoEdicion> {
               ),
             ),
             RaisedButton(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.primario)),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.colorPrimario)),
               color: Colors.white70,
-              disabledColor: MisterFootball.primarioLight2,
+              disabledColor: MisterFootball.colorPrimarioLight2,
               disabledTextColor: Colors.white70,
               child: Text("Aceptar"),
               onPressed: () async {
@@ -831,7 +831,7 @@ class _PartidoPostpartidoEdicion extends State<PartidoPostpartidoEdicion> {
               color: avisoJugador,
               border: Border(
                 bottom: BorderSide(
-                  color: ((partidoActual.tarjetas.length - 1) != iFila) ? MisterFootball.primario : Colors.transparent,
+                  color: ((partidoActual.tarjetas.length - 1) != iFila) ? MisterFootball.colorPrimario : Colors.transparent,
                   width: .4,
                 ),
               ),
@@ -1030,9 +1030,9 @@ class _PartidoPostpartidoEdicion extends State<PartidoPostpartidoEdicion> {
                 }),
               ),
               RaisedButton(
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.primario)),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.colorPrimario)),
                 color: Colors.white70,
-                disabledColor: MisterFootball.primarioLight2,
+                disabledColor: MisterFootball.colorPrimarioLight2,
                 disabledTextColor: Colors.white70,
                 child: Text("Aceptar"),
                 onPressed: (_idJugadorSeleccionadoTarjeta == "")
@@ -1136,7 +1136,7 @@ class _PartidoPostpartidoEdicion extends State<PartidoPostpartidoEdicion> {
               color: avisoJugador,
               border: Border(
                 bottom: BorderSide(
-                  color: ((partidoActual.cambios.length - 1) != iFila) ? MisterFootball.primario : Colors.transparent,
+                  color: ((partidoActual.cambios.length - 1) != iFila) ? MisterFootball.colorPrimario : Colors.transparent,
                   width: .4,
                 ),
               ),
@@ -1309,9 +1309,9 @@ class _PartidoPostpartidoEdicion extends State<PartidoPostpartidoEdicion> {
                   }),
                 ),
                 RaisedButton(
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.primario)),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.colorPrimario)),
                   color: Colors.white70,
-                  disabledColor: MisterFootball.primarioLight2,
+                  disabledColor: MisterFootball.colorPrimarioLight2,
                   disabledTextColor: Colors.white70,
                   child: Text("Aceptar"),
                   onPressed: (_idJugadorEntraSeleccionadoCambios == "" && _idJugadorSaleSeleccionadoCambios == "")
@@ -1394,7 +1394,7 @@ class _PartidoPostpartidoEdicion extends State<PartidoPostpartidoEdicion> {
               color: avisoJugador,
               border: Border(
                 bottom: BorderSide(
-                  color: ((partidoActual.lesiones.length - 1) != iFila) ? MisterFootball.primario : Colors.transparent,
+                  color: ((partidoActual.lesiones.length - 1) != iFila) ? MisterFootball.colorPrimario : Colors.transparent,
                   width: .4,
                 ),
               ),
@@ -1518,9 +1518,9 @@ class _PartidoPostpartidoEdicion extends State<PartidoPostpartidoEdicion> {
                 }),
               ),
               RaisedButton(
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.primario)),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.colorPrimario)),
                 color: Colors.white70,
-                disabledColor: MisterFootball.primarioLight2,
+                disabledColor: MisterFootball.colorPrimarioLight2,
                 disabledTextColor: Colors.white70,
                 child: Text("Aceptar"),
                 onPressed: (_idJugadorSeleccionadoLesiones == "")

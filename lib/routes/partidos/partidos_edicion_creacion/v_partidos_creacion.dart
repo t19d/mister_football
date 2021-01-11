@@ -167,9 +167,9 @@ class _PartidosCreacion extends State<PartidosCreacion> {
                       separadorFormulario(),
                       //Fecha
                       RaisedButton(
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.primario)),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.colorPrimario)),
                         color: Colors.white70,
-                        disabledColor: MisterFootball.primarioLight2,
+                        disabledColor: MisterFootball.colorPrimarioLight2,
                         disabledTextColor: Colors.white70,
                         onPressed: () {
                           //Seleccionar fecha
@@ -205,9 +205,9 @@ class _PartidosCreacion extends State<PartidosCreacion> {
                       separadorFormulario(),
                       //Hora
                       RaisedButton(
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.primario)),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.colorPrimario)),
                         color: Colors.white70,
-                        disabledColor: MisterFootball.primarioLight2,
+                        disabledColor: MisterFootball.colorPrimarioLight2,
                         disabledTextColor: Colors.white70,
                         onPressed: () {
                           //Seleccionar hora
@@ -335,9 +335,9 @@ class _PartidosCreacion extends State<PartidosCreacion> {
                   ),
                 ),
                 RaisedButton(
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.primario)),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0), side: BorderSide(color: MisterFootball.colorPrimario)),
                   color: Colors.white70,
-                  disabledColor: MisterFootball.primarioLight2,
+                  disabledColor: MisterFootball.colorPrimarioLight2,
                   disabledTextColor: Colors.white70,
                   child: Text("CREAR"),
                   onPressed: () async {

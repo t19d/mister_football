@@ -78,17 +78,17 @@ class _ListaPartidos extends State<ListaPartidos> {
     //Estilo de los textos de los equipos
     TextStyle estiloEquipos = TextStyle(
       fontWeight: FontWeight.bold,
-      color: MisterFootball.primarioDark,
+      color: MisterFootball.colorPrimarioDark,
       fontSize: MediaQuery.of(context).size.width * .03,
     );
     //Estilo de los textos
     TextStyle estiloTextos = TextStyle(
-      color: MisterFootball.primarioDark,
+      color: MisterFootball.colorPrimarioDark,
       fontSize: MediaQuery.of(context).size.width * .03,
     );
     //Estilo de las fechas y hora
     TextStyle estiloFechasHoraTextos = TextStyle(
-      color: MisterFootball.primarioDark,
+      color: MisterFootball.colorPrimarioDark,
       fontSize: MediaQuery.of(context).size.width * .03,
       fontWeight: FontWeight.bold,
     );
@@ -96,7 +96,7 @@ class _ListaPartidos extends State<ListaPartidos> {
     TextStyle estiloResultado = TextStyle(
       fontSize: MediaQuery.of(context).size.width * .04,
       fontWeight: FontWeight.bold,
-      color: MisterFootball.primarioDark,
+      color: MisterFootball.colorPrimarioDark,
     );
     final boxPartidos = Hive.box('partidos');
     final boxPerfil = Hive.box('perfil');
@@ -130,7 +130,7 @@ class _ListaPartidos extends State<ListaPartidos> {
                   borderRadius: BorderRadius.circular(5.0),
                 ),
                 child: InkWell(
-                  splashColor: MisterFootball.complementario,
+                  splashColor: MisterFootball.colorComplementario,
                   onTap: () {
                     Navigator.push(
                       context,
@@ -144,7 +144,7 @@ class _ListaPartidos extends State<ListaPartidos> {
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
-                      border: Border.all(color: MisterFootball.primario),
+                      border: Border.all(color: MisterFootball.colorPrimario),
                     ),
                     child: (DateTime.now()
                                 .difference(DateTime(
@@ -165,7 +165,7 @@ class _ListaPartidos extends State<ListaPartidos> {
                                   TableRow(
                                     decoration: BoxDecoration(
                                       border: Border(
-                                        bottom: BorderSide(color: MisterFootball.primario),
+                                        bottom: BorderSide(color: MisterFootball.colorPrimario),
                                       ),
                                     ),
                                     children: [
@@ -191,7 +191,7 @@ class _ListaPartidos extends State<ListaPartidos> {
                                       //Escudo Rival
                                       Icon(
                                         Icons.security,
-                                        color: MisterFootball.primario,
+                                        color: MisterFootball.colorPrimario,
                                         size: MediaQuery.of(context).size.width / 10,
                                       ),
                                     ],
@@ -229,14 +229,14 @@ class _ListaPartidos extends State<ListaPartidos> {
                                   TableRow(
                                     decoration: BoxDecoration(
                                       border: Border(
-                                        bottom: BorderSide(color: MisterFootball.primario),
+                                        bottom: BorderSide(color: MisterFootball.colorPrimario),
                                       ),
                                     ),
                                     children: [
                                       //Escudo Rival
                                       Icon(
                                         Icons.security,
-                                        color: MisterFootball.primario,
+                                        color: MisterFootball.colorPrimario,
                                         size: MediaQuery.of(context).size.width / 10,
                                       ),
                                       //Rival
@@ -330,7 +330,7 @@ class _ListaPartidos extends State<ListaPartidos> {
                                       //Escudo Rival
                                       Icon(
                                         Icons.security,
-                                        color: MisterFootball.primario,
+                                        color: MisterFootball.colorPrimario,
                                         size: MediaQuery.of(context).size.width / 10,
                                       ),
                                     ],
@@ -346,7 +346,7 @@ class _ListaPartidos extends State<ListaPartidos> {
                                       //Escudo Rival
                                       Icon(
                                         Icons.security,
-                                        color: MisterFootball.primario,
+                                        color: MisterFootball.colorPrimario,
                                         size: MediaQuery.of(context).size.width / 10,
                                       ),
                                       //Rival

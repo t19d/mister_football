@@ -65,7 +65,7 @@ class _DetallesJugador extends State<DetallesJugador> {
                         ? IconButton(
                             icon: Icon(
                               Icons.visibility_off,
-                              color: MisterFootball.complementarioDelComplementarioLight,
+                              color: MisterFootball.colorComplementarioDelComplementarioLight,
                             ),
                             tooltip: 'Deshabilitar jugador',
                             onPressed: () async {
@@ -128,7 +128,7 @@ class _DetallesJugador extends State<DetallesJugador> {
                         : IconButton(
                             icon: Icon(
                               Icons.delete,
-                              color: MisterFootball.complementarioDelComplementarioLight,
+                              color: MisterFootball.colorComplementarioDelComplementarioLight,
                             ),
                             tooltip: 'Eliminar jugador',
                             onPressed: () async {
@@ -183,7 +183,7 @@ class _DetallesJugador extends State<DetallesJugador> {
                       Container(
                         padding: EdgeInsets.all(MediaQuery.of(context).size.width * .03),
                         decoration: BoxDecoration(
-                          color: MisterFootball.primarioLight2.withOpacity(.25),
+                          color: MisterFootball.colorPrimarioLight2.withOpacity(.25),
                           border: Border(bottom: BorderSide(width: 1)),
                         ),
                         child: Row(
@@ -214,7 +214,7 @@ class _DetallesJugador extends State<DetallesJugador> {
                         child: Table(
                           border: TableBorder(
                             verticalInside: BorderSide(
-                              color: MisterFootball.primario,
+                              color: MisterFootball.colorPrimario,
                               width: .4,
                             ),
                           ),
@@ -224,7 +224,7 @@ class _DetallesJugador extends State<DetallesJugador> {
                             TableRow(
                               decoration: BoxDecoration(
                                 border: Border(
-                                  bottom: BorderSide(color: MisterFootball.primario, width: .4),
+                                  bottom: BorderSide(color: MisterFootball.colorPrimario, width: .4),
                                 ),
                               ),
                               children: [
@@ -248,7 +248,7 @@ class _DetallesJugador extends State<DetallesJugador> {
                             TableRow(
                               decoration: BoxDecoration(
                                 border: Border(
-                                  bottom: BorderSide(color: MisterFootball.primario, width: .4),
+                                  bottom: BorderSide(color: MisterFootball.colorPrimario, width: .4),
                                 ),
                               ),
                               children: [
@@ -272,7 +272,7 @@ class _DetallesJugador extends State<DetallesJugador> {
                             TableRow(
                               decoration: BoxDecoration(
                                 border: Border(
-                                  bottom: BorderSide(color: MisterFootball.primario, width: .4),
+                                  bottom: BorderSide(color: MisterFootball.colorPrimario, width: .4),
                                 ),
                               ),
                               children: [
@@ -296,7 +296,7 @@ class _DetallesJugador extends State<DetallesJugador> {
                             TableRow(
                               decoration: BoxDecoration(
                                 border: Border(
-                                  bottom: BorderSide(color: MisterFootball.primario, width: .4),
+                                  bottom: BorderSide(color: MisterFootball.colorPrimario, width: .4),
                                 ),
                               ),
                               children: [
@@ -320,7 +320,7 @@ class _DetallesJugador extends State<DetallesJugador> {
                             TableRow(
                               decoration: BoxDecoration(
                                 border: Border(
-                                  bottom: BorderSide(color: MisterFootball.primario, width: .4),
+                                  bottom: BorderSide(color: MisterFootball.colorPrimario, width: .4),
                                 ),
                               ),
                               children: [
@@ -345,7 +345,7 @@ class _DetallesJugador extends State<DetallesJugador> {
                             TableRow(
                               decoration: BoxDecoration(
                                 border: Border(
-                                  bottom: BorderSide(color: MisterFootball.primario, width: .4),
+                                  bottom: BorderSide(color: MisterFootball.colorPrimario, width: .4),
                                 ),
                               ),
                               children: [
@@ -369,7 +369,7 @@ class _DetallesJugador extends State<DetallesJugador> {
                             TableRow(
                               decoration: BoxDecoration(
                                 border: Border(
-                                  bottom: BorderSide(color: MisterFootball.primario, width: .4),
+                                  bottom: BorderSide(color: MisterFootball.colorPrimario, width: .4),
                                 ),
                               ),
                               children: [
@@ -393,7 +393,7 @@ class _DetallesJugador extends State<DetallesJugador> {
                             TableRow(
                               decoration: BoxDecoration(
                                 border: Border(
-                                  bottom: BorderSide(color: MisterFootball.primario, width: .4),
+                                  bottom: BorderSide(color: MisterFootball.colorPrimario, width: .4),
                                 ),
                               ),
                               children: [
@@ -419,7 +419,7 @@ class _DetallesJugador extends State<DetallesJugador> {
                       //Histórico y estadísticas
                       /*Container(
                         decoration: BoxDecoration(
-                          color: MisterFootball.primarioLight2.withOpacity(.05),
+                          color: MisterFootball.colorPrimarioLight2.withOpacity(.05),
                           border: Border(
                             top: BorderSide(width: .4),
                             bottom: BorderSide(width: .4),
@@ -673,7 +673,7 @@ class _DetallesJugador extends State<DetallesJugador> {
                 Container(
                   padding: EdgeInsets.all(MediaQuery.of(context).size.width * .03),
                   decoration: BoxDecoration(
-                    color: MisterFootball.primarioLight2.withOpacity(.25),
+                    color: MisterFootball.colorPrimarioLight2.withOpacity(.25),
                     border: Border(bottom: BorderSide(width: 1)),
                   ),
                   child: Row(
@@ -704,7 +704,7 @@ class _DetallesJugador extends State<DetallesJugador> {
                   child: Table(
                     border: TableBorder(
                       verticalInside: BorderSide(
-                        color: MisterFootball.primario,
+                        color: MisterFootball.colorPrimario,
                         width: .4,
                       ),
                     ),
@@ -714,7 +714,7 @@ class _DetallesJugador extends State<DetallesJugador> {
                       TableRow(
                         decoration: BoxDecoration(
                           border: Border(
-                            bottom: BorderSide(color: MisterFootball.primario, width: .4),
+                            bottom: BorderSide(color: MisterFootball.colorPrimario, width: .4),
                           ),
                         ),
                         children: [
@@ -738,7 +738,7 @@ class _DetallesJugador extends State<DetallesJugador> {
                       TableRow(
                         decoration: BoxDecoration(
                           border: Border(
-                            bottom: BorderSide(color: MisterFootball.primario, width: .4),
+                            bottom: BorderSide(color: MisterFootball.colorPrimario, width: .4),
                           ),
                         ),
                         children: [
@@ -762,7 +762,7 @@ class _DetallesJugador extends State<DetallesJugador> {
                       TableRow(
                         decoration: BoxDecoration(
                           border: Border(
-                            bottom: BorderSide(color: MisterFootball.primario, width: .4),
+                            bottom: BorderSide(color: MisterFootball.colorPrimario, width: .4),
                           ),
                         ),
                         children: [
@@ -786,7 +786,7 @@ class _DetallesJugador extends State<DetallesJugador> {
                       TableRow(
                         decoration: BoxDecoration(
                           border: Border(
-                            bottom: BorderSide(color: MisterFootball.primario, width: .4),
+                            bottom: BorderSide(color: MisterFootball.colorPrimario, width: .4),
                           ),
                         ),
                         children: [
@@ -810,7 +810,7 @@ class _DetallesJugador extends State<DetallesJugador> {
                       TableRow(
                         decoration: BoxDecoration(
                           border: Border(
-                            bottom: BorderSide(color: MisterFootball.primario, width: .4),
+                            bottom: BorderSide(color: MisterFootball.colorPrimario, width: .4),
                           ),
                         ),
                         children: [
@@ -834,7 +834,7 @@ class _DetallesJugador extends State<DetallesJugador> {
                       TableRow(
                         decoration: BoxDecoration(
                           border: Border(
-                            bottom: BorderSide(color: MisterFootball.primario, width: .4),
+                            bottom: BorderSide(color: MisterFootball.colorPrimario, width: .4),
                           ),
                         ),
                         children: [
@@ -858,7 +858,7 @@ class _DetallesJugador extends State<DetallesJugador> {
                       TableRow(
                         decoration: BoxDecoration(
                           border: Border(
-                            bottom: BorderSide(color: MisterFootball.primario, width: .4),
+                            bottom: BorderSide(color: MisterFootball.colorPrimario, width: .4),
                           ),
                         ),
                         children: [
@@ -882,7 +882,7 @@ class _DetallesJugador extends State<DetallesJugador> {
                       TableRow(
                         decoration: BoxDecoration(
                           border: Border(
-                            bottom: BorderSide(color: MisterFootball.primario, width: .4),
+                            bottom: BorderSide(color: MisterFootball.colorPrimario, width: .4),
                           ),
                         ),
                         children: [

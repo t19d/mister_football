@@ -108,10 +108,10 @@ class _EventosCalendario extends State<EventosCalendario> with TickerProviderSta
         CalendarFormat.week: '',
       },
       calendarStyle: CalendarStyle(
-        weekendStyle: TextStyle(color: MisterFootball.primarioDark2),
+        weekendStyle: TextStyle(color: MisterFootball.colorPrimarioDark2),
       ),
       daysOfWeekStyle: DaysOfWeekStyle(
-        weekendStyle: TextStyle(color: MisterFootball.primarioLight2),
+        weekendStyle: TextStyle(color: MisterFootball.colorPrimarioDark2),
       ),
       headerStyle: HeaderStyle(
         centerHeaderTitle: true,
@@ -125,7 +125,7 @@ class _EventosCalendario extends State<EventosCalendario> with TickerProviderSta
               margin: const EdgeInsets.all(4.0),
               padding: const EdgeInsets.only(top: 5.0, left: 6.0),
               decoration: BoxDecoration(
-                color: MisterFootball.complementarioLight2.withOpacity(.2),
+                color: MisterFootball.colorComplementarioLight2.withOpacity(.2),
                 border: Border(
                   bottom: BorderSide(width: 1),
                   top: BorderSide(width: 1),
@@ -149,14 +149,14 @@ class _EventosCalendario extends State<EventosCalendario> with TickerProviderSta
           return Container(
             margin: const EdgeInsets.all(4.0),
             padding: const EdgeInsets.only(top: 5.0, left: 6.0),
-            //color: MisterFootball.complementarioLight2.withOpacity(.3),
+            //color: MisterFootball.colorComplementarioLight2.withOpacity(.3),
             decoration: BoxDecoration(
               color: Colors.transparent,
               border: Border(
-                bottom: BorderSide(width: 1, color: MisterFootball.primarioDark2.withOpacity(.3)),
-                top: BorderSide(width: 1, color: MisterFootball.primarioDark2.withOpacity(.3)),
-                left: BorderSide(width: 1, color: MisterFootball.primarioDark2.withOpacity(.3)),
-                right: BorderSide(width: 1, color: MisterFootball.primarioDark2.withOpacity(.3)),
+                bottom: BorderSide(width: 1, color: MisterFootball.colorPrimarioDark2.withOpacity(.3)),
+                top: BorderSide(width: 1, color: MisterFootball.colorPrimarioDark2.withOpacity(.3)),
+                left: BorderSide(width: 1, color: MisterFootball.colorPrimarioDark2.withOpacity(.3)),
+                right: BorderSide(width: 1, color: MisterFootball.colorPrimarioDark2.withOpacity(.3)),
               ),
             ),
             width: 100,
@@ -196,9 +196,9 @@ class _EventosCalendario extends State<EventosCalendario> with TickerProviderSta
       decoration: BoxDecoration(
         shape: BoxShape.rectangle,
         color: (_calendarController.isSelected(date)
-            ? MisterFootball.complementarioDelComplementarioDark
-            //: (_calendarController.isToday(date) ? MisterFootball.primarioLight2 : Colors.blue[400])
-            : MisterFootball.primario),
+            ? MisterFootball.colorComplementarioDelComplementarioDark
+            //: (_calendarController.isToday(date) ? MisterFootball.colorPrimarioLight2 : Colors.blue[400])
+            : MisterFootball.colorPrimario),
       ),
       width: 16.0,
       height: 16.0,
@@ -233,23 +233,23 @@ class _EventosCalendario extends State<EventosCalendario> with TickerProviderSta
                   MediaQuery.of(context).size.width * .05,
                 ),
                 decoration: BoxDecoration(
-                  border: Border.all(width: 1, color: MisterFootball.primarioDark2.withOpacity(.3)),
+                  border: Border.all(width: 1, color: MisterFootball.colorPrimarioDark2.withOpacity(.3)),
                   borderRadius: BorderRadius.circular(12.0),
                   gradient: (event[1].length == 1)
                       ? LinearGradient(
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                           colors: [
-                            MisterFootball.complementarioLight.withOpacity(.3),
-                            MisterFootball.complementario.withOpacity(.3),
+                            MisterFootball.colorComplementarioLight.withOpacity(.3),
+                            MisterFootball.colorComplementario.withOpacity(.3),
                           ],
                         )
                       : LinearGradient(
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                           colors: [
-                            MisterFootball.analogo1Light.withOpacity(.3),
-                            MisterFootball.analogo1.withOpacity(.3),
+                            MisterFootball.colorAnalogo1Light.withOpacity(.3),
+                            MisterFootball.colorAnalogo1.withOpacity(.3),
                           ],
                         ),
                 ),

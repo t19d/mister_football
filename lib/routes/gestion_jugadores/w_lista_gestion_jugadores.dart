@@ -15,156 +15,11 @@ class _ListaGestionJugadores extends State<ListaGestionJugadores> {
   String valorOrdenarPor = "Posición";
   List<String> elementosOrdenarPor = ["Posición", "Edad", "Apodo"];
 
-  //Future<List<Jugador>> jugadores;
-
-  /*refreshList() {
-    setState(() {
-      //jugadores = DBHelper.getJugadoresPorPosiciones();
-    });
-  }*/
-
   @override
   void dispose() {
     Hive.close();
     super.dispose();
   }
-
-  BoxDecoration colorear(posicion) {
-    Color coloreado1 = Colors.white;
-    Color coloreado2 = Colors.white70;
-    switch (posicion) {
-      case "Portero":
-        coloreado1 = Colors.lightGreen;
-        coloreado2 = Colors.redAccent;
-        break;
-      case "Lateral derecho":
-      /*coloreado1 = Colors.lightBlue;
-        coloreado2 = Colors.lightBlueAccent;
-        break;*/
-      case "Carrilero derecho":
-      /*coloreado1 = Colors.indigo;
-        coloreado2 = Colors.indigoAccent;
-        break;*/
-      case "Central":
-      /*coloreado1 = Colors.blue;
-        coloreado2 = Colors.blueAccent;
-        break;*/
-      case "Líbero":
-      /*coloreado1 = Colors.lightBlue;
-        coloreado2 = Colors.lightBlueAccent;
-        break;*/
-      case "Lateral izquierdo":
-      /*coloreado1 = Colors.lightBlue;
-        coloreado2 = Colors.lightBlueAccent;
-        break;*/
-      case "Carrilero izquierdo":
-        /*coloreado1 = Colors.indigo;
-        coloreado2 = Colors.indigoAccent;
-        break;*/
-        coloreado1 = Colors.yellow;
-        coloreado2 = Colors.purpleAccent;
-        break;
-      case "Mediocentro defensivo":
-      /*coloreado1 = Colors.lightGreen;
-        coloreado2 = Colors.lightGreenAccent;
-        break;*/
-      case "Mediocentro central":
-      /*coloreado1 = Colors.lightGreen;
-        coloreado2 = Colors.lightGreenAccent;
-        break;*/
-      case "Mediocentro ofensivo":
-      /*coloreado1 = Colors.green;
-        coloreado2 = Colors.greenAccent;
-        break;*/
-      case "Interior derecho":
-      /*coloreado1 = Colors.green;
-        coloreado2 = Colors.greenAccent;
-        break;*/
-      case "Interior izquierdo":
-      /*coloreado1 = Colors.green;
-        coloreado2 = Colors.greenAccent;
-        break;*/
-      case "Mediapunta":
-      /*coloreado1 = Colors.yellow;
-        coloreado2 = Colors.yellowAccent;
-        break;*/
-      case "Falso 9":
-        /*coloreado1 = Colors.lightGreenAccent;
-        coloreado2 = Colors.redAccent;
-        break;*/
-        coloreado1 = Colors.orangeAccent;
-        coloreado2 = Colors.lightBlueAccent;
-        break;
-      case "Segundo delantero":
-      /*coloreado1 = Colors.red;
-        coloreado2 = Colors.redAccent;
-        break;*/
-      case "Delantero centro":
-      /*coloreado1 = Colors.red;
-        coloreado2 = Colors.redAccent;
-        break;*/
-      case "Extremo derecho":
-      /*coloreado1 = Colors.brown;
-        coloreado2 = Colors.brown.withOpacity(.2);
-        break;*/
-      case "Extremo izquierdo":
-        /*coloreado1 = Colors.brown;
-        coloreado2 = Colors.brown.withOpacity(.2);
-        break;*/
-        coloreado1 = Colors.red;
-        coloreado2 = Colors.purpleAccent;
-        break;
-    }
-    return BoxDecoration(
-      gradient: LinearGradient(
-        begin: Alignment.topRight,
-        end: Alignment.bottomLeft,
-        colors: [coloreado1, coloreado2],
-      ),
-      border: Border.all(width: 1, color: coloreado1),
-      borderRadius: BorderRadius.all(Radius.circular(10.0)),
-    );
-  }
-
-/*
-  SingleChildScrollView dataTable(List<Jugador> jugadores) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.vertical,
-      child: DataTable(
-        columns: [
-          DataColumn(
-            label: Text('NAME'),
-          ),
-          DataColumn(
-            label: Text('DELETE'),
-          )
-        ],
-        rows: jugadores
-            .map(
-              (jugador) => DataRow(cells: [
-            DataCell(
-              Text(jugador.nombre),
-              onTap: () {
-                setState(() {
-                  isUpdating = true;
-                  curUserId = jugador.id;
-                });
-              },
-            ),
-            DataCell(IconButton(
-              icon: Icon(Icons.delete),
-              onPressed: () {
-                DBHelper.delete(jugador.id);
-                refreshList();
-              },
-            )),
-          ]),
-        )
-            .toList(),
-      ),
-    );
-  }
- */
 
   Widget cartasJugadores() {
     final boxJugadores = Hive.box('jugadores');
@@ -325,11 +180,6 @@ class _ListaGestionJugadores extends State<ListaGestionJugadores> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    /*MaterialPageRoute(
-                    builder: (context) => DetallesJugador(
-                      posicion: jugadoresOrdenados[iJugador][0],
-                    ),
-                  ),*/
                     AnimacionDetalles(
                       widget: DetallesJugador(
                         posicion: jugadoresOrdenados[iJugador][0],
@@ -341,16 +191,10 @@ class _ListaGestionJugadores extends State<ListaGestionJugadores> {
                   padding: EdgeInsets.only(
                     left: MediaQuery.of(context).size.width * .03,
                   ),
-                  //decoration: colorear(jugadorBox.posicionFavorita),
                   decoration: (jugadorBox.habilitado)
-                      ? BoxDecoration(
-                          //border: Border.all(color: MisterFootball.colorPrimario),
-                          //borderRadius: BorderRadius.circular(5),
-                          )
+                      ? BoxDecoration()
                       : BoxDecoration(
                           color: MisterFootball.colorSemiprimarioLight2,
-                          //borderRadius: BorderRadius.circular(5),
-                          //border: Border.all(color: MisterFootball.colorPrimario),
                         ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -438,41 +282,6 @@ class _ListaGestionJugadores extends State<ListaGestionJugadores> {
                       ),
                     ],
                   ),
-
-                  /*Table(
-                  defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                  children: [
-                    TableRow(
-                      children: [
-                        (jugadorBox.habilitado)
-                            ? Container(
-                                padding: EdgeInsets.all(
-                                  MediaQuery.of(context).size.width * .05,
-                                ),
-                                decoration: BoxDecoration(color: colorearPosicion(jugadorBox.posicionFavorita)),
-                                child: Text(
-                                  acortarPosicion(jugadorBox.posicionFavorita),
-                                  textAlign: TextAlign.center,
-                                ),
-                              )
-                            : Icon(
-                                Icons.visibility_off,
-                                color: MisterFootball.colorPrimario,
-                              ),
-                        Text(
-                          jugadorBox.apodo,
-                          overflow: TextOverflow.clip,
-                          textAlign: TextAlign.center,
-                        ),
-                        FittedBox(
-                          child: Image.asset('assets/img/icono_persona.png'),
-                          fit: BoxFit.fitHeight,
-                        ),
-                        //ConversorImagen.imageFromBase64String(jugadorBox.nombre_foto, context),
-                      ],
-                    ),
-                  ],
-                ),*/
                 ),
               ),
             ),

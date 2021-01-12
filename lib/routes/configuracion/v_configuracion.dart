@@ -78,13 +78,6 @@ class _Configuracion extends State<Configuracion> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                IconButton(
-                  icon: Icon(
-                    Icons.settings,
-                    color: Colors.white,
-                  ),
-                  onPressed: () {},
-                ),
                 (!isEscudoEditado)
                     ? ConversorImagen.devolverEscudoImageFromBase64String(equipo['escudo'], context)
                     : ConversorImagen.devolverEscudoImageFromBase64String(imgString, context),
@@ -128,13 +121,6 @@ class _Configuracion extends State<Configuracion> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                IconButton(
-                  icon: Icon(
-                    Icons.settings,
-                    color: Colors.white,
-                  ),
-                  onPressed: () {},
-                ),
                 Text(
                   (!isNombreEquipoEditado)
                       ? (equipo['nombre_equipo'].length == 0) ? "-" : equipo['nombre_equipo']
@@ -329,13 +315,6 @@ class _Configuracion extends State<Configuracion> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                IconButton(
-                  icon: Icon(
-                    Icons.settings,
-                    color: Colors.white,
-                  ),
-                  onPressed: () {},
-                ),
                 (!isEscudoEditado)
                     ? ConversorImagen.devolverEscudoImageFromBase64String(equipo['escudo'], context)
                     : ConversorImagen.devolverEscudoImageFromBase64String(imgString, context),
@@ -375,13 +354,6 @@ class _Configuracion extends State<Configuracion> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                IconButton(
-                  icon: Icon(
-                    Icons.settings,
-                    color: Colors.white,
-                  ),
-                  onPressed: () {},
-                ),
                 Text(
                   (!isNombreEquipoEditado)
                       ? (equipo['nombre_equipo'].length == 0) ? "-" : equipo['nombre_equipo']

@@ -684,9 +684,9 @@ class _Configuracion extends State<Configuracion> {
 
   //Coger imagen de la galería
   void _abrirGaleria(BuildContext context) async {
-    await ImagePicker.pickImage(source: ImageSource.gallery).then((imgFile) async {
+    await ImagePicker().getImage(source: ImageSource.gallery).then((imgFile) async {
       if (imgFile != null) {
-        _recortarImagen(imgFile);
+        _recortarImagen(File(imgFile.path));
       }
     });
     Navigator.of(context).pop();
@@ -694,9 +694,9 @@ class _Configuracion extends State<Configuracion> {
 
   //Sacar foto
   void _abrirCamara(BuildContext context) async {
-    await ImagePicker.pickImage(source: ImageSource.camera).then((imgFile) {
+    await ImagePicker().getImage(source: ImageSource.camera).then((imgFile) {
       if (imgFile != null) {
-        _recortarImagen(imgFile);
+        _recortarImagen(File(imgFile.path));
       }
     });
     Navigator.of(context).pop();

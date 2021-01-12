@@ -5,11 +5,6 @@ import 'package:mister_football/clases/entrenamiento.dart';
 import 'package:mister_football/clases/eventos.dart';
 import 'package:mister_football/clases/jugador.dart';
 import 'package:mister_football/routes/ejercicios/v_ejercicios.dart';
-import 'package:mister_football/routes/entrenamientos/v_entrenamientos.dart';
-import 'package:mister_football/routes/estadisticas/v_estadisticas.dart';
-import 'package:mister_football/routes/eventos/v_eventos.dart';
-import 'package:mister_football/routes/gestion_jugadores/v_gestion_jugadores.dart';
-import 'package:mister_football/routes/partidos/v_partidos.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 
 import 'clases/partido.dart';

@@ -98,7 +98,7 @@ class MisterFootball extends StatelessWidget {
   static Color colorAnalogo1Light = const Color(0xFFD5FDE3);
   static Color colorAnalogo1Light2 = const Color(0xFFFFFFFF);
 
-  static Color colorFondo = const Color(0xFFDDE0E3);
+  static Color colorFondo = const Color(0xFFe8e8e8);
 
   @override
   Widget build(BuildContext context) {

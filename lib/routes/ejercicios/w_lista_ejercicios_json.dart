@@ -18,36 +18,44 @@ class _ListaEjerciciosJSON extends State<ListaEjerciciosJSON> {
     return await rootBundle.loadString('assets/json/ejercicios.json');
   }
 
-  LinearGradient colorearDificultad(String dificultad) {
-    LinearGradient coloreado = LinearGradient(
-      begin: Alignment.topRight,
-      end: Alignment.bottomLeft,
-      colors: [const Color(0xFF000000), const Color(0xFF000000)],
+  Container colorearDificultad(String dificultad) {
+    Container coloreadoDificultad = Container(
+      width: MediaQuery.of(context).size.width * .02,
+      height: 70,
+      decoration: BoxDecoration(
+        color: const Color(0xFF000000),
+      ),
     );
     switch (dificultad.toLowerCase()) {
       case "fácil":
-        coloreado = LinearGradient(
-          begin: Alignment.bottomLeft,
-          end: Alignment.topLeft,
-          colors: [const Color(0xFFFFFFFF), const Color(0xFFefffe6)],
+        coloreadoDificultad = Container(
+          width: MediaQuery.of(context).size.width * .02,
+          height: 70,
+          decoration: BoxDecoration(
+            color: const Color(0xFF4fdb74),
+          ),
         );
         break;
       case "media":
-        coloreado = LinearGradient(
-          begin: Alignment.bottomLeft,
-          end: Alignment.topLeft,
-          colors: [const Color(0xFFFFFFFF), const Color(0xFFfff7e6)],
+        coloreadoDificultad = Container(
+          width: MediaQuery.of(context).size.width * .02,
+          height: 70,
+          decoration: BoxDecoration(
+            color: const Color(0xFFe8de51),
+          ),
         );
         break;
       case "difícil":
-        coloreado = LinearGradient(
-          begin: Alignment.bottomLeft,
-          end: Alignment.topLeft,
-          colors: [const Color(0xFFFFFFFF), const Color(0xFFffe6e6)],
+        coloreadoDificultad = Container(
+          width: MediaQuery.of(context).size.width * .02,
+          height: 70,
+          decoration: BoxDecoration(
+            color: const Color(0xFFdb4f4f),
+          ),
         );
         break;
     }
-    return coloreado;
+    return coloreadoDificultad;
   }
 
   Widget itemEjercicio(String ejerciciosString) {
@@ -84,38 +92,42 @@ class _ListaEjerciciosJSON extends State<ListaEjerciciosJSON> {
                       ),
                     );
                   },
-                  child: Container(
-                    padding: EdgeInsets.all(
-                      MediaQuery.of(context).size.width * .025,
-                    ),
-                    decoration: BoxDecoration(
-                      gradient: colorearDificultad(ejercicios[iEjercicio]['dificultad']),
-                      //border: Border.all(color: MisterFootball.colorPrimarioLight2, width: .2),
-                    ),
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          padding: EdgeInsets.only(
-                            bottom: 10
-                          ),
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            ejercicios[iEjercicio]['titulo'],
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                              fontSize: 20,
-                            ),
-                          ),
+                  child: Row(
+                    children: <Widget>[
+                      Container(
+                        width: MediaQuery.of(context).size.width * .8996, // Para hacerlo lo más grande posible
+                        padding: EdgeInsets.all(
+                          MediaQuery.of(context).size.width * .025,
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        decoration: BoxDecoration(
+                            //border: Border.all(color: MisterFootball.colorPrimarioLight2, width: .2),
+                            ),
+                        child: Column(
                           children: <Widget>[
-                            Text(ejercicios[iEjercicio]['tipo']),
-                            Text("${ejercicios[iEjercicio]['duracion']} min"),
+                            Container(
+
+                              padding: EdgeInsets.only(bottom: 10),
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                ejercicios[iEjercicio]['titulo'],
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                  fontSize: 20,
+                                ),
+                              ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Text(ejercicios[iEjercicio]['tipo']),
+                                Text("${ejercicios[iEjercicio]['duracion']} min"),
+                              ],
+                            ),
                           ],
                         ),
-                      ],
-                    ),
+                      ),
+                      colorearDificultad(ejercicios[iEjercicio]['dificultad']),
+                    ],
                   ),
                 ),
               ),

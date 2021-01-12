@@ -27,23 +27,23 @@ class _ListaEjerciciosJSON extends State<ListaEjerciciosJSON> {
     switch (dificultad.toLowerCase()) {
       case "fácil":
         coloreado = LinearGradient(
-          begin: Alignment.topRight,
-          end: Alignment.bottomLeft,
-          colors: [const Color(0xFF64ed61), const Color(0xFF78de76)],
+          begin: Alignment.bottomLeft,
+          end: Alignment.topLeft,
+          colors: [const Color(0xFFFFFFFF), const Color(0xFFefffe6)],
         );
         break;
       case "media":
         coloreado = LinearGradient(
-          begin: Alignment.topRight,
-          end: Alignment.bottomLeft,
-          colors: [const Color(0xFFe6a353), const Color(0xFFdeab6f)],
+          begin: Alignment.bottomLeft,
+          end: Alignment.topLeft,
+          colors: [const Color(0xFFFFFFFF), const Color(0xFFfff7e6)],
         );
         break;
       case "difícil":
         coloreado = LinearGradient(
-          begin: Alignment.topRight,
-          end: Alignment.bottomLeft,
-          colors: [const Color(0xFFeb6c60), const Color(0xFFe38178)],
+          begin: Alignment.bottomLeft,
+          end: Alignment.topLeft,
+          colors: [const Color(0xFFFFFFFF), const Color(0xFFffe6e6)],
         );
         break;
     }
@@ -90,7 +90,7 @@ class _ListaEjerciciosJSON extends State<ListaEjerciciosJSON> {
                     ),
                     decoration: BoxDecoration(
                       gradient: colorearDificultad(ejercicios[iEjercicio]['dificultad']),
-                      border: Border.all(color: MisterFootball.colorPrimarioLight2),
+                      //border: Border.all(color: MisterFootball.colorPrimarioLight2, width: .2),
                     ),
                     child: Column(
                       children: <Widget>[
@@ -129,6 +129,7 @@ class _ListaEjerciciosJSON extends State<ListaEjerciciosJSON> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: MisterFootball.colorFondo,
       body: SafeArea(
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,

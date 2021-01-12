@@ -374,13 +374,6 @@ class _Configuracion extends State<Configuracion> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        IconButton(
-                          icon: Icon(
-                            Icons.settings,
-                            color: Colors.white,
-                          ),
-                          onPressed: () {},
-                        ),
                         ConversorImagen.devolverEscudoImageFromBase64String(imgString, context),
                         IconButton(
                           icon: Icon(
@@ -416,13 +409,6 @@ class _Configuracion extends State<Configuracion> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        IconButton(
-                          icon: Icon(
-                            Icons.settings,
-                            color: Colors.white,
-                          ),
-                          onPressed: () {},
-                        ),
                         Text(
                           "-",
                           textAlign: TextAlign.center,

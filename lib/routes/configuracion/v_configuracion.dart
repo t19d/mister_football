@@ -192,102 +192,6 @@ class _Configuracion extends State<Configuracion> {
           ),
         ],
       );
-      /*return Table(
-        defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-        children: [
-          TableRow(
-            children: [
-              Text("Escudo:"),
-              (!isEscudoEditado)
-                  ? ConversorImagen.devolverEscudoImageFromBase64String(equipo['escudo'], context)
-                  : ConversorImagen.devolverEscudoImageFromBase64String(imgString, context),
-              IconButton(
-                icon: Icon(
-                  Icons.mode_edit,
-                  color: Colors.lightBlueAccent,
-                ),
-                onPressed: () async {
-                  if (!isEscudoEditado) {
-                    _elegirOpcionFotoDialogo(equipo['escudo'], context);
-                  } else {
-                    _elegirOpcionFotoDialogo(imgString, context);
-                  }
-                },
-              ),
-            ],
-          ),
-          TableRow(
-            children: [
-              Text("Nombre del equipo:"),
-              Text(
-                (!isNombreEquipoEditado)
-                    ? (equipo['nombre_equipo'].length == 0) ? "-" : equipo['nombre_equipo']
-                    : (nombreEquipo.length == 0) ? "-" : nombreEquipo,
-                textAlign: TextAlign.center,
-              ),
-              IconButton(
-                icon: Icon(
-                  Icons.mode_edit,
-                  color: Colors.lightBlueAccent,
-                ),
-                onPressed: () async {
-                  print(isNombreEquipoEditado);
-                  _cambiarNombreEquipo(context, (!isNombreEquipoEditado) ? equipo['nombre_equipo'] : nombreEquipo);
-                },
-              ),
-            ],
-          ),
-          TableRow(
-            children: [
-              Container(
-                height: 0,
-              ),
-              RaisedButton(
-                child: Text("Aceptar"),
-                onPressed: (!isEscudoEditado && !isNombreEquipoEditado)
-                    ? null
-                    : () {
-                        //Escudo editado y nombre NO editado
-                        if (isEscudoEditado && !isNombreEquipoEditado) {
-                          equipoEditado = {
-                            "nombre_equipo": equipo['nombre_equipo'],
-                            "escudo": "$imgString",
-                            "modo_oscuro": false,
-                            "alineacion_favorita": equipo["alineacion_favorita"]
-                          };
-                        } else {
-                          //Nombre editado y escudo NO editado
-                          if (!isEscudoEditado && isNombreEquipoEditado) {
-                            equipoEditado = {
-                              "nombre_equipo": "$nombreEquipo",
-                              "escudo": equipo['escudo'],
-                              "modo_oscuro": false,
-                              "alineacion_favorita": equipo["alineacion_favorita"]
-                            };
-                          } else {
-                            equipoEditado = {
-                              "nombre_equipo": "$nombreEquipo",
-                              "escudo": "$imgString",
-                              "modo_oscuro": false,
-                              "alineacion_favorita": equipo["alineacion_favorita"]
-                            };
-                          }
-                        }
-                        //boxPerfil.putAt(0, equipoEditado);
-                        boxPerfil.putAt(0, equipoEditado);
-                        setState(() {
-                          isEscudoEditado = false;
-                          isNombreEquipoEditado = false;
-                        });
-                      },
-              ),
-              Container(
-                height: 0,
-              ),
-            ],
-          ),
-        ],
-      );*/
     } else {
       return Column(
         children: <Widget>[
@@ -389,31 +293,13 @@ class _Configuracion extends State<Configuracion> {
                   : () {
                       //Escudo editado y nombre NO editado
                       if (isEscudoEditado && !isNombreEquipoEditado) {
-                        /*equipoEditado = {
-                          "nombre_equipo": "",
-                          "escudo": "$imgString",
-                          "modo_oscuro": false,
-                          "alineacion_favorita": equipo["alineacion_favorita"]
-                        };*/
                         equipoEditado["nombre_equipo"] = nombreEquipo;
                         equipoEditado["escudo"] = imgString;
                       } else {
                         //Nombre editado y escudo NO editado
                         if (!isEscudoEditado && isNombreEquipoEditado) {
-                          /*equipoEditado = {
-                            "nombre_equipo": "$nombreEquipo",
-                            "escudo": "",
-                            "modo_oscuro": false,
-                            "alineacion_favorita": equipo["alineacion_favorita"]
-                          };*/
                           equipoEditado["nombre_equipo"] = nombreEquipo;
                         } else {
-                          /*equipoEditado = {
-                            "nombre_equipo": "$nombreEquipo",
-                            "escudo": "$imgString",
-                            "modo_oscuro": false,
-                            "alineacion_favorita": equipo["alineacion_favorita"]
-                          };*/
                           equipoEditado["escudo"] = imgString;
                         }
                       }
@@ -425,93 +311,6 @@ class _Configuracion extends State<Configuracion> {
                       });
                     },
             ),
-          ),
-        ],
-      );
-      return Table(
-        defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-        children: [
-          TableRow(
-            children: [
-              Text("Escudo:"),
-              ConversorImagen.devolverEscudoImageFromBase64String(imgString, context),
-              IconButton(
-                icon: Icon(
-                  Icons.mode_edit,
-                  color: Colors.lightBlueAccent,
-                ),
-                onPressed: () async {
-                  _elegirOpcionFotoDialogo(equipo['escudo'], context);
-                },
-              ),
-            ],
-          ),
-          TableRow(
-            children: [
-              Text("Nombre del equipo:"),
-              Text(
-                (nombreEquipo.length == 0) ? "-" : nombreEquipo,
-                textAlign: TextAlign.center,
-              ),
-              IconButton(
-                icon: Icon(
-                  Icons.mode_edit,
-                  color: Colors.lightBlueAccent,
-                ),
-                onPressed: () async {
-                  _cambiarNombreEquipo(context, nombreEquipo);
-                },
-              ),
-            ],
-          ),
-          TableRow(
-            children: [
-              Container(
-                height: 0,
-              ),
-              RaisedButton(
-                child: Text("Aceptar"),
-                onPressed: (!isEscudoEditado && !isNombreEquipoEditado)
-                    ? null
-                    : () {
-                        //Escudo editado y nombre NO editado
-                        if (isEscudoEditado && !isNombreEquipoEditado) {
-                          equipoEditado = {
-                            "nombre_equipo": "",
-                            "escudo": "$imgString",
-                            "modo_oscuro": false,
-                            "alineacion_favorita": equipo["alineacion_favorita"]
-                          };
-                        } else {
-                          //Nombre editado y escudo NO editado
-                          if (!isEscudoEditado && isNombreEquipoEditado) {
-                            equipoEditado = {
-                              "nombre_equipo": "$nombreEquipo",
-                              "escudo": "",
-                              "modo_oscuro": false,
-                              "alineacion_favorita": equipo["alineacion_favorita"]
-                            };
-                          } else {
-                            equipoEditado = {
-                              "nombre_equipo": "$nombreEquipo",
-                              "escudo": "$imgString",
-                              "modo_oscuro": false,
-                              "alineacion_favorita": equipo["alineacion_favorita"]
-                            };
-                          }
-                        }
-                        //boxPerfil.putAt(0, equipoEditado);
-                        boxPerfil.add(equipoEditado);
-                        setState(() {
-                          isEscudoEditado = false;
-                          isNombreEquipoEditado = false;
-                        });
-                      },
-              ),
-              Container(
-                height: 0,
-              ),
-            ],
           ),
         ],
       );
@@ -742,7 +541,6 @@ class _Configuracion extends State<Configuracion> {
   Future<void> _elegirOpcionFotoDialogo(String imagenEscudo, BuildContext context) {
     //Estilo
     RoundedRectangleBorder _formaDialogo = RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0), side: BorderSide(color: Colors.black26));
-    RoundedRectangleBorder _formaBoton = RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0));
     BoxDecoration _formaBotones = BoxDecoration(
         gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [Colors.lightBlue, Colors.lightBlueAccent]),
         borderRadius: BorderRadius.circular(15.0));

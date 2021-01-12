@@ -49,6 +49,7 @@ class _ListaEjerciciosJSON extends State<ListaEjerciciosJSON> {
     }
     return coloreado;
   }
+
   Widget itemEjercicio(String ejerciciosString) {
     List<dynamic> ejercicios = jsonDecode(ejerciciosString);
     if (ejercicios.length > 0) {
@@ -89,10 +90,23 @@ class _ListaEjerciciosJSON extends State<ListaEjerciciosJSON> {
                     ),
                     decoration: BoxDecoration(
                       gradient: colorearDificultad(ejercicios[iEjercicio]['dificultad']),
+                      border: Border.all(color: MisterFootball.colorPrimarioLight2),
                     ),
                     child: Column(
                       children: <Widget>[
-                        Text(ejercicios[iEjercicio]['titulo']),
+                        Container(
+                          padding: EdgeInsets.only(
+                            bottom: 10
+                          ),
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            ejercicios[iEjercicio]['titulo'],
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              fontSize: 20,
+                            ),
+                          ),
+                        ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[

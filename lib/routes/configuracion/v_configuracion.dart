@@ -417,28 +417,32 @@ class _Configuracion extends State<Configuracion> {
                   : () {
                       //Escudo editado y nombre NO editado
                       if (isEscudoEditado && !isNombreEquipoEditado) {
-                        equipoEditado = {
+                        /*equipoEditado = {
                           "nombre_equipo": "",
                           "escudo": "$imgString",
                           "modo_oscuro": false,
                           "alineacion_favorita": equipo["alineacion_favorita"]
-                        };
+                        };*/
+                        equipoEditado["nombre_equipo"] = nombreEquipo;
+                        equipoEditado["escudo"] = imgString;
                       } else {
                         //Nombre editado y escudo NO editado
                         if (!isEscudoEditado && isNombreEquipoEditado) {
-                          equipoEditado = {
+                          /*equipoEditado = {
                             "nombre_equipo": "$nombreEquipo",
                             "escudo": "",
                             "modo_oscuro": false,
                             "alineacion_favorita": equipo["alineacion_favorita"]
-                          };
+                          };*/
+                          equipoEditado["nombre_equipo"] = nombreEquipo;
                         } else {
-                          equipoEditado = {
+                          /*equipoEditado = {
                             "nombre_equipo": "$nombreEquipo",
                             "escudo": "$imgString",
                             "modo_oscuro": false,
                             "alineacion_favorita": equipo["alineacion_favorita"]
-                          };
+                          };*/
+                          equipoEditado["escudo"] = imgString;
                         }
                       }
                       //boxPerfil.putAt(0, equipoEditado);

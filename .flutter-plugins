@@ -1,9 +1,11 @@
 # This is a generated file; do not edit or check into version control.
 admob_flutter=C:\\src\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\admob_flutter-0.3.4\\
 flutter_image_compress=C:\\src\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\flutter_image_compress-0.6.8\\
-flutter_plugin_android_lifecycle=C:\\src\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\flutter_plugin_android_lifecycle-1.0.8\\
-image_cropper=C:\\src\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\image_cropper-1.2.2\\
-image_picker=C:\\src\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\image_picker-0.6.7\\
-path_provider=C:\\src\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\path_provider-1.6.9\\
-path_provider_macos=C:\\src\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\path_provider_macos-0.0.4+3\\
-share=C:\\src\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\share-0.6.4+3\\
+flutter_plugin_android_lifecycle=C:\\src\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\flutter_plugin_android_lifecycle-1.0.11\\
+image_cropper=C:\\src\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\image_cropper-1.4.0\\
+image_picker=C:\\src\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\image_picker-0.6.7+22\\
+path_provider=C:\\src\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\path_provider-1.6.28\\
+path_provider_linux=C:\\src\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\path_provider_linux-0.0.1+2\\
+path_provider_macos=C:\\src\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\path_provider_macos-0.0.4+8\\
+path_provider_windows=C:\\src\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\path_provider_windows-0.0.5\\
+share=C:\\src\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\share-0.6.5+4\\

@@ -1,4 +1,0 @@
-#Wed Jun 17 20:40:08 CEST 2020
-base.0=C\:\\mister_football\\build\\app\\intermediates\\transforms\\r8\\release\\0\\classes.dex
-path.0=classes.dex
-renamed.0=classes.dex

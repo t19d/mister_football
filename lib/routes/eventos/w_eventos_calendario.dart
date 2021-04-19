@@ -12,7 +12,8 @@ class EventosCalendario extends StatefulWidget {
   _EventosCalendario createState() => _EventosCalendario();
 }
 
-class _EventosCalendario extends State<EventosCalendario> with TickerProviderStateMixin {
+class _EventosCalendario extends State<EventosCalendario>
+    with TickerProviderStateMixin {
   Map<DateTime, List> _events;
   List _selectedEvents;
   AnimationController _animationController;
@@ -27,7 +28,10 @@ class _EventosCalendario extends State<EventosCalendario> with TickerProviderSta
     //Añadir eventos
     widget.listaEventos.forEach((key, value) {
       String fechaString = key.split("/")[0];
-      DateTime fecha = DateTime(int.parse(fechaString.split("-")[0]), int.parse(fechaString.split("-")[1]), int.parse(fechaString.split("-")[2]));
+      DateTime fecha = DateTime(
+          int.parse(fechaString.split("-")[0]),
+          int.parse(fechaString.split("-")[1]),
+          int.parse(fechaString.split("-")[2]));
       String horaString = key.split("/")[1];
       if (_events[fecha] != null) {
         List eventosItem = _events[fecha].toList();
@@ -99,6 +103,7 @@ class _EventosCalendario extends State<EventosCalendario> with TickerProviderSta
       locale: 'es_ES',
       calendarController: _calendarController,
       events: _events,
+      holidays: _events,
       initialCalendarFormat: CalendarFormat.month,
       startingDayOfWeek: StartingDayOfWeek.monday,
       availableGestures: AvailableGestures.all,
@@ -137,9 +142,7 @@ class _EventosCalendario extends State<EventosCalendario> with TickerProviderSta
               height: 100,
               child: Text(
                 '${date.day}',
-                style: TextStyle(
-                  fontSize: 16.0
-                ),
+                style: TextStyle(fontSize: 16.0),
               ),
             ),
           );
@@ -153,10 +156,18 @@ class _EventosCalendario extends State<EventosCalendario> with TickerProviderSta
             decoration: BoxDecoration(
               color: Colors.transparent,
               border: Border(
-                bottom: BorderSide(width: 1, color: MisterFootball.colorPrimarioDark2.withOpacity(.3)),
-                top: BorderSide(width: 1, color: MisterFootball.colorPrimarioDark2.withOpacity(.3)),
-                left: BorderSide(width: 1, color: MisterFootball.colorPrimarioDark2.withOpacity(.3)),
-                right: BorderSide(width: 1, color: MisterFootball.colorPrimarioDark2.withOpacity(.3)),
+                bottom: BorderSide(
+                    width: 1,
+                    color: MisterFootball.colorPrimarioDark2.withOpacity(.3)),
+                top: BorderSide(
+                    width: 1,
+                    color: MisterFootball.colorPrimarioDark2.withOpacity(.3)),
+                left: BorderSide(
+                    width: 1,
+                    color: MisterFootball.colorPrimarioDark2.withOpacity(.3)),
+                right: BorderSide(
+                    width: 1,
+                    color: MisterFootball.colorPrimarioDark2.withOpacity(.3)),
               ),
             ),
             width: 100,
@@ -181,11 +192,10 @@ class _EventosCalendario extends State<EventosCalendario> with TickerProviderSta
           return children;
         },
       ),
-      onDaySelected: (date, events) {
+      onDaySelected: (date, events, holidays) {
         _onDaySelected(date, events);
         _animationController.forward(from: 0.0);
-      },
-      /*onVisibleDaysChanged: _onVisibleDaysChanged,
+      }, /*onVisibleDaysChanged: _onVisibleDaysChanged,
       onCalendarCreated: _onCalendarCreated,*/
     );
   }
@@ -205,7 +215,8 @@ class _EventosCalendario extends State<EventosCalendario> with TickerProviderSta
       child: Center(
         child: Text(
           '${events.length}',
-          style: TextStyle(color: Colors.white, fontSize: 12.0, fontWeight: FontWeight.bold),
+          style: TextStyle(
+              color: Colors.white, fontSize: 12.0, fontWeight: FontWeight.bold),
         ),
       ),
     );
@@ -233,14 +244,17 @@ class _EventosCalendario extends State<EventosCalendario> with TickerProviderSta
                   MediaQuery.of(context).size.width * .05,
                 ),
                 decoration: BoxDecoration(
-                  border: Border.all(width: 1, color: MisterFootball.colorPrimarioDark2.withOpacity(.3)),
+                  border: Border.all(
+                      width: 1,
+                      color: MisterFootball.colorPrimarioDark2.withOpacity(.3)),
                   borderRadius: BorderRadius.circular(12.0),
                   gradient: (event[1].length == 1)
                       ? LinearGradient(
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                           colors: [
-                            MisterFootball.colorComplementarioLight.withOpacity(.3),
+                            MisterFootball.colorComplementarioLight
+                                .withOpacity(.3),
                             MisterFootball.colorComplementario.withOpacity(.3),
                           ],
                         )

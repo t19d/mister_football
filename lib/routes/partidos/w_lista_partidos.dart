@@ -8,7 +8,6 @@ import 'package:mister_football/clases/partido.dart';
 import 'package:mister_football/main.dart';
 import 'package:mister_football/routes/partidos/detalles_partidos/v_detalles_partido.dart';
 import 'package:admob_flutter/admob_flutter.dart';
-import 'package:mister_football/services/admob_servicio.dart';
 
 class ListaPartidos extends StatefulWidget {
   @override

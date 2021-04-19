@@ -29,7 +29,7 @@ dependencies:
   # Selector imagen
   image_picker: ^0.6.3+1
   # Recortar imagen
-  image_cropper: ^1.2.1
+  image_cropper: ^1.4.0
   # Compresor imagen
   flutter_image_compress: ^0.6.5+1
   # Hive
